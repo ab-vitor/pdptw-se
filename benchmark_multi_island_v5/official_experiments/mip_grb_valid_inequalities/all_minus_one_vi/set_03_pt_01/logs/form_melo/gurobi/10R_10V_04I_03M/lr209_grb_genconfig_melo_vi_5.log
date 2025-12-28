@@ -1,0 +1,102 @@
+
+Gurobi 12.0.2 (linux64) logging started Thu Oct  2 04:44:52 2025
+
+Set parameter LogFile to value "/dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/mip_grb_valid_inequalities/all_minus_one_vi/set_03_pt_01/logs/form_melo/gurobi/10R_10V_04I_03M/lr209_grb_genconfig_melo_vi_5.log"
+Set parameter Seed to value 0
+Gurobi Optimizer version 12.0.2 build v12.0.2rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 8 threads
+
+Non-default parameters:
+TimeLimit  600
+Heuristics  0
+Cuts  1
+Threads  8
+
+Academic license 2661775 - for non-commercial use only - registered to me___@dcc.ufba.br
+Optimize a model with 390921 rows, 92865 columns and 1021962 nonzeros
+Model fingerprint: 0x6c947717
+Variable types: 833 continuous, 92032 integer (92032 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+03]
+  RHS range        [1e+00, 2e+03]
+Presolve removed 163135 rows and 10685 columns (presolve time = 5s)...
+Presolve removed 165648 rows and 11555 columns (presolve time = 10s)...
+Presolve removed 166134 rows and 11545 columns
+Presolve time: 10.52s
+Presolved: 224787 rows, 81320 columns, 726470 nonzeros
+Variable types: 813 continuous, 80507 integer (80507 binary)
+
+Deterministic concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Root barrier log...
+
+Ordering time: 0.80s
+
+Barrier performed 0 iterations in 12.44 seconds (18.60 work units)
+Barrier solve interrupted - model solved by another algorithm
+
+Concurrent spin time: 0.09s
+
+Solved with primal simplex
+
+Root relaxation: objective 5.115908e-13, 1420 iterations, 1.54 seconds (1.92 work units)
+Total elapsed time = 15.10s (DegenMoves)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   56          -    0.00000      -     -   16s
+     0     0    0.00000    0  230          -    0.00000      -     -   21s
+     0     0    0.00000    0   86          -    0.00000      -     -   31s
+     0     0    0.00000    0   96          -    0.00000      -     -   31s
+     0     0    0.00000    0   66          -    0.00000      -     -   38s
+     0     0    0.00000    0  113          -    0.00000      -     -   39s
+     0     0    0.00000    0   73          -    0.00000      -     -   53s
+     0     0    0.00000    0  110          -    0.00000      -     -   54s
+     0     0    0.00000    0   79          -    0.00000      -     -   65s
+     0     0    0.00000    0   65          -    0.00000      -     -   65s
+     0     0    0.00000    0   36          -    0.00000      -     -   72s
+     0     0    0.00000    0  145          -    0.00000      -     -   74s
+     0     0    0.00000    0   62          -    0.00000      -     -   81s
+     0     0    0.00000    0   62          -    0.00000      -     -   84s
+     0     2    0.00000    0   28          -    0.00000      -     -   91s
+     3     7    0.00000    2  187          -    0.00000      -  5444  104s
+     6    14    0.00000    3  130          -    0.00000      -  4085  107s
+    13    22    0.00000    4  190          -    0.00000      -  2436  110s
+    21    71    0.00000    5  159          -    0.00000      -  2688  118s
+    70   119    0.00000    9  117          -    0.00000      -  1120  142s
+   120   275    0.00000   11  111          -    0.00000      -  1243  177s
+   343   470    0.00000   34   73          -    0.00000      -  1019  234s
+   738   657    0.00000   25   78          -    0.00000      -   777  305s
+  1207   850 infeasible   47               -    0.00000      -   833  363s
+  1641  1015 infeasible   35               -    0.00000      -   881  432s
+* 1927  1015              79    1052.7900000    0.00000   100%   860  432s
+  2055  1059 infeasible   49      1052.79000    0.00000   100%   875  516s
+  2604  1294    0.00000   18  128 1052.79000    0.00000   100%   827  579s
+* 2932  1294              58    1050.4700000    0.00000   100%   797  579s
+
+Cutting planes:
+  Learned: 12
+  Cover: 15
+  Implied bound: 295
+  Clique: 1
+  MIR: 315
+  GUB cover: 13
+  Zero half: 2
+  RLT: 148
+  Relax-and-lift: 63
+  BQP: 29
+  PSD: 17
+
+Explored 3222 nodes (2617889 simplex iterations) in 600.09 seconds (787.41 work units)
+Thread count was 8 (of 16 available processors)
+
+Solution count 2: 1050.47 1052.79 
+
+Time limit reached
+Best objective 1.050470000000e+03, best bound 1.080024958355e-12, gap 100.0000%

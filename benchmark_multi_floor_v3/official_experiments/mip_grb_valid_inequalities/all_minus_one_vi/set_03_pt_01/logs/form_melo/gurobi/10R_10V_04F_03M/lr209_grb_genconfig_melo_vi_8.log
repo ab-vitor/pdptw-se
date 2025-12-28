@@ -1,0 +1,104 @@
+
+Gurobi 12.0.2 (linux64) logging started Thu Oct  2 08:08:59 2025
+
+Set parameter LogFile to value "/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_grb_valid_inequalities/all_minus_one_vi/set_03_pt_01/logs/form_melo/gurobi/10R_10V_04F_03M/lr209_grb_genconfig_melo_vi_8.log"
+Set parameter Seed to value 0
+Gurobi Optimizer version 12.0.2 build v12.0.2rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 8 threads
+
+Non-default parameters:
+TimeLimit  600
+Heuristics  0
+Cuts  1
+Threads  8
+
+Academic license 2661775 - for non-commercial use only - registered to me___@dcc.ufba.br
+Optimize a model with 388492 rows, 91979 columns and 1014260 nonzeros
+Model fingerprint: 0x75637022
+Variable types: 829 continuous, 91150 integer (91150 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+03]
+  RHS range        [1e+00, 2e+03]
+Presolve removed 181644 rows and 14046 columns (presolve time = 5s)...
+Presolve removed 181644 rows and 15695 columns (presolve time = 11s)...
+Presolve removed 186198 rows and 15685 columns
+Presolve time: 11.71s
+Presolved: 202294 rows, 76294 columns, 662960 nonzeros
+Variable types: 809 continuous, 75485 integer (75485 binary)
+
+Deterministic concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Root barrier log...
+
+Ordering time: 0.75s
+
+Barrier statistics:
+ Dense cols : 1105
+ AA' NZ     : 1.356e+06
+ Factor NZ  : 8.527e+06 (roughly 180 MB of memory)
+ Factor Ops : 7.353e+09 (less than 1 second per iteration)
+ Threads    : 6
+
+Barrier performed 0 iterations in 13.61 seconds (18.08 work units)
+Barrier solve interrupted - model solved by another algorithm
+
+Concurrent spin time: 0.02s
+
+Solved with primal simplex
+
+Root relaxation: objective -1.705303e-13, 1297 iterations, 1.46 seconds (1.65 work units)
+Total elapsed time = 15.34s (DegenMoves)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0   66          -   -0.00000      -     -   19s
+     0     0   -0.00000    0  325          -   -0.00000      -     -   29s
+     0     0    0.00000    0  314          -    0.00000      -     -   29s
+     0     0    0.00000    0  101          -    0.00000      -     -   45s
+     0     0    0.00000    0  149          -    0.00000      -     -   52s
+     0     0    0.00000    0  223          -    0.00000      -     -   58s
+     0     0    0.00000    0   92          -    0.00000      -     -   70s
+     0     0    0.00000    0  228          -    0.00000      -     -   80s
+     0     0    0.00000    0   56          -    0.00000      -     -   91s
+     0     0    0.00000    0  372          -    0.00000      -     -   97s
+     0     0    0.00000    0  150          -    0.00000      -     -  110s
+     0     0    0.00000    0  168          -    0.00000      -     -  112s
+     0     0    0.00000    0   58          -    0.00000      -     -  125s
+     0     0    0.00000    0  137          -    0.00000      -     -  126s
+     0     0    0.00000    0   63          -    0.00000      -     -  134s
+     0     0    0.00000    0  233          -    0.00000      -     -  138s
+     0     0    0.00000    0   60          -    0.00000      -     -  147s
+     0     0    0.00000    0   60          -    0.00000      -     -  150s
+     0     2    0.00000    0   60          -    0.00000      -     -  154s
+     1     5    0.00000    1   61          -    0.00000      -  2414  155s
+     3     8    0.00000    2  185          -    0.00000      -  3115  162s
+     7    16    0.00000    3  164          -    0.00000      -  5254  172s
+    15    24    0.00000    4  173          -    0.00000      -  4914  177s
+    23   100    0.00000    5  159          -    0.00000      -  5259  198s
+   101   204 infeasible   14               -    0.00000      -  2063  227s
+   271   344    0.00000   21  243          -    0.00000      -  1746  267s
+*  380   344              76    1393.4300000    0.00000   100%  1547  267s
+*  381   344              76    1380.1100000    0.00000   100%  1542  267s
+   514   518    0.00000   27  160 1380.11000    0.00000   100%  1375  309s
+   831   745 infeasible   22      1380.11000    0.00000   100%  1133  356s
+*  905   697              56    1193.4700000    0.00000   100%  1052  356s
+*  909   697              58    1192.1000000    0.00000   100%  1047  356s
+  1200   974     cutoff   35      1192.10000    0.00000   100%   996  404s
+* 1416   970              46    1187.0800000    0.00000   100%   891  404s
+  1750  1340 infeasible   27      1187.08000    0.00000   100%   852  460s
+* 1866  1340              46    1182.9400000    0.00000   100%   826  460s
+  2484  1341    0.00000   18  314 1182.94000    0.00000   100%   739  590s
+
+Explored 2485 nodes (2012243 simplex iterations) in 600.04 seconds (724.86 work units)
+Thread count was 8 (of 16 available processors)
+
+Solution count 6: 1182.94 1187.08 1192.1 ... 1393.43
+
+Time limit reached
+Best objective 1.182940000000e+03, best bound 1.477928890381e-12, gap 100.0000%

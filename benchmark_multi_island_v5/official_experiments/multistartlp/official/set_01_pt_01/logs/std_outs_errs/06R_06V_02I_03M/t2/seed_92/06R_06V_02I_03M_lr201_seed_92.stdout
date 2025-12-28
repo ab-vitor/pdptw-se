@@ -1,0 +1,604 @@
+Set parameter WLSAccessID
+Set parameter WLSSecret
+Set parameter LicenseID to value 2661775
+Academic license 2661775 - for non-commercial use only - registered to me___@dcc.ufba.br
+Loading line 2: methodType heur
+Loading line 3: methodCode mslp
+Loading line 4: seed 0
+Loading line 5: threads 1
+Loading line 6: greedy_service_order random
+Loading line 7: outputFlagGrbMSLP 0
+Loading line 8: mslpa 60000
+Loading line 9: mslpr I
+Loading line 10: maxtime 3600
+Loading line 11: output ./logs/
+Loading line 12: printsol 1
+Loading line 13: solverMethod A
+Loading line 14: alpha 0.05 # selected from preliminary experiments
+Instance: lr201_t2_06R_06V_02I_03M
+
+[14:44:30.33] Running Data.readData with file /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/../../../../instances/orig_ams_fg/06R_06V_02I_04M/t2/lr201/
+vehicles: Vehicle[Vehicle(0, 34), Vehicle(1, 43), Vehicle(2, 52), Vehicle(3, 52), Vehicle(4, 34), Vehicle(5, 43)]
+vehicle_types: Vehicle[Vehicle(0, 34), Vehicle(1, 43), Vehicle(2, 52)]
+Machine[Machine(0, Point[Point(22, 48, 0), Point(32, 57, 1)], 1.0), Machine(1, Point[Point(23, 47, 0), Point(33, 56, 1)], 1.0), Machine(2, Point[Point(24, 46, 0), Point(34, 55, 1)], 1.0)]
+refs: [1, 2, 3, 5, 6, 7, 8, 12, 4, 9, 10, 11, 13, 1]
+V: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+V_p: [2, 3, 4, 5, 6, 7]
+V_d: [8, 9, 10, 11, 12, 13]
+Vprime: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+V: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+q: [0, 7, 26, 9, 16, 19, 20, -7, -26, -9, -16, -19, -20, 0]
+H: [1, 2, 3]
+f: [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [2, 2, 2], [2, 2, 2], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [2, 2, 2], [2, 2, 2], [1, 1, 1], [1, 1, 1]]
+1 1 1 -> 0.0
+1 2 1 -> 13.45
+2 1 1 -> 13.45
+2 2 1 -> 0.0
+1 1 2 -> 0.0
+1 2 2 -> 13.45
+2 1 2 -> 13.45
+2 2 2 -> 0.0
+1 1 3 -> 0.0
+1 2 3 -> 13.45
+2 1 3 -> 13.45
+2 2 3 -> 0.0
+o: (1, 2, 1) => 13.45
+o: (1, 2, 3) => 13.45
+o: (1, 1, 2) => 0.0
+o: (1, 2, 2) => 13.45
+o: (2, 1, 1) => 13.45
+o: (2, 1, 3) => 13.45
+o: (2, 2, 1) => 0.0
+o: (2, 2, 3) => 0.0
+o: (2, 1, 2) => 13.45
+o: (1, 1, 1) => 0.0
+o: (1, 1, 3) => 0.0
+o: (2, 2, 2) => 0.0
+
+[79, 1089, 1079, 1052, 1042, 1056, 1028, 15]
+JOBS in the order of refs (Vprime)
+Node 1: Job(0, Point(35, 35, 0), 0, 0, 1000, 0, 0, 0)
+Node 2: Job(2, Point(35, 17, 0), 7, 143, 282, 10, 0, 72)
+Node 3: Job(5, Point(15, 30, 0), 26, 34, 209, 10, 0, 7)
+Node 4: Job(8, Point(10, 43, 0), 9, 404, 481, 10, 0, 18)
+Node 5: Job(10, Point(30, 60, 1), 16, 577, 632, 10, 0, 70)
+Node 6: Job(12, Point(50, 35, 1), 19, 228, 345, 10, 0, 71)
+Node 7: Job(14, Point(15, 10, 0), 20, 32, 243, 10, 0, 99)
+Node 8: Job(72, Point(47, 16, 0), -7, 31, 208, 10, 2, 0)
+Node 9: Job(7, Point(20, 50, 0), -26, 331, 410, 10, 5, 0)
+Node 10: Job(18, Point(20, 40, 0), -9, 377, 434, 10, 8, 0)
+Node 11: Job(70, Point(37, 56, 1), -16, 788, 968, 10, 10, 0)
+Node 12: Job(71, Point(57, 68, 1), -19, 268, 367, 10, 12, 0)
+Node 13: Job(99, Point(20, 26, 0), -20, 333, 432, 10, 14, 0)
+Node 14: Job(0, Point(35, 35, 0), 0, 0, 1000, 0, 0, 0)
+
+### Preprocessing Data ###
+	-> arcs: 196 (100.0%)
+	-> arc_removals: 145 (73.98%)
+	-> arc_removals_is_loop: 14 (7.14%)
+	-> arc_removals_is_delivery_to_pickup: 8 (4.08%)
+	-> arc_removals_is_depot_begin_to_delivery: 6 (3.06%)
+	-> arc_removals_is_pickup_to_depot_end: 6 (3.06%)
+	-> arc_removals_is_dest_depot_begin: 12 (6.12%)
+	-> arc_removals_is_orig_depot_end: 11 (5.61%)
+	-> arc_removals_is_capacity_violated: 0 (0.0%)
+	-> arc_removals_is_time_window_limited: 55 (28.06%)
+	-> arc_removals_is_time_window_pairing_limited: 26 (13.27%)
+	-> arc_removals_is_indirect_request_service_impossible: 7 (3.57%)
+	-> gamma_vars: 0 (0%)
+	-> feas_gamma_vars: 0 (0%)
+	-> infeas_gamma_vars_is_next_mtrv_unreachable: 0 (0%)
+	-> infeas_gamma_vars_is_iprime_jprime_eq_i_j: 0 (0%)
+	-> machine_removal_for_an_arc: 0 (0.0%)
+##########################
+
+[14:44:40.285] Print configuration
+------------------------------------------------------
+"
+[14:44:40.285] Running Multi Start Heuristic"
+> Experiment started at 2025-10-14T14:44:40.285
+> Instance: lr201_t2_06R_06V_02I_03M
+> Algorithm Parameters:
+
+
+	>Stop params:
+		>  - rule ITERATIONS
+		>  - argument 60000.0
+		>  - maximum_time 3600
+
+	>General params:
+		>  - instPath /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/../../../../instances/orig_ams_fg/06R_06V_02I_04M/t2/lr201/
+		>  - name lr201
+		>  - type t2
+		>  - group 06R_06V_02I_03M
+		>  - fullname lr201_t2_06R_06V_02I_03M
+		>  - methodType heur
+		>  - methodCode mslp
+		>  - genconfigfile /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/configs/genconfig_mslp.conf
+		>  - genconfigfilename genconfig_mslp
+		>  - greedy_service_order random
+		>  - cutoff 0
+		>  - cutoffmachs 3
+		>  - num_machs 0
+		>  - solver Gurobi
+		>  - maxtime 3600
+		>  - gurobiCuts 1
+		>  - typeUserCut 0
+		>  - mipPresolve -1
+		>  - printsol 1
+		>  - maxnodes -1
+		>  - elevator 0
+		>  - make_instance_feasible false
+		>  - output /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs
+		>  - suff_outputs _seed_92
+		>  - suff_csv _bash_5
+		>  - epsilon 0.005
+		>  - epsilonCap 0.5
+		>  - warmStart false
+		>  - seed 92
+		>  - rng Random.MersenneTwister(92)
+		>  - alpha 0.05
+		>  - maxiter 1000000
+		>  - outputFlagGrbMIP 0
+		>  - outputFlagGrbMSLP 0
+		>  - outputFlagGrbLMNS 0
+		>  - mslpr I
+		>  - mslpa 60000
+		>  - lmnsr M
+		>  - lmnsa 60
+		>  - lmnsRepairTime 30.0
+		>  - lmnsMIPFocus 0
+		>  - lmnsGapToBiggerDestruction 50
+		>  - lmnsGapToSmallerDestruction 95
+		>  - lmnsWeightShawDistProx 1.0
+		>  - lmnsWeightShawEarlProx 1.0
+		>  - lmnsWeightShawSameRoute 1.0
+		>  - lmnsWeightShawDemandSim 1.0
+		>  - lmnsReqRApplyMIPStart true
+		>  - lmnsAcceptanceCriteria H
+		>  - lmnsMetropolisTemp 100.0
+		>  - lmnsSimulatedAnnealingTemp 100.0
+		>  - lmnsSimulatedAnnealingCool 0.95
+		>  - mipmaxtime 3600
+		>  - csvfilename /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/outputs/csvresults_heur_mslp_bash_5.csv
+		>  - solfilename /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/solutions/06R_06V_02I_03M/lr201_sol_genconfig_mslp_seed_92.txt
+		>  - timelineFilename /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/timelines/06R_06V_02I_03M/lr201_timeline_genconfig_mslp_seed_92.txt
+		>  - grbFilename /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/gurobi/06R_06V_02I_03M/lr201_grb_genconfig_mslp_seed_92.log
+		>  - threads 1
+		>  - solverMethod AUTOMATIC
+
+------------------------------------------------------
+
+[14:44:40.388] Starting running MSLP
+objValue;greedysol;iteration;time
+985.55;1552.87;1;0.002425
+849.02;1190.66;2;0.319588
+847.28;1222.66;104;0.446457
+841.88;1190.66;160;0.518098
+
+[14:46:35.954] Finished running MSLP
+System CPU time: 30.02 seconds
+
+[14:46:36.026] Post running MSLP
+Best solution value: 841.88
+Total time elapsed: 85.530263
+Time to best: 0.518098
+Iterations: 60000
+Iterations to best: 160
+Improvements: 4
+Infeasible solutions percentage: (0 / 60000) = 0.0000 %
+(LP improvements)/(LP runs) = 60000/60000 = 100.0000 %
+Mean LP improvement percentage: 26.4535 %
+[14:46:36.279] Writing results to CSV file: /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/outputs/csvresults_heur_mslp_bash_5.csv
+
+[14:46:38.327] Saving solution to file:/dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/solutions/06R_06V_02I_03M/lr201_sol_genconfig_mslp_seed_92.txt
+
+[14:46:38.327] Saving solution timeline to file: /dados/rmelo/PDPTW-SE/benchmark_multi_island_v5/official_experiments/multistartlp/official/set_01_pt_01/logs/heur_mslp/timelines/06R_06V_02I_03M/lr201_timeline_genconfig_mslp_seed_92.txt
+---------------------| VEHICLES |---------------------
+
+Vehicle 1 :
+	id: 0
+		node: 1
+		(x, y, z): (35, 35, 0)
+		dem: 0
+		earl: 0
+		lat: 1000
+		servt: 0
+		pid: 0
+		did: 0
+		servST: 160.4
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+	Finished service at time: 160.4
+
+	Task 0 -> Task 2: 18.0
+	Vehicle arrival at task: 178.4
+	Waiting time until service start time: 0.0
+
+	id: 2
+		node: 2
+		(x, y, z): (35, 17, 0)
+		dem: 7
+		earl: 143
+		lat: 282
+		servt: 10
+		pid: 0
+		did: 72
+		servST: 178.4
+		(h, h_ind): (-1, 0)
+		load: 7.0
+
+	Finished service at time: 188.4
+
+	Task 2 -> Task 72: 12.04
+	Vehicle arrival at task: 200.44
+	Waiting time until service start time: 0.0
+
+	id: 72
+		node: 8
+		(x, y, z): (47, 16, 0)
+		dem: -7
+		earl: 31
+		lat: 208
+		servt: 10
+		pid: 2
+		did: 0
+		servST: 200.44
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+	Finished service at time: 210.44
+
+	Task 72 -> Task 14: 32.56
+	Vehicle arrival at task: 243.0
+	Waiting time until service start time: 0.0
+
+	id: 14
+		node: 7
+		(x, y, z): (15, 10, 0)
+		dem: 20
+		earl: 32
+		lat: 243
+		servt: 10
+		pid: 0
+		did: 99
+		servST: 243.0
+		(h, h_ind): (-1, 0)
+		load: 20.0
+
+	Finished service at time: 253.0
+
+	Task 14 -> Task 99: 16.76
+	Vehicle arrival at task: 269.76
+	Waiting time until service start time: 63.24
+
+	id: 99
+		node: 13
+		(x, y, z): (20, 26, 0)
+		dem: -20
+		earl: 333
+		lat: 432
+		servt: 10
+		pid: 14
+		did: 0
+		servST: 333.0
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+	Finished service at time: 343.0
+
+	Task 99 -> Task 0: 17.49
+	Vehicle arrival at task: 360.49
+	Waiting time until service start time: 0.0
+
+	id: 0
+		node: 14
+		(x, y, z): (35, 35, 0)
+		dem: 0
+		earl: 0
+		lat: 1000
+		servt: 0
+		pid: 0
+		did: 0
+		servST: 360.49
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+
+Vehicle 2 :
+	id: 0
+		node: 1
+		(x, y, z): (35, 35, 0)
+		dem: 0
+		earl: 0
+		lat: 1000
+		servt: 0
+		pid: 0
+		did: 0
+		servST: 188.38
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+	Finished service at time: 188.38
+
+	Task 0 -> Task 5: 20.62
+	Vehicle arrival at task: 209.0
+	Waiting time until service start time: 0.0
+
+	id: 5
+		node: 3
+		(x, y, z): (15, 30, 0)
+		dem: 26
+		earl: 34
+		lat: 209
+		servt: 10
+		pid: 0
+		did: 7
+		servST: 209.0
+		(h, h_ind): (-1, 0)
+		load: 26.0
+
+	Finished service at time: 219.0
+
+	Using Machine: 2
+		Task 5 -> Machine 2 (Station 1): 18.36
+		Vehicle arrival at machine station: 237.36
+		Waiting time until machine travel: 17.61
+
+		Machine travel start time: 254.97000000000003
+		Region 0 -> Region 1: 13.45
+		Machine arrival at machine station: 268.42
+
+		Machine 2 (Station 2)-> Task 12: 25.61
+		Vehicle arrival at task: 294.03000000000003
+		Waiting time until service start time: 0.0
+
+	id: 12
+		node: 6
+		(x, y, z): (50, 35, 1)
+		dem: 19
+		earl: 228
+		lat: 345
+		servt: 10
+		pid: 0
+		did: 71
+		servST: 294.03000000000003
+		(h, h_ind): (2, 1)
+		load: 45.0
+
+	Finished service at time: 304.03000000000003
+
+	Task 12 -> Task 71: 33.73
+	Vehicle arrival at task: 337.76000000000005
+	Waiting time until service start time: 0.0
+
+	id: 71
+		node: 12
+		(x, y, z): (57, 68, 1)
+		dem: -19
+		earl: 268
+		lat: 367
+		servt: 10
+		pid: 12
+		did: 0
+		servST: 337.76000000000005
+		(h, h_ind): (-1, 0)
+		load: 26.0
+
+	Finished service at time: 347.76000000000005
+
+	Using Machine: 0
+		Task 71 -> Machine 0 (Station 2): 27.31
+		Vehicle arrival at machine station: 375.07000000000005
+		Waiting time until machine travel: 0.0
+
+		Machine travel start time: 375.07000000000005
+		Region 1 -> Region 0: 13.45
+		Machine arrival at machine station: 388.52000000000004
+
+		Machine 0 (Station 1)-> Task 7: 2.83
+		Vehicle arrival at task: 391.35
+		Waiting time until service start time: 0.0
+
+	id: 7
+		node: 9
+		(x, y, z): (20, 50, 0)
+		dem: -26
+		earl: 331
+		lat: 410
+		servt: 10
+		pid: 5
+		did: 0
+		servST: 391.35
+		(h, h_ind): (0, 1)
+		load: 0.0
+
+	Finished service at time: 401.35
+
+	Task 7 -> Task 8: 12.21
+	Vehicle arrival at task: 413.56
+	Waiting time until service start time: 0.0
+
+	id: 8
+		node: 4
+		(x, y, z): (10, 43, 0)
+		dem: 9
+		earl: 404
+		lat: 481
+		servt: 10
+		pid: 0
+		did: 18
+		servST: 413.56
+		(h, h_ind): (-1, 0)
+		load: 9.0
+
+	Finished service at time: 423.56
+
+	Task 8 -> Task 18: 10.44
+	Vehicle arrival at task: 434.0
+	Waiting time until service start time: 0.0
+
+	id: 18
+		node: 10
+		(x, y, z): (20, 40, 0)
+		dem: -9
+		earl: 377
+		lat: 434
+		servt: 10
+		pid: 8
+		did: 0
+		servST: 434.0
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+	Finished service at time: 444.0
+
+	Using Machine: 0
+		Task 18 -> Machine 0 (Station 1): 8.25
+		Vehicle arrival at machine station: 452.25
+		Waiting time until machine travel: 162.69
+
+		Machine travel start time: 614.94
+		Region 0 -> Region 1: 13.45
+		Machine arrival at machine station: 628.3900000000001
+
+		Machine 0 (Station 2)-> Task 10: 3.61
+		Vehicle arrival at task: 632.0000000000001
+		Waiting time until service start time: -0.0
+
+	id: 10
+		node: 5
+		(x, y, z): (30, 60, 1)
+		dem: 16
+		earl: 577
+		lat: 632
+		servt: 10
+		pid: 0
+		did: 70
+		servST: 632.0
+		(h, h_ind): (0, 2)
+		load: 16.0
+
+	Finished service at time: 642.0
+
+	Task 10 -> Task 70: 8.06
+	Vehicle arrival at task: 650.06
+	Waiting time until service start time: 137.94
+
+	id: 70
+		node: 11
+		(x, y, z): (37, 56, 1)
+		dem: -16
+		earl: 788
+		lat: 968
+		servt: 10
+		pid: 10
+		did: 0
+		servST: 788.0
+		(h, h_ind): (-1, 0)
+		load: 0.0
+
+	Finished service at time: 798.0
+
+	Using Machine: 2
+		Task 70 -> Machine 2 (Station 2): 3.16
+		Vehicle arrival at machine station: 801.16
+		Waiting time until machine travel: 0.0
+
+		Machine travel start time: 801.16
+		Region 1 -> Region 0: 13.45
+		Machine arrival at machine station: 814.61
+
+		Machine 2 (Station 1)-> Task 0: 15.56
+		Vehicle arrival at task: 830.17
+		Waiting time until service start time: 0.0
+
+	id: 0
+		node: 14
+		(x, y, z): (35, 35, 0)
+		dem: 0
+		earl: 0
+		lat: 1000
+		servt: 0
+		pid: 0
+		did: 0
+		servST: 830.17
+		(h, h_ind): (2, 2)
+		load: 0.0
+
+
+---------------------| MACHINES |---------------------
+
+Machine 0 :
+	setup duration: 13.45
+
+	vehicle: 2
+	vehicleInd: 5
+	(orig, dest): (71, 7)
+	(origRegion, destRegion): (1, 0)
+	st: 375.07000000000005
+	duration: 13.45
+
+	setup duration: 0.0
+
+	vehicle: 2
+	vehicleInd: 8
+	(orig, dest): (18, 10)
+	(origRegion, destRegion): (0, 1)
+	st: 614.94
+	duration: 13.45
+
+
+Machine 2 :
+	setup duration: 0.0
+
+	vehicle: 2
+	vehicleInd: 3
+	(orig, dest): (5, 12)
+	(origRegion, destRegion): (0, 1)
+	st: 254.97000000000003
+	duration: 13.45
+
+	setup duration: 0.0
+
+	vehicle: 2
+	vehicleInd: 10
+	(orig, dest): (70, 0)
+	(origRegion, destRegion): (1, 0)
+	st: 801.16
+	duration: 13.45
+
+
+-------------------| COMPL. TIMES |-------------------
+
+Vehicle 0 : 0.0
+Vehicle 1 : 200.09
+Vehicle 2 : 641.79
+Vehicle 3 : 0.0
+Vehicle 4 : 0.0
+Vehicle 5 : 0.0
+-------------------| STATISTICS |-------------------
+
+    Vehicles used                           : 33.3333
+    Machines used                           : 66.6667
+    Max load (vehicles)                     : 86.5385
+    Min load (vehicles)                     : 46.5116
+    Mean load (vehicles)                    : 66.525
+    Min completion time                     : 20.009
+    Max completion time                     : 64.179
+    Mean completion time                    : 42.094
+    Avrg travel time (with vehicle)         : 3.3625
+    Avrg travel time (only with vehicle)    : 2.69
+    Avrg travel time (no vehicle)           : 0.6725
+    Avrg waiting time (machine travel)      : 14.0467
+    Avrg waiting time (service)             : 34.9392
+    Machines travel times (with vehicle)    : [4.035, 0.0, 2.69]
+    Machines travel times (no vehicle)      : [1.345, 0.0, 0.0]
+    Max load per vehicle                    : [0.0, 46.5116, 86.5385, 0.0, 0.0, 0.0]
+
+----------------------------------------------------
+
+TOTAL: 841.88
+
+Everything is awesome!

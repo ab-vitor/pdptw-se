@@ -1,0 +1,117 @@
+Set parameter WLSAccessID
+Set parameter WLSSecret
+Set parameter LicenseID to value 2661775
+Parameter 'method_type' with value 'form' successfully set as form of type <class 'str'>
+Parameter 'method_code' with value 'melo' successfully set as melo of type <class 'str'>
+Parameter 'seed' with value '0' successfully set as 0 of type <class 'int'>
+Parameter 'mip_max_time' with value '3600' successfully set as 3600 of type <class 'int'>
+Parameter 'output_flag_grb_mip' with value '1' successfully set as 1 of type <class 'int'>
+Parameter 'elevator' with value '1' successfully set as 1 of type <class 'int'>
+Parameter 'threads' with value '8' successfully set as 8 of type <class 'int'>
+Parameter 'print_sol' with value '1' successfully set as 1 of type <class 'int'>
+Parameter 'constraints_used_melo_mip_str' with value '1-29' successfully set as 1-29 of type <class 'str'>
+Instance: lr204_t2_08R_08V_02F_03M
+ParameterData(inst_path='/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_gurobi/set_02_pt_02/../../../instances/orig_ams_fg/08R_08V_02F_04M/t2/lr204/', name='lr204', type='t2', group='08R_08V_02F_03M', full_name='lr204_t2_08R_08V_02F_03M', method_type='form', method_code='melo', gen_config_file='/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_gurobi/set_02_pt_02/configs/genconfig_melo.conf', gen_config_filename='genconfig_melo', greedy_service_order='tightest_tw', cutoff=0, cutoff_machs=3, solver='Gurobi', max_time=7200, gurobi_cuts=1, type_user_cut=0, mip_presolve=-1, print_sol=1, max_nodes=-1, elevator=1, make_instance_feasible=False, output='/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_gurobi/set_02_pt_02/logs', epsilon=0.005, epsilon_cap=0.5, warm_start=False, seed=0, rng=<random.Random object at 0x557b2e5714d0>, alpha=0.2, max_iter=1000000, output_flag_grb_mip=1, output_flag_grb_mslp=0, output_flag_grb_lmns=0, mslp_r='M', mslp_a='60', lmns_r='M', lmns_a='60', lmns_repair_time=30.0, lmns_mip_focus=0, lmns_gap_to_bigger_destruction=50, lmns_gap_to_smaller_destruction=95, lmns_weight_shaw_dist_prox=1.0, lmns_weight_shaw_earl_prox=1.0, lmns_weight_shaw_same_route=1.0, lmns_weight_shaw_demand_sim=1.0, lmns_req_r_apply_mip_start=True, lmns_acceptance_criteria='H', lmns_metropolis_temp=100.0, lmns_simulated_annealing_temp=100.0, lmns_simulated_annealing_cool=0.95, mip_max_time=3600, hx_max_time=3600, csv_file_name='', sol_file_name='', timeline_file_name='', grb_file_name='', validate_synchronization=True, constraints_used_melo_mip_str='1-29', constraints_used_melo_mip=None, run_callback_melo_mip=False, mip_heuristics=0.05, threads=8)
+Constraints active in melo MIP
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 
+[Reading Data] Using files at /dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_gurobi/set_02_pt_02/../../../instances/orig_ams_fg/08R_08V_02F_04M/t2/lr204/
+vehicles: [Vehicle(id=0, cap=26), Vehicle(id=1, cap=32), Vehicle(id=2, cap=38), Vehicle(id=3, cap=32), Vehicle(id=4, cap=38), Vehicle(id=5, cap=32), Vehicle(id=6, cap=32), Vehicle(id=7, cap=32)]
+vehicle_types: [Vehicle(id=0, cap=26), Vehicle(id=7, cap=32), Vehicle(id=4, cap=38)]
+machines: [Machine(id=0, points=[Point(x=34, y=35, z=0), Point(x=34, y=35, z=1)], spd=0.2), Machine(id=1, points=[Point(x=36, y=35, z=0), Point(x=36, y=35, z=1)], spd=0.2), Machine(id=2, points=[Point(x=32, y=35, z=0), Point(x=32, y=35, z=1)], spd=0.2)]
+refs: [0, 2, 3, 4, 6, 7, 8, 9, 10, 12, 1, 11, 16, 13, 5, 15, 14, 0]
+V: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+V_p: [1, 2, 3, 4, 5, 6, 7, 8]
+V_d: [9, 10, 11, 12, 13, 14, 15, 16]
+V_p_d: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+Vprime: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+q: [0, 5, 9, 16, 12, 19, 8, 19, 2, -5, -9, -16, -12, -19, -8, -19, -2, 0]
+H: [0, 1, 2]
+Machine points:
+# Machine 0
+	Point(x=34, y=35, z=0)
+	Point(x=34, y=35, z=1)
+
+# Machine 1
+	Point(x=36, y=35, z=0)
+	Point(x=36, y=35, z=1)
+
+# Machine 2
+	Point(x=32, y=35, z=0)
+	Point(x=32, y=35, z=1)
+
+f: [[0 0 0]
+ [0 0 0]
+ [1 1 1]
+ [1 1 1]
+ [1 1 1]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]
+ [1 1 1]
+ [0 0 0]
+ [1 1 1]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]]
+(0, 0, 0) 0.0
+(0, 1, 0) 5.0
+(1, 0, 0) 5.0
+(1, 1, 0) 0.0
+(0, 0, 1) 0.0
+(0, 1, 1) 5.0
+(1, 0, 1) 5.0
+(1, 1, 1) 0.0
+(0, 0, 2) 0.0
+(0, 1, 2) 5.0
+(1, 0, 2) 5.0
+(1, 1, 2) 0.0
+Number of arcs: 229
+M:  (0, np.int64(0)) (1, np.int64(58)) (2, np.int64(1100)) (3, np.int64(1090)) (4, np.int64(1058)) (5, np.int64(1048)) (6, np.int64(1053)) (7, np.int64(1011)) (8, np.int64(6))
+JOBS in the order of refs (Vprime)
+Node 0: Job(id=0, point=Point(x=35, y=35, z=0), dem=0, earl=0, lat=1000, servt=0, pid=0, did=0)
+Node 1: Job(id=7, point=Point(x=20, y=50, z=0), dem=5, earl=0, lat=968, servt=10, pid=0, did=31)
+Node 2: Job(id=8, point=Point(x=10, y=43, z=1), dem=9, earl=404, lat=481, servt=10, pid=0, did=3)
+Node 3: Job(id=9, point=Point(x=55, y=60, z=1), dem=16, earl=400, lat=497, servt=10, pid=0, did=21)
+Node 4: Job(id=11, point=Point(x=20, y=65, z=1), dem=12, earl=206, lat=325, servt=10, pid=0, did=67)
+Node 5: Job(id=12, point=Point(x=50, y=35, z=0), dem=19, earl=0, lat=975, servt=10, pid=0, did=35)
+Node 6: Job(id=15, point=Point(x=30, y=5, z=0), dem=8, earl=175, lat=300, servt=10, pid=0, did=10)
+Node 7: Job(id=16, point=Point(x=10, y=20, z=0), dem=19, earl=0, lat=960, servt=10, pid=0, did=61)
+Node 8: Job(id=17, point=Point(x=5, y=30, z=0), dem=2, earl=0, lat=959, servt=10, pid=0, did=46)
+Node 9: Job(id=31, point=Point(x=31, y=52, z=0), dem=-5, earl=0, lat=972, servt=10, pid=7, did=0)
+Node 10: Job(id=3, point=Point(x=55, y=45, z=1), dem=-9, earl=0, lat=967, servt=10, pid=8, did=0)
+Node 11: Job(id=21, point=Point(x=45, y=20, z=0), dem=-16, earl=0, lat=971, servt=10, pid=9, did=0)
+Node 12: Job(id=67, point=Point(x=67, y=5, z=1), dem=-12, earl=294, lat=401, servt=10, pid=11, did=0)
+Node 13: Job(id=35, point=Point(x=63, y=65, z=0), dem=-19, earl=0, lat=948, servt=10, pid=12, did=0)
+Node 14: Job(id=10, point=Point(x=30, y=60, z=0), dem=-8, earl=0, lat=964, servt=10, pid=15, did=0)
+Node 15: Job(id=61, point=Point(x=12, y=24, z=0), dem=-19, earl=0, lat=964, servt=10, pid=16, did=0)
+Node 16: Job(id=46, point=Point(x=2, y=48, z=0), dem=-2, earl=0, lat=954, servt=10, pid=17, did=0)
+Node 17: Job(id=0, point=Point(x=35, y=35, z=0), dem=0, earl=0, lat=1000, servt=0, pid=0, did=0)
+
+### Preprocessing - arc removals
+	-> arcs: 324 (100.0%)
+	-> arc_removals: 95 (29.32%)
+	-> arc_removals_is_loop: 18 (5.56%)
+	-> arc_removals_is_delivery_to_pickup: 10 (3.09%)
+	-> arc_removals_is_depot_begin_to_delivery: 8 (2.47%)
+	-> arc_removals_is_pickup_to_depot_end: 8 (2.47%)
+	-> arc_removals_is_dest_depot_begin: 16 (4.94%)
+	-> arc_removals_is_orig_depot_end: 15 (4.63%)
+	-> arc_removals_is_capacity_violated: 0 (0.0%)
+	-> arc_removals_is_time_window_limited: 14 (4.32%)
+	-> arc_removals_is_time_window_pairing_limited: 4 (1.23%)
+	-> arc_removals_is_indirect_request_service_impossible: 2 (0.62%)
+	-> gamma_vars: 32448 (100.0%)
+	-> feas_gamma_vars: 28593 (88.12%)
+	-> infeas_gamma_vars_is_next_mtrv_unreachable: 3543 (10.92%)
+	-> infeas_gamma_vars_is_iprime_jprime_eq_i_j: 312 (0.96%)
+
+[19/09/2025 05:51:22] Running melo_formulation
+
+[19/09/2025 05:51:22] Creating Melo MIP model...
+Set parameter WLSAccessID
+Set parameter WLSSecret
+Set parameter LicenseID to value 2661775
