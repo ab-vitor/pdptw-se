@@ -57,9 +57,9 @@ for(i in seq_along(benchmarks)){
     ) +
     labs(x = "Type", y = "Deviation (%)") +
     scale_y_sqrt(
-      limits = c(0, 150),                    # 🔹 fixes range for all plots
-      breaks = c(0, 1, 5, 10, 20, 50, 100, 150),  # 🔹 same ticks
-      labels = function(x) paste0(x)    # optional: add percent symbol
+      limits = c(0, 150),
+      breaks = c(0, 1, 5, 10, 20, 50, 100, 150),
+      labels = function(x) paste0(x)
     )
   
   

@@ -39,9 +39,6 @@ for (i in seq_along(solvers)){
           found_sol = pmax(optimal, tle_feas)
         )
       
-      csv_results_df$n_vehicles <- csv_results_df$n_vehicles*100
-      csv_results_df$n_machines <- csv_results_df$n_machines*100
-      
       grouped_avrg <- csv_results_df %>%
         group_by(group) %>%
         summarise(
@@ -49,7 +46,6 @@ for (i in seq_along(solvers)){
           "Gap" = mean(gap[found_sol == 1], na.rm = T),
           "Time (s)" = mean(time[found_sol == 1], na.rm = T),
         )
-      # across(-instname, mean, na.rm = TRUE))
       
       write.table(
         grouped_avrg,

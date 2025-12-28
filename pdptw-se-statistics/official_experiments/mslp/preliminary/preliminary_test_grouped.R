@@ -29,21 +29,9 @@ compute_grouped_stats <- function(data, group_vars) {
     group_by(across(all_of(group_vars))) %>%
     summarise(
       feasible = sum(feasible == "true"),
-      # minbestsol = if (all(is.na(value))) NA else min(value),
-      # maxbestsol = if (all(is.na(value))) NA else max(value),
-      # meanbestsol = if (all(is.na(value))) NA else mean(value),
       minrpd = if (all(is.na(value))) NA else min(rpd),
       meanrpd = if (all(is.na(value))) NA else mean(rpd),
       maxrpd = if (all(is.na(value))) NA else max(rpd),
-      # iterations = mean(iteration, na.rm = TRUE),
-      # miniterationtobest = min(iterationToBest, na.rm = TRUE),
-      # maxiterationtobest = max(iterationToBest, na.rm = TRUE),
-      # meaniterationtobest = mean(iterationToBest, na.rm = TRUE),
-      # percentage_infeas_sol = mean(percentageInfeasibleSol, na.rm = TRUE),
-      # percentage_LP_impr = mean(percentageLPImpr, na.rm = TRUE),
-      # mean_LP_impr_percentage = mean(meanLPImprPercentage, na.rm = TRUE),
-      # totalTimeElapsed = mean(totalTimeElapsed, na.rm = TRUE),
-      # timeToBest = mean(timeToBest, na.rm = TRUE),
       .groups = "drop"
     )
 }
@@ -53,24 +41,12 @@ aggregate_by_alpha <- function(data) {
   data %>%
     group_by(alpha) %>%
     summarise(
-      # mean_minbestsol = mean(minbestsol, na.rm = TRUE),
-      # mean_maxbestsol = mean(maxbestsol, na.rm = TRUE),
-      # mean_meanbestsol = mean(meanbestsol, na.rm = TRUE),
       mean_minrpd = mean(minrpd, na.rm = TRUE),
       mean_meanrpd = mean(meanrpd, na.rm = TRUE),
       mean_maxrpd = mean(maxrpd, na.rm = TRUE),
       sd_minrpd = sd(minrpd, na.rm = TRUE),
       sd_meanrpd = sd(meanrpd, na.rm = TRUE),
       sd_maxrpd = sd(maxrpd, na.rm = TRUE),
-      # iterations = mean(iterations, na.rm = TRUE),
-      # mean_miniterationtobest = mean(miniterationtobest, na.rm = TRUE),
-      # mean_maxiterationtobest = max(maxiterationtobest, na.rm = TRUE),
-      # mean_meaniterationtobest = mean(meaniterationtobest, na.rm = TRUE),
-      # percentage_infeas_sol = mean(percentage_infeas_sol, na.rm = TRUE),
-      # percentage_LP_impr = mean(percentage_LP_impr, na.rm = TRUE),
-      # mean_LP_impr_percentage = mean(mean_LP_impr_percentage, na.rm = TRUE),
-      # totalTimeElapsed = mean(totalTimeElapsed, na.rm = TRUE),
-      # timeToBest = mean(timeToBest, na.rm = TRUE),
       .groups = "drop"
     )
 }

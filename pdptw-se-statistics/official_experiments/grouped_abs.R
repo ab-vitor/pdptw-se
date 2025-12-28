@@ -47,8 +47,6 @@ for (i in seq_along(solvers)){
         mutate(
           n_req = as.integer(substr(group, 1, 2)),
           feas_sol = n_vehicles_used != 0 & !is.na(n_vehicles_used) | status == OPT_HX | status == FEAS_HX,
-          # bound_zero = bestbound < 0.01,
-          # root_rlx_zero = rt_rlx < 0.01,
           tle = status == TIME_LIMIT | status == FEAS_HX | status == INFEAS_HX,
           killed = status == KILLED | status == KILLED_HX,
           optimal = status == OPTIMAL | status == OPT_HX
@@ -58,15 +56,10 @@ for (i in seq_along(solvers)){
       grouped_abs <- csv_results_df %>%
         group_by(group) %>%
         summarise(
-          # n_req = mean(n_req),
-          # n_insts = n(),
-          # type = t,
           Optimal = sum(optimal, na.rm = TRUE),
           TLE = sum(tle, na.rm = TRUE),
           Killed = sum(killed),
           "Feas. Sol." = sum(feas_sol),
-          # bound_zero = sum(bound_zero, na.rm = TRUE),
-          # root_rlx_zero = sum(root_rlx_zero, na.rm = TRUE)
         )
       
       
@@ -117,22 +110,16 @@ for (i in seq_along(solvers)){
         mutate(
           n_req = as.integer(substr(group, 1, 2)),
           feas_sol = n_vehicles_used != 0 & !is.na(n_vehicles_used) | status == OPT_HX | status == FEAS_HX,
-          # bound_zero = bestbound < 0.01,
-          # root_rlx_zero = rt_rlx < 0.01,
           tle = status == TIME_LIMIT | status == FEAS_HX | status == INFEAS_HX,
           killed = status == KILLED | status == KILLED_HX,
           optimal = status == OPTIMAL | status == OPT_HX
         ) %>%
         group_by(n_req) %>%
         summarise(
-          # n_insts = n(),
-          # type = t,
           Optimal = sum(optimal, na.rm = TRUE),
           TLE = sum(tle, na.rm = TRUE),
           Killed = sum(killed),
           "Feas. Sol." = sum(feas_sol),
-          # bound_zero = sum(bound_zero, na.rm = TRUE),
-          # root_rlx_zero = sum(root_rlx_zero, na.rm = TRUE)
         )
       
       write.table(
@@ -184,23 +171,16 @@ for (i in seq_along(solvers)){
         mutate(
           req_reg = substr(group, 1, 11),
           feas_sol = n_vehicles_used != 0 & !is.na(n_vehicles_used) | status == OPT_HX | status == FEAS_HX,
-          # bound_zero = bestbound < 0.01,
-          # root_rlx_zero = rt_rlx < 0.01,
           tle = status == TIME_LIMIT | status == FEAS_HX | status == INFEAS_HX,
           killed = status == KILLED | status == KILLED_HX,
           optimal = status == OPTIMAL | status == OPT_HX
         ) %>%
         group_by(req_reg) %>%
         summarise(
-          # n_req = mean(n_req),
-          # n_insts = n(),
-          # type = t,
           Optimal = sum(optimal, na.rm = TRUE),
           TLE = sum(tle, na.rm = TRUE),
           Killed = sum(killed),
           "Feas. Sol." = sum(feas_sol, na.rm = TRUE),
-          # bound_zero = sum(bound_zero, na.rm = TRUE),
-          # root_rlx_zero = sum(root_rlx_zero, na.rm = TRUE)
         )
       
       write.table(
@@ -252,8 +232,6 @@ for (i in seq_along(solvers)){
         mutate(
           req_mach = paste(substr(group, 1, 7), substr(group, 13, 15), sep = "_"),
           feas_sol = n_vehicles_used != 0 & !is.na(n_vehicles_used) | status == OPT_HX | status == FEAS_HX,
-          # bound_zero = bestbound < 0.01,
-          # root_rlx_zero = rt_rlx < 0.01,
           tle = status == TIME_LIMIT | status == FEAS_HX | status == INFEAS_HX,
           killed = status == KILLED | status == KILLED_HX,
           optimal = status == OPTIMAL | status == OPT_HX
@@ -266,8 +244,6 @@ for (i in seq_along(solvers)){
           tle = sum(tle, na.rm = TRUE),
           killed = sum(killed),
           feas_sol = sum(feas_sol),
-          # bound_zero = sum(bound_zero, na.rm = TRUE),
-          # root_rlx_zero = sum(root_rlx_zero, na.rm = TRUE)
         )
       
       write.table(

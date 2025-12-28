@@ -119,7 +119,6 @@ for (j in seq_along(benchmarks)) {
         missing_one = sum(missing_one)
       )
     
-    # add identifiers to know which benchmark/type this belongs to
     na_count_table <- na_count_table %>%
       mutate(
         variation = variations[j],
@@ -129,7 +128,7 @@ for (j in seq_along(benchmarks)) {
     # store this table in the list
     na_count_list[[paste0(benchmarks[j], "_type_", t)]] <- na_count_table
     
-      
+    
     write.table(
       na_count_table,
       paste(
@@ -181,8 +180,6 @@ for (j in seq_along(benchmarks)) {
       group_by(group) %>%
       summarise(
         mean_dev_obj = if (any(is.na(dev_obj))) NA else mean(dev_obj),
-        # mean_dev_gap = if (any(is.na(dev_gap))) NA else mean(dev_gap),
-        # mean_dev_time = if (any(is.na(dev_time))) NA else mean(dev_time)
       )
     
     write.table(
@@ -216,7 +213,6 @@ merged_na_count_table <- merged_na_count_table %>%
   select(inst_type, variation, missing_one, missing_both, only_missing_grb, only_missing_hx) %>%
   arrange(inst_type)
 
-# write the merged summary table
 write.table(
   merged_na_count_table,
   paste0(prefix_set_output, "/tables/merged_na_count_summary.csv"),
