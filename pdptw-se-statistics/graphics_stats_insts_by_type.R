@@ -5,68 +5,22 @@ library(purrr)
 inst_set <- c("I5", "F3")
 inst_set_desc <- c("Multi-island", "Multi-floor")
 folder_inst_set <- c("multi_island_v5/", "multi_floor_v3/")
-profiles <- c("small", "big", "big_40R", "big_50R", "big_60R")
-suff_prof <- c("", "_big", "_big_40R", "_big_50R", "_big_60R")
+profiles <- c("small", "big")
+suff_prof <- c("", "_big")
+
+set.seed(0)
 
 plot_profiles <- list(
   # Profile A: small famillies
   small = list(
-    list(yvar = "tw_shift",     ylab = "TW change (%)",          ylim = c(0, 15),  breaks = seq(0, 15, 3)),
-    list(yvar = "cap_incr",     ylab = "Cap change (%)",         ylim = c(0, 2.5), breaks = seq(0, 2.5, 0.5)),
-    list(yvar = "mean_z",       ylab = "Mean (z)",               ylim = c(0, 3),   breaks = seq(0, 3, 0.25)),
-    list(yvar = "std_z",        ylab = "Std (z)",                breaks = seq(0, 3, 0.25)),
-    list(yvar = "var_z",        ylab = "Var (z)",                breaks = seq(0, 3, 0.25)),
-    list(yvar = "chi_squared_z",ylab = "Chi-squared (z)",        ylim = c(0, 14),  breaks = seq(0, 14, 2),
-         add_rect = TRUE, filename_suffix = "chi_squared"),
-    list(yvar = "reqs_split",   ylab = "Requests splitted (%)",  ylim = c(0, 100))
+    list(yvar = "tw_shift", ylab = "TW change (%)",  ylim = c(0, 15),  breaks = seq(0, 15, 3)),
+    list(yvar = "cap_incr", ylab = "Cap change (%)", ylim = c(0, 2.5), breaks = seq(0, 2.5, 0.5))
   ),
 
   # Profile B: big famillies
   big = list(
-    list(yvar = "tw_shift",     ylab = "TW change (%)",          ylim = c(0, 55), breaks = seq(0, 55, 5)),
-    list(yvar = "cap_incr",     ylab = "Cap change (%)",         ylim = c(0, 2.5),  breaks = seq(0, 2.5, 0.5)),
-    list(yvar = "mean_z",       ylab = "Mean (z)",               ylim = c(0, 10),  breaks = seq(0, 10, 1)),
-    list(yvar = "std_z",        ylab = "Std (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "var_z",        ylab = "Var (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "chi_squared_z",ylab = "Chi-squared (z)",        ylim = c(0, 50),  breaks = seq(0, 50, 5),
-         add_rect = TRUE, filename_suffix = "chi_squared"),
-    list(yvar = "reqs_split",   ylab = "Requests splitted (%)",  ylim = c(0, 100))
-  ),
-  
-  # Profile C: big 40R famillies
-  big_40R = list(
-    list(yvar = "tw_shift",     ylab = "TW change (%)",          ylim = c(0, 30), breaks = seq(0, 30, 5)),
-    list(yvar = "cap_incr",     ylab = "Cap change (%)",         ylim = c(0, 2.0),  breaks = seq(0, 2.0, 0.5)),
-    list(yvar = "mean_z",       ylab = "Mean (z)",               ylim = c(0, 10),  breaks = seq(0, 10, 1)),
-    list(yvar = "std_z",        ylab = "Std (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "var_z",        ylab = "Var (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "chi_squared_z",ylab = "Chi-squared (z)",        ylim = c(0, 50),  breaks = seq(0, 50, 5),
-         add_rect = TRUE, filename_suffix = "chi_squared"),
-    list(yvar = "reqs_split",   ylab = "Requests splitted (%)",  ylim = c(0, 100))
-  ),
-
-  # Profile D: big 50R famillies
-  big_50R = list(
-    list(yvar = "tw_shift",     ylab = "TW change (%)",          ylim = c(0, 70), breaks = seq(0, 70, 10)),
-    list(yvar = "cap_incr",     ylab = "Cap change (%)",         ylim = c(0, 2.0),  breaks = seq(0, 2.0, 0.5)),
-    list(yvar = "mean_z",       ylab = "Mean (z)",               ylim = c(0, 10),  breaks = seq(0, 10, 1)),
-    list(yvar = "std_z",        ylab = "Std (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "var_z",        ylab = "Var (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "chi_squared_z",ylab = "Chi-squared (z)",        ylim = c(0, 50),  breaks = seq(0, 50, 5),
-         add_rect = TRUE, filename_suffix = "chi_squared"),
-    list(yvar = "reqs_split",   ylab = "Requests splitted (%)",  ylim = c(0, 100))
-  ),
-
-  # Profile E: big 60R famillies
-  big_60R = list(
-    list(yvar = "tw_shift",     ylab = "TW change (%)",          ylim = c(0, 60), breaks = seq(0, 60, 10)),
-    list(yvar = "cap_incr",     ylab = "Cap change (%)",         ylim = c(0, 3.0),  breaks = seq(0, 3.0, 0.5)),
-    list(yvar = "mean_z",       ylab = "Mean (z)",               ylim = c(0, 10),  breaks = seq(0, 10, 1)),
-    list(yvar = "std_z",        ylab = "Std (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "var_z",        ylab = "Var (z)",                breaks = seq(0, 10, 1)),
-    list(yvar = "chi_squared_z",ylab = "Chi-squared (z)",        ylim = c(0, 50),  breaks = seq(0, 50, 5),
-         add_rect = TRUE, filename_suffix = "chi_squared"),
-    list(yvar = "reqs_split",   ylab = "Requests splitted (%)",  ylim = c(0, 100))
+    list(yvar = "tw_shift", ylab = "TW change (%)",   ylim = c(0, 55), breaks = seq(0, 55, 5)),
+    list(yvar = "cap_incr", ylab = "Cap change (%)",  ylim = c(0, 2.5),  breaks = seq(0, 2.5, 0.5))
   )
 )
 
@@ -90,7 +44,6 @@ read_stats <- function(inst, folder) {
       n_regions_num = as.numeric(factor(n_regions)),
       tw_shift = 100 * tw_shift,
       cap_incr = 100 * cap_incr,
-      reqs_split = 100 * reqs_split
     )
 }
 
@@ -135,13 +88,13 @@ save_boxplot <- function(stats, yvar, ylab, inst, ylim = NULL, breaks = NULL,
   }
   
   print(p)
-  filename <- paste0("plots/", inst, "/stats_insts/types/boxplot_stats_by_type_",
+  filename <- paste0("plots/stats_insts/boxplot_stats_by_type_",
                      filename_suffix %||% yvar, "_", inst, ".pdf")
   ggsave(filename, plot = p, width = 5, height = 4)
 }
 
 
-for (p in 1:2){
+for (p in seq_along(profiles)){
   profile_choice <- profiles[p]
   suff_p <- suff_prof[p]
   # --- Main loop ---

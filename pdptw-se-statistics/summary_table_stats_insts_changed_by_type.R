@@ -4,8 +4,8 @@ library(readr)
 inst_set <- c("I5", "F3")
 inst_set_desc <- c("Multi-island", "Multi-floor")
 folder_inst_set <- c("multi_island_v5/", "multi_floor_v3/")
-profiles <- c("small", "big", "big_40R", "big_50R", "big_60R")
-suff_prof <- c("", "_big", "_big_40R", "_big_50R", "_big_60R")
+profiles <- c("small", "big")
+suff_prof <- c("", "_big")
 
 
 merged_data <- list()
