@@ -34,8 +34,6 @@ for(i in seq_along(benchmarks)){
     
     csv_output_file_name <- paste0(prefix_csv_output, "_", variations[i], ext_csv)
     csv_output_file_path <- file.path(off_exp, "data", grb_vi_folder, vi_test[j], csv_output_file_name)
-    print(csv_output_file_path)
-    
     dir.create(dirname(csv_output_file_path), showWarnings = FALSE, recursive = TRUE)
     
     write_delim(
