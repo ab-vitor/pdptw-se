@@ -32,7 +32,7 @@ for(i in seq_along(benchmarks)){
   
   csvr_df_grb <- csvr_df_grb %>%
     rename(obj_value = any_of("objValue")) %>%
-    select(name, group, type, obj_value, gap, n_vehicles_used, time) %>%
+    select(name, group, type, obj_value, gap, n_vehicles_used, time, status) %>%
     rename(
       obj_value_grb = obj_value,
       gap_grb = gap,
@@ -45,7 +45,7 @@ for(i in seq_along(benchmarks)){
   
   csvr_df_hx <- csvr_df_hx %>%
     rename(obj_value = any_of("objValue")) %>%
-    select(name, group, type, obj_value, gap, n_vehicles_used, time) %>%
+    select(name, group, type, obj_value, gap, n_vehicles_used, time, status) %>%
     rename(
       obj_value_hx = obj_value,
       gap_hx = gap,
