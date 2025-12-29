@@ -3,21 +3,17 @@ library(ggplot2)
 library(dplyr)
 library(purrr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-prefix_set <- "official_experiments/grb_vs_hx"
+prefix_set <- "official_experiments/data/grb_vs_hx"
 prefix_csv_input <- "inst_by_inst_grb_vs_hx_dev_type_"
-exp_set <- c("set_02", "set_02")
 
+set.seed(0)
 
-for(i in seq_along(benchmarks)){
+for(i in seq_along(variations)){
   csv_input_t1 <- paste0(
-    "../",
-    benchmarks[i],
-    "/",
     prefix_set,
     "/",
-    exp_set[i],
+    variations[i],
     "/",
     prefix_csv_input,
     1,
@@ -28,12 +24,9 @@ for(i in seq_along(benchmarks)){
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
   
   csv_input_t2 <- paste0(
-    "../",
-    benchmarks[i],
-    "/",
     prefix_set,
     "/",
-    exp_set[i],
+    variations[i],
     "/",
     prefix_csv_input,
     2,
@@ -64,6 +57,6 @@ for(i in seq_along(benchmarks)){
   
   
   print(p)
-  filename <- paste0("./official_experiments/grb_vs_hx/plots/boxplots_dev_by_type_", variations[i], ".pdf")
-  ggsave(filename, plot = p, width = 5, height = 4)
+  # filename <- paste0("./official_experiments/grb_vs_hx/plots/boxplots_dev_by_type_", variations[i], ".pdf")
+  # ggsave(filename, plot = p, width = 5, height = 4)
 }
