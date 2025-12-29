@@ -1,100 +1,53 @@
 library(dplyr)
+library(readr)
 
 
-solvers_suff <- c("", "_hx")
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
 prefix_csv_output <- "grouped"
-exp_set <- c("set_02", "set_02")
-prefix_set_output <- "official_experiments/grb_vs_hx"
-prefix_set_grb <- "official_experiments/mip_gurobi"
-prefix_set_hx <- "official_experiments/mip_hexaly"
-prefix_csv_input_grb <- "csvresults_form_melo"
-prefix_csv_input_hx <- "csvresults_form_melo_hx"
+prefix_set_output <- "official_experiments/data/grb_vs_hx"
+prefix_csv_input_grb <- "official_experiments/data/mip_gurobi/csvresults_form_melo"
+prefix_csv_input_hx <- "official_experiments/data/mip_hexaly/csvresults_form_melo_hx"
+ext_csv <- ".csv"
 
+types <- c(1, 2)
 
 na_count_list <- list()
 
 
-for (j in seq_along(benchmarks)) {
-  for (t in 1:2) {
+for (j in seq_along(variations)) {
+  for (t in seq_along(types)) {
     suff_output <- paste0("dev_type_", t)
-    csv_results_df_grb <-
-      read.csv(
-        file = paste0(
-          "../",
-          benchmarks[j],
-          "/",
-          prefix_set_grb,
-          "/",
-          exp_set[j],
-          "/",
-          prefix_csv_input_grb,
-          "_type_",
-          t,
-          ".csv"
-        ),
-        sep = ";"
-      )
+    csvr_grb_file_path <- paste0(prefix_csv_input_grb, "_", variations[j], ext_csv)
+    csv_results_df_grb <- read_delim(
+      file = csvr_grb_file_path,
+      delim = ";"
+    )
     
     csv_results_df_grb <- csv_results_df_grb %>%
-      rename(obj_value = any_of("objValue")) %>%
-      select(name, group, obj_value, gap, n_vehicles_used, time) %>%
-      rename(
-        obj_value_grb = obj_value,
-        gap_grb = gap,
-        n_vehicles_used_grb = n_vehicles_used,
-        time_grb = time
-      ) %>%
-      mutate(
-        obj_value_grb = ifelse(n_vehicles_used_grb != 0 & obj_value_grb != Inf & !is.na(obj_value_grb), obj_value_grb, NA)
-      )
+      filter(type == paste0("t", t))
     
-    csv_results_df_hx <-
-      read.csv(
-        file = paste0(
-          "../",
-          benchmarks[j],
-          "/",
-          prefix_set_hx,
-          "/",
-          exp_set[j],
-          "/",
-          prefix_csv_input_hx,
-          "_type_",
-          t,
-          ".csv"
-        ),
-        sep = ";"
-      )
+    csvr_hx_file_path <- paste0(prefix_csv_input_hx, "_", variations[j], ext_csv)
+    csv_results_df_hx <- read_delim(
+      file = csvr_hx_file_path,
+      delim = ";"
+    )
     
     csv_results_df_hx <- csv_results_df_hx %>%
-      rename(obj_value = any_of("objValue")) %>%
-      select(name, group, obj_value, gap, n_vehicles_used, time) %>%
-      rename(
-        obj_value_hx = obj_value,
-        gap_hx = gap,
-        n_vehicles_used_hx = n_vehicles_used,
-        time_hx = time
-      ) %>%
-      mutate(
-        obj_value_hx = ifelse(n_vehicles_used_hx != 0 & obj_value_hx != Inf & !is.na(obj_value_hx), obj_value_hx, NA)
-      )
+      filter(type == paste0("t", t))
     
-    
-    df_grb_hx <- 
-      inner_join(
-        csv_results_df_grb,
-        csv_results_df_hx,
-        by = c("name", "group")
-      )
+    df_grb_hx <- inner_join(
+      csv_results_df_grb,
+      csv_results_df_hx,
+      by = c("name", "group")
+    )
     
     dev_df_grb_hx <- df_grb_hx %>%
       mutate(
         dev_obj = ifelse(!is.na(obj_value_grb) & !is.na(obj_value_hx), round((obj_value_hx - obj_value_grb) / obj_value_grb * 100, digits = 2), NA),
-        dev_gap = ifelse(gap_grb > 0,
-                         round((gap_hx - gap_grb) / gap_grb * 100, digits = 2),
-                         0),
+        dev_gap = ifelse(
+          gap_grb > 0,
+          round((gap_hx - gap_grb) / gap_grb * 100, digits = 2), 0
+        ),
         dev_time = round((time_hx - time_grb) / time_grb * 100, digits=2)
       )
     
@@ -110,7 +63,7 @@ for (j in seq_along(benchmarks)) {
         missing_both = if_else(is.na(obj_value_grb) & is.na(obj_value_hx), 1, 0),
         missing_one = if_else(is.na(dev_obj), 1, 0)
       )
-
+    
     na_count_table <- dev_df_grb_hx %>%
       summarise(
         only_missing_grb = sum(only_missing_grb),
@@ -128,23 +81,17 @@ for (j in seq_along(benchmarks)) {
     # store this table in the list
     na_count_list[[paste0(benchmarks[j], "_type_", t)]] <- na_count_table
     
-    
+    na_count_table_file_name <- paste0("na_count_dev_obj_", suff_output, ".csv")
+    na_count_table_file_path <- file.path(
+      prefix_set_output,
+      variations[j],
+      na_count_table_file_name
+    )
+    dir.create(dirname(na_count_table_file_path), showWarnings = FALSE, recursive = TRUE)
+
     write.table(
       na_count_table,
-      paste(
-        "../",
-        benchmarks[j],
-        "/",
-        prefix_set_output,
-        "/",
-        exp_set[j],
-        "/",
-        "na_count_dev_obj",
-        "_",
-        suff_output,
-        ".csv",
-        sep = ""
-      ),
+      na_count_table_file_path,
       sep = ";",
       dec = ".",
       quote = F,
@@ -154,22 +101,17 @@ for (j in seq_along(benchmarks)) {
     dev_df_grb_hx <- dev_df_grb_hx %>%
       select(-only_missing_grb, -only_missing_hx, -missing_both, -missing_one)
     
+    dev_df_grb_hx_file_name <- paste0("inst_by_inst_grb_vs_hx_", suff_output, ".csv")
+    dev_df_grb_hx_file_path <- file.path(
+      prefix_set_output,
+      variations[j],
+      dev_df_grb_hx_file_name
+    )
+    dir.create(dirname(dev_df_grb_hx_file_path), showWarnings = FALSE, recursive = TRUE)
+
     write.table(
       dev_df_grb_hx,
-      paste(
-        "../",
-        benchmarks[j],
-        "/",
-        prefix_set_output,
-        "/",
-        exp_set[j],
-        "/",
-        "inst_by_inst_grb_vs_hx",
-        "_",
-        suff_output,
-        ".csv",
-        sep = ""
-      ),
+      dev_df_grb_hx_file_path,
       sep = ";",
       dec = ".",
       quote = F,
@@ -181,23 +123,17 @@ for (j in seq_along(benchmarks)) {
       summarise(
         mean_dev_obj = if (any(is.na(dev_obj))) NA else mean(dev_obj),
       )
-    
+
+    grouped_mean_dev_file_name <- paste0(prefix_csv_output, "_", suff_output, ".csv")
+    grouped_mean_dev_file_path <- file.path(
+      prefix_set_output,
+      variations[j],
+      grouped_mean_dev_file_name
+    )
+    dir.create(dirname(grouped_mean_dev_file_path), showWarnings = FALSE, recursive = TRUE)
     write.table(
       grouped_mean_dev,
-      paste(
-        "../",
-        benchmarks[j],
-        "/",
-        prefix_set_output,
-        "/",
-        exp_set[j],
-        "/",
-        prefix_csv_output,
-        "_",
-        suff_output,
-        ".csv",
-        sep = ""
-      ),
+      grouped_mean_dev_file_path,
       sep = ";",
       dec = ".",
       quote = F,
@@ -215,7 +151,7 @@ merged_na_count_table <- merged_na_count_table %>%
 
 write.table(
   merged_na_count_table,
-  paste0(prefix_set_output, "/tables/merged_na_count_summary.csv"),
+  paste0(prefix_set_output, "/merged_na_count_summary.csv"),
   sep = ";",
   dec = ".",
   quote = F,
