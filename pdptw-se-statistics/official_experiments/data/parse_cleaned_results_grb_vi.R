@@ -43,3 +43,35 @@ for(i in seq_along(benchmarks)){
     )
   }
 }
+
+exp_set <- c("set_01", "set_01")
+folder_official <- "official"
+for(i in seq_along(benchmarks)){
+  csv_input_file_name <- paste0(prefix_csv_input, ext_csv)
+  csv_input_file_path <- file.path("..", benchmarks[i], prefix_set, folder_official, exp_set[i], csv_input_file_name)
+  csv_results <- read_delim(
+    csv_input_file_path,
+    delim = ";", 
+    escape_double = FALSE, 
+    trim_ws = TRUE,
+    show_col_types = F
+  )
+  
+  csv_results_filtered <- csv_results %>%
+    select(
+      name, group, type, full_name, time, 
+      status, optimal, tle_feas, tle_not_feas, 
+      gen_config_filename, gap, obj_value, bestbound,
+      numnodes, constraints_used_melo_mip_str
+    )
+  
+  csv_output_file_name <- paste0(prefix_csv_output, "_", variations[i], ext_csv)
+  csv_output_file_path <- file.path(off_exp, "data", grb_vi_folder, folder_official, csv_output_file_name)
+  dir.create(dirname(csv_output_file_path), showWarnings = FALSE, recursive = TRUE)
+  
+  write_delim(
+    csv_results_filtered,
+    csv_output_file_path,
+    delim = ";"
+  )
+}
