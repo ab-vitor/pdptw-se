@@ -1,27 +1,21 @@
 library(readr)
 library(dplyr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-prefix_set <- "official_experiments/mip_grb_valid_inequalities"
-prefix_csv_input <- "csvresults_form_melo_simplified"
-prefix_csv_output <- "csvresults_form_melo"
-exp_set <- c("set_03", "set_03")
+prefix_set <- "official_experiments/data/mip_grb_valid_inequalities"
+prefix_csv_input <- "csvresults_form_melo"
 vi_test <- c("all_minus_one_vi", "all_vi", "no_vi", "one_vi")
 path_to_csv_output <- "official_experiments/mip_grb_vi/tables_per_instance/"
 
-for(i in seq_along(benchmarks)){
+for(i in seq_along(variations)){
   csv_input_vi_test_1 <- paste0(
-    "../",
-    benchmarks[i],
-    "/",
     prefix_set,
     "/",
     vi_test[1],
     "/",
-    exp_set[i],
-    "/",
     prefix_csv_input,
+    "_",
+    variations[i],
     ".csv"
   )
   csv_results_vi_test_1 <- read_delim(
@@ -32,16 +26,13 @@ for(i in seq_along(benchmarks)){
   )
   
   csv_input_vi_test_2 <- paste0(
-    "../",
-    benchmarks[i],
-    "/",
     prefix_set,
     "/",
     vi_test[2],
     "/",
-    exp_set[i],
-    "/",
     prefix_csv_input,
+    "_",
+    variations[i],
     ".csv"
   )
   csv_results_vi_test_2 <- read_delim(
@@ -52,16 +43,13 @@ for(i in seq_along(benchmarks)){
   )
   
   csv_input_vi_test_3 <- paste0(
-    "../",
-    benchmarks[i],
-    "/",
     prefix_set,
     "/",
     vi_test[3],
     "/",
-    exp_set[i],
-    "/",
     prefix_csv_input,
+    "_",
+    variations[i],
     ".csv"
   )
   csv_results_vi_test_3 <- read_delim(
@@ -72,16 +60,13 @@ for(i in seq_along(benchmarks)){
   )
   
   csv_input_vi_test_4 <- paste0(
-    "../",
-    benchmarks[i],
-    "/",
     prefix_set,
     "/",
     vi_test[4],
     "/",
-    exp_set[i],
-    "/",
     prefix_csv_input,
+    "_",
+    variations[i],
     ".csv"
   )
   csv_results_vi_test_4 <- read_delim(
