@@ -2,12 +2,13 @@ library(dplyr)
 library(knitr)
 library(glue)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
+# Refactored by chat-gpt
+
 variations <- c("I5", "F3")
 prefix_csv_output <- "grouped"
-exp_set <- c("set_01", "set_01")
-prefix_set <- "official_experiments/mip_grb_valid_inequalities/official"
+prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_csv_input <- "csvresults_form_melo"
+types <- c(1, 2)
 
 OPTIMAL <- 2
 TIME_LIMIT <- 9
@@ -15,7 +16,13 @@ KILLED <- 11
 
 # ---- Helper functions ----
 
-process_results <- function(csv_results_df) {
+process_results <- function(csv_results_df, type) {
+  csv_results_df <- csv_results_df %>%
+    filter(type == paste0("t", t))
+  
+  csv_results_df <- csv_results_df %>%
+    rename_with(~ sub("(_grb|_hx)+$", "", .x))
+  
   csv_results_df %>%
     mutate(
       found_sol = pmax(optimal, tle_feas),
@@ -24,14 +31,13 @@ process_results <- function(csv_results_df) {
       tle = pmax(tle_feas, tle_not_feas),
       killed = if_else(status == KILLED, 1, 0)
     ) %>%
-    select(name, group, optimal, n_req, status, tle, tle_feas, tle_not_feas, killed, feas_sol, n_vehicles_used, status, obj_value)
+    select(name, group, optimal, n_req, status, tle, tle_feas, tle_not_feas, killed, feas_sol, status)
 }
 
-write_outputs <- function(df, suffix, prefix_csv_output, benchmarks, prefix_set, exp_set, j) {
-  csv_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j],
-                        glue("{prefix_csv_output}_{suffix}.csv"))
-  tex_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j],
-                        glue("{prefix_csv_output}_{suffix}.tex"))
+write_outputs <- function(df, suffix, prefix_csv_output, prefix_set, j) {
+  csv_path <- file.path(prefix_set, "grouped_abs", glue("{prefix_csv_output}_{suffix}.csv"))
+  tex_path <- file.path(prefix_set, "grouped_abs", glue("{prefix_csv_output}_{suffix}.tex"))
+  dir.create(dirname(csv_path), showWarnings = FALSE, recursive = TRUE)
   
   write.table(df, file = csv_path, sep = ";", dec = ".", quote = FALSE, row.names = FALSE)
   tex_table <- kable(df, format = "latex", booktabs = TRUE)
@@ -52,35 +58,34 @@ summarize_by <- function(df, group_var) {
 
 # ---- Main loop ----
 
-for (j in seq_along(benchmarks)) {
-  for (t in 1:2) {
-    
+for (j in seq_along(variations)) {
+  for (t in types) {
     suff_output <- glue("abs_type_{t}")
-    file_name <- glue("{prefix_csv_input}_type_{t}.csv")
-    input_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], file_name)
+    file_name <- glue("{prefix_csv_input}_{variations[j]}.csv")
+    input_path <- file.path(prefix_set, file_name)
     
-    csv_results_df <- read.csv(file = input_path, sep = ";") |> process_results()
+    csv_results_df <- read.csv(file = input_path, sep = ";") |> process_results(type = t)
     
     # ---- 1. Group by group ----
     grouped_abs <- summarize_by(csv_results_df, group)
-    write_outputs(grouped_abs, suff_output, prefix_csv_output, benchmarks, prefix_set, exp_set, j)
+    write_outputs(grouped_abs, suff_output, prefix_csv_output, prefix_set, j)
     
     # ---- 2. Group by n_req ----
     grouped_by_n_req_abs <- summarize_by(csv_results_df, n_req)
     write_outputs(grouped_by_n_req_abs, glue("by_n_req_{suff_output}"),
-                  prefix_csv_output, benchmarks, prefix_set, exp_set, j)
+                  prefix_csv_output, prefix_set, j)
     
     # ---- 3. Group by req_reg ----
     csv_results_df <- csv_results_df %>% mutate(req_reg = substr(group, 1, 11))
     grouped_by_req_reg_abs <- summarize_by(csv_results_df, req_reg)
     write_outputs(grouped_by_req_reg_abs, glue("by_req_reg_{suff_output}"),
-                  prefix_csv_output, benchmarks, prefix_set, exp_set, j)
+                  prefix_csv_output, prefix_set, j)
     
     # ---- 4. Group by req_mach ----
     csv_results_df <- csv_results_df %>%
       mutate(req_mach = paste(substr(group, 1, 7), substr(group, 13, 15), sep = "_"))
     grouped_by_req_mach_abs <- summarize_by(csv_results_df, req_mach)
     write_outputs(grouped_by_req_mach_abs, glue("by_req_mach_{suff_output}"),
-                  prefix_csv_output, benchmarks, prefix_set, exp_set, j)
+                  prefix_csv_output, prefix_set, j)
   }
 }
