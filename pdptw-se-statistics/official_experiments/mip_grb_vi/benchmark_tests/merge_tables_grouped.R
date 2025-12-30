@@ -3,22 +3,19 @@ library(knitr)
 library(kableExtra)
 library(tibble)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
 prefix_csv_output <- "grouped"
-exp_set <- c("set_01", "set_01")
 tables <- c("grouped_abs", "grouped_avrg")
 
-prefix_set <- "official_experiments/mip_grb_valid_inequalities/official"
+prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
 for (table in tables) {
-  for (j in seq_along(benchmarks)) {
-    file_name <- paste0(table, "_type_1.csv")
-    file_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], file_name)
-    grouped_t1 <-
-      read.csv(
-        file = file_path,
-        sep = ";"
-      )
+  for (j in seq_along(variations)) {
+    file_name <- paste0(table, "_type_1_", variations[j], ".csv")
+    file_path <- file.path(prefix_set, table, file_name)
+    grouped_t1 <- read.csv(
+      file = file_path,
+      sep = ";"
+    )
     
     # --- NEW: compute totals for numeric columns ---
     totals <- grouped_t1 %>%
@@ -33,13 +30,12 @@ for (table in tables) {
     # Append row
     grouped_t1 <- bind_rows(grouped_t1, total_row)
     
-    file_name <- paste0(table, "_type_2.csv")
-    file_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], file_name)
-    grouped_t2 <-
-      read.csv(
-        file = file_path,
-        sep = ";"
-      )
+    file_name <- paste0(table, "_type_2_", variations[j], ".csv")
+    file_path <- file.path(prefix_set, table, file_name)
+    grouped_t2 <- read.csv(
+      file = file_path,
+      sep = ";"
+    )
     
     grouped_t2 <- subset(grouped_t2, select = -1)
     
@@ -73,8 +69,8 @@ for (table in tables) {
     grouped <- cbind(grouped_t1, grouped_t2)
     names(grouped) <- make.unique(names(grouped), sep = "_")
     
-    file_name <- paste0(table, ".csv")
-    file_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], file_name)
+    file_name <- paste0(table, "_", variations[j], ".csv")
+    file_path <- file.path(prefix_set, table, file_name)
     # Save CSV with totals
     write.table(
       grouped,
@@ -110,9 +106,9 @@ for (table in tables) {
         escape = FALSE
       ) %>%
       add_header_above(type_header)
-    
-    file_name <- paste0(table, ".tex")
-    file_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], file_name)
+
+    file_name <- paste0(table, "_", variations[j], ".tex")
+    file_path <- file.path(prefix_set, table, file_name)
     writeLines(
       tex_grouped,
       file_path
