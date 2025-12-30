@@ -67,7 +67,7 @@ for (i in seq_along(solvers)){
       )
       grouped_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         grouped_abs_file_name
       )
       dir.create(dirname(grouped_abs_file_path), showWarnings = FALSE, recursive = TRUE)
@@ -95,7 +95,7 @@ for (i in seq_along(solvers)){
       )
       tex_grouped_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         tex_grouped_abs_file_name
       )
       dir.create(dirname(tex_grouped_abs_file_path), showWarnings = FALSE, recursive = TRUE)
@@ -133,7 +133,7 @@ for (i in seq_along(solvers)){
       )
       grouped_by_n_req_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         grouped_by_n_req_abs_file_name
       )
 
@@ -163,7 +163,7 @@ for (i in seq_along(solvers)){
       )
       tex_grouped_by_n_req_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         tex_grouped_by_n_req_abs_file_name
       )
       dir.create(dirname(tex_grouped_by_n_req_abs_file_path), showWarnings = FALSE, recursive = TRUE)
@@ -201,7 +201,7 @@ for (i in seq_along(solvers)){
       )
       grouped_by_req_reg_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         grouped_by_req_reg_abs_file_name
       )
       dir.create(dirname(grouped_by_req_reg_abs_file_path), showWarnings = FALSE, recursive = TRUE)
@@ -230,7 +230,7 @@ for (i in seq_along(solvers)){
       )
       tex_grouped_by_req_reg_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         tex_grouped_by_req_reg_abs_file_name
       )
       dir.create(dirname(tex_grouped_by_req_reg_abs_file_path), showWarnings = FALSE, recursive = TRUE)
@@ -270,7 +270,7 @@ for (i in seq_along(solvers)){
       )
       grouped_by_req_mach_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         grouped_by_req_mach_abs_file_name
       )
       dir.create(dirname(grouped_by_req_mach_abs_file_path), showWarnings = FALSE, recursive = TRUE)
@@ -299,7 +299,7 @@ for (i in seq_along(solvers)){
       )
       tex_grouped_by_req_mach_abs_file_path <- file.path(
         prefix_set,
-        "grouped",
+        "grouped_abs",
         tex_grouped_by_req_mach_abs_file_name
       )
       dir.create(dirname(tex_grouped_by_req_mach_abs_file_path), showWarnings = FALSE, recursive = TRUE)
