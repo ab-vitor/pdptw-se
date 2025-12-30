@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 library(stringr)
+library(tidyr)
 
 prefix <- "official_experiments/mip_grb_vi"
 input_dir <- "table_all_instances"
