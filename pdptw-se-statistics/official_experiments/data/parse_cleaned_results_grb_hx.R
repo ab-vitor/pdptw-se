@@ -32,7 +32,7 @@ for(i in seq_along(benchmarks)){
   
   csvr_df_grb <- csvr_df_grb %>%
     rename(obj_value = any_of("objValue")) %>%
-    select(name, group, type, obj_value, gap, n_vehicles_used, time, status, optimal, tle_feas, tle_not_feas) %>%
+    select(name, group, type, full_name, obj_value, gap, n_vehicles_used, time, status, optimal, tle_feas, tle_not_feas, constraints_used_melo_mip_str) %>%
     rename(
       obj_value_grb = obj_value,
       gap_grb = gap,
@@ -45,7 +45,7 @@ for(i in seq_along(benchmarks)){
   
   csvr_df_hx <- csvr_df_hx %>%
     rename(obj_value = any_of("objValue")) %>%
-    select(name, group, type, obj_value, gap, n_vehicles_used, time, status, optimal, tle_feas, tle_not_feas) %>%
+    select(name, group, type, full_name, obj_value, gap, n_vehicles_used, time, status, optimal, tle_feas, tle_not_feas) %>%
     rename(
       obj_value_hx = obj_value,
       gap_hx = gap,
