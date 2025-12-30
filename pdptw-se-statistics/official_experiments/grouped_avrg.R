@@ -45,6 +45,8 @@ for (i in seq_along(solvers)){
         prefix_csv_output,
         "_",
         suff_output,
+        "_",
+        variations[j],
         ".csv"
       )
       grouped_avrg_file_path <- file.path(
