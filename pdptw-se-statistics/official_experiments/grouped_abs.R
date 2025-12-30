@@ -20,7 +20,7 @@ for (i in seq_along(solvers)){
   prefix_set <- paste0("official_experiments/data/mip_", solvers[i])
   prefix_csv_input <- paste0("csvresults_form_melo", solvers_suff[i])
   for (j in seq_along(variations)) {
-    for (t in seq_along(types)) {
+    for (t in types) {
       suff_output <- paste0("abs_type_", t)
       csvr_df_file_name <- paste0(prefix_csv_input, "_", variations[j], ".csv")
       csvr_file_path <- file.path(prefix_set, csvr_df_file_name)
@@ -34,9 +34,6 @@ for (i in seq_along(solvers)){
 
       csv_results_df <- csv_results_df %>%
         rename_with(~ sub("(_grb|_hx)+$", "", .x))
-      
-      csv_results_df <- csv_results_df %>%
-        rename(obj_value = any_of("objValue"))
       
       csv_results_df <- csv_results_df %>%
         mutate(

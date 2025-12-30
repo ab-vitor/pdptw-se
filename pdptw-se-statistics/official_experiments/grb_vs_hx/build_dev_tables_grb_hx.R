@@ -15,7 +15,7 @@ na_count_list <- list()
 
 
 for (j in seq_along(variations)) {
-  for (t in seq_along(types)) {
+  for (t in types) {
     suff_output <- paste0("dev_type_", t)
     csvr_grb_file_path <- paste0(prefix_csv_input_grb, "_", variations[j], ext_csv)
     csv_results_df_grb <- read_delim(
