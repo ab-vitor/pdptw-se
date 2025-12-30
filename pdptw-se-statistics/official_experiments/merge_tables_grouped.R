@@ -4,30 +4,28 @@ library(kableExtra)
 library(tibble)
 
 solvers <- c("gurobi", "hexaly")
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
 prefix_csv_output <- "grouped"
-exp_set <- c("set_02", "set_02")
 tables <- c("grouped_abs", "grouped_avrg")
 for (i in seq_along(solvers)){
-  prefix_set <- paste0("official_experiments/mip_", solvers[i])
+  prefix_set <- paste0("official_experiments/data/mip_", solvers[i])
   for (table in tables) {
     for (j in seq_along(benchmarks)) {
-      grouped_t1 <-
-        read.csv(
-          file = paste0(
-            "../",
-            benchmarks[j],
-            "/",
-            prefix_set,
-            "/",
-            exp_set[j],
-            "/",
-            table,
-            "_type_",
-            1,
-            ".csv"
-          ),
+      grouped_t1_file_name <- paste0(
+        table,
+        "_type_",
+        1,
+        "_",
+        variations[j],
+        ".csv"
+      )
+      grouped_t1_file_path <- file.path(
+        prefix_set,
+        table,
+        grouped_t1_file_name
+      )
+      grouped_t1 <- read.csv(
+          file = grouped_t1_file_path,
           sep = ";"
         )
       
@@ -44,21 +42,21 @@ for (i in seq_along(solvers)){
       # Append row
       grouped_t1 <- bind_rows(grouped_t1, total_row)
       
-      grouped_t2 <-
-        read.csv(
-          file = paste0(
-            "../",
-            benchmarks[j],
-            "/",
-            prefix_set,
-            "/",
-            exp_set[j],
-            "/",
-            table,
-            "_type_",
-            2,
-            ".csv"
-          ),
+      grouped_t2_file_name <- paste0(
+        table,
+        "_type_",
+        2,
+        "_",
+        variations[j],
+        ".csv"
+      )
+      grouped_t2_file_path <- file.path(
+        prefix_set,
+        table,
+        grouped_t2_file_name
+      )
+      grouped_t2 <- read.csv(
+          file = grouped_t2_file_path,
           sep = ";"
         )
       
@@ -95,19 +93,21 @@ for (i in seq_along(solvers)){
       names(grouped) <- make.unique(names(grouped), sep = "_")
       
       # Save CSV with totals
+      grouped_file_name <- paste0(
+        table,
+        "_",
+        variations[j],
+        ".csv"
+      )
+      grouped_file_path <- file.path(
+        prefix_set,
+        table,
+        grouped_file_name
+      )
+      dir.create(dirname(grouped_file_path), showWarnings = FALSE, recursive = TRUE)
       write.table(
         grouped,
-        paste0(
-          "../",
-          benchmarks[j],
-          "/",
-          prefix_set,
-          "/",
-          exp_set[j],
-          "/",
-          table,
-          ".csv"
-        ),
+        grouped_file_path,
         sep = ";",
         dec = ".",
         quote = F,
@@ -140,19 +140,21 @@ for (i in seq_along(solvers)){
         ) %>%
         add_header_above(type_header)
       
+      tex_grouped_file_name <- paste0(
+        table,
+        "_",
+        variations[j],
+        ".tex"
+      )
+      tex_grouped_file_path <- file.path(
+        prefix_set,
+        table,
+        tex_grouped_file_name
+      )
+      dir.create(dirname(tex_grouped_file_path), showWarnings = FALSE, recursive = TRUE)
       writeLines(
         tex_grouped,
-        paste0(
-          "../",
-          benchmarks[j],
-          "/",
-          prefix_set,
-          "/",
-          exp_set[j],
-          "/",
-          table,
-          ".tex"
-        )
+        tex_grouped_file_path
       )
     }
   }
