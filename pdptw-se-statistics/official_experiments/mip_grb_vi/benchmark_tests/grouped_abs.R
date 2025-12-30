@@ -21,7 +21,7 @@ process_results <- function(csv_results_df, type) {
     filter(type == paste0("t", t))
   
   csv_results_df <- csv_results_df %>%
-    rename_with(~ sub("(_grb|_hx)+$", "", .x))
+    rename_with(~ sub("(_grb)+$", "", .x))
   
   csv_results_df %>%
     mutate(
@@ -34,9 +34,9 @@ process_results <- function(csv_results_df, type) {
     select(name, group, optimal, n_req, status, tle, tle_feas, tle_not_feas, killed, feas_sol, status)
 }
 
-write_outputs <- function(df, suffix, prefix_csv_output, prefix_set, j) {
-  csv_path <- file.path(prefix_set, "grouped_abs", glue("{prefix_csv_output}_{suffix}.csv"))
-  tex_path <- file.path(prefix_set, "grouped_abs", glue("{prefix_csv_output}_{suffix}.tex"))
+write_outputs <- function(df, suffix, prefix_csv_output, prefix_set, var, j) {
+  csv_path <- file.path(prefix_set, "grouped_abs", glue("{prefix_csv_output}_{suffix}_{var}.csv"))
+  tex_path <- file.path(prefix_set, "grouped_abs", glue("{prefix_csv_output}_{suffix}_{var}.tex"))
   dir.create(dirname(csv_path), showWarnings = FALSE, recursive = TRUE)
   
   write.table(df, file = csv_path, sep = ";", dec = ".", quote = FALSE, row.names = FALSE)
@@ -68,24 +68,24 @@ for (j in seq_along(variations)) {
     
     # ---- 1. Group by group ----
     grouped_abs <- summarize_by(csv_results_df, group)
-    write_outputs(grouped_abs, suff_output, prefix_csv_output, prefix_set, j)
+    write_outputs(grouped_abs, suff_output, prefix_csv_output, prefix_set, variations[j], j)
     
     # ---- 2. Group by n_req ----
     grouped_by_n_req_abs <- summarize_by(csv_results_df, n_req)
     write_outputs(grouped_by_n_req_abs, glue("by_n_req_{suff_output}"),
-                  prefix_csv_output, prefix_set, j)
+                  prefix_csv_output, prefix_set, variations[j], j)
     
     # ---- 3. Group by req_reg ----
     csv_results_df <- csv_results_df %>% mutate(req_reg = substr(group, 1, 11))
     grouped_by_req_reg_abs <- summarize_by(csv_results_df, req_reg)
     write_outputs(grouped_by_req_reg_abs, glue("by_req_reg_{suff_output}"),
-                  prefix_csv_output, prefix_set, j)
+                  prefix_csv_output, prefix_set, variations[j], j)
     
     # ---- 4. Group by req_mach ----
     csv_results_df <- csv_results_df %>%
       mutate(req_mach = paste(substr(group, 1, 7), substr(group, 13, 15), sep = "_"))
     grouped_by_req_mach_abs <- summarize_by(csv_results_df, req_mach)
     write_outputs(grouped_by_req_mach_abs, glue("by_req_mach_{suff_output}"),
-                  prefix_csv_output, prefix_set, j)
+                  prefix_csv_output, prefix_set, variations[j], j)
   }
 }
