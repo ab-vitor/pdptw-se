@@ -1,22 +1,26 @@
 library(dplyr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
 prefix_csv_output <- "grouped"
-exp_set <- c("set_01", "set_01")
+types <- c(1, 2)
 
-prefix_set <- "official_experiments/mip_grb_valid_inequalities/official"
+prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_csv_input <- "csvresults_form_melo"
-for (j in seq_along(benchmarks)) {
-  for (t in 1:2) {
+for (j in seq_along(variations)) {
+  for (t in types) {
     suff_output <- paste0("avrg_type_", t)
-    file_name <- paste0(prefix_csv_input, "_type_", t, ".csv")
-    file_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], file_name)
-    csv_results_df <-
-      read.csv(
-        file = file_path,
-        sep = ";"
-      )
+    file_name <- paste0(prefix_csv_input, "_", variations[j], ".csv")
+    file_path <- file.path(prefix_set, file_name)
+    csv_results_df <- read.csv(
+      file = file_path,
+      sep = ";"
+    )
+
+    csv_results_df <- csv_results_df %>%
+      filter(type == paste0("t", t))
+
+    csv_results_df <- csv_results_df %>%
+      rename_with(~ sub("(_grb)+$", "", .x))
     
     csv_results_df <- csv_results_df %>%
       mutate(
@@ -30,9 +34,10 @@ for (j in seq_along(benchmarks)) {
         "Gap" = mean(gap[found_sol == 1], na.rm = T),
         "Time (s)" = mean(time[found_sol == 1], na.rm = T),
       )
-    
-    output_file <- paste0(prefix_csv_output, "_", suff_output, ".csv")
-    output_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], output_file)
+
+    output_file <- paste0(prefix_csv_output, "_", suff_output, "_", variations[j], ".csv")
+    output_path <- file.path(prefix_set, "grouped_avrg", output_file)
+    dir.create(dirname(output_path), showWarnings = FALSE, recursive = TRUE)
     write.table(
       grouped_avrg,
       file = output_path,
