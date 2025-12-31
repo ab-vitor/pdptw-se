@@ -3,13 +3,11 @@ library(dplyr)
 # Refactored by chat-gpt
 
 # Parameters
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-prefix_set <- "official_experiments/multistartlp/preliminar"
-csv_input_filename <- "csvresults_heur_mslp.csv"
+prefix_set <- "official_experiments/data/mslp_preliminary"
+prefix_csv_input_filename <- "csvresults_heur_mslp"
 prefix_output_1 <- "grouped_avrg_group_instname_alpha"
 prefix_output_2 <- "grouped_avrg_alpha"
-exp_set <- c("set_01", "set_01")
 
 # Helper to write CSVs
 write_csv <- function(data, filepath) {
@@ -52,9 +50,10 @@ aggregate_by_alpha <- function(data) {
 }
 
 # Loop over all benchmarks
-for (j in seq_along(benchmarks)) {
+for (j in seq_along(variations)) {
   # --- Input ---
-  input_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], csv_input_filename)
+  csv_input_filename <- paste0(prefix_csv_input_filename, "_", variations[j], ".csv")
+  input_path <- file.path(prefix_set, csv_input_filename)
   csv_results <- read.csv(input_path, sep = ";")
   
   csv_results <- csv_results %>%
@@ -85,13 +84,15 @@ for (j in seq_along(benchmarks)) {
   grouped_t2 <- grouped_full %>% filter(type == "t2")
   
   # --- Output base paths ---
-  output_base_1 <- file.path("..", benchmarks[j], prefix_set, exp_set[j], prefix_output_1)
-  output_base_2 <- file.path("..", benchmarks[j], prefix_set, exp_set[j], prefix_output_2)
-  
+  output_base_1 <- file.path(prefix_set, "grouped", prefix_output_1)
+  output_base_2 <- file.path(prefix_set, "grouped", prefix_output_2)
+  dir.create(dirname(output_base_1), showWarnings = FALSE, recursive = TRUE)
+  dir.create(dirname(output_base_2), showWarnings = FALSE, recursive = TRUE)
+    
   # --- Write grouped by fullname/type/alpha ---
-  write_csv(grouped_full, paste0(output_base_1, ".csv"))
-  write_csv(grouped_t1, paste0(output_base_1, "_type_1.csv"))
-  write_csv(grouped_t2, paste0(output_base_1, "_type_2.csv"))
+  write_csv(grouped_full, paste0(output_base_1, "_", variations[j], ".csv"))
+  write_csv(grouped_t1, paste0(output_base_1, "_type_1_", variations[j], ".csv"))
+  write_csv(grouped_t2, paste0(output_base_1, "_type_2_", variations[j], ".csv"))
   
   # --- Aggregate by alpha ---
   grouped_alpha_all <- aggregate_by_alpha(grouped_full)
@@ -99,7 +100,7 @@ for (j in seq_along(benchmarks)) {
   grouped_alpha_t2 <- aggregate_by_alpha(grouped_t2)
   
   # --- Write aggregated results ---
-  write_csv(grouped_alpha_all, paste0(output_base_2, ".csv"))
-  write_csv(grouped_alpha_t1, paste0(output_base_2, "_type_1.csv"))
-  write_csv(grouped_alpha_t2, paste0(output_base_2, "_type_2.csv"))
+  write_csv(grouped_alpha_all, paste0(output_base_2, "_", variations[j], ".csv"))
+  write_csv(grouped_alpha_t1, paste0(output_base_2, "_type_1_", variations[j], ".csv"))
+  write_csv(grouped_alpha_t2, paste0(output_base_2, "_type_2_", variations[j], ".csv"))
 }
