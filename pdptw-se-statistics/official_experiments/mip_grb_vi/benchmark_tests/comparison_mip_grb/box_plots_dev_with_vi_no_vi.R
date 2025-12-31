@@ -5,11 +5,10 @@ library(tibble)
 library(readr)
 library(ggplot2)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-file_name <- "csvresults_form_melo.csv"
-prefix_set_with_vi <- "official_experiments/mip_grb_valid_inequalities/official"
-prefix_set_no_vi <- "official_experiments/mip_gurobi"
+prefix_file_name <- "csvresults_form_melo"
+prefix_set_with_vi <- "official_experiments/data/mip_grb_valid_inequalities/official"
+prefix_set_no_vi <- "official_experiments/data/mip_gurobi"
 prefix_output_plots <- "official_experiments/mip_grb_vi/benchmark_tests/comparison_mip_grb/plots"
 prefix_output_tables <- "official_experiments/mip_grb_vi/benchmark_tests/comparison_mip_grb/tables"
 
@@ -17,6 +16,8 @@ set.seed(10)
 post_process <- function(df, suff) {
   obj_col <- paste("obj_value", suff, sep = "_")
   gap_col <- paste("gap", suff, sep = "_")
+  df <- df %>%
+    rename_with(~ sub("(_grb)+$", "", .x))
   df <- df %>%
     mutate(
       found_sol = pmax(optimal, tle_feas),
@@ -31,15 +32,17 @@ post_process <- function(df, suff) {
   df
 }
 
-for (j in seq_along(benchmarks)) {
-  file_path <- file.path("..", benchmarks[j], prefix_set_no_vi, "set_02", file_name)
+for (j in seq_along(variations)) {
+  file_name <- paste0(prefix_file_name, "_", variations[j], ".csv")
+  file_path <- file.path(prefix_set_no_vi, file_name)
   csv_results_no_vi <-
     read.csv(
       file = file_path,
       sep = ";"
     ) |> post_process(suff = "no_vi")
   
-  file_path <- file.path("..", benchmarks[j], prefix_set_with_vi, "set_01", file_name)
+  file_name <- paste0(prefix_file_name, "_", variations[j], ".csv")
+  file_path <- file.path(prefix_set_with_vi, file_name)
   csv_results_with_vi <-
     read.csv(
       file = file_path,
@@ -142,7 +145,7 @@ for (j in seq_along(benchmarks)) {
 
   ggsave_filename <- paste0("box_plots_sol_dev_with_vi_no_vi_", variations[j], ".pdf")
   ggsave_filepath <- file.path(prefix_output_plots, ggsave_filename)
-  # ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
+  ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
 
   p <- ggplot(csv_results, aes(x = type, y = dev_gap)) +
     geom_boxplot(outlier.shape = NA) +
@@ -161,7 +164,7 @@ for (j in seq_along(benchmarks)) {
   
   ggsave_filename <- paste0("box_plots_gap_dev_with_vi_no_vi_", variations[j], ".pdf")
   ggsave_filepath <- file.path(prefix_output_plots, ggsave_filename)
-  # ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
+  ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
 }
 
 
