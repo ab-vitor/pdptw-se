@@ -4,15 +4,17 @@ library(kableExtra)
 library(tibble)
 library(readr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-file_name <- "csvresults_form_melo.csv"
-prefix_set_with_vi <- "official_experiments/mip_grb_valid_inequalities/official"
-prefix_set_no_vi <- "official_experiments/mip_gurobi"
+prefix_file_name <- "csvresults_form_melo"
+prefix_set_with_vi <- "official_experiments/data/mip_grb_valid_inequalities/official"
+prefix_set_no_vi <- "official_experiments/data/mip_gurobi"
 prefix_output <- "official_experiments/mip_grb_vi/benchmark_tests/comparison_mip_grb"
 prefix_output_file_name <- "csvresults_form_melo.csv"
 
 post_process <- function(df) {
+  df <- df %>%
+    rename_with(~ sub("(_grb)+$", "", .x))
+  
   df <- df %>%
     select(
       name, group, type, full_name, 
@@ -26,19 +28,23 @@ post_process <- function(df) {
       tle = pmax(tle_feas, tle_not_feas)
     ) %>%
     rename(vi_config = constraints_used_melo_mip_str)
+  
+  
   df
 }
 
 csv_results_benchmarks <- list()
-for (j in seq_along(benchmarks)) {
-  file_path <- file.path("..", benchmarks[j], prefix_set_no_vi, "set_02", file_name)
+for (j in seq_along(variations)) {
+  file_name <- paste0(prefix_file_name, "_", variations[j], ".csv")
+  file_path <- file.path(prefix_set_no_vi, file_name)
   csv_results_no_vi <-
     read.csv(
       file = file_path,
       sep = ";"
     ) |> post_process()
   
-  file_path <- file.path("..", benchmarks[j], prefix_set_with_vi, "set_01", file_name)
+  file_name <- paste0(prefix_file_name, "_", variations[j], ".csv")
+  file_path <- file.path(prefix_set_with_vi, file_name)
   csv_results_with_vi <-
     read.csv(
       file = file_path,
