@@ -1,33 +1,21 @@
 library(dplyr)
 library(readr)
 
-benchmarks <-
-  c(
-    "benchmark_multi_island_v5",
-    "benchmark_multi_floor_v3"
-  )
 variations <- c("I5", "F3")
-prefix_path_mip <- "official_experiments/mip_grb_valid_inequalities/official"
-prefix_path_mslp <- "official_experiments/multistartlp/official"
-sets <- c("set_01", "set_01", "set_01", "set_01")
+prefix_path_mip <- "official_experiments/data/mip_grb_valid_inequalities/official"
+prefix_path_mslp <- "official_experiments/data/mslp_official"
 
-mip_input_name <- "csvresults_form_melo.csv"
-mslp_input_name <- "csvresults_heur_mslp.csv"
+prefix_mip_input_name <- "csvresults_form_melo"
+prefix_mslp_input_name <- "csvresults_heur_mslp"
 
 prefix_output_tables <- "official_experiments/mslp_vs_mip/tables"
 prefix_output_plots <- "official_experiments/mslp_vs_mip/plots"
 set.seed(10)
 
 for (j in 1:2) {
-  k <- j + 2
   var <- variations[j]
-  mip_input_path <- file.path(
-    "..",
-    benchmarks[j],
-    prefix_path_mip,
-    sets[j],
-    mip_input_name
-  )
+  mip_input_name <- paste0(prefix_mip_input_name, "_", var, ".csv")
+  mip_input_path <- file.path(prefix_path_mip, mip_input_name)
   csvr_mip_complete <-
     read.csv(
       file = mip_input_path,
@@ -35,15 +23,12 @@ for (j in 1:2) {
     )
   
   csvr_mip <- csvr_mip_complete %>%
-    select(full_name, group, type, obj_value)
+    select(full_name, group, type, obj_value) %>%
+    rename(mip_sol = obj_value) %>%
+    mutate(mip_sol = ifelse(is.infinite(mip_sol), NA, mip_sol))
   
-  mslp_input_path <- file.path(
-    "..",
-    benchmarks[j],
-    prefix_path_mslp,
-    sets[k],
-    mslp_input_name
-  )
+  mslp_input_name <- paste0(prefix_mslp_input_name, "_", var, ".csv")
+  mslp_input_path <- file.path(prefix_path_mslp, mslp_input_name)
   csvr_mslp_complete <-
     read.csv(
       file = mslp_input_path,
@@ -51,13 +36,9 @@ for (j in 1:2) {
     )
   
   csvr_mslp <- csvr_mslp_complete %>%
-    select(
-      fullname, group, type, value,
-      iteration, iterationToBest, timeToBest, 
-      totalTimeElapsed, seed, n, feasible
-    ) %>%
-    rename(full_name = fullname) %>%
+    rename(full_name = fullname, mslp_sol = value) %>%
     filter(n <= 12)
+  
   
   csvr_mip_mslp <-
     left_join(csvr_mip,
@@ -65,14 +46,7 @@ for (j in 1:2) {
               by = c("full_name", "group", "type"))
   
   csvr_mip_mslp <- csvr_mip_mslp %>%
-    select(full_name, type, group, obj_value, value) %>%
-    rename(
-      mip_sol = obj_value,
-      mslp_sol = value
-    ) %>%
-    mutate(
-      mip_sol = ifelse(is.infinite(mip_sol), NA, mip_sol)
-    )
+    select(full_name, type, group, mip_sol, mslp_sol)
   
   csvr_mip_mslp <- csvr_mip_mslp %>%
     mutate(

@@ -4,7 +4,6 @@ library(kableExtra)
 library(tibble)
 library(readr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
 prefix_path <- "official_experiments/mslp_vs_mip/tables"
 suff_t1 <- "type_1.csv"
@@ -12,7 +11,7 @@ suff_t2 <- "type_2.csv"
 tables <- c("grouped_mean_mip_mslp")
 
 for (table in tables) {
-  for (j in seq_along(benchmarks)) {
+  for (j in seq_along(variations)) {
     var <- variations[j]
     input_file_name <- paste(table, var, suff_t1, sep = "_")
     input_file_path <- file.path(prefix_path, input_file_name)
