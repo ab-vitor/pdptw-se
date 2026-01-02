@@ -2,28 +2,22 @@ library(dplyr)
 library(readr)
 library(purrr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-prefix_path_mslp <- "official_experiments/multistartlp/official"
-sets <- c("set_01", "set_01")
+prefix_path_mslp <- "official_experiments/data/mslp_official"
+ext_csv <- ".csv"
+types <- c(1, 2)
 
 prefix_input_csvr_mslp <- "csvresults_heur_mslp"
 prefix_output <- "official_experiments/mslp/official/tables"
 
-for (j in 1:2) {
+for (j in seq_along(variations)) {
   var <- variations[j]
   grouped_abs_tables_list <- list()
-  for (t in 1:2) {
-    suff_type <- paste0("type_", t, ".csv")
+  for (t in types) {
+    suff_type <- paste0("_type_", t, ".csv")
     
-    mslp_input_name <- paste(prefix_input_csvr_mslp, suff_type, sep="_")
-    mslp_input_path <- file.path(
-      "..",
-      benchmarks[j],
-      prefix_path_mslp,
-      sets[j],
-      mslp_input_name
-    )
+    mslp_input_name <- paste0(prefix_input_csvr_mslp, "_", var, ext_csv)
+    mslp_input_path <- file.path(prefix_path_mslp, mslp_input_name)
     csvr_mslp_complete <-
       read.csv(
         file = mslp_input_path,
@@ -31,20 +25,11 @@ for (j in 1:2) {
       )
     
     csvr_mslp <- csvr_mslp_complete %>%
-      select(
-        fullname, group, value, iteration, 
-        iterationToBest, timeToBest, 
-        totalTimeElapsed, seed, n, feasible
-      ) %>%
-      rename(full_name = fullname) %>%
-      filter(n > 12) %>%
-      mutate(
-        feasible = ifelse(feasible == "true", T, F),
-        value = ifelse(is.infinite(value), NA, value)
-      )
+      filter(n > 12, type == paste0("t", t)) %>%
+      mutate(value = ifelse(is.infinite(value), NA, value))
     
     grouped_abs_group_instname_mslp <- csvr_mslp %>%
-      group_by(full_name, group) %>%
+      group_by(fullname, group) %>%
       summarise(
         feas_exec = sum(feasible),
         exec = n(),
@@ -67,7 +52,7 @@ for (j in 1:2) {
       )
     
     grouped_abs_tables_list[[t]] <- grouped_abs_mslp
-    output_file_name_mslp <- paste("grouped_abs_mslp", var, suff_type, sep="_")
+    output_file_name_mslp <- paste0("grouped_abs_mslp_", var, suff_type)
     output_file_path_mslp <- file.path(prefix_output, output_file_name_mslp)
     write_delim(
       grouped_abs_mslp,
