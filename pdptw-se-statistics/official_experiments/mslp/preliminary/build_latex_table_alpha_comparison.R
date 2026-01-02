@@ -3,11 +3,9 @@ library(xtable)
 library(readr)
 
 # Parameters
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-prefix_set <- "official_experiments/multistartlp/preliminar"
+prefix_set <- "official_experiments/data/mslp_preliminary"
 prefix_input <- "grouped_avrg_alpha"
-exp_set <- c("set_01", "set_01")
 
 prefix_output <- "official_experiments/mslp"
 output_dir <- "alpha_comparison"
@@ -16,14 +14,14 @@ sd_cols   <- c("sd_minrpd", "sd_meanrpd", "sd_maxrpd")
 mean_cols_b <- c("mean_minrpd_T1", "mean_meanrpd_T1", "mean_maxrpd_T1", "mean_minrpd_T2", "mean_meanrpd_T2", "mean_maxrpd_T2")
 sd_cols_b   <- c("sd_minrpd_T1", "sd_meanrpd_T1", "sd_maxrpd_T1", "sd_minrpd_T2", "sd_meanrpd_T2", "sd_maxrpd_T2")
 
-for (j in seq_along(benchmarks)) {
+for (j in seq_along(variations)) {
   merged_data <- list()  # store both types
   
   for(t in 1:2){
     # --- Input ---
-    suff_path <- paste0("_type_", t, ".csv")
+    suff_path <- paste0("_type_", t, "_", variations[j], ".csv")
     filename <- paste0(prefix_input, suff_path)
-    input_path <- file.path("..", benchmarks[j], prefix_set, exp_set[j], filename)
+    input_path <- file.path(prefix_set, "grouped", filename)
     grouped_avrg_alpha <- read.csv(input_path, sep = ";")
     
     # round numeric columns
@@ -48,7 +46,7 @@ for (j in seq_along(benchmarks)) {
     latex_table <- xtable(grouped_avrg_alpha, caption = paste("Alpha comparison - Type", t), digits = digits_vec)
     
     output_file <- paste0("grouped_avrg_alpha_type_", t, ".tex")
-    output_path <- file.path(prefix_output, output_dir, output_file)
+    output_path <- file.path(prefix_output, "preliminary", output_dir, output_file)
     sink(output_path)
     print(latex_table, include.rownames = FALSE, sanitize.text.function = identity)
     sink()
@@ -73,7 +71,7 @@ for (j in seq_along(benchmarks)) {
   digits_vec_merged <- rep(2, ncol(merged_df_side)+1)  # all numeric columns rounded already
   latex_table_merged <- xtable(
     merged_df_side,
-    caption = paste("Side-by-side Alpha comparison for", benchmarks[j]),
+    caption = paste("Side-by-side Alpha comparison for", variations[j]),
     digits = digits_vec_merged
   )
   
@@ -90,7 +88,8 @@ for (j in seq_along(benchmarks)) {
   
   # Save merged table with multi-header
   output_file_merged <- paste0("grouped_avrg_alpha_merged.tex")
-  output_path_merged <- file.path(prefix_output, output_dir, output_file_merged)
+  output_path_merged <- file.path(prefix_output, "preliminary", output_dir, output_file_merged)
+  dir.create(dirname(output_path_merged), showWarnings = FALSE, recursive = TRUE)
   sink(output_path_merged)
   print(
     latex_table_merged,
