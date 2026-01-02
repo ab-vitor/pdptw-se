@@ -2,32 +2,32 @@ library(dplyr)
 library(tidyr)
 library(readr)
 
-benchmarks <- c("benchmark_multi_island_v5","benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
 
-input_path_mipr <- "official_experiments/mip_gurobi/set_02/csvresults_form_melo.csv"
-input_path_mipvir <- "official_experiments/mip_grb_valid_inequalities/official/set_01/csvresults_form_melo.csv"
-input_path_mslpr <- "official_experiments/multistartlp/official/set_01/csvresults_heur_mslp.csv"
+prefix_input_path_mipr <- "official_experiments/data/mip_gurobi/csvresults_form_melo"
+prefix_input_path_mipvir <- "official_experiments/data/mip_grb_valid_inequalities/official/csvresults_form_melo"
+prefix_input_path_mslpr <- "official_experiments/data/mslp_official/csvresults_heur_mslp"
 
 prefix_output_path <- "official_experiments/mslp_vs_mip/tables_mach_sens_analysis"
 
-for (j in seq_along(benchmarks)) {
+for (j in seq_along(variations)) {
+  var <- variations[j]
   csv_mipr <- read.csv(
-    file = file.path("..", benchmarks[j], input_path_mipr),
+    file = paste0(prefix_input_path_mipr, "_", var, ".csv"),
     sep = ";"
   )
   csv_mipvir <- read.csv(
-    file = file.path("..", benchmarks[j], input_path_mipvir),
+    file = paste0(prefix_input_path_mipvir, "_", var, ".csv"),
     sep = ";"
   )
   csv_mslpr <- read.csv(
-    file = file.path("..", benchmarks[j], input_path_mslpr),
+    file = paste0(prefix_input_path_mslpr, "_", var, ".csv"),
     sep = ";"
   )
   
   csv_miprf <- csv_mipr %>%
-    select(full_name, name, group, obj_value) %>%
-    rename(mip_sol = obj_value)
+    select(full_name, name, group, obj_value_grb) %>%
+    rename(mip_sol = obj_value_grb)
   
   csv_mipvirf <- csv_mipvir %>%
     select(full_name, name, group, obj_value) %>%
@@ -38,6 +38,8 @@ for (j in seq_along(benchmarks)) {
     rename(mslp_sol = value, full_name = fullname) %>%
     group_by(full_name, name, group) %>%
     summarise(mslp_min_sol = min(mslp_sol), .groups = "drop")
+  
+  
   
   csv_results <- csv_mslprf %>%
     left_join(csv_miprf, by = c("full_name", "group", "name")) %>%
@@ -84,7 +86,7 @@ for (j in seq_along(benchmarks)) {
   grouped_inst_dev <- group_inst_merge_machines %>%
     mutate(deviation = (min_machs - max_machs) / min_machs * 100)
   
-  output_table_file_name <- paste0("grouped_inst_dev_", variations[j], ".csv")
+  output_table_file_name <- paste0("grouped_inst_dev_", var, ".csv")
   output_table_path <- file.path(prefix_output_path, output_table_file_name)
   write_delim(
     grouped_inst_dev,
@@ -97,7 +99,7 @@ for (j in seq_along(benchmarks)) {
     group_by(group) %>%
     summarise(mean_deviation = mean(deviation))
   
-  output_table_file_name <- paste0("grouped_mean_dev_", variations[j], ".csv")
+  output_table_file_name <- paste0("grouped_mean_dev_", var, ".csv")
   output_table_path <- file.path(prefix_output_path, output_table_file_name)
   write_delim(
     grouped_mean_dev,
