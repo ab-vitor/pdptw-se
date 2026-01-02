@@ -1,31 +1,19 @@
 library(dplyr)
 library(readr)
+library(ggplot2)
 
-benchmarks <-
-  c(
-    "benchmark_multi_island_v5",
-    "benchmark_multi_floor_v3"
-  )
 variations <- c("I5", "F3")
-prefix_path_mslp <- "official_experiments/multistartlp/official"
-sets <- c("set_01", "set_01", "set_01", "set_01")
-
-mslp_input_name <- "csvresults_heur_mslp.csv"
+prefix_path_mslp <- "official_experiments/data/mslp_official"
+prefix_mslp_input_name <- "csvresults_heur_mslp"
 
 prefix_output_tables <- "official_experiments/mslp/official/tables"
 prefix_output_plots <- "official_experiments/mslp/official/plots"
 set.seed(10)
 
-for (j in 1:2) {
-  k <- j + 2
+for (j in seq_along(variations)) {
   var <- variations[j]
-  mslp_input_path <- file.path(
-    "..",
-    benchmarks[j],
-    prefix_path_mslp,
-    sets[k],
-    mslp_input_name
-  )
+  mslp_input_name <- paste0(prefix_mslp_input_name, "_", var, ".csv")
+  mslp_input_path <- file.path(prefix_path_mslp, mslp_input_name)
   csvr_mslp_complete <-
     read.csv(
       file = mslp_input_path,
@@ -33,25 +21,20 @@ for (j in 1:2) {
     )
   
   csvr_mslp <- csvr_mslp_complete %>%
-    select(
-      fullname, group, type, value,
-      iteration, iterationToBest, timeToBest, 
-      totalTimeElapsed, seed, n, feasible
-    ) %>%
-    rename(full_name = fullname, mslp_sol = value) %>%
+    rename(mslp_sol = value) %>%
     filter(n > 12)
   
   csvr_mslp_best <- csvr_mslp %>%
-    group_by(full_name, group, type) %>%
+    group_by(fullname, group, type) %>%
     summarise(
       mslp_min_sol = min(mslp_sol, na.rm = T),
       .groups = "drop"
     )
   
-  csvr_mslp <- left_join(csvr_mslp, csvr_mslp_best, by = c("full_name", "group", "type"))
+  csvr_mslp <- left_join(csvr_mslp, csvr_mslp_best, by = c("fullname", "group", "type"))
   
   csvr_mslp <- csvr_mslp %>%
-    select(full_name, type, group, mslp_sol, mslp_min_sol) %>%
+    select(fullname, type, group, mslp_sol, mslp_min_sol) %>%
     mutate(
       mslp_sol = ifelse(is.infinite(mslp_sol), NA, mslp_sol),
       mslp_min_sol = ifelse(is.infinite(mslp_min_sol), NA, mslp_min_sol)

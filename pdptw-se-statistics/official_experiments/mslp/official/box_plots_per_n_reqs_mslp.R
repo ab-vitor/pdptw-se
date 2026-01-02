@@ -1,21 +1,20 @@
 library(dplyr)
 library(readr)
 
-benchmarks <- c("benchmark_multi_island_v5","benchmark_multi_floor_v3")
 variations <- c("I5", "F3")
-prefix_input_path <- "official_experiments/multistartlp/official"
-input_file_name <- "csvresults_heur_mslp.csv"
+prefix_input_path <- "official_experiments/data/mslp_official"
+prefix_input_file_name <- "csvresults_heur_mslp"
 ext_set <- c("set_01", "set_01")
 
 prefix_output_path_plots <- "official_experiments/mslp/official/plots"
 prefix_output_path_tables <- "official_experiments/mslp/official/tables"
 set.seed(10)
-for (j in seq_along(benchmarks)) {
-  csv_mslpr_path <- file.path("..", benchmarks[j], prefix_input_path, ext_set[j], input_file_name)
+for (j in seq_along(variations)) {
+  input_file_name <- paste0(prefix_input_file_name, "_", variations[j], ".csv")
+  csv_mslpr_path <- file.path(prefix_input_path, input_file_name)
   csv_mslpr_complete <- read.csv(file = csv_mslpr_path,sep = ";")
   
   csv_mslpr <- csv_mslpr_complete %>%
-    select(fullname, group, type, percentageInfeasibleSol, meanLPImprPercentage, feasible) %>%
     mutate(
       perc_feasible = 100 - percentageInfeasibleSol,
       meanLPImprPercentage = ifelse(feasible, meanLPImprPercentage, NA),
@@ -72,7 +71,7 @@ for (j in seq_along(benchmarks)) {
       "n_reqs",
       output_filename
     )
-  ggsave(file_path, plot = p, width = 5, height = 4)
+  # ggsave(file_path, plot = p, width = 5, height = 4)
   
   p <-
     ggplot(
@@ -103,5 +102,5 @@ for (j in seq_along(benchmarks)) {
       "n_reqs",
       output_filename
     )
-  ggsave(file_path, plot = p, width = 5, height = 4)
+  # ggsave(file_path, plot = p, width = 5, height = 4)
 }
