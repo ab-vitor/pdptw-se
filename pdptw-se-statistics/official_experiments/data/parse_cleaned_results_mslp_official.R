@@ -22,7 +22,7 @@ for (j in seq_along(benchmarks)) {
       name, group, type, alpha, 
       seed, value, feasible, 
       totalTimeElapsed, fullname, n,
-      iterationToBest, timeToBest,
+      iterationToBest, timeToBest, iteration,
       percentageInfeasibleSol, meanLPImprPercentage
     )
   
