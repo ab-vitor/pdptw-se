@@ -33,7 +33,7 @@ post_process <- function(df) {
   df
 }
 
-csv_results_benchmarks <- list()
+csv_results_variations <- list()
 for (j in seq_along(variations)) {
   file_name <- paste0(prefix_file_name, "_", variations[j], ".csv")
   file_path <- file.path(prefix_set_no_vi, file_name)
@@ -58,10 +58,10 @@ for (j in seq_along(variations)) {
       variation = variations[j]
     )
   
-  csv_results_benchmarks[[variations[j]]] = csv_results
+  csv_results_variations[[variations[j]]] = csv_results
 }
 
-csv_results <- rbind(csv_results_benchmarks[["I5"]], csv_results_benchmarks[["F3"]])
+csv_results <- rbind(csv_results_variations[["I5"]], csv_results_variations[["F3"]])
 
 best_per_instance <- csv_results %>%
   group_by(full_name) %>%
