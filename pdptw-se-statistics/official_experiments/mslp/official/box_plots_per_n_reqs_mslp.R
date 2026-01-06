@@ -4,7 +4,6 @@ library(readr)
 variations <- c("I5", "F3")
 prefix_input_path <- "official_experiments/data/mslp_official"
 prefix_input_file_name <- "csvresults_heur_mslp"
-ext_set <- c("set_01", "set_01")
 
 prefix_output_path_plots <- "official_experiments/mslp/official/plots"
 prefix_output_path_tables <- "official_experiments/mslp/official/tables"
