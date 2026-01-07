@@ -4,13 +4,11 @@ library(svglite)
 library(purrr)
 library(readr)
 
-benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
 benchmarks_desc <- c("Multi-island", "Multi-floor")
 names_regions <- c("Islands", "Floors")
 variations <- c("I5", "F3")
-exp_set <- c("set_01", "set_01")
-prefix_set <- "official_experiments/mip_grb_valid_inequalities/official"
-csv_input_file_name <- "csvresults_form_melo.csv"
+prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
+prefix_csv_input_file_name <- "csvresults_form_melo"
 plot_dir <- "official_experiments/time_and_optimality_gap/plots"
 tables_dir <- "official_experiments/time_and_optimality_gap/tables"
 
@@ -25,10 +23,11 @@ columns_max_value <- c(3600, 100)
 
 columns_min_value <- c(0, 0)
 set.seed(10)
-for (j in seq_along(benchmarks)) {
-  csv_input <- file.path("..", benchmarks[j], prefix_set, exp_set[j], csv_input_file_name)
+for (j in seq_along(variations)) {
+  csv_input_file_name <- paste0(prefix_csv_input_file_name, "_", variations[j], ".csv")
+  csv_input_file_path <- file.path(prefix_set, csv_input_file_name)
   csv_results <- read_delim(
-    csv_input,
+    csv_input_file_path,
     delim = ";", 
     escape_double = FALSE, 
     trim_ws = TRUE
