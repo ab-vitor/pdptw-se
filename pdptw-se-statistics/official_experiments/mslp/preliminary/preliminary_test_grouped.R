@@ -49,7 +49,7 @@ aggregate_by_alpha <- function(data) {
     )
 }
 
-# Loop over all benchmarks
+# Loop over all variations
 for (j in seq_along(variations)) {
   # --- Input ---
   csv_input_filename <- paste0(prefix_csv_input_filename, "_", variations[j], ".csv")

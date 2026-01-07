@@ -10,7 +10,7 @@ tables <- c("grouped_abs", "grouped_avrg")
 for (i in seq_along(solvers)){
   prefix_set <- paste0("official_experiments/data/mip_", solvers[i])
   for (table in tables) {
-    for (j in seq_along(benchmarks)) {
+    for (j in seq_along(variations)) {
       grouped_t1_file_name <- paste0(
         table,
         "_type_",

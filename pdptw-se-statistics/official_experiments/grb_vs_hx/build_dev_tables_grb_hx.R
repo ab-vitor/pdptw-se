@@ -79,7 +79,7 @@ for (j in seq_along(variations)) {
       )
     
     # store this table in the list
-    na_count_list[[paste0(benchmarks[j], "_type_", t)]] <- na_count_table
+    na_count_list[[paste0(variations[j], "_type_", t)]] <- na_count_table
     
     na_count_table_file_name <- paste0("na_count_dev_obj_", suff_output, ".csv")
     na_count_table_file_path <- file.path(
