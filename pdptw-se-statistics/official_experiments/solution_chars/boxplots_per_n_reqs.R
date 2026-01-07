@@ -3,48 +3,21 @@ library(ggplot2)
 library(svglite)
 library(readr)
 
-benchmarks <- c("benchmark_multi_island_v5","benchmark_multi_floor_v3")
 benchmarks_desc <- c("Multi-island","Multi-floor")
 names_regions <- c("Islands", "Floors")
 variations <- c("I5", "F3")
-method_file_suff_path <- c(
-  "mip_grb_valid_inequalities/official/set_01/sol_chars_form_melo.csv", 
-  "multistartlp/official/set_01/sol_chars_heur_mslp.csv"
+method_output_prefix_file_path <- c(
+  "official_experiments/data/solution_chars/sol_chars_form_melo",
+  "official_experiments/data/solution_chars/sol_chars_heur_mslp"
 )
 method_names <- c("mip_vi", "mslp")
-root_dir_exp <- "official_experiments"
 
 output_dir_plots <- "official_experiments/solution_chars/plots/n_reqs"
 output_dir_tables <- "official_experiments/solution_chars/tables/n_reqs"
 
+columns_max_value <- rep.int(0, 13)
 
-columns_max_value <- c(0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0)
-
-columns_min_value <- c(0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0,
-                       0)
+columns_min_value <- rep.int(0, 13)
 
 columns_sol_chars <- c(
   "n_vehicles_used",
@@ -79,12 +52,10 @@ columns_desc <-
     "Mean vehicles waiting time for a service (%)"
   )
 
-for (j in seq_along(benchmarks)) {
-  benchmark <- benchmarks[j]
+for (j in seq_along(variations)) {
   var <- variations[j]
   for (l in seq_along(method_names)){
-    file_name_method <- method_file_suff_path[l]
-    file_path <- file.path("..", benchmark, root_dir_exp, file_name_method)
+    file_path <- paste0(method_output_prefix_file_path[l], "_", var, ".csv")
     csvr_df_complete <- read.csv(
       file = file_path,
       sep = ";"
@@ -116,12 +87,10 @@ for (j in seq_along(benchmarks)) {
   }
 }
 
-for (j in seq_along(benchmarks)) {
-  benchmark <- benchmarks[j]
+for (j in seq_along(variations)) {
   var <- variations[j]
   for (l in seq_along(method_names)){
-    file_name_method <- method_file_suff_path[l]
-    file_path <- file.path("..", benchmark, root_dir_exp, file_name_method)
+    file_path <- paste0(method_output_prefix_file_path[l], "_", var, ".csv")
     csvr_df_complete <- read.csv(
       file = file_path,
       sep = ";"
@@ -137,19 +106,8 @@ for (j in seq_along(benchmarks)) {
       select(group, name, type, feasible, n_reqs, n_regions, n_machs, any_of(columns_sol_chars))
     
     
-    columns_breaks <- c(10,
-                        10,
-                        10,
-                        10,
-                        10,
-                        10,
-                        10,
-                        10,
-                        10,
-                        5,
-                        5,
-                        10,
-                        10)
+    columns_breaks <- c(10,10,10,10,10,10,10,10,10,5,5,10,10)
+    
     obs_counts <- csvr_df %>%
       filter(feasible == 1) %>%
       group_by(type, n_reqs) %>%
