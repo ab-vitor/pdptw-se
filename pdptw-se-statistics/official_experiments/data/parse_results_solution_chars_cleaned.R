@@ -7,7 +7,7 @@ library(tidyselect)
 benchmarks <- c("benchmark_multi_island_v5","benchmark_multi_floor_v3")
 benchmarks_desc <- c("Multi-island","Multi-floor")
 names_regions <- c("Islands", "Floors")
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 method_file_suff_path <- c(
   "mip_grb_valid_inequalities/official/set_01/sol_chars_form_melo.csv", 
   "multistartlp/official/set_01/sol_chars_heur_mslp.csv"

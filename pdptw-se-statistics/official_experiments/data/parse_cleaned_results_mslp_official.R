@@ -3,7 +3,7 @@ library(dplyr)
 
 # Parameters
 benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 off_exp <- "official_experiments"
 mslp_prel_folder <- "multistartlp/official"
 prefix_set <- file.path(off_exp, mslp_prel_folder)

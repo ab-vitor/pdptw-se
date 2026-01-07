@@ -2,7 +2,7 @@ library(readr)
 library(dplyr)
 
 benchmarks <- c("benchmark_multi_island_v5", "benchmark_multi_floor_v3")
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 exp_set <- c("set_02", "set_02")
 off_exp <- "official_experiments"
 grb_folder <- "mip_gurobi"
