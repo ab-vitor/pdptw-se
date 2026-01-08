@@ -2,7 +2,7 @@ library(dplyr)
 library(tidyr)
 library(readr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 
 prefix_input_path_mipr <- "official_experiments/data/mip_gurobi/csvresults_form_melo"
 prefix_input_path_mipvir <- "official_experiments/data/mip_grb_valid_inequalities/official/csvresults_form_melo"
