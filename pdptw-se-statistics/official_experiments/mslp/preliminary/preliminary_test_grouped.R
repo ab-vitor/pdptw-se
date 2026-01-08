@@ -3,7 +3,7 @@ library(dplyr)
 # Refactored by chat-gpt
 
 # Parameters
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mslp_preliminary"
 prefix_csv_input_filename <- "csvresults_heur_mslp"
 prefix_output_1 <- "grouped_avrg_group_instname_alpha"

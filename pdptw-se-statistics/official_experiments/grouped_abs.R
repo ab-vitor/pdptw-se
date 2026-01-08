@@ -4,7 +4,7 @@ library(readr)
 
 solvers <- c("gurobi", "hexaly")
 solvers_suff <- c("", "_hx")
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_csv_output <- "grouped"
 types <- c(1, 2)
 

@@ -2,7 +2,7 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_path_mslp <- "official_experiments/data/mslp_official"
 prefix_mslp_input_name <- "csvresults_heur_mslp"
 
@@ -95,5 +95,5 @@ for (j in seq_along(variations)) {
   suff_output <- "_by_n_reqs.pdf"
   ggsave_filename <- paste0("box_plots_sol_rpd_mslp_sol_min_", var, suff_output)
   ggsave_filepath <- file.path(prefix_output_plots, ggsave_filename)
-  # ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
+  # ggsave(ggsave_filepath, plot = p, width = 5, height = 4) # uncomment to save the plot
 }

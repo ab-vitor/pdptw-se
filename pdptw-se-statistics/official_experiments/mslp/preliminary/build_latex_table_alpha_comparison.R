@@ -3,7 +3,7 @@ library(xtable)
 library(readr)
 
 # Parameters
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mslp_preliminary"
 prefix_input <- "grouped_avrg_alpha"
 
@@ -13,11 +13,12 @@ mean_cols <- c("mean_minrpd", "mean_meanrpd", "mean_maxrpd")
 sd_cols   <- c("sd_minrpd", "sd_meanrpd", "sd_maxrpd")
 mean_cols_b <- c("mean_minrpd_T1", "mean_meanrpd_T1", "mean_maxrpd_T1", "mean_minrpd_T2", "mean_meanrpd_T2", "mean_maxrpd_T2")
 sd_cols_b   <- c("sd_minrpd_T1", "sd_meanrpd_T1", "sd_maxrpd_T1", "sd_minrpd_T2", "sd_meanrpd_T2", "sd_maxrpd_T2")
+types <- c(1, 2)
 
 for (j in seq_along(variations)) {
   merged_data <- list()  # store both types
   
-  for(t in 1:2){
+  for(t in types){
     # --- Input ---
     suff_path <- paste0("_type_", t, "_", variations[j], ".csv")
     filename <- paste0(prefix_input, suff_path)
@@ -45,10 +46,10 @@ for (j in seq_along(variations)) {
     digits_vec <- rep(2, ncol(grouped_avrg_alpha)+1)
     latex_table <- xtable(grouped_avrg_alpha, caption = paste("Alpha comparison - Type", t), digits = digits_vec)
     
-    output_file <- paste0("grouped_avrg_alpha_type_", t, ".tex")
+    output_file <- paste0("grouped_avrg_alpha_type_", t, "_", variations[j], ".tex")
     output_path <- file.path(prefix_output, "preliminary", output_dir, output_file)
     sink(output_path)
-    print(latex_table, include.rownames = FALSE, sanitize.text.function = identity)
+    # print(latex_table, include.rownames = FALSE, sanitize.text.function = identity) # comment to save latex table for each type
     sink()
   }
   
@@ -87,7 +88,7 @@ for (j in seq_along(variations)) {
   )
   
   # Save merged table with multi-header
-  output_file_merged <- paste0("grouped_avrg_alpha_merged.tex")
+  output_file_merged <- paste0("grouped_avrg_alpha_merged_", variations[j], ".tex")
   output_path_merged <- file.path(prefix_output, "preliminary", output_dir, output_file_merged)
   dir.create(dirname(output_path_merged), showWarnings = FALSE, recursive = TRUE)
   sink(output_path_merged)

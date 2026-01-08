@@ -2,9 +2,9 @@ library(ggplot2)
 library(dplyr)
 library(purrr)
 
-inst_set <- c("I5", "F3")
-inst_set_desc <- c("Multi-island", "Multi-floor")
-folder_inst_set <- c("multi_island_v5/", "multi_floor_v3/")
+variations <- c("multi_island", "multi_floor")
+variations_desc <- c("Multi-island", "Multi-floor")
+folder_variations <- c("multi_island/", "multi_floor/")
 profiles <- c("small", "big")
 suff_prof <- c("", "_big")
 
@@ -90,7 +90,7 @@ save_boxplot <- function(stats, yvar, ylab, inst, ylim = NULL, breaks = NULL,
   print(p)
   filename <- paste0("plots/stats_insts/boxplot_stats_by_type_",
                      filename_suffix %||% yvar, "_", inst, ".pdf")
-  ggsave(filename, plot = p, width = 5, height = 4)
+  # ggsave(filename, plot = p, width = 5, height = 4) # uncomment this line to save box plot
 }
 
 
@@ -98,9 +98,9 @@ for (p in seq_along(profiles)){
   profile_choice <- profiles[p]
   suff_p <- suff_prof[p]
   # --- Main loop ---
-  for (i in seq_along(inst_set)) {
-    inst <- paste0(inst_set[i], suff_p)
-    stats <- read_stats(inst, folder_inst_set[i])
+  for (i in seq_along(variations)) {
+    inst <- paste0(variations[i], suff_p)
+    stats <- read_stats(inst, folder_variations[i])
     
     plots_to_generate <- plot_profiles[[profile_choice]]
     

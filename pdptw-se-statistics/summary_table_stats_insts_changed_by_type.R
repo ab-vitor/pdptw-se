@@ -1,19 +1,20 @@
 library(dplyr)
 library(readr)
+library(tibble)
 
-inst_set <- c("I5", "F3")
-inst_set_desc <- c("Multi-island", "Multi-floor")
-folder_inst_set <- c("multi_island_v5/", "multi_floor_v3/")
+variations <- c("multi_island", "multi_floor")
+variations_desc <- c("Multi-island", "Multi-floor")
+folder_variations <- c("multi_island/", "multi_floor/")
 profiles <- c("small", "big")
 suff_prof <- c("", "_big")
 
 
 merged_data <- list()
 # --- Main loop ---
-for (i in seq_along(inst_set)) {
-  inst <- inst_set[i]
+for (i in seq_along(variations)) {
+  var <- variations[i]
   df <- read.csv(
-    file = paste0("./inst_statistics/", folder_inst_set[i], "tw_cap_change_", inst, ".csv"),
+    file = paste0("./inst_statistics/", folder_variations[i], "tw_cap_change_", var, ".csv"),
     sep = ";"
   )
   df <- df %>%
@@ -36,12 +37,12 @@ for (i in seq_along(inst_set)) {
       .groups = "drop"
     )
   
-  merged_data[[inst]] <- df_summary
+  merged_data[[var]] <- df_summary
 }
 
 merged_df_side <- cbind(
-  merged_data[["I5"]] %>% rename_with(~ paste0(.x, "_I5")),
-  merged_data[["F3"]] %>% rename_with(~ paste0(.x, "_F3"))
+  merged_data[[variations[1]]] %>% rename_with(~ paste0(.x, "_", variations[1])),
+  merged_data[[variations[2]]] %>% rename_with(~ paste0(.x, "_", variations[2]))
 )
 
 write_delim(

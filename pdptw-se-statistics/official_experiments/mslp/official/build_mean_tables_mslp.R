@@ -3,7 +3,7 @@ library(readr)
 library(purrr)
 library(tibble)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_path_mslp <- "official_experiments/data/mslp_official"
 types <- c(1, 2)
 

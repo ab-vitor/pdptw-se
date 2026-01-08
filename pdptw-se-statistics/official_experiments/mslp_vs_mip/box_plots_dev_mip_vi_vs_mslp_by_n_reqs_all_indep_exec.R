@@ -1,7 +1,7 @@
 library(dplyr)
 library(readr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_path_mip <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_path_mslp <- "official_experiments/data/mslp_official"
 
@@ -12,7 +12,7 @@ prefix_output_tables <- "official_experiments/mslp_vs_mip/tables"
 prefix_output_plots <- "official_experiments/mslp_vs_mip/plots"
 set.seed(10)
 
-for (j in 1:2) {
+for (j in seq_along(variations)) {
   var <- variations[j]
   mip_input_name <- paste0(prefix_mip_input_name, "_", var, ".csv")
   mip_input_path <- file.path(prefix_path_mip, mip_input_name)

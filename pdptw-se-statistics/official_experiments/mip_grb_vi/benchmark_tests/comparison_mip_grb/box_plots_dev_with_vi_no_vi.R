@@ -5,7 +5,7 @@ library(tibble)
 library(readr)
 library(ggplot2)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_file_name <- "csvresults_form_melo"
 prefix_set_with_vi <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_set_no_vi <- "official_experiments/data/mip_gurobi"
@@ -145,7 +145,7 @@ for (j in seq_along(variations)) {
 
   ggsave_filename <- paste0("box_plots_sol_dev_with_vi_no_vi_", variations[j], ".pdf")
   ggsave_filepath <- file.path(prefix_output_plots, ggsave_filename)
-  ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
+  # ggsave(ggsave_filepath, plot = p, width = 5, height = 4) # uncomment to save plot
 
   p <- ggplot(csv_results, aes(x = type, y = dev_gap)) +
     geom_boxplot(outlier.shape = NA) +
@@ -164,7 +164,7 @@ for (j in seq_along(variations)) {
   
   ggsave_filename <- paste0("box_plots_gap_dev_with_vi_no_vi_", variations[j], ".pdf")
   ggsave_filepath <- file.path(prefix_output_plots, ggsave_filename)
-  ggsave(ggsave_filepath, plot = p, width = 5, height = 4)
+  # ggsave(ggsave_filepath, plot = p, width = 5, height = 4) # uncomment to save plot
 }
 
 

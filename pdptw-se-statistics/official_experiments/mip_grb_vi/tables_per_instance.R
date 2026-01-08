@@ -1,7 +1,7 @@
 library(readr)
 library(dplyr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities"
 prefix_csv_input <- "csvresults_form_melo"
 vi_test <- c("all_minus_one_vi", "all_vi", "no_vi", "one_vi")

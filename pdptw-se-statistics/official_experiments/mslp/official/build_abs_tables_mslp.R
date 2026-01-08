@@ -2,7 +2,7 @@ library(dplyr)
 library(readr)
 library(purrr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_path_mslp <- "official_experiments/data/mslp_official"
 ext_csv <- ".csv"
 types <- c(1, 2)

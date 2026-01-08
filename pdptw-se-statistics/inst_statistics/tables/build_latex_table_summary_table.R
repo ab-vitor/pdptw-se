@@ -14,10 +14,10 @@ df_long <- df %>%
   pivot_longer(
     cols = everything(),
     names_to = c(".value", "scenario"),
-    names_pattern = "(.*)_(I5|F3)"
+    names_pattern = "(.*)_(multi_island|multi_floor)"
   ) %>%
   mutate(
-    scenario = recode(scenario, I5="multi-island", F3="multi-floor"),
+    scenario = recode(scenario, multi_island="multi-island", multi_floor="multi-floor"),
     inst_size = tolower(inst_size),
     type = as.character(type),
     across(c(modified, tw_shift, cap_incr), as.numeric)

@@ -6,7 +6,7 @@ library(readr)
 
 benchmarks_desc <- c("Multi-island", "Multi-floor")
 names_regions <- c("Islands", "Floors")
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_csv_input_file_name <- "csvresults_form_melo"
 plot_dir <- "official_experiments/time_and_optimality_gap/plots"
@@ -115,7 +115,7 @@ for (j in seq_along(variations)) {
         variations[j],
         ".pdf"
       )
-    # ggsave(filename, plot = p, width = 5, height = 4)
+    # ggsave(filename, plot = p, width = 5, height = 4) # uncomment to save the plot
   }
   
 }

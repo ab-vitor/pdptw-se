@@ -5,7 +5,7 @@ library(readr)
 
 benchmarks_desc <- c("Multi-island","Multi-floor")
 names_regions <- c("Islands", "Floors")
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 method_output_prefix_file_path <- c(
   "official_experiments/data/solution_chars/sol_chars_form_melo",
   "official_experiments/data/solution_chars/sol_chars_heur_mslp"
@@ -162,7 +162,7 @@ for (j in seq_along(variations)) {
       
       file_name <- paste0("plot_", columns_sol_chars[i], "_vs_n_reqs_and_instance_", method_names[l], "_", var, ".pdf")
       file_path <- file.path(output_dir_plots, file_name)
-      ggsave(file_path, plot = p, width = 5, height = 4)
+      # ggsave(file_path, plot = p, width = 5, height = 4) # uncomment to save the plot
     }
   }
 }

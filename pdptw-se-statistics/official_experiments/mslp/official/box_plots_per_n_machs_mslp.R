@@ -1,7 +1,7 @@
 library(dplyr)
 library(readr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_input_path <- "official_experiments/data/mslp_official"
 prefix_input_file_name <- "csvresults_heur_mslp"
 
@@ -70,7 +70,7 @@ for (j in seq_along(variations)) {
       "n_machs",
       output_filename
     )
-  # ggsave(file_path, plot = p, width = 5, height = 4)
+  # ggsave(file_path, plot = p, width = 5, height = 4) # uncomment to save the plot
   
   p <-
     ggplot(
@@ -101,5 +101,5 @@ for (j in seq_along(variations)) {
       "n_machs",
       output_filename
     )
-  # ggsave(file_path, plot = p, width = 5, height = 4)
+  # ggsave(file_path, plot = p, width = 5, height = 4) # uncomment to save the plot
 }

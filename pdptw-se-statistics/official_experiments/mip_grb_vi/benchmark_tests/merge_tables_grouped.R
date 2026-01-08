@@ -3,7 +3,7 @@ library(knitr)
 library(kableExtra)
 library(tibble)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_csv_output <- "grouped"
 tables <- c("grouped_abs", "grouped_avrg")
 

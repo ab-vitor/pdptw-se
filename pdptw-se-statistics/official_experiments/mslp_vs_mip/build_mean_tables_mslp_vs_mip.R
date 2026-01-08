@@ -1,7 +1,7 @@
   library(dplyr)
   library(readr)
   
-  variations <- c("I5", "F3")
+  variations <- c("multi_island", "multi_floor")
   prefix_path_mip <- "official_experiments/data/mip_grb_valid_inequalities/official"
   prefix_path_mslp <- "official_experiments/data/mslp_official"
   types <- c(1, 2)

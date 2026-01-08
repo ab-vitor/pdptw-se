@@ -4,7 +4,7 @@ library(glue)
 
 # Refactored by chat-gpt
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_csv_output <- "grouped"
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_csv_input <- "csvresults_form_melo"

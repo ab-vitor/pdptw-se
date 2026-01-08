@@ -3,7 +3,7 @@ library(ggplot2)
 library(dplyr)
 library(purrr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/grb_vs_hx"
 prefix_csv_input <- "inst_by_inst_grb_vs_hx_dev_type_"
 

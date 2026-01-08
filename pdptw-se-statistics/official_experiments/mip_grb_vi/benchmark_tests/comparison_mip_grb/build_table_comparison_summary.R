@@ -3,8 +3,9 @@ library(knitr)
 library(kableExtra)
 library(tibble)
 library(readr)
+library(stringr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_file_name <- "csvresults_form_melo"
 prefix_set_with_vi <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_set_no_vi <- "official_experiments/data/mip_gurobi"
@@ -61,7 +62,7 @@ for (j in seq_along(variations)) {
   csv_results_variations[[variations[j]]] = csv_results
 }
 
-csv_results <- rbind(csv_results_variations[["I5"]], csv_results_variations[["F3"]])
+csv_results <- rbind(csv_results_variations[["multi_island"]], csv_results_variations[["multi_floor"]])
 
 best_per_instance <- csv_results %>%
   group_by(full_name) %>%
@@ -112,10 +113,10 @@ summarise_by_var_and_type <- function(df, var, t) {
   df_summary
 }
 
-comparison_summary_I5_t1 <- summarise_by_var_and_type(csv_results, "I5", "t1")
-comparison_summary_I5_t2 <- summarise_by_var_and_type(csv_results, "I5", "t2")
-comparison_summary_F3_t1 <- summarise_by_var_and_type(csv_results, "F3", "t1")
-comparison_summary_F3_t2 <- summarise_by_var_and_type(csv_results, "F3", "t2")
+comparison_summary_multi_island_t1 <- summarise_by_var_and_type(csv_results, "multi_island", "t1")
+comparison_summary_multi_island_t2 <- summarise_by_var_and_type(csv_results, "multi_island", "t2")
+comparison_summary_multi_floor_t1 <- summarise_by_var_and_type(csv_results, "multi_floor", "t1")
+comparison_summary_multi_floor_t2 <- summarise_by_var_and_type(csv_results, "multi_floor", "t2")
 
 save_df <- function(df, pref, var, type) {
   file_name <- paste0(paste("comparison_summary", var, type,  sep = "_"), ".csv")
@@ -127,7 +128,7 @@ save_df <- function(df, pref, var, type) {
   )
 }
 
-save_df(comparison_summary_I5_t1, prefix_output, "I5", "t1")
-save_df(comparison_summary_I5_t2, prefix_output, "I5", "t2")
-save_df(comparison_summary_F3_t1, prefix_output, "F3", "t1")
-save_df(comparison_summary_F3_t2, prefix_output, "F3", "t2")
+save_df(comparison_summary_multi_island_t1, prefix_output, "multi_island", "t1")
+save_df(comparison_summary_multi_island_t2, prefix_output, "multi_island", "t2")
+save_df(comparison_summary_multi_floor_t1, prefix_output, "multi_floor", "t1")
+save_df(comparison_summary_multi_floor_t2, prefix_output, "multi_floor", "t2")
