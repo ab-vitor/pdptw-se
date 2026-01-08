@@ -1,6 +1,6 @@
 library(readr)
 
-variations <- c("I5", "F3")
+variations <- c("multi_island", "multi_floor")
 prefix_output_path_plots <- "official_experiments/mslp_vs_mip/tables_mach_sens_analysis/plots"
 prefix_output_path_tables <- "official_experiments/mslp_vs_mip/tables_mach_sens_analysis"
 for(j in seq_along(variations)){
@@ -57,5 +57,5 @@ for(j in seq_along(variations)){
     "n_reqs",
     output_filename
   )
-  ggsave(file_path, plot = p, width = 5, height = 4)
+  # ggsave(file_path, plot = p, width = 5, height = 4) # uncomment to save the plot
 }
