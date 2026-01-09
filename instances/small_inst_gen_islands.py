@@ -511,67 +511,50 @@ def gen_inst_files(filename, group, new_group):
 parser = argparse.ArgumentParser(description="Your script description")
 
 # Define the arguments
+parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
 parser.add_argument("--req", type=int, default=0, help="Number of requests")
-parser.add_argument("--min_req", type=int, default=0, help="Minimum number of requests")
 parser.add_argument("--vehi", type=int, default=0, help="Number of vehicles")
-parser.add_argument("--min_vehi", type=int, default=0, help="Minimum Number of vehicles")
+parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
 parser.add_argument("--isl", type=int, default=0, help="Number of islands")
 parser.add_argument("--mach", type=int, default=0, help="Number of machines")
 parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
+parser.add_argument("--mach_spd", type=float, default=1, help="Number of machines")
 parser.add_argument(
-    "--ams", action="store_true", help="Instances with all machine stations"
+    "--ams", 
+    action="store_true", 
+    help="Instances with all machine stations"
 )
 parser.add_argument(
     "--mf",
     choices=["greedy", "none"],
     default="none",
-    help="Instances with all machine stations",
+    help="Heuristic to make instance feasible after generation",
 )
-parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
 parser.add_argument(
     "--var_cap",
     type=int,
     default=5,
     help="Vehicle Capacity variation from base capacity (%%). If base is 100 and the variation is 20%%, the vehicles capacities will be 80, 100%%, and 120, if v_types is 3",
 )
-parser.add_argument("--mach_spd", type=float, default=1, help="Number of machines")
-parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
 
 # Parse the arguments
 args = parser.parse_args()
 
 group = args.group
 n_requests = args.req
-min_n_requests = args.min_req
 n_jobs = n_requests * 2
-min_n_jobs = min_n_requests * 2
 n_vehicles = args.vehi
-min_n_vehicles = args.min_vehi
 n_islands = args.isl
 n_machines = args.mach
 min_n_machines = args.min_mach
 v_types = args.v_types
 var_cap = args.var_cap
 mach_spd = args.mach_spd
-version_id = "I5"
-version = group[:3] + "tw-se_" + version_id
+version = "multi_island"
 if not os.path.isdir(version):
     os.mkdir(version)
 
-new_group = (
-    version
-    + "/"
-    + version
-    + "_"
-    + str(n_requests)
-    + "_"
-    + str(n_vehicles)
-    + "_"
-    + str(n_islands)
-    + "_"
-    + str(n_machines)
-    + "_ams"
-)
+new_group = f"{version}/{n_requests:02d}R_{n_vehicles:02d}V_{n_islands:02d}I_{n_machines:02d}M_{('ams' if args.ams else '')}"
 if not os.path.isdir(new_group):
     os.mkdir(new_group)
 
