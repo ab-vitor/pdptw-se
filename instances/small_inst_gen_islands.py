@@ -518,7 +518,7 @@ parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle ty
 parser.add_argument("--isl", type=int, default=0, help="Number of islands")
 parser.add_argument("--mach", type=int, default=0, help="Number of machines")
 parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
-parser.add_argument("--mach_spd", type=float, default=1, help="Number of machines")
+parser.add_argument("--mach_spd", type=float, default=1, help="Machine speed")
 parser.add_argument(
     "--ams", 
     action="store_true", 
@@ -554,19 +554,21 @@ version = "multi_island"
 if not os.path.isdir(version):
     os.mkdir(version)
 
-new_group = f"{version}/{n_requests:02d}R_{n_vehicles:02d}V_{n_islands:02d}I_{n_machines:02d}M_{('ams' if args.ams else '')}"
+new_group = f"{version}/{n_requests:02d}R_{n_vehicles:02d}V_{n_islands:02d}I_{n_machines:02d}M"
 if not os.path.isdir(new_group):
     os.mkdir(new_group)
 
 seed = 1
+
 filenames = os.listdir(group)
 filenames.sort()
 for filename in filenames:
     if filename[0:2].lower() == "lc" or filename[0:3].lower() == "lrc" or filename[:-4:-1] != "txt" :
         continue
 
-    filename = filename[:-4]
     np.random.seed(seed)
     random.seed(seed)
     seed += 1
+    
+    filename = filename[:-4]
     gen_inst_files(filename, group, new_group)
