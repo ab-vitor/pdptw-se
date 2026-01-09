@@ -80,10 +80,12 @@ def gen_vehicles(n_vehicles, max_demand_req):
     var = int(round(base_cap * var_cap / 100))
 
     # Ensure that at least one vehicle of each type exists in the instance
-    variations = [i*var for i in range(-math.floor(v_types / 2), math.ceil(v_types / 2))]
+    variations = [
+        i * var for i in range(-math.floor(v_types / 2), math.ceil(v_types / 2))
+    ]
     for i in range(v_types):
         vehicles.append([i, base_cap + variations[i]])
-        
+
     for i in range(v_types, n_vehicles):
         vehicles.append([i, choose_capacity(base_cap, var, v_types)])
 
@@ -192,7 +194,7 @@ def savePltFigInstanceMap(jobs, machines, filename):
     for i in range(n_floors):
         color = cmap((i + 1) % 10)
         colors.append(color)
-  
+
     for name, group in groups_jobs:
         color = cmap((int(name) + 1) % 10)
         ax.scatter(
@@ -202,7 +204,7 @@ def savePltFigInstanceMap(jobs, machines, filename):
             marker="o",
             label=f"Floor {name}",
             color=color,
-            depthshade=0
+            depthshade=0,
         )
 
     groups_machines_by_id = machines.groupby("id")
@@ -215,7 +217,7 @@ def savePltFigInstanceMap(jobs, machines, filename):
             marker="^",
             label=f"Machine {name} Station",
             color=color,
-            depthshade=0
+            depthshade=0,
         )
 
     ax.set_xlabel("X")
@@ -223,7 +225,7 @@ def savePltFigInstanceMap(jobs, machines, filename):
     ax.set_zlabel("Z")
 
     ax.set_zticks(range(int(jobs["z"].min()), int(jobs["z"].max()) + 2))
-    ax.set_box_aspect([1.5, 1.5, 1 + 0.2*(1.71**n_floors)])
+    ax.set_box_aspect([1.5, 1.5, 1 + 0.2 * (1.71**n_floors)])
 
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
@@ -288,6 +290,7 @@ def read_inst_lines(filename, group):
 
     return inst_lines
 
+
 def gen_inst_files(filename, group, new_group):
     inst_lines = read_inst_lines(filename, group)
 
@@ -296,11 +299,13 @@ def gen_inst_files(filename, group, new_group):
     points = extract_points(inst_jobs)
 
     os.chdir(new_group)
-    if filename[2] == '1':
-        os.mkdir("t1")
+    if filename[2] == "1":
+        if not os.path.isdir("t1"):
+            os.mkdir("t1")
         os.chdir("t1")
-    elif filename[2] == '2':
-        os.mkdir("t2")
+    elif filename[2] == "2": 
+        if not os.path.isdir("t2"):
+            os.mkdir("t2")
         os.chdir("t2")
     else:
         raise ValueError("Filename does not match expected pattern.")
@@ -338,23 +343,28 @@ def gen_inst_files(filename, group, new_group):
 
     os.chdir("../../../../../")
 
+
 def main():
     # Define the parser
     parser = argparse.ArgumentParser(description="Your script description")
 
     # Define the arguments
-    parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
+    parser.add_argument(
+        "--group", type=str, default="pdptw_100_li_lim", help="Group of instances"
+    )
     parser.add_argument("--req", type=int, default=0, help="Number of requests")
     parser.add_argument("--vehi", type=int, default=0, help="Number of vehicles")
-    parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
+    parser.add_argument(
+        "--v_types", type=int, default=3, help="Number of vehicle types"
+    )
     parser.add_argument("--floors", type=int, default=0, help="Number of floors")
     parser.add_argument("--mach", type=int, default=0, help="Number of machines")
-    parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
+    parser.add_argument(
+        "--min_mach", type=int, default=0, help="Minimum Number of machines"
+    )
     parser.add_argument("--mach_spd", type=float, default=0.2, help="Machine speed")
     parser.add_argument(
-        "--ams", 
-        action="store_true", 
-        help="Instances with all machine stations"
+        "--ams", action="store_true", help="Instances with all machine stations"
     )
     parser.add_argument(
         "--mf",
@@ -372,7 +382,7 @@ def main():
         "--pre_folder",
         type=str,
         default="orig_ams",
-        help = "Folder before the new group folder"
+        help="Folder before the new group folder",
     )
 
     # Parse the arguments
@@ -396,12 +406,12 @@ def main():
     mf = args.mf
     ams = args.ams
     pre_folder = args.pre_folder
- 
+
     version = "multi_floor"
     if not os.path.isdir(version):
         os.mkdir(version)
-  
-    if not os.path.isdir(f"{version}/{pre_folder}"):	
+
+    if not os.path.isdir(f"{version}/{pre_folder}"):
         os.mkdir(f"{version}/{pre_folder}")
 
     new_group = f"{version}/{pre_folder}/{n_requests:02d}R_{n_vehicles:02d}V_{n_floors:02d}F_{n_machines:02d}M"
@@ -415,7 +425,11 @@ def main():
     filenames.sort()
     for filename in filenames:
         # skip files that don't match the instance patterns
-        if filename[0:2].lower() == "lc" or filename[0:3].lower() == "lrc" or filename[:-4:-1] != "txt":
+        if (
+            filename[0:2].lower() == "lc"
+            or filename[0:3].lower() == "lrc"
+            or filename[:-4:-1] != "txt"
+        ):
             continue
 
         np.random.seed(seed)

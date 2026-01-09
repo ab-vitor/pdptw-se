@@ -463,11 +463,13 @@ def gen_inst_files(filename, group, new_group):
     kmeans = kmeans_for_instance(points)
 
     os.chdir(new_group)
-    if filename[2] == '1':
-        os.mkdir("t1")
+    if filename[2] == "1":
+        if not os.path.isdir("t1"):
+            os.mkdir("t1")
         os.chdir("t1")
-    elif filename[2] == '2':
-        os.mkdir("t2")
+    elif filename[2] == "2": 
+        if not os.path.isdir("t2"):
+            os.mkdir("t2")
         os.chdir("t2")
     else:
         raise ValueError("Filename does not match expected pattern.")
