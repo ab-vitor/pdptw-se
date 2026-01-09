@@ -49,7 +49,6 @@ def reduce_inst_jobs(inst_jobs):
         inst_jobs.drop(chosen_idx, inplace=True)
         if pid == 0:
             inst_jobs = inst_jobs[inst_jobs["job_no"] != did]
-        # print(inst_jobs.to_string())
 
     return inst_jobs
 
@@ -91,7 +90,6 @@ def gen_z_values(kmeans):
 
 def gen_jobs(inst_jobs, kmeans):
     inst_jobs.insert(3, "z", gen_z_values(kmeans))
-    # print(inst_jobs)
     return inst_jobs
 
 
@@ -401,7 +399,6 @@ def savePltFigInstanceMap(jobs, machines, convex_hulls):
         )
 
         hull = convex_hulls[int(name)]
-        # plt.plot(hull.points[:, 0], hull.points[:, 1], "o")
         for simplex in hull.simplices:
             plt.plot(hull.points[simplex, 0], hull.points[simplex, 1], "k-")
 
@@ -411,13 +408,6 @@ def savePltFigInstanceMap(jobs, machines, convex_hulls):
             alpha=0.2,
             color=color,
         )
-
-        # plt.plot(
-        #     hull.points[hull.vertices, 0], hull.points[hull.vertices, 1], "r--", lw=2
-        # )
-        # plt.plot(
-        #     hull.points[hull.vertices[0], 0], hull.points[hull.vertices[0], 1], "ro"
-        # )
 
     global n_islands
     groups_machines_by_id = machines.groupby("id")
@@ -482,7 +472,7 @@ def gen_inst_files(filename, group, new_group):
     global n_vehicles, args
     vehicles = gen_vehicles(n_vehicles, max_demand_req)
     jobs = gen_jobs(inst_jobs, kmeans)
-    if args.ams:
+    if ams:
         machines, convex_hulls = gen_machines_with_all_stations(kmeans, points)
     else:
         machines, convex_hulls = gen_machines(kmeans, points)
@@ -493,82 +483,105 @@ def gen_inst_files(filename, group, new_group):
 
     savePltFigInstanceMap(jobs, machines, convex_hulls)
 
-    if args.mf != "none":
+    if mf != "none":
         inst_location = os.getcwd()
 
         os.chdir("../../../../src/julia/")
 
         global min_n_machines
-        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {args.mf} --inst ../../instances/{new_group}/{filename}/ --make_instance_feasible --cutoffmachs {min_n_machines}"
+        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{filename}/ --make_instance_feasible --cutoffmachs {min_n_machines}"
         subprocess.run(cmd_str, shell=True)
 
         os.chdir(inst_location)
 
 
-    os.chdir("../../../")
+    os.chdir("../../../../")
 
-# Define the parser
-parser = argparse.ArgumentParser(description="Your script description")
+def main():
+    # Define the parser
+    parser = argparse.ArgumentParser(description="Your script description")
 
-# Define the arguments
-parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
-parser.add_argument("--req", type=int, default=0, help="Number of requests")
-parser.add_argument("--vehi", type=int, default=0, help="Number of vehicles")
-parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
-parser.add_argument("--isl", type=int, default=0, help="Number of islands")
-parser.add_argument("--mach", type=int, default=0, help="Number of machines")
-parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
-parser.add_argument("--mach_spd", type=float, default=1, help="Machine speed")
-parser.add_argument(
-    "--ams", 
-    action="store_true", 
-    help="Instances with all machine stations"
-)
-parser.add_argument(
-    "--mf",
-    choices=["greedy", "none"],
-    default="none",
-    help="Heuristic to make instance feasible after generation",
-)
-parser.add_argument(
-    "--var_cap",
-    type=int,
-    default=5,
-    help="Vehicle Capacity variation from base capacity (%%). If base is 100 and the variation is 20%%, the vehicles capacities will be 80, 100%%, and 120, if v_types is 3",
-)
+    # Define the arguments
+    parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
+    parser.add_argument("--req", type=int, default=0, help="Number of requests")
+    parser.add_argument("--vehi", type=int, default=0, help="Number of vehicles")
+    parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
+    parser.add_argument("--isl", type=int, default=0, help="Number of islands")
+    parser.add_argument("--mach", type=int, default=0, help="Number of machines")
+    parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
+    parser.add_argument("--mach_spd", type=float, default=1, help="Machine speed")
+    parser.add_argument(
+        "--ams",
+        action="store_true",
+        help="Instances with all machine stations",
+    )
+    parser.add_argument(
+        "--mf",
+        choices=["greedy", "none"],
+        default="none",
+        help="Heuristic to make instance feasible after generation",
+    )
+    parser.add_argument(
+        "--var_cap",
+        type=int,
+        default=5,
+        help="Vehicle Capacity variation from base capacity (%%). If base is 100 and the variation is 20%%, the vehicles capacities will be 80, 100%%, and 120, if v_types is 3",
+    )
+    parser.add_argument(
+        "--pre_folder",
+        type=str,
+        default="orig_ams",
+        help = "Folder before the new group folder"
+    )
 
-# Parse the arguments
-args = parser.parse_args()
+    # Parse the arguments
+    args = parser.parse_args()
 
-group = args.group
-n_requests = args.req
-n_jobs = n_requests * 2
-n_vehicles = args.vehi
-n_islands = args.isl
-n_machines = args.mach
-min_n_machines = args.min_mach
-v_types = args.v_types
-var_cap = args.var_cap
-mach_spd = args.mach_spd
-version = "multi_island"
-if not os.path.isdir(version):
-    os.mkdir(version)
+    # Set module-level globals used by helper functions
+    global group, n_requests, n_jobs, n_vehicles, n_islands, n_machines
+    global min_n_machines, v_types, var_cap, mach_spd, version, new_group, seed, filename
+    global mf, ams
 
-new_group = f"{version}/{n_requests:02d}R_{n_vehicles:02d}V_{n_islands:02d}I_{n_machines:02d}M"
-if not os.path.isdir(new_group):
-    os.mkdir(new_group)
-
-seed = 1
-
-filenames = os.listdir(group)
-filenames.sort()
-for filename in filenames:
-    if filename[0:2].lower() == "lc" or filename[0:3].lower() == "lrc" or filename[:-4:-1] != "txt" :
-        continue
-
-    np.random.seed(seed)
-    random.seed(seed)
-    seed += 1
+    group = args.group
+    n_requests = args.req
+    n_jobs = n_requests * 2
+    n_vehicles = args.vehi
+    n_islands = args.isl
+    n_machines = args.mach
+    min_n_machines = args.min_mach
+    v_types = args.v_types
+    var_cap = args.var_cap
+    mach_spd = args.mach_spd
+    mf = args.mf
+    ams = args.ams
+    pre_folder = args.pre_folder
     
-    filename = filename[:-4]
-    gen_inst_files(filename, group, new_group)
+    version = "multi_island"
+    if not os.path.isdir(version):
+        os.mkdir(version)
+        
+    if not os.path.isdir(f"{version}/{pre_folder}"):	
+        os.mkdir(f"{version}/{pre_folder}")
+
+    new_group = f"{version}/{pre_folder}/{n_requests:02d}R_{n_vehicles:02d}V_{n_islands:02d}I_{n_machines:02d}M"
+    if not os.path.isdir(new_group):
+        os.mkdir(new_group)
+
+    seed = 1
+
+    filenames = os.listdir(group)
+    filenames.sort()
+    for fname in filenames:
+        if fname[0:2].lower() == "lc" or fname[0:3].lower() == "lrc" or fname[:-4:-1] != "txt":
+            continue
+
+        np.random.seed(seed)
+        random.seed(seed)
+        seed += 1
+
+        filename = fname[:-4]
+        gen_inst_files(filename, group, new_group)
+
+
+if __name__ == "__main__":
+    main()

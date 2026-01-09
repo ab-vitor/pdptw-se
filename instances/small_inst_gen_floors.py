@@ -46,7 +46,6 @@ def reduce_inst_jobs(inst_jobs):
 		inst_jobs.drop(chosen_idx, inplace=True)
 		if pid == 0:
 			inst_jobs = inst_jobs[inst_jobs["job_no"] != did]
-		# print(inst_jobs.to_string())
 
 	return inst_jobs
 
@@ -67,7 +66,6 @@ def gen_z_values():
 
 def gen_jobs(inst_jobs):
 	inst_jobs.insert(3, "z", gen_z_values())
-	# print(inst_jobs)
 	return inst_jobs
 
 
@@ -90,7 +88,6 @@ def gen_vehicles(n_vehicles, max_demand_req):
 		vehicles.append([i, choose_capacity(base_cap, var, v_types)])
 
 	vehicles = pd.DataFrame(vehicles, columns=["v_no", "cap"], index=None)
-	# print(vehicles)
 	return vehicles
 
 
@@ -144,7 +141,6 @@ def gen_machines(points):
 			points = np.vstack([points, pt])
 
 	machines = pd.DataFrame(machines, columns=["id", "x", "y", "z", "spd"])
-	# print(machines)
 	machines.to_csv("machines.csv", header=False, index=False)
 	return machines
 
@@ -174,7 +170,6 @@ def gen_machines_with_all_stations(points):
 			points = np.vstack([points, pt])
 
 	machines = pd.DataFrame(machines, columns=["id", "x", "y", "z", "spd"])
-	# print(machines)
 	machines.to_csv("machines.csv", header=False, index=False)
 	return machines
 
@@ -307,10 +302,10 @@ def gen_inst_files(filename, group, new_group):
 
 	max_demand_req = inst_jobs["dem"].max()
 
-	global n_vehicles, args
+	global n_vehicles
 	vehicles = gen_vehicles(n_vehicles, max_demand_req)
 	jobs = gen_jobs(inst_jobs)
-	if args.ams:
+	if ams:
 		machines = gen_machines_with_all_stations(points)
 	else:
 		machines = gen_machines(points)
@@ -321,82 +316,106 @@ def gen_inst_files(filename, group, new_group):
 
 	savePltFigInstanceMap(jobs, machines, filename)
 
-	if args.mf != "none":
+	if mf != "none":
 		inst_location = os.getcwd()
 
 		os.chdir("../../../../src/julia/")
 
 		global min_n_machines
-		cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {args.mf} --inst ../../instances/{new_group}/{filename}/ --make_instance_feasible --elevator --cutoffmachs {min_n_machines}"
+		cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{filename}/ --make_instance_feasible --elevator --cutoffmachs {min_n_machines}"
 		subprocess.run(cmd_str, shell=True)
 
 		os.chdir(inst_location)
 
-	os.chdir("../../../")
+	os.chdir("../../../../")
 
 
-# Define the parser
-parser = argparse.ArgumentParser(description="Your script description")
+def main():
+	# Define the parser
+	parser = argparse.ArgumentParser(description="Your script description")
 
-# Define the arguments
-parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
-parser.add_argument("--req", type=int, default=0, help="Number of requests")
-parser.add_argument("--vehi", type=int, default=0, help="Number of vehicles")
-parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
-parser.add_argument("--floors", type=int, default=0, help="Number of floors")
-parser.add_argument("--mach", type=int, default=0, help="Number of machines")
-parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
-parser.add_argument("--mach_spd", type=float, default=0.2, help="Machine speed")
-parser.add_argument(
-	"--ams", 
- 	action="store_true", 
-  	help="Instances with all machine stations"
-)
-parser.add_argument(
-	"--mf",
-	choices=["greedy", "none"],
-	default="none",
-	help="Instances with all machine stations",
-)
-parser.add_argument(
-	"--var_cap",
-	type=int,
-	default=5,
-	help="Vehicle Capacity variation from base capacity (%%). If base is 90%% and the variation is 5%%, the vehicles capacities will be 90%%, 95%%, and 100%%, if v_types is 3",
-)
+	# Define the arguments
+	parser.add_argument("--group", type=str, default="pdptw_100_li_lim", help="Group of instances")
+	parser.add_argument("--req", type=int, default=0, help="Number of requests")
+	parser.add_argument("--vehi", type=int, default=0, help="Number of vehicles")
+	parser.add_argument("--v_types", type=int, default=3, help="Number of vehicle types")
+	parser.add_argument("--floors", type=int, default=0, help="Number of floors")
+	parser.add_argument("--mach", type=int, default=0, help="Number of machines")
+	parser.add_argument("--min_mach", type=int, default=0, help="Minimum Number of machines")
+	parser.add_argument("--mach_spd", type=float, default=0.2, help="Machine speed")
+	parser.add_argument(
+		"--ams", 
+		action="store_true", 
+		help="Instances with all machine stations"
+	)
+	parser.add_argument(
+		"--mf",
+		choices=["greedy", "none"],
+		default="none",
+		help="Instances with all machine stations",
+	)
+	parser.add_argument(
+		"--var_cap",
+		type=int,
+		default=5,
+		help="Vehicle Capacity variation from base capacity (%%). If base is 90%% and the variation is 5%%, the vehicles capacities will be 90%%, 95%%, and 100%%, if v_types is 3",
+	)
+	parser.add_argument(
+        "--pre_folder",
+        type=str,
+        default="orig_ams",
+        help = "Folder before the new group folder"
+    )
 
-# Parse the arguments
-args = parser.parse_args()
+	# Parse the arguments
+	args = parser.parse_args()
 
-group = args.group
-n_requests = args.req
-n_jobs = n_requests * 2
-n_vehicles = args.vehi
-n_floors = args.floors
-n_machines = args.mach
-min_n_machines = args.min_mach
-v_types = args.v_types
-var_cap = args.var_cap
-mach_spd = args.mach_spd
-version = "multi_floor"
-if not os.path.isdir(version):
-	os.mkdir(version)
+	# Set module-level globals used by helper functions
+	global group, n_requests, n_jobs, n_vehicles, n_floors, n_machines
+	global min_n_machines, v_types, var_cap, mach_spd, version, new_group, seed
+	global mf, ams
 
-new_group = f"{version}/{n_requests:02d}R_{n_vehicles:02d}V_{n_floors:02d}F_{n_machines:02d}M"
-
-if not os.path.isdir(new_group):
-	os.mkdir(new_group)
-
-seed = 1
-
-filenames = os.listdir(group)
-filenames.sort()
-for filename in filenames:
-	if filename[0:2].lower() == "lc" or filename[0:3].lower() == "lrc" or filename[:-4:-1] != "txt":
-		continue
-	
-	np.random.seed(seed)
-	seed += 1
+	group = args.group
+	n_requests = args.req
+	n_jobs = n_requests * 2
+	n_vehicles = args.vehi
+	n_floors = args.floors
+	n_machines = args.mach
+	min_n_machines = args.min_mach
+	v_types = args.v_types
+	var_cap = args.var_cap
+	mach_spd = args.mach_spd
+	mf = args.mf
+	ams = args.ams
+	pre_folder = args.pre_folder
  
-	filename = filename[:-4]
-	gen_inst_files(filename, group, new_group)
+	version = "multi_floor"
+	if not os.path.isdir(version):
+		os.mkdir(version)
+  
+	if not os.path.isdir(f"{version}/{pre_folder}"):	
+		os.mkdir(f"{version}/{pre_folder}")
+
+	new_group = f"{version}/{pre_folder}/{n_requests:02d}R_{n_vehicles:02d}V_{n_floors:02d}F_{n_machines:02d}M"
+
+	if not os.path.isdir(new_group):
+		os.mkdir(new_group)
+
+	seed = 1
+
+	filenames = os.listdir(group)
+	filenames.sort()
+	for filename in filenames:
+		# skip files that don't match the instance patterns
+		if filename[0:2].lower() == "lc" or filename[0:3].lower() == "lrc" or filename[:-4:-1] != "txt":
+			continue
+
+		np.random.seed(seed)
+		seed += 1
+
+		filename = filename[:-4]
+		gen_inst_files(filename, group, new_group)
+
+
+if __name__ == "__main__":
+	main()
