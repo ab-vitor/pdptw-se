@@ -463,6 +463,15 @@ def gen_inst_files(filename, group, new_group):
     kmeans = kmeans_for_instance(points)
 
     os.chdir(new_group)
+    if filename[2] == '1':
+        os.mkdir("t1")
+        os.chdir("t1")
+    elif filename[2] == '2':
+        os.mkdir("t2")
+        os.chdir("t2")
+    else:
+        raise ValueError("Filename does not match expected pattern.")
+
     if not os.path.isdir(filename):
         os.mkdir(filename)
     os.chdir(filename)
@@ -486,7 +495,7 @@ def gen_inst_files(filename, group, new_group):
     if mf != "none":
         inst_location = os.getcwd()
 
-        os.chdir("../../../../src/julia/")
+        os.chdir("../../../../../../src/julia/")
 
         global min_n_machines
         cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{filename}/ --make_instance_feasible --cutoffmachs {min_n_machines}"
@@ -495,7 +504,7 @@ def gen_inst_files(filename, group, new_group):
         os.chdir(inst_location)
 
 
-    os.chdir("../../../../")
+    os.chdir("../../../../../")
 
 def main():
     # Define the parser
