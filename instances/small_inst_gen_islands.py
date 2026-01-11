@@ -461,16 +461,14 @@ def gen_inst_files(filename, group, new_group):
 
     points = extract_points(inst_jobs)
     kmeans = kmeans_for_instance(points)
+    
+    type_code = f"t{filename[2]}"
 
     os.chdir(new_group)
-    if filename[2] == "1":
-        if not os.path.isdir("t1"):
-            os.mkdir("t1")
-        os.chdir("t1")
-    elif filename[2] == "2": 
-        if not os.path.isdir("t2"):
-            os.mkdir("t2")
-        os.chdir("t2")
+    if type_code == "t1" or type_code == "t2":
+        if not os.path.isdir(type_code):
+            os.mkdir(type_code)
+        os.chdir(type_code)
     else:
         raise ValueError("Filename does not match expected pattern.")
 
@@ -500,7 +498,7 @@ def gen_inst_files(filename, group, new_group):
         os.chdir("../../../../../../src/julia/")
 
         global min_n_machines
-        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{filename}/ --make_instance_feasible --cutoffmachs {min_n_machines}"
+        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --cutoffmachs {min_n_machines}"
         subprocess.run(cmd_str, shell=True)
 
         os.chdir(inst_location)
@@ -592,6 +590,7 @@ def main():
 
         filename = fname[:-4]
         gen_inst_files(filename, group, new_group)
+        exit(0)
 
 
 if __name__ == "__main__":

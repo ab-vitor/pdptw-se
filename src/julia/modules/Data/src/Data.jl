@@ -508,17 +508,13 @@ end # function readData()
 function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, methodCode::String)::Nothing
 	original_path = pwd()
 	cd(params.instPath)
-	cd("..")
-	feasible_group = basename(pwd()) * "_f_" * methodCode
-	cd("..")
-	if !isdir(feasible_group)
-		mkdir(feasible_group)
+	cd("../../../")
+	feasible_inst_path = string("../", basename(pwd()), "_f", methodCode, "/", inst.group, "/", inst.type, "/", inst.name)
+	if !ispath(feasible_inst_path)
+		mkpath(feasible_inst_path)
 	end
-	cd(feasible_group)
-	if !isdir(inst.name)
-		mkdir(inst.name)
-	end
-	cd(inst.name)
+	cd(feasible_inst_path)
+
 	vehicles = "vehicles.csv"
 	jobs = "jobs.csv"
 	machines = "machines.csv"
