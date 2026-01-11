@@ -1,0 +1,68 @@
+module Multistart
+
+import Base.parse
+using Printf
+
+using Gurobi
+using Data
+using Parameters
+using Solutions
+using Formulations
+using Random
+using Enumerations
+using DataFrames
+using CSVUtils
+using Dates
+# using MyCPUTime
+using ProcUsage
+
+include("structs.jl")
+include("greedyUtils.jl")
+include("chooseCandidate.jl")
+include("greedyHeuristic.jl")
+include("semiGreedyHeuristic.jl")
+include("structures.jl")
+include("runMSLP.jl")
+include("statistics.jl")
+include("csvresults.jl")
+include("improvement.jl")
+include("postRunningMSLP.jl")
+include("printConfiguration.jl")
+
+function multistartlpinitialsetup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
+	dummySol = greedyHeuristic(inst, params)
+	Formulations.runLPFormToReScheduleSol(env, dummySol, inst, params)
+	return nothing
+end
+
+function multistartlp(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Solution
+	stopParams = load_stop_params(params)
+	allParams = AllParams(params, stopParams)
+
+	isMainMethod = params.methodType == "heur" && params.methodCode == "mslp"
+	if isMainMethod
+		println("\n[$(Dates.Time(Dates.now()))] Print configuration")
+		printConfiguration(inst, allParams)
+	end
+
+	extmd = ExternalMSLPData()
+	extmd.env = env
+	println("\n[$(Dates.Time(Dates.now()))] Starting running MSLP")
+	t0 = cpu_times()[2]
+	# extmd.startTime = CPUtime_us()
+	extmd.startTime = cpu_times()[1]
+	extmd.iteration = 1
+
+	runMSLP!(inst, extmd, allParams)
+	t1 = cpu_times()[2]
+	@printf("System CPU time: %.2f seconds\n", t1 - t0)
+
+	if isMainMethod
+		println("\n[$(Dates.Time(Dates.now()))] Post running MSLP")
+		postRunningMSLP!(inst, extmd, allParams)
+	end
+
+	return extmd.bestSol
+end # function multistartlp()
+
+end # module Multistart
