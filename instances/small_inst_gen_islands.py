@@ -490,7 +490,7 @@ def gen_inst_files(filename, group, new_group):
     vehicles.to_csv("vehicles.csv", header=False, index=False)
     machines.to_csv("machines.csv", header=False, index=False)
 
-    savePltFigInstanceMap(jobs, machines, convex_hulls)
+    # savePltFigInstanceMap(jobs, machines, convex_hulls)
 
     if mf != "none":
         inst_location = os.getcwd()
@@ -590,7 +590,6 @@ def main():
 
         filename = fname[:-4]
         gen_inst_files(filename, group, new_group)
-        exit(0)
 
 
 if __name__ == "__main__":

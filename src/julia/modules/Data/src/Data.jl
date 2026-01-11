@@ -509,7 +509,14 @@ function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, metho
 	original_path = pwd()
 	cd(params.instPath)
 	cd("../../../")
-	feasible_inst_path = string("../", basename(pwd()), "_f", methodCode, "/", inst.group, "/", inst.type, "/", inst.name)
+	group = inst.group
+	if endswith(inst.group, "03M")
+		group = replace(inst.group, "03M" => "04M")
+	elseif endswith(inst.group, "05M")
+		group = replace(inst.group, "05M" => "06M")
+	end
+
+	feasible_inst_path = string("../", basename(pwd()), "_f", methodCode, "/", group, "/", inst.type, "/", inst.name)
 	if !ispath(feasible_inst_path)
 		mkpath(feasible_inst_path)
 	end
