@@ -145,8 +145,6 @@ function build_vehicle_sets(inst::InstanceData)::Nothing
 	end
 	# println("Q: ", inst.Q)
 
-	inst.max_Q = maximum(inst.Q)
-	# println("max_Q: ", inst.max_Q)
 	return nothing
 end
 
@@ -251,7 +249,6 @@ function build_requests(inst::InstanceData)::Nothing
 	end
 	println("q: ", inst.q)
 
-	inst.max_q = maximum(inst.q)
 
 	inst.s = Int64[]
 	for i in inst.Vprime

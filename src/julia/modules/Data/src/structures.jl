@@ -58,10 +58,8 @@ mutable struct InstanceData
 	e::Vector{Int64} # early time for i in Vprime
 	l::Vector{Int64} # late time for i in Vprime
 	q::Vector{Int64} # demands
-	max_q::Int64 # maximum demand
 	K::Vector{Int64} # vehicles
 	Q::Vector{Int64} # capacities
-	max_Q::Int64 # maximum capacity
 	d::Array{Float64, 3} # dist from node i to node j using vehicle k
 	H::Vector{Int64} # machines
 	H_e::Vector{Vector{Vector{Int64}}} # for each arc, the machines that can attend
@@ -96,10 +94,8 @@ mutable struct InstanceData
 		e = Int64[]
 		l = Int64[]
 		q = Int64[]
-		max_q = 0
 		K = Int64[]
 		Q = Int64[]
-		max_Q = 0
 		d = Array{Float64, 3}(undef, 0, 0, 0)
 		H = Int64[]
 		H_e = Vector{Vector{Vector{Int64}}}()
@@ -133,10 +129,8 @@ mutable struct InstanceData
 			e,
 			l,
 			q,
-			max_q,
 			K,
 			Q,
-			max_Q,
 			d,
 			H,
 			H_e,
