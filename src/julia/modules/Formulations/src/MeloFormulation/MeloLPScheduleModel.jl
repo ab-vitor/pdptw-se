@@ -40,7 +40,7 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 		inst.jobs[inst.refs[inst.depot_begin]].lat >= alpha[i = inst.Vprime, j = inst.Vprime, h = inst.H; (i, j) in trvs[h]] >= 0
 	)
 
-	# c37
+	# c48
 	for k in inst.K, i in L_k[k][2:end]
 		if inst.jobs[inst.refs[sigma[k][i-1]]].point.z == inst.jobs[inst.refs[sigma[k][i]]].point.z
 			@constraint(
@@ -49,12 +49,12 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 				t[sigma[k][i-1]] +
 				inst.s[sigma[k][i-1]] +
 				inst.d[sigma[k][i-1], sigma[k][i], k],
-				base_name = "c37"
+				base_name = "c48"
 			)
 		end
 	end
 
-	# c38
+	# c49
 	for k in inst.K
 		if length(L_k[k]) > 0 && inst.jobs[inst.refs[1]].point.z == inst.jobs[inst.refs[sigma[k][1]]].point.z
 			@constraint(
@@ -62,12 +62,12 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 				t[sigma[k][1]] >=
 				tstart[k] +
 				inst.d[1, sigma[k][1], k],
-				base_name = "c38"
+				base_name = "c49"
 			)
 		end
 	end
 
-	# c39 and c40
+	# c50 and c51
 	for h in inst.H, l in L_h[h]
 		if psi[h][l][1] != 1
 			@constraint(
@@ -76,14 +76,14 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 				t[psi[h][l][1]] +
 				inst.s[psi[h][l][1]] +
 				inst.d_bar[psi[h][l][1], h, psi[h][l][3]],
-				base_name = "c39"
+				base_name = "c50"
 			)
 		else
-			@constraint(model, alpha[1, psi[h][l][2], h] >= tstart[psi[h][l][3]] + inst.d_bar[1, h, psi[h][l][3]], base_name = "c40")
+			@constraint(model, alpha[1, psi[h][l][2], h] >= tstart[psi[h][l][3]] + inst.d_bar[1, h, psi[h][l][3]], base_name = "c51")
 		end
 	end
 
-	# c41
+	# c52
 	for h in inst.H, l in L_h[h]
 		if psi[h][l][2] != inst.depot_end
 			@constraint(
@@ -96,12 +96,12 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 					h,
 				)] +
 				inst.d_bar[psi[h][l][2], h, psi[h][l][3]],
-				base_name = "c41"
+				base_name = "c52"
 			)
 		end
 	end
 
-	# c42
+	# c53
 	for h in inst.H, l in L_h[h][2:end]
 		@constraint(
 			model,
@@ -117,23 +117,23 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 				inst.f[psi[h][l][1]][h],
 				h,
 			)],
-			base_name = "c42"
+			base_name = "c53"
 		)
 	end
 
-	# c43
+	# c54
 	for h in inst.H
 		if length(L_h[h]) > 0
 			@constraint(
 				model,
 				alpha[psi[h][1][1], psi[h][1][2], h] >=
 				inst.O[(1, inst.f[psi[h][1][1]][h], h)],
-				base_name = "c43"
+				base_name = "c54"
 			)
 		end
 	end
 
-	# c44
+	# c55
 	for k in inst.K
 		if length(L_k[k]) > 0 && inst.jobs[inst.refs[sigma[k][end]]].point.z == inst.jobs[inst.refs[inst.depot_end]].point.z
 			@constraint(
@@ -142,14 +142,14 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 				t[sigma[k][end]] +
 				inst.s[sigma[k][end]] +
 				inst.d[sigma[k][end], inst.depot_end, k],
-				base_name = "c44"
+				base_name = "c55"
 			)
 		end
 	end
 
-	# c45
+	# c56
 	for h in inst.H, l in L_h[h]
-		if psi[h][l][2] == 2 * inst.n + 2
+		if psi[h][l][2] == inst.depot_end
 			@constraint(
 				model,
 				tfinal[psi[h][l][3]] >=
@@ -160,30 +160,30 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 					h,
 				)] +
 				inst.d_bar[inst.depot_end, h, psi[h][l][3]],
-				base_name = "c45"
+				base_name = "c56"
 			)
 		end
 	end
 
-	# c46
+	# c57
 	for k in inst.K
-		@constraint(model, C[k] >= tfinal[k] - tstart[k], base_name = "c46")
+		@constraint(model, C[k] >= tfinal[k] - tstart[k], base_name = "c57")
+	end
+
+	# c58
+	for i in inst.V_p_d
+		@constraint(model, inst.e[i] <= t[i], base_name = "c58_p1")
+		@constraint(model, t[i] <= inst.l[i], base_name = "c58_p2")
+	end
+
+	# c59
+	for k in inst.K
+		@constraint(model, inst.e[inst.depot_begin] <= tstart[k], base_name = "c59_p1")
+		@constraint(model, tstart[k] <= tfinal[k], base_name = "c59_p2")
+		@constraint(model, tfinal[k] <= inst.l[inst.depot_begin], base_name = "c59_p3")
 	end
 
 	# c47
-	for i in inst.V_p_d
-		@constraint(model, inst.eprime[i] <= t[i], base_name = "c47_p1")
-		@constraint(model, t[i] <= inst.lprime[i], base_name = "c47_p2")
-	end
-
-	# c48
-	for k in inst.K
-		@constraint(model, inst.jobs[inst.refs[inst.depot_begin]].earl <= tstart[k], base_name = "c48_p1")
-		@constraint(model, tstart[k] <= tfinal[k], base_name = "c48_p2")
-		@constraint(model, tfinal[k] <= inst.jobs[inst.refs[inst.depot_begin]].lat, base_name = "c48_p3")
-	end
-
-	# c36
 	@objective(model, Min, sum(C))
 
 	# Starting optimization
