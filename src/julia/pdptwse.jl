@@ -12,7 +12,6 @@ using JuMP
 using GreedyHeuristicMutate
 using Multistart
 using Solutions
-using LNS
 
 const GRB_ENV = let
     try
@@ -37,15 +36,10 @@ sol::Union{Nothing, Solution} = nothing
 if params.methodType == "form"
 	if params.methodCode == "melo"
 		sol = meloFormulation(GRB_ENV, inst, params)
-	elseif params.methodCode == "barbosa"
-		sol = barbosaFormulation(GRB_ENV, inst, params)
 	end
 elseif params.methodType == "heur"
 	if params.methodCode == "greedy"
 		sol = GreedyHeuristicMutate.greedyHeuristicMutate(inst, params)
-	elseif params.methodCode == "lmns"
-		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
-		sol = LNS.lmns(GRB_ENV, inst, params)
 	elseif params.methodCode == "mssg"
 		sol = Multistart.multistart_semi_greedy(inst, params)
 	elseif params.methodCode == "mslp"

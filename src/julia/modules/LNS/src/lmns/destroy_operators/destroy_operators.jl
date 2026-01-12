@@ -1,8 +1,0 @@
-include("destroyUtils.jl")
-include("randomRequestRemoval.jl")
-include("randomRouteRemoval.jl")
-include("shawRemoval.jl")
-include("proximityBasedRemoval.jl")
-include("timeBasedRemoval.jl")
-include("demBasedRemoval.jl")
-include("selectDestroyOperator.jl")
