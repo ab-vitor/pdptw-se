@@ -39,24 +39,8 @@ mutable struct ParameterData
 	maxiter::Int64
 	outputFlagGrbMIP::Int64
 	outputFlagGrbMSLP::Int64
-	outputFlagGrbLMNS::Int64
 	mslpr::String # stop rule Mulsti-Start LP (MSLP)
 	mslpa::String # stop argument given mslpr
-	lmnsr::String # stop rule large Large Multiple Neighborhood Search (LMNS)
-	lmnsa::String # stop argument given lmnsr 
-	lmnsRepairTime::Float64 # max time for repair operator
-	lmnsMIPFocus::Int64 # 0 -> no focus, 1 -> focus on finding feasible solutions, 2 -> focus on proving optimality, 3 -> focus on improving the best bound
-	lmnsGapToBiggerDestruction::Int64
-	lmnsGapToSmallerDestruction::Int64
-	lmnsWeightShawDistProx::Float64
-	lmnsWeightShawEarlProx::Float64
-	lmnsWeightShawSameRoute::Float64
-	lmnsWeightShawDemandSim::Float64
-	lmnsReqRApplyMIPStart::Bool
-	lmnsAcceptanceCriteria::String
-	lmnsMetropolisTemp::Float64
-	lmnsSimulatedAnnealingTemp::Float64
-	lmnsSimulatedAnnealingCool::Float64
 	mipmaxtime::Int64 # max time for MIP solver
 	csvfilename::String
 	solfilename::String
@@ -103,30 +87,14 @@ mutable struct ParameterData
 		maxiter = 1e6
 		outputFlagGrbMIP = 0
 		outputFlagGrbMSLP = 0
-		outputFlagGrbLMNS = 0
 		mslpr = "M" # check Enumerations Module
 		mslpa = "60"
-		lmnsr = "M" # check Enumerations Module
-		lmnsa = "60"
-		lmnsRepairTime = 30
-		lmnsMIPFocus = 0
-		lmnsGapToBiggerDestruction = 50
-		lmnsGapToSmallerDestruction = 95
 		mipmaxtime = 3600
 		csvfilename = ""
 		solfilename = ""
 		timelineFilename = ""
 		grbFilename = ""
 		rng = Random.MersenneTwister(seed)
-		lmnsWeightShawDistProx = 1
-		lmnsWeightShawEarlProx = 1
-		lmnsWeightShawSameRoute = 1
-		lmnsWeightShawDemandSim = 1
-		lmnsReqRApplyMIPStart = true
-		lmnsAcceptanceCriteria = "H" # check Enumerations Module
-		lmnsMetropolisTemp = 100
-		lmnsSimulatedAnnealingTemp = 100
-		lmnsSimulatedAnnealingCool = 0.95
 		threads = 8
 		solverMethod = parse(SolverMethod, "A")
 
@@ -165,24 +133,8 @@ mutable struct ParameterData
 			maxiter,
 			outputFlagGrbMIP,
 			outputFlagGrbMSLP,
-			outputFlagGrbLMNS,
 			mslpr,
 			mslpa,
-			lmnsr,
-			lmnsa,
-			lmnsRepairTime,
-			lmnsMIPFocus,
-			lmnsGapToBiggerDestruction,
-			lmnsGapToSmallerDestruction,
-			lmnsWeightShawDistProx,
-			lmnsWeightShawEarlProx,
-			lmnsWeightShawSameRoute,
-			lmnsWeightShawDemandSim,
-			lmnsReqRApplyMIPStart,
-			lmnsAcceptanceCriteria,
-			lmnsMetropolisTemp,
-			lmnsSimulatedAnnealingTemp,
-			lmnsSimulatedAnnealingCool,
 			mipmaxtime,
 			csvfilename,
 			solfilename,
@@ -308,18 +260,6 @@ function readInputParameters(ARGS)
 		elseif ARGS[param] == "--mslpa"
 			params.mslpa = ARGS[param+1]
 			param += 1
-		elseif ARGS[param] == "--lmnsr"
-			params.lmnsr = ARGS[param+1]
-			param += 1
-		elseif ARGS[param] == "--lmnsa"
-			params.lmnsa = ARGS[param+1]
-			param += 1
-		elseif ARGS[param] == "--lmnsGapToBiggerDestruction"
-			params.lmnsGapToBiggerDestruction = ARGS[param+1]
-			param += 1
-		elseif ARGS[param] == "--lmnsGapToSmallerDestruction"
-			params.lmnsGapToSmallerDestruction = ARGS[param+1]
-			param += 1
 		elseif ARGS[param] == "--mipmaxtime"
 			params.mipmaxtime = parse(Int64, ARGS[param+1])
 			param += 1
@@ -328,12 +268,6 @@ function readInputParameters(ARGS)
 			param += 1
 		elseif ARGS[param] == "--typeUserCut"
 			params.typeUserCut = parse(Int64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--lmnsRepairTime"
-			params.lmnsRepairTime = parse(Float64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--lmnsMIPFocus"
-			params.lmnsMIPFocus = parse(Int64, ARGS[param+1])
 			param += 1
 		elseif ARGS[param] == "--csvfilename"
 			params.csvfilename = ARGS[param+1]
@@ -352,9 +286,6 @@ function readInputParameters(ARGS)
 			param += 1
 		elseif ARGS[param] == "--outputFlagGrbMSLP"
 			params.outputFlagGrbMSLP = parse(Int64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--outputFlagGrbLMNS"
-			params.outputFlagGrbLMNS = parse(Int64, ARGS[param+1])
 			param += 1
 		elseif ARGS[param] == "--mipPresolve"
 			params.mipPresolve = parse(Int64, ARGS[param+1])

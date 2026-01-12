@@ -2,22 +2,19 @@ function createMeloMIPModel(env::Union{Gurobi.Env, Nothing}, inst::InstanceData,
 	println("\n[$(Dates.Time(Dates.now()))] Creating Melo MIP model...")
 	if params.solver == "Gurobi"
 		model = Model(() -> Gurobi.Optimizer(env))
-		if params.methodType == "heur" && params.methodCode == "lmns"
-			if params.outputFlagGrbLMNS == 0
-				set_silent(model)
-			end
-			set_attribute(model, "OutputFlag", params.outputFlagGrbLMNS)
-			set_attribute(model, "MIPFocus", params.lmnsMIPFocus)
-			set_attribute(model, "Threads", 1)
-		else
-			if params.outputFlagGrbMIP == 0
-				set_silent(model)
-			end
-			set_attribute(model, "OutputFlag", params.outputFlagGrbMIP)
-			max_num_threads = length(Sys.cpu_info())/2
-			num_threads = min(params.threads, max_num_threads)
-			set_attribute(model, "Threads", num_threads)
+
+		if params.outputFlagGrbMIP == 0
+			set_silent(model)
 		end
+		set_attribute(model, "OutputFlag", params.outputFlagGrbMIP)
+
+		max_num_threads = length(Sys.cpu_info())
+		num_threads = max_num_threads
+		if params.threads > 0 && params.threads <= max_num_threads
+			num_threads = params.threads
+		end
+		set_attribute(model, "Threads", num_threads)
+
 		set_attribute(model, "Seed", params.seed)
 
 		set_attribute(model, "TimeLimit", params.mipmaxtime)
@@ -27,7 +24,6 @@ function createMeloMIPModel(env::Union{Gurobi.Env, Nothing}, inst::InstanceData,
 		end
 		set_attribute(model, "LogFile", params.grbFilename)
 		set_attribute(model, "Presolve", params.mipPresolve)
-		# set_attribute(model, "Heuristics", 0)
 		set_attribute(model, "Cuts", params.gurobiCuts)
 		if params.maxnodes >= 0
 			set_attribute(model, "NodeLimit", params.maxnodes)
