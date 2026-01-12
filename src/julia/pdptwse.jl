@@ -40,8 +40,6 @@ if params.methodType == "form"
 elseif params.methodType == "heur"
 	if params.methodCode == "greedy"
 		sol = GreedyHeuristicMutate.greedyHeuristicMutate(inst, params)
-	elseif params.methodCode == "mssg"
-		sol = Multistart.multistart_semi_greedy(inst, params)
 	elseif params.methodCode == "mslp"
 		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
 		sol = Multistart.multistartlp(GRB_ENV, inst, params)
