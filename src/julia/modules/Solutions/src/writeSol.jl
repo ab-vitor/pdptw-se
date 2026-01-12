@@ -42,7 +42,7 @@ function saveSolutionTimeline(sol::Solution, inst::InstanceData, gp::ParameterDa
 	file = open(timelineFilename, "w")
 	orig_stdout = stdout
 	redirect_stdout(file)
-	printDetailMeloFormulationSolution(inst, sol)
+	print_timeline_solution(inst, sol)
 	close(file)
 	redirect_stdout(orig_stdout)
 	return nothing

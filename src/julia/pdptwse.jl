@@ -43,7 +43,7 @@ end
 # Print solution details and validate solution
 if sol !== nothing
 	if params.printsol == 1
-		printDetailMeloFormulationSolution(inst, sol)
+		print_timeline_solution(inst, sol)
 	end
 	
 	if validate_solution(inst, sol, params)

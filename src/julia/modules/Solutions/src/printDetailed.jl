@@ -106,7 +106,7 @@ function printMachineDetail(inst::InstanceData, machine::Vector{MachineTravel}, 
 	return nothing
 end # function printMachineDetail()
 
-function printDetailMeloFormulationSolution(inst::InstanceData, sol::Solution)::Nothing
+function print_timeline_solution(inst::InstanceData, sol::Solution)::Nothing
 	println("---------------------| VEHICLES |---------------------\n")
 	for k in inst.K
 		if length(sol.vehicles[k]) > 2
@@ -136,4 +136,4 @@ function printDetailMeloFormulationSolution(inst::InstanceData, sol::Solution)::
 	println("TOTAL: ", sum(sol.completionTimes))
 	println()
 	return nothing
-end # function printDetailMeloFormulationSolution()
+end # function print_timeline_solution()

@@ -53,7 +53,7 @@ function greedyHeuristic(inst::InstanceData, params::ParameterData)::Solution
 
 	sol.feasible = !reqNotInserted
 
-	# printDetailMeloFormulationSolution(inst, sol)
+	# print_timeline_solution(inst, sol)
 	# if validate_solution(inst, sol, params)
 	# 	sol.feasible = true
 	# else

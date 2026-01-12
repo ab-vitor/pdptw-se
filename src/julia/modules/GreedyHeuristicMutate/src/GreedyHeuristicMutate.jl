@@ -802,7 +802,7 @@ function greedyHeuristicMutate(inst::InstanceData, params::ParameterData)
 
 	sol.completionTimes = Float64[rt[length(rt)].servST for rt in sol.vehicles]
 	sol.value = sum(sol.completionTimes)
-	printDetailMeloFormulationSolution(inst, sol)
+	print_timeline_solution(inst, sol)
 	println(inst.name, ": ", sol.value)
 	if validate_solution(inst, sol, params)
 		sol.feasible = true

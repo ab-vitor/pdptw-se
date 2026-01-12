@@ -10,7 +10,7 @@ export VehicleStop, MachineTravel, StatsSolution, Solution
 export LPSolution
 
 export createSolutionMelo, saveSolutionToFile, saveSolutionTimeline,
-	printDetailMeloFormulationSolution, validate_solution
+	print_timeline_solution, validate_solution
 
 
 include("solutionDataStructures.jl")
