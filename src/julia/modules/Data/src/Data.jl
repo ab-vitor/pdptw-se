@@ -257,7 +257,6 @@ function build_requests(inst::InstanceData)::Nothing
 	for i in inst.Vprime
 		push!(inst.s, inst.jobs[inst.refs[i]].servt)
 	end
-	inst.max_s = maximum(inst.s)
 	return nothing
 end
 

@@ -71,7 +71,6 @@ mutable struct InstanceData
 	O::Dict{Tuple{Int64, Int64, Int64}, Float64} # dist from z-pos of node i to z-pos of node j using machine h
 	n::Int64 # number of requests
 	s::Vector{Int64} # service time at node i
-	max_s::Int64 # maximum service time
 	depot_begin::Int64 # 1
 	depot_end::Int64 # 2*n+2
 	initial_station::Int64 # 1
@@ -111,7 +110,6 @@ mutable struct InstanceData
 		O = Dict{Tuple{Int64, Int64, Int64}, Float64}()
 		n = 0
 		s = Int64[]
-		max_s = 0
 		depot_begin = 0
 		depot_end = 0
 		initial_station = 0
@@ -150,7 +148,6 @@ mutable struct InstanceData
 			O,
 			n,
 			s,
-			max_s,
 			depot_begin,
 			depot_end,
 			initial_station,
