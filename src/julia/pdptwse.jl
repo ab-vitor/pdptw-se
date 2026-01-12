@@ -1,8 +1,4 @@
 push!(LOAD_PATH, "modules/")
-# using Pkg
-# Pkg.activate(".")
-# Pkg.instantiate()
-# Pkg.build()
 
 using Data
 using Parameters
@@ -13,6 +9,7 @@ using GreedyHeuristicMutate
 using Multistart
 using Solutions
 
+# Check if Gurobi is available
 const GRB_ENV = let
     try
         @eval using Gurobi
@@ -32,12 +29,9 @@ params = readInputParameters(ARGS)
 # Read instance data
 inst = readData(params)
 
+# Solve the problem according to the selected method
 sol::Union{Nothing, Solution} = nothing
-if params.methodType == "form"
-	if params.methodCode == "melo"
-		sol = meloFormulation(GRB_ENV, inst, params)
-	end
-elseif params.methodType == "heur"
+if params.methodType == "heur"
 	if params.methodCode == "greedy"
 		sol = GreedyHeuristicMutate.greedyHeuristicMutate(inst, params)
 	elseif params.methodCode == "mslp"
@@ -46,14 +40,15 @@ elseif params.methodType == "heur"
 	end
 end
 
+# Print solution details and validate solution
 if sol !== nothing
 	if params.printsol == 1
 		printDetailMeloFormulationSolution(inst, sol)
 	end
 	
 	if validateSolution(inst, sol, params)
-		println("Everything is awesome!")
+		println("Feasible solution! :D")
 	else
-		println("Infeasible solution :(")
+		println("Infeasible solution! :(")
 	end
 end
