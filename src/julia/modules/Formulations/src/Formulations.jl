@@ -9,7 +9,7 @@ using Solutions
 using CSVUtils
 using DataFrames
 
-export meloFormulation, barbosaFormulation, MIPModel, createMeloMIPModel
+export meloFormulation, MIPModel, createMeloMIPModel
 
 include("MeloFormulation/MeloFormulation.jl")
 
