@@ -9,7 +9,7 @@ include("structures.jl")
 include("auxiliary_functions.jl")
 include("Statistics.jl")
 
-export InstanceData, readData, Vehicle, Job, Machine, Point, instanceDataToCsvFiles
+export InstanceData, read_data, Vehicle, Job, Machine, Point, instanceDataToCsvFiles
 
 function read_files(inst::InstanceData, params::ParameterData)::Nothing
 	vehicles = string(params.instPath, "vehicles.csv")
@@ -266,12 +266,12 @@ function print_jobs(inst::InstanceData)::Nothing
 	return nothing
 end
 
-function readData(params::ParameterData, instPath::Union{Nothing, String} = nothing)::InstanceData
+function read_data(params::ParameterData, instPath::Union{Nothing, String} = nothing)::InstanceData
 	if instPath !== nothing
 		params.instPath = instPath
 		Parameters.saveInstanceFullName!(params)
 	end
-	println("\n[$(Dates.Time(Dates.now()))] Running Data.readData with file $(params.instPath)")
+	println("\n[$(Dates.Time(Dates.now()))] Running Data.read_data with file $(params.instPath)")
 	inst = InstanceData()
 
 	inst.name = params.name
@@ -295,7 +295,7 @@ function readData(params::ParameterData, instPath::Union{Nothing, String} = noth
 
 	print_jobs(inst)
 	return inst
-end # function readData()
+end # function read_data()
 
 function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, methodCode::String)::Nothing
 	original_path = pwd()

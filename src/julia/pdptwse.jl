@@ -27,7 +27,7 @@ end
 params = readInputParameters(ARGS)
 
 # Read instance data
-inst = readData(params)
+inst = read_data(params)
 
 # Solve the problem according to the selected method
 sol::Union{Nothing, Solution} = nothing
