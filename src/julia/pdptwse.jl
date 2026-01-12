@@ -44,8 +44,6 @@ elseif params.methodType == "heur"
 		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
 		sol = Multistart.multistartlp(GRB_ENV, inst, params)
 	end
-elseif params.methodType == "preprocessing"
-	Data.write_preprocessingdata_to_csv(inst, params)
 end
 
 if sol !== nothing
