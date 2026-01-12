@@ -144,7 +144,7 @@ function saveInstanceFullName!(params::ParameterData)::Nothing
 	return nothing
 end
 
-include("LoadGenConfig.jl")
+include("load_general_configuration.jl")
 
 function readInputParameters(ARGS)
 	#println("Running Parameters.readInputParameters")
