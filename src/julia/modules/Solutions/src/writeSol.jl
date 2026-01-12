@@ -30,3 +30,20 @@ function saveSolutionToFile(sol::Solution, inst::InstanceData, params::Parameter
 	write(file, "\nValue = $(sol.value)\n")
 	close(file)
 end # function saveSolutionToFile()
+
+function saveSolutionTimeline(sol::Solution, inst::InstanceData, gp::ParameterData, suff::String="")::Nothing
+	println("\n[$(Dates.Time(Dates.now()))] Saving solution timeline to file: ", gp.timelineFilename)
+
+	dir = dirname(gp.timelineFilename)
+	if !isdir(dir)
+		mkpath(dir)
+	end
+	timelineFilename = string(gp.timelineFilename[1:end-4], suff, ".txt")
+	file = open(timelineFilename, "w")
+	orig_stdout = stdout
+	redirect_stdout(file)
+	printDetailMeloFormulationSolution(inst, sol)
+	close(file)
+	redirect_stdout(orig_stdout)
+	return nothing
+end
