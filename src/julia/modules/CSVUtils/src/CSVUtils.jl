@@ -5,6 +5,10 @@ using DataFrames
 
 export write_csv_with_flock, structToKeyInDict
 
+# The idea was to write into a CSV file without concurrence,
+# but it didn't work as expected, so I decided to save results
+# in different files for parallel executions
+
 # Function to apply file locks
 function flock(fd::Integer, operation::Integer)
     ccall(:flock, Cint, (Cint, Cint), fd, operation)
