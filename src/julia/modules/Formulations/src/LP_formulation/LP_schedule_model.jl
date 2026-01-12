@@ -1,4 +1,4 @@
-function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution, inst::InstanceData, params::ParameterData)::Solution
+function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Solution, inst::InstanceData, params::ParameterData)::Solution
 	if params.solver == "Gurobi"
 		model = Model(() -> Gurobi.Optimizer(env))
 		if params.outputFlagGrbMSLP == 0
@@ -231,4 +231,4 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 	Solutions.updateSolFromLPSol!(sol, lpSol, inst, params)
 
 	return sol
-end # function runLPFormToReScheduleSol()
+end # function run_LP_to_reschedule_solution()

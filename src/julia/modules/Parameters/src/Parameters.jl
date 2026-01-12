@@ -47,8 +47,6 @@ mutable struct ParameterData
 		type = ""
 		group = ""
 		fullname = ""
-		# methodType = "form"
-		# methodCode = "melo"
 		methodType = "heur"
 		methodCode = "mslp"
 		genconfigfile = "configs/mslp/genconfig_mslp.conf"

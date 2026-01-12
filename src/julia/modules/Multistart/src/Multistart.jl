@@ -30,7 +30,7 @@ include("printConfiguration.jl")
 
 function multistartlpinitialsetup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
 	dummySol = greedyHeuristic(inst, params)
-	Formulations.runLPFormToReScheduleSol(env, dummySol, inst, params)
+	Formulations.run_LP_to_reschedule_solution(env, dummySol, inst, params)
 	return nothing
 end
 

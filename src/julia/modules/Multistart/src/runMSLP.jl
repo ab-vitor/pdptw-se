@@ -16,7 +16,7 @@ function runMSLP!(inst::InstanceData, extmd::ExternalMSLPData, allParams::AllPar
 
 	if extmd.currSol.feasible
 		extmd.lastSGreedySolValue = extmd.currSol.value
-		extmd.currSol = Formulations.runLPFormToReScheduleSol(extmd.env, extmd.currSol, inst, allParams.general)
+		extmd.currSol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.currSol, inst, allParams.general)
 		extmd.lpRuns += 1
 
 		if extmd.currSol.feasible && extmd.currSol.value < extmd.lastSGreedySolValue
@@ -45,7 +45,7 @@ function runMSLP!(inst::InstanceData, extmd::ExternalMSLPData, allParams::AllPar
 		extmd.currSol = semiGreedyHeuristic(inst, allParams.general)
 		if extmd.currSol.feasible
 			extmd.lastSGreedySolValue = extmd.currSol.value
-			extmd.currSol = Formulations.runLPFormToReScheduleSol(extmd.env, extmd.currSol, inst, allParams.general)
+			extmd.currSol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.currSol, inst, allParams.general)
 			extmd.lpRuns += 1
 
 			if extmd.currSol.value < extmd.lastSGreedySolValue
