@@ -7,7 +7,7 @@ using Parameters
 
 include("structures.jl")
 include("auxiliary_functions.jl")
-include("preprocessing.jl")
+include("Statistics.jl")
 
 export InstanceData, readData, Vehicle, Job, Machine, Point, instanceDataToCsvFiles
 
@@ -207,26 +207,12 @@ function build_O(inst::InstanceData, params::ParameterData)::Nothing
 			end
 		end
 	end
-	# for h in inst.H
-	# 	for i in 1:length(inst.machines[h].points)
-	# 		inst.O[(i, inst.Sprime_h[h][end], h)] = 0
-	# 	end
-	# end
 	for o in inst.O
 		println("o: ", o)
 	end
 	println()
 	# println("O: ", inst.O)
 	return nothing
-end
-
-function can_be_used_to_traverse_the_arc(i::Int, j::Int, h::Int, inst::InstanceData)::Bool
-	job_i_z = inst.jobs[inst.refs[i]].point.z
-	job_j_z = inst.jobs[inst.refs[j]].point.z
-	has_station_for_i = any(p -> p.z == job_i_z, inst.machines[h].points)
-	has_station_for_j = any(p -> p.z == job_j_z, inst.machines[h].points)
-
-	return has_station_for_i && has_station_for_j
 end
 
 function build_H_e(inst::InstanceData)::Nothing
@@ -244,26 +230,6 @@ function build_H_e(inst::InstanceData)::Nothing
 		end
 	end
 	# println("H_e ", inst.H_e)
-	return nothing
-end
-
-function build_H_eprime(inst::InstanceData)::Nothing
-	inst.H_eprime = []
-	for i in inst.Vprime
-		push!(inst.H_eprime, [])
-		for j in inst.Vprime
-			push!(inst.H_eprime[i], [])
-			for iprime in inst.Vprime
-				push!(inst.H_eprime[i][j], [])
-				for jprime in inst.Vprime
-					set1 = Set(inst.H_e[i][j])
-					set2 = Set(inst.H_e[iprime][jprime])
-					intersection = collect(intersect(set1, set2))
-					push!(inst.H_eprime[i][j][iprime], intersection)
-				end
-			end
-		end
-	end
 	return nothing
 end
 
@@ -301,167 +267,12 @@ function build_requests(inst::InstanceData)::Nothing
 	return nothing
 end
 
-function build_arcs(inst::InstanceData)::Nothing
-	inst.A = Tuple{Int64, Int64}[]
-	inst.ppd.arcs = length(inst.Vprime) * length(inst.Vprime)
-	for i in inst.Vprime, j in inst.Vprime
-		if !is_arc_infeasible(i, j, inst)
-			push!(inst.A, (i, j))
-		end
-	end
-	# println("A: ", inst.A)
-
-	inst.A_m = Tuple{Int64, Int64}[]
-	inst.A_s = Tuple{Int64, Int64}[]
-	for (i, j) in inst.A
-		if inst.jobs[inst.refs[i]].point.z != inst.jobs[inst.refs[j]].point.z
-			push!(inst.A_m, (i, j))
-		else
-			push!(inst.A_s, (i, j))
-		end
-	end
-	# println("A_m: ", inst.A_m)
-	# println("A_s: ", inst.A_s)
-	return nothing
-end
-
-function build_barbosa_formulation_data(inst::InstanceData)::Nothing
-	inst.L_K = copy(inst.Vprime)
-	length_L_H = 0
-	for i in inst.V_p
-		nodes = Int64[1, i, i+inst.n, 1]
-		for j in eachindex(nodes)[2:end]
-			if inst.jobs[inst.refs[nodes[j]]].point.z != inst.jobs[inst.refs[nodes[j-1]]].point.z
-				length_L_H += 1
-			end
-		end
-	end
-	inst.L_H = Int64[i for i in 1:length_L_H]
-	println("L_K: ", inst.L_K)
-	println("L_H: ", inst.L_H)
-
-	inst.F_h = Vector[]
-	for h in inst.H
-		push!(inst.F_h, Int64[])
-		for mpt in inst.machines[h].points
-			push!(inst.F_h[h], mpt.z)
-		end
-	end
-	println("F_h: ", inst.F_h)
-
-	inst.S_h = Vector[]
-	for h in inst.H
-		push!(inst.S_h, Int64[])
-		for i in 1:length(inst.F_h[h])
-			push!(inst.S_h[h], i)
-		end
-	end
-	println("S_h: ", inst.S_h)
-
-	inst.Sprime_h = deepcopy(inst.S_h)
-	for h in inst.H
-		push!(inst.Sprime_h[h], length(inst.F_h[h]) + 1)
-	end
-	println("Sprime_h: ", inst.Sprime_h)
-	return nothing
-end
-
-function build_minimums_and_maximums(inst::InstanceData)::Nothing
-	inst.dmax_vehicle::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.Vprime)))
-	for i in inst.Vprime, j in inst.Vprime
-		inst.dmax_vehicle[i, j] = maximum(inst.d[i, j, :])
-	end
-	inst.dmin_vehicle::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.Vprime)))
-	for i in inst.Vprime, j in inst.Vprime
-		inst.dmin_vehicle[i, j] = minimum(inst.d[i, j, :])
-	end
-end
-
-function build_feas_gamma(inst::InstanceData)::Nothing
-	inst.feas_gamma = zeros(Float64, length(inst.Vprime), length(inst.Vprime), length(inst.Vprime), length(inst.Vprime), length(inst.H))
-	for (i, j) in inst.A_m
-		for (ip, jp) in inst.A_m
-			for h in intersect(inst.H_e[i][j], inst.H_e[ip][jp])
-				inst.ppd.gamma_vars += 1
-				if is_precede_possible(i, j, ip, jp, h, inst)
-					inst.feas_gamma[i, j, ip, jp, h] = 1.0
-					inst.ppd.feas_gamma_vars += 1
-				end
-			end
-		end
-	end
-	return nothing
-end
-
-function build_big_M(inst::InstanceData)::Nothing
-	inst.max_d::Float64 = maximum(inst.d)
-
-	inst.M = Int64[]
-
-	M1 = inst.max_Q + inst.max_q + 1
-	M1 = ceil(M1)
-	push!(inst.M, M1)
-
-	M2 = inst.jobs[1].lat + inst.max_s + inst.max_d + 1
-	M2 = ceil(M2)
-	push!(inst.M, M2)
-
-	M3 = inst.jobs[1].lat + inst.max_d + 1
-	M3 = ceil(M3)
-	push!(inst.M, M3)
-
-	max_d_bar = maximum([inst.d_bar[i, h, k] for i in inst.Vprime for h in inst.H for k in inst.K if inst.f[i][h] != -1])
-	M4 = inst.jobs[1].lat + inst.max_s + max_d_bar + 1
-	M4 = ceil(M4)
-	push!(inst.M, M4)
-
-	M5 = inst.jobs[1].lat + max_d_bar + 1
-	M5 = ceil(M5)
-	push!(inst.M, M5)
-
-	max_O =
-		maximum([inst.O[(i, j, h)] for h in inst.H for i in 1:length(inst.machines[h].points) for j in 1:length(inst.machines[h].points)])
-	M6 = inst.jobs[1].lat + max_O + max_d_bar + 1
-	M6 = ceil(M6)
-	push!(inst.M, M6)
-
-	M7 = inst.jobs[1].lat + 2 * max_O + 1
-	M7 = ceil(M7)
-	push!(inst.M, M7)
-
-	M8 = max_O + 1
-	M8 = ceil(M8)
-	push!(inst.M, M8)
-	println(inst.M)
-	return nothing
-end
-
 function print_jobs(inst::InstanceData)::Nothing
 	println("JOBS in the order of refs (Vprime)")
 	for i in inst.Vprime
 		ref = inst.refs[i]
 		println("Node ", i, ": ", inst.jobs[ref])
 	end
-	return nothing
-end
-
-function print_preprocessingdata(ppd::PreprocessingData)::Nothing
-	println()
-	println("### Preprocessing Data ###")
-	for field in fieldnames(typeof(ppd))
-		fname = String(field)
-		value = getfield(ppd, field)
-		if occursin("arc", fname)
-			perc = ppd.arcs != 0 ? round(100 * value / ppd.arcs; digits = 2) : 0
-			println("\t-> $(fname): $(value) ($(perc)%)")
-		elseif occursin("gamma", fname)
-			perc = ppd.gamma_vars != 0 ? round(100 * value / ppd.gamma_vars; digits = 2) : 0
-			println("\t-> $(fname): $(value) ($(perc)%)")
-		elseif occursin("machine", fname)
-			println("\t-> $(fname): $(value)")
-		end
-	end
-	println("##########################")
 	return nothing
 end
 
@@ -490,18 +301,9 @@ function readData(params::ParameterData, instPath::Union{Nothing, String} = noth
 	build_station_point_mapper(inst)
 	build_O(inst, params)
 	build_H_e(inst)
-	# build_H_eprime(inst)
 	build_d(inst)
-	build_minimums_and_maximums(inst)
-	build_eprime_lprime!(inst)
-	build_arcs(inst)
-	build_big_M(inst)
-	# preprocess_H_e!(inst)
-	# build_H_eprime(inst)
-	# build_feas_gamma(inst)
 
 	print_jobs(inst)
-	print_preprocessingdata(inst.ppd)
 	return inst
 end # function readData()
 
@@ -553,6 +355,5 @@ function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, metho
 	return nothing
 end # function instanceDataToCsvFiles()
 
-include("Statistics.jl")
 
 end # module Data

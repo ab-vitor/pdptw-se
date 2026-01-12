@@ -1,9 +1,4 @@
 push!(LOAD_PATH, "modules/")
-# push!(DEPOT_PATH, JULIA_DEPOT_PATH)
-using Pkg
-#Pkg.activate(".")
-# Pkg.instantiate()
-# Pkg.build()
 
 import Data
 using Parameters
