@@ -326,7 +326,7 @@ def gen_inst_files(filename, group, new_group):
     vehicles.to_csv("vehicles.csv", header=False, index=False)
     machines.to_csv("machines.csv", header=False, index=False)
 
-    savePltFigInstanceMap(jobs, machines, filename)
+    # savePltFigInstanceMap(jobs, machines, filename) # uncomment to save instance map figure
 
     if mf != "none":
         inst_location = os.getcwd()
