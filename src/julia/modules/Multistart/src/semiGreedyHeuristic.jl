@@ -45,7 +45,7 @@ function semiGreedyHeuristic(inst::InstanceData, params::ParameterData)::Solutio
 
 	sol.feasible = !jumpedRequest
 
-	# if  validateSolution(inst, sol, params)
+	# if  validate_solution(inst, sol, params)
 	# 	sol.feasible = true
 	# else
 	# 	sol.feasible = false

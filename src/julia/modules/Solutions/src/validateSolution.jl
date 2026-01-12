@@ -239,7 +239,7 @@ function completion_times_const(inst::InstanceData, sol::Solution, params::Param
 	return true
 end
 
-function validateSolution(inst::InstanceData, sol::Solution, params::ParameterData, partialValidation::Bool = false)
+function validate_solution(inst::InstanceData, sol::Solution, params::ParameterData, partialValidation::Bool = false)
 
 	jobs_completed = [Any[false, 0] for i in inst.Vprime] # for each node: 1st visited; 2nd which vehicle
 	if !depot_flow_and_precedence_const(inst, sol, jobs_completed)
@@ -275,4 +275,4 @@ function validateSolution(inst::InstanceData, sol::Solution, params::ParameterDa
 	end
 
 	return true
-end # validateSolution
+end # validate_solution

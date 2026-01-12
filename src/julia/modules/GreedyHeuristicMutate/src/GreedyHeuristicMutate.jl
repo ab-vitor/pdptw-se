@@ -804,7 +804,7 @@ function greedyHeuristicMutate(inst::InstanceData, params::ParameterData)
 	sol.value = sum(sol.completionTimes)
 	printDetailMeloFormulationSolution(inst, sol)
 	println(inst.name, ": ", sol.value)
-	if validateSolution(inst, sol, params)
+	if validate_solution(inst, sol, params)
 		sol.feasible = true
 		println("Feasible solution! :D")
 		if params.make_instance_feasible && params.methodCode == "greedy"

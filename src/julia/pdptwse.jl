@@ -46,7 +46,7 @@ if sol !== nothing
 		printDetailMeloFormulationSolution(inst, sol)
 	end
 	
-	if validateSolution(inst, sol, params)
+	if validate_solution(inst, sol, params)
 		println("Feasible solution! :D")
 	else
 		println("Infeasible solution! :(")
