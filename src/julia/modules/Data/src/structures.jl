@@ -67,8 +67,6 @@ mutable struct InstanceData
 	H::Vector{Int64} # machines
 	H_e::Vector{Vector{Vector{Int64}}} # for each arc, the machines that can attend
 	d_bar::Array{Float64, 3} # distance from node i to machine h using vehicle k
-	d_bar_min::Array{Float64, 2} # minimum distance from node i to machine h from all vehicles k
-	d_bar_max::Array{Float64, 2} # maximum distance from node i to machine h from all vehicles k
 	f::Vector{Vector{Int64}} # z-pos for machine h considering node i (-1 if the machine is not on node's z-pos)
 	O::Dict{Tuple{Int64, Int64, Int64}, Float64} # dist from z-pos of node i to z-pos of node j using machine h
 	n::Int64 # number of requests
@@ -109,8 +107,6 @@ mutable struct InstanceData
 		H = Int64[]
 		H_e = Vector{Vector{Vector{Int64}}}()
 		d_bar = Array{Float64, 3}(undef, 0, 0, 0)
-		d_bar_min = Array{Float64, 2}(undef, 0, 0)
-		d_bar_max = Array{Float64, 2}(undef, 0, 0)
 		f = Vector{Vector{Int64}}()
 		O = Dict{Tuple{Int64, Int64, Int64}, Float64}()
 		n = 0
@@ -150,8 +146,6 @@ mutable struct InstanceData
 			H,
 			H_e,
 			d_bar,
-			d_bar_min,
-			d_bar_max,
 			f,
 			O,
 			n,

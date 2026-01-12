@@ -170,12 +170,6 @@ function build_d_bar(inst::InstanceData)::Nothing
 			inst.d_bar[i, h, k] = Inf64
 		end
 	end
-	inst.d_bar_min::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.H)))
-	inst.d_bar_max::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.H)))
-	for i in inst.Vprime, h in inst.H
-		inst.d_bar_min[i, h] = minimum(inst.d_bar[i, h, :])
-		inst.d_bar_max[i, h] = maximum(inst.d_bar[i, h, :])
-	end
 	return nothing
 end
 
