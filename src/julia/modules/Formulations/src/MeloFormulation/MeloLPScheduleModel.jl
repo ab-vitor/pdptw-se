@@ -178,32 +178,33 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 
 	# c48
 	for k in inst.K
-		@constraint(model, inst.jobs[inst.refs[inst.depot_begin]].earl <= tstart[k], base_name = "c48")
-		@constraint(model, tstart[k] <= tfinal[k], base_name = "c48")
-		@constraint(model, tfinal[k] <= inst.jobs[inst.refs[inst.depot_begin]].lat, base_name = "c48")
+		@constraint(model, inst.jobs[inst.refs[inst.depot_begin]].earl <= tstart[k], base_name = "c48_p1")
+		@constraint(model, tstart[k] <= tfinal[k], base_name = "c48_p2")
+		@constraint(model, tfinal[k] <= inst.jobs[inst.refs[inst.depot_begin]].lat, base_name = "c48_p3")
 	end
 
 	# c36
 	@objective(model, Min, sum(C))
 
-	# println("Starting optimization...")
+	# Starting optimization
 
-	# println("starting")
 	optimize!(model)
-	# println("final")
+
+
+	# Retrieving results
 
 	status = termination_status(model)
 
 	opt = 0
 	tle = 0
 	if status == OPTIMAL
-		# println("Solution is optimal")
+		# Solution is optimal
 		opt = 1
 	elseif status == TIME_LIMIT && has_values(model)
+		# Solution is suboptimal due to a time limit, but a primal solution is available
 		tle = 1
-		# println("Solution is suboptimal due to a time limit, but a primal solution is available")
 	else
-		# println("The model was not solved correctly. Status: ", status)
+		# The model was not solved correctly
 		sol.feasible = false
 		return sol
 	end
@@ -228,14 +229,6 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 
 	lpSol = LPSolution(t, tstart, tfinal, C, alpha, status, opt, tle, objValue, bestbound, numnodes, time, gap)
 	Solutions.updateSolFromLPSol!(sol, lpSol, inst, params)
-
-	# if validateSolution(inst, sol, params)
-	# 	sol.feasible = true
-	# 	println("Everything is awesome!")
-	# else
-	# 	println("Infeasible solution :(")
-	# 	sol.feasible = false
-	# end
 
 	return sol
 end # function runLPFormToReScheduleSol()
