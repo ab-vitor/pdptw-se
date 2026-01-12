@@ -14,7 +14,7 @@ export createSolutionMelo, saveSolutionToFile, saveSolutionTimeline,
 
 
 include("solutionDataStructures.jl")
-include("LPSolutionDataStructures.jl")
+include("LP_solution_data_structures.jl")
 include("printDetailed.jl")
 include("validate_solution.jl")
 include("statistics.jl")
