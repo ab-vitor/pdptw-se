@@ -1,5 +1,5 @@
 
-function saveSolutionToFile(sol::Solution, inst::InstanceData, params::ParameterData)
+function save_summarized_solution(sol::Solution, inst::InstanceData, params::ParameterData)
 	println("\n[$(Dates.Time(Dates.now()))] Saving solution to file:", params.solfilename)
 	dir = dirname(params.solfilename)
 	if !isdir(dir)
@@ -29,9 +29,9 @@ function saveSolutionToFile(sol::Solution, inst::InstanceData, params::Parameter
 
 	write(file, "\nValue = $(sol.value)\n")
 	close(file)
-end # function saveSolutionToFile()
+end # function save_summarized_solution()
 
-function saveSolutionTimeline(sol::Solution, inst::InstanceData, gp::ParameterData, suff::String="")::Nothing
+function save_solution_timeline(sol::Solution, inst::InstanceData, gp::ParameterData, suff::String="")::Nothing
 	println("\n[$(Dates.Time(Dates.now()))] Saving solution timeline to file: ", gp.timelineFilename)
 
 	dir = dirname(gp.timelineFilename)

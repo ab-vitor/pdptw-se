@@ -10,8 +10,8 @@ function postRunningMSLP!(inst::InstanceData, extmd::ExternalMSLPData, allParams
 		csvrow = csvresults(inst, extmd, allParams)
 		CSVUtils.write_csv_with_flock(allParams.general.csvfilename, csvrow)
 
-		saveSolutionToFile(extmd.bestSol, inst, allParams.general)
-		saveSolutionTimeline(extmd.bestSol, inst, allParams.general)
+		save_summarized_solution(extmd.bestSol, inst, allParams.general)
+		save_solution_timeline(extmd.bestSol, inst, allParams.general)
 	end
 
 	return nothing

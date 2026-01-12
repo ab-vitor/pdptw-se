@@ -9,17 +9,17 @@ export VehicleStop, MachineTravel, StatsSolution, Solution
 
 export LPSolution
 
-export saveSolutionToFile, saveSolutionTimeline,
+export save_summarized_solution, save_solution_timeline,
 	print_timeline_solution, validate_solution
 
 
-include("solutionDataStructures.jl")
+include("solution_data_structures.jl")
 include("LP_solution_data_structures.jl")
-include("printDetailed.jl")
+include("print_timeline_solution.jl")
 include("validate_solution.jl")
 include("statistics.jl")
-include("convertSol.jl")
-include("writeSol.jl")
+include("convert_solution.jl")
+include("save_solution.jl")
 
 
 end # module
