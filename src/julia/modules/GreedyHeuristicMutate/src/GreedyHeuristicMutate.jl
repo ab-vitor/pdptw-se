@@ -807,7 +807,7 @@ function greedyHeuristicMutate(inst::InstanceData, params::ParameterData)
 	if validateSolution(inst, sol, params)
 		sol.feasible = true
 		println("Everything is awesome!")
-		if params.make_instance_feasible && params.methodCode == "greedy" && params.warmStart == false
+		if params.make_instance_feasible && params.methodCode == "greedy"
 			if appliedRelaxation
 				println("Updating instance...")
 			end

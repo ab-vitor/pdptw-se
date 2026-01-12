@@ -20,11 +20,7 @@ mutable struct ParameterData
 	num_machs::Int
 	solver::String
 	maxtime::Int64 # Maxtime of any approach
-	gurobiCuts::Int # 0 -> no cut, 1 -> gurobi cuts
-	typeUserCut::Int
-	mipPresolve::Int # -1 -> automatic, 0 -> no presolve, 1 -> moderate, 2 -> agressive
 	printsol::Int
-	maxnodes::Int
 	elevator::Int
 	make_instance_feasible::Bool
 	output::String
@@ -32,20 +28,16 @@ mutable struct ParameterData
 	suff_csv::String
 	epsilon::Float64
 	epsilonCap::Float64
-	warmStart::Bool
 	seed::Int
 	rng::Random.MersenneTwister
 	alpha::Float64
 	maxiter::Int64
-	outputFlagGrbMIP::Int64
 	outputFlagGrbMSLP::Int64
 	mslpr::String # stop rule Mulsti-Start LP (MSLP)
 	mslpa::String # stop argument given mslpr
-	mipmaxtime::Int64 # max time for MIP solver
 	csvfilename::String
 	solfilename::String
 	timelineFilename::String
-	grbFilename::String
 	threads::Int
 	solverMethod::SolverMethod
 
@@ -64,11 +56,7 @@ mutable struct ParameterData
 		greedy_service_order = "tightest_tw"
 		solver = "Gurobi"
 		maxtime = 999999999999999
-		gurobiCuts = 1
-		typeUserCut = 0
-		mipPresolve = -1
 		printsol = 0
-		maxnodes = -1
 		cutoff = 0
 		cutoffmachs = 0
 		num_machs = 0
@@ -77,23 +65,17 @@ mutable struct ParameterData
 		output = "./logs/"
 		suff_outputs = ""
 		suff_csv = ""
-		# epsilon = 0.0001 # dealing with imprecision issues
 		epsilon = 0.005 # dealing with imprecision issues
-		# epsilon = 0.01 # dealing with imprecision issues
 		epsilonCap = 0.5
-		warmStart = false
 		seed = 0
 		alpha = 0.2
 		maxiter = 1e6
-		outputFlagGrbMIP = 0
 		outputFlagGrbMSLP = 0
 		mslpr = "M" # check Enumerations Module
 		mslpa = "60"
-		mipmaxtime = 3600
 		csvfilename = ""
 		solfilename = ""
 		timelineFilename = ""
-		grbFilename = ""
 		rng = Random.MersenneTwister(seed)
 		threads = 8
 		solverMethod = parse(SolverMethod, "A")
@@ -114,11 +96,7 @@ mutable struct ParameterData
 			num_machs,
 			solver,
 			maxtime,
-			gurobiCuts,
-			typeUserCut,
-			mipPresolve,
 			printsol,
-			maxnodes,
 			elevator,
 			make_instance_feasible,
 			output,
@@ -126,20 +104,16 @@ mutable struct ParameterData
 			suff_csv,
 			epsilon,
 			epsilonCap,
-			warmStart,
 			seed,
 			rng,
 			alpha,
 			maxiter,
-			outputFlagGrbMIP,
 			outputFlagGrbMSLP,
 			mslpr,
 			mslpa,
-			mipmaxtime,
 			csvfilename,
 			solfilename,
 			timelineFilename,
-			grbFilename,
 			threads,
 			solverMethod
 		)
@@ -219,16 +193,10 @@ function readInputParameters(ARGS)
 			param += 1
 		elseif ARGS[param] == "--elevator"
 			params.elevator = 1
-		elseif ARGS[param] == "--maxnodes"
-			params.maxnodes = parse(Float64, ARGS[param+1])
-			param += 1
 		elseif ARGS[param] == "--make_instance_feasible"
 			params.make_instance_feasible = true
 		elseif ARGS[param] == "--epsilon"
 			params.epsilon = parse(Float64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--warmStart"
-			params.warmStart = true
 			param += 1
 		elseif ARGS[param] == "--output"
 			params.output = ARGS[param+1]
@@ -260,15 +228,6 @@ function readInputParameters(ARGS)
 		elseif ARGS[param] == "--mslpa"
 			params.mslpa = ARGS[param+1]
 			param += 1
-		elseif ARGS[param] == "--mipmaxtime"
-			params.mipmaxtime = parse(Int64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--gurobiCuts"
-			params.gurobiCuts = parse(Int64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--typeUserCut"
-			params.typeUserCut = parse(Int64, ARGS[param+1])
-			param += 1
 		elseif ARGS[param] == "--csvfilename"
 			params.csvfilename = ARGS[param+1]
 			param += 1
@@ -278,17 +237,8 @@ function readInputParameters(ARGS)
 		elseif ARGS[param] == "--timelineFilename"
 			params.timelineFilename = ARGS[param+1]
 			param += 1
-		elseif ARGS[param] == "--grbFilename"
-			params.grbFilename = ARGS[param+1]
-			param += 1
-		elseif ARGS[param] == "--outputFlagGrbMIP"
-			params.outputFlagGrbMIP = parse(Int64, ARGS[param+1])
-			param += 1
 		elseif ARGS[param] == "--outputFlagGrbMSLP"
 			params.outputFlagGrbMSLP = parse(Int64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--mipPresolve"
-			params.mipPresolve = parse(Int64, ARGS[param+1])
 			param += 1
 		elseif ARGS[param] == "--threads"
 			params.threads = parse(Int, ARGS[param+1])
@@ -340,17 +290,6 @@ function readInputParameters(ARGS)
 		params.genconfigfilename,
 		params.suff_outputs,
 		".txt",
-	)
-	params.grbFilename = string(
-		params.output, "/",
-		params.methodType, "_",
-		params.methodCode, "/",
-		"gurobi/",
-		params.group, "/",
-		params.name, "_grb_",
-		params.genconfigfilename,
-		params.suff_outputs,
-		".log",
 	)
 
 	return params
