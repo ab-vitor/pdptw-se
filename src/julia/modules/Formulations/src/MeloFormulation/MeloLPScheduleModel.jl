@@ -5,12 +5,18 @@ function runLPFormToReScheduleSol(env::Union{Gurobi.Env, Nothing}, sol::Solution
 			set_attribute(model, "OutputFlag", 0)
 			set_silent(model)
 		end
-		# model = Model(Gurobi.Optimizer)
-		# set_attribute(model, "TimeLimit", params.maxtime)
-		# set_attribute(model, "LogFile", params.output * inst.name * "_grb.log")
-		# set_attribute(model, "Presolve", 0)
-		# set_attribute(model, "Heuristics", 0)
-		# set_attribute(model, "OutputFlag", params.outputFlagGrbMSLP)
+		if params.threads > 0
+			max_num_threads = length(Sys.cpu_info())
+			num_threads = max_num_threads
+			if params.threads > 0 && params.threads <= max_num_threads
+				num_threads = params.threads
+			else
+				error("Number of threads must be between 1 and $(max_num_threads)")
+			end
+			set_attribute(model, "Threads", num_threads)
+		else
+			error("Number of threads must be greater than zero")
+		end
 		set_attribute(model, "Threads", params.threads)
 		set_attribute(model, "Method", Int(params.solverMethod))
 	else
