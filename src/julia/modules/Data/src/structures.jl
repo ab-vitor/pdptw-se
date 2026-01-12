@@ -63,7 +63,6 @@ mutable struct InstanceData
 	Q::Vector{Int64} # capacities
 	max_Q::Int64 # maximum capacity
 	d::Array{Float64, 3} # dist from node i to node j using vehicle k
-	max_d::Float64 # dist max in `d`
 	H::Vector{Int64} # machines
 	H_e::Vector{Vector{Vector{Int64}}} # for each arc, the machines that can attend
 	d_bar::Array{Float64, 3} # distance from node i to machine h using vehicle k
@@ -102,7 +101,6 @@ mutable struct InstanceData
 		Q = Int64[]
 		max_Q = 0
 		d = Array{Float64, 3}(undef, 0, 0, 0)
-		max_d = 0.0
 		H = Int64[]
 		H_e = Vector{Vector{Vector{Int64}}}()
 		d_bar = Array{Float64, 3}(undef, 0, 0, 0)
@@ -140,7 +138,6 @@ mutable struct InstanceData
 			Q,
 			max_Q,
 			d,
-			max_d,
 			H,
 			H_e,
 			d_bar,
