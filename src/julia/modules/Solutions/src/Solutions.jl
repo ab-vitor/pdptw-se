@@ -9,7 +9,7 @@ export VehicleStop, MachineTravel, StatsSolution, Solution
 
 export LPSolution
 
-export createSolutionMelo, saveSolutionToFile, saveSolutionTimeline,
+export saveSolutionToFile, saveSolutionTimeline,
 	print_timeline_solution, validate_solution
 
 
