@@ -12,6 +12,5 @@ using DataFrames
 export meloFormulation, barbosaFormulation, MIPModel, createMeloMIPModel
 
 include("MeloFormulation/MeloFormulation.jl")
-include("BarbosaFormulation/BarbosaFormulation.jl")
 
 end # module
