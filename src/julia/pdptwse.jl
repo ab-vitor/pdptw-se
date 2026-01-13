@@ -33,7 +33,7 @@ inst = read_data(params)
 sol::Union{Nothing, Solution} = nothing
 if params.methodType == "heur"
 	if params.methodCode == "greedy"
-		sol = GreedyHeuristicMutate.greedyHeuristicMutate(inst, params)
+		sol = GreedyHeuristicMutate.greedy_heuristic_mutate(inst, params)
 	elseif params.methodCode == "mslp"
 		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
 		sol = Multistart.multistartlp(GRB_ENV, inst, params)
