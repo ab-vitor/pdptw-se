@@ -5,46 +5,19 @@ using Parameters
 using Solutions
 using Random
 
-struct PossibleMachineTravel
-	found::Bool # used to check if a possible machine travel was found
-	deltaT::Float64 # the time between the moment after service time and the next vehicle stop
-	h::Int64 # index of the machine used
-	hPos::Int64 # index of where this machine travel will be placed in current machine h
-	st::Float64 # start time of the machine travel
-	orig::Int64 # origin node in V_prime
-	dest::Int64 # destiny node in V_prime
-end
+include("structures.jl")
 
-mutable struct InsertionData
-	feasible::Bool # used to check if the object is a feasible insertionData
-	cost::Float64 # cost added to current solution value
-	pPos::Int64 # position where the pickup node will be placed
-	dPos::Int64 # position where the delivery node will be placed
-	pJob::Int64 # index of the pickup job in V_prime
-	dJob::Int64 # index of the delivert job in V_prime
-	k::Int64 # index of which vehicle is used
-	machineTravels::Vector{PossibleMachineTravel} # all machine travels added after pPos-1
-end
 
-mutable struct CheckInsertionData
-	feasible::Bool
-	twViol::Bool
-	capViol::Bool
-	cost::Float64
-	loadCost::Float64
-	availableVehicle::Bool
-end
-
-function findNextActiveMachineTravel(machine::Vector{MachineTravel}, pos::Ref{Int64})
+function find_next_active_machine_travel(machine::Vector{MachineTravel}, pos::Ref{Int64})
 	trv = machine[pos[]]
 	while !trv.active
 		pos[] += 1
 		trv = machine[pos[]]
 	end
 	return trv
-end # function findNextActiveMachineTravel
+end # function find_next_active_machine_travel
 
-function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
+function analyse_possible_machine_travel_from_last_computed_possible_machine_travel(
 	prevStop::VehicleStop,
 	currStop::VehicleStop,
 	k::Int64,
@@ -59,7 +32,7 @@ function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
 	lastPossibleMachineTravel = possibleMachineTravels[h][end]
 	startHPos[] = lastPossibleMachineTravel.hPos
 	trv1 = lastPossibleMachineTravel
-	trv2 = findNextActiveMachineTravel(machines[h], startHPos)
+	trv2 = find_next_active_machine_travel(machines[h], startHPos)
 
 	trv1End = trv1.st + inst.O[(inst.f[trv1.orig][h], inst.f[trv1.dest][h], h)]
 	hArr = trv1End + inst.O[(inst.f[trv1.dest][h], inst.f[prevStop.node][h], h)]
@@ -72,9 +45,9 @@ function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
 			bestPossibleMachineTravel[] = PossibleMachineTravel(true, deltaT, h, startHPos[], max(hArr, kArr), prevStop.node, currStop.node)
 		end
 	end
-end # function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel()
+end # function analyse_possible_machine_travel_from_last_computed_possible_machine_travel()
 
-function getBestVehicleTravelTime(
+function get_best_vehicle_travel_time(
 	prevStop::VehicleStop,
 	currStop::VehicleStop,
 	k::Int64,
@@ -91,7 +64,7 @@ function getBestVehicleTravelTime(
 	for h in inst.H_e[prevStop.node][currStop.node]
 		startHPos = Ref(1)
 		if length(possibleMachineTravels[h]) > 0
-			analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
+			analyse_possible_machine_travel_from_last_computed_possible_machine_travel(
 				prevStop,
 				currStop,
 				k,
@@ -107,10 +80,10 @@ function getBestVehicleTravelTime(
 		currHPos = Ref(startHPos[])
 		nextHPos = Ref(currHPos[] + 1)
 		while nextHPos[] <= length(machines[h])
-			trv1 = findNextActiveMachineTravel(machines[h], currHPos)
+			trv1 = find_next_active_machine_travel(machines[h], currHPos)
 			nextHPos[] = currHPos[] + 1
 
-			trv2 = findNextActiveMachineTravel(machines[h], nextHPos)
+			trv2 = find_next_active_machine_travel(machines[h], nextHPos)
 
 			if currHPos[] == 1
 				trv1End = trv1.st
@@ -140,7 +113,7 @@ function getBestVehicleTravelTime(
 	push!(possibleMachineTravels[bestPossibleMachineTravel[].h], bestPossibleMachineTravel[])
 
 	return bestPossibleMachineTravel[].deltaT
-end # function getBestVehicleTravelTime()
+end # function get_best_vehicle_travel_time()
 
 function getVehicleTravelTime(
 	prevStop::VehicleStop,
@@ -173,7 +146,7 @@ function advanceBestTime(
 	possibleMachineTravels::Vector{Vector},
 )
 	time += inst.s[prevStop.node]
-	time += getBestVehicleTravelTime(prevStop, currStop, k, time, inst, machines, possibleMachineTravels)
+	time += get_best_vehicle_travel_time(prevStop, currStop, k, time, inst, machines, possibleMachineTravels)
 	time = max(time, currStop.job.earl)
 	return time
 end # function advanceBestTime()
@@ -309,10 +282,7 @@ function checkInsertion(
 		prevStop = sol.vehicles[k][prev]
 		currStop = sol.vehicles[k][curr]
 		time += inst.s[prevStop.node]
-		time += getBestVehicleTravelTime(prevStop, currStop, k, time, inst, sol.machines, possibleMachineTravels)
-		# if time <= currStop.job.earl
-		#   return true, 0
-		# end
+		time += get_best_vehicle_travel_time(prevStop, currStop, k, time, inst, sol.machines, possibleMachineTravels)
 		time = max(time, currStop.job.earl)
 		if time > currStop.job.lat
 			feasible = false
@@ -452,10 +422,6 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 		currStop = sol.vehicles[k][curr]
 		time += inst.s[prevStop.node]
 		time += getVehicleTravelTime(prevStop, currStop, k, inst, machineTravels, lastMachTrv, lastMachTrvForH)
-		# if time <= currStop.job.earl
-		#   reactivateNextTravels(k, sol, curr)
-		#   break
-		# end
 		time = max(time, currStop.job.earl)
 		currStop.servST = time
 		if currStop.mach != 0
@@ -605,10 +571,6 @@ function updateSolutionWithRelaxation(sol::Solution, rlxData::InsertionData, ins
 		currStop = sol.vehicles[k][curr]
 		time += inst.s[prevStop.node]
 		time += getVehicleTravelTime(prevStop, currStop, k, inst, machineTravels, lastMachTrv, lastMachTrvForH)
-		# if time <= currStop.job.earl
-		#   reactivateNextTravels(k, sol, curr)
-		#   break
-		# end
 		time = max(time, currStop.job.earl)
 		if time > currStop.job.lat
 			delta = ceil(time) - inst.jobs[inst.refs[currStop.node]].lat
