@@ -31,13 +31,14 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 	L_k = Vector[Int64[i for i in eachindex(sol.vehicles[k][1:end-2])] for k in inst.K]
 	L_h = Vector[Int64[i for i in eachindex(sol.machines[h])] for h in inst.H]
 
-	@variable(model, inst.jobs[inst.refs[inst.depot_begin]].lat >= t[i = inst.V_p_d] >= 0)
-	@variable(model, inst.jobs[inst.refs[inst.depot_begin]].lat >= tstart[k = inst.K] >= 0)
-	@variable(model, inst.jobs[inst.refs[inst.depot_begin]].lat >= tfinal[k = inst.K] >= 0)
-	@variable(model, inst.jobs[inst.refs[inst.depot_begin]].lat >= C[k = inst.K] >= 0)
+	@variable(model, inst.l[inst.depot_begin] >= t[i = inst.V_p_d] >= inst.e[inst.depot_begin])
+	@variable(model, inst.l[inst.depot_begin] >= tstart[k = inst.K] >= inst.e[inst.depot_begin])
+	@variable(model, inst.l[inst.depot_begin] >= tfinal[k = inst.K] >= inst.e[inst.depot_begin])
+	@variable(model, inst.l[inst.depot_begin] >= C[k = inst.K] >= 0)
 	@variable(
 		model,
-		inst.jobs[inst.refs[inst.depot_begin]].lat >= alpha[i = inst.Vprime, j = inst.Vprime, h = inst.H; (i, j) in trvs[h]] >= 0
+		inst.l[inst.depot_begin] >= alpha[i = inst.Vprime, j = inst.Vprime, h = inst.H;
+			(i, j) in trvs[h]] >= inst.e[inst.depot_begin]
 	)
 
 	# c48
