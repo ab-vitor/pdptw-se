@@ -7,7 +7,7 @@ using Parameters
 
 include("structures.jl")
 include("auxiliary_functions.jl")
-include("Statistics.jl")
+include("statistics.jl")
 
 export InstanceData, read_data, Vehicle, Job, Machine, Point, instanceDataToCsvFiles
 
