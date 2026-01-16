@@ -17,7 +17,7 @@ using ProcUsage
 
 include("structs.jl")
 include("greedyUtils.jl")
-include("chooseCandidate.jl")
+include("choose_candidate.jl")
 include("greedyHeuristic.jl")
 include("semiGreedyHeuristic.jl")
 include("structures.jl")
