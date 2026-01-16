@@ -6,15 +6,15 @@ function getInsertionWithLessIncreaseInCompTime(
 )::InsertionData
 	bestInsData = InsertionData(false, Inf64, 0, 0, 0, 0, 0, PossibleMachineTravel[])
 	for k in inst.K
-		for pPos in 2:length(sol.vehicles[k])
-			for dPos in pPos:length(sol.vehicles[k])
-				checkInsData = checkInsertion(sol, k, pPos, dPos, pJob, dJob, inst)
+		for p_pos in 2:length(sol.vehicles[k])
+			for dPos in p_pos:length(sol.vehicles[k])
+				checkInsData = checkInsertion(sol, k, p_pos, dPos, pJob, dJob, inst)
 				if checkInsData.feasible
 					if checkInsData.cost < bestInsData.cost
 						bestInsData = InsertionData(
 							checkInsData.feasible,
 							checkInsData.cost,
-							pPos,
+							p_pos,
 							dPos,
 							pJob,
 							dJob,

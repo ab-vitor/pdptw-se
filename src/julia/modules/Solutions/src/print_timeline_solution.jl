@@ -9,7 +9,7 @@ function printStopDetail(stop::VehicleStop)::Nothing
 	println("\t\tpid: ", stop.job.pid)
 	println("\t\tdid: ", stop.job.did)
 	println("\t\tservST: ", stop.servST)
-	println("\t\t(h, h_ind): ", (stop.mach - 1, stop.machInd))
+	println("\t\t(h, h_ind): ", (stop.mach - 1, stop.mach_index))
 	println("\t\tload: ", stop.load)
 	println()
 	return nothing
@@ -39,9 +39,9 @@ function printVehicleDetail(inst::InstanceData, sol::Solution, k)::Nothing
 			)
 			timer += inst.d_bar[vehicle[i-1].node, h, k]
 			println("\t\tVehicle arrival at machine station: ", timer)
-			println("\t\tWaiting time until machine travel: ", round(sol.machines[h][vehicle[i].machInd].st - timer, digits = 2))
+			println("\t\tWaiting time until machine travel: ", round(sol.machines[h][vehicle[i].mach_index].st - timer, digits = 2))
 			println()
-			timer = sol.machines[h][vehicle[i].machInd].st
+			timer = sol.machines[h][vehicle[i].mach_index].st
 			println("\t\tMachine travel start time: ", timer)
 			println(
 				"\t\tRegion ",
@@ -85,7 +85,7 @@ end # function printVehicleDetail()
 
 function printTravelDetail(inst::InstanceData, travel::MachineTravel, h::Int64)::Nothing
 	println("\tvehicle: ", travel.vehicle - 1)
-	println("\tvehicleInd: ", travel.vehicleInd)
+	println("\tvehicle_index: ", travel.vehicle_index)
 	println("\t(orig, dest): ", (inst.jobs[inst.refs[travel.orig]].id, inst.jobs[inst.refs[travel.dest]].id))
 	println("\t(origRegion, destRegion): ", (inst.jobs[inst.refs[travel.orig]].point.z, inst.jobs[inst.refs[travel.dest]].point.z))
 	println("\tst: ", travel.st)

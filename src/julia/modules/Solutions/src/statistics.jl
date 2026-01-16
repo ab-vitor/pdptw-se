@@ -26,7 +26,7 @@ function calculate_rate_waiting_times_of_vehicles_for_a_machine_travel(inst::Ins
 			nxt = vehi[i]
 			if nxt.mach > 0
 				v_arr = cur.servST + inst.s[cur.node] + inst.d_bar[cur.node, nxt.mach, k]
-				vehicles_waiting_times_for_a_machine_travel[k] += max(0, machines[nxt.mach][nxt.machInd].st - v_arr)
+				vehicles_waiting_times_for_a_machine_travel[k] += max(0, machines[nxt.mach][nxt.mach_index].st - v_arr)
 			end
 		end
 		if length(vehi) > 2

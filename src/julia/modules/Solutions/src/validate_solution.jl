@@ -186,8 +186,8 @@ end # function time_window_const()
 function vehicle_machine_travel_synchronization_const(inst::InstanceData, sol::Solution, params::ParameterData)
 	for h in inst.H
 		for travel in sol.machines[h]
-			cStop = sol.vehicles[travel.vehicle][travel.vehicleInd-1]
-			nStop = sol.vehicles[travel.vehicle][travel.vehicleInd]
+			cStop = sol.vehicles[travel.vehicle][travel.vehicle_index-1]
+			nStop = sol.vehicles[travel.vehicle][travel.vehicle_index]
 			if travel.st + params.epsilon < cStop.servST + inst.s[travel.orig] + inst.d_bar[travel.orig, h, travel.vehicle]
 				println(
 					"Start time of the travel ",

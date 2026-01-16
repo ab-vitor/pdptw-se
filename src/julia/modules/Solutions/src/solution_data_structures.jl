@@ -3,21 +3,21 @@ mutable struct VehicleStop
 	job::Job # the job the vehicle is doing
 	servST::Float64 # the arrival time at this job
 	mach::Int64 # which machine was used
-	machInd::Int64 # index in machine's travel vector
+	mach_index::Int64 # index in machine's travel vector
 	load::Float64 # load of the vehicle
 end
-Base.copy(s::VehicleStop) = VehicleStop(s.node, s.job, s.servST, s.mach, s.machInd, s.load)
+Base.copy(s::VehicleStop) = VehicleStop(s.node, s.job, s.servST, s.mach, s.mach_index, s.load)
 
 mutable struct MachineTravel
 	vehicle::Int64 # which vehicle is being transported
-	vehicleInd::Int64 # index in vehicle's stop vector
+	vehicle_index::Int64 # index in vehicle's stop vector
 	orig::Int64 # node id in inst.Vprime from where the vehicle has come to
 	dest::Int64 # node id in inst.Vprime to where the vehicle is going to
 	st::Float64 # start time of machine's travel
 	active::Bool # if this machine travel should be considered
 	function MachineTravel(
 		vehicle::Int64 = 0,
-		vehicleInd::Int64 = 0,
+		vehicle_index::Int64 = 0,
 		orig::Int64 = 0,
 		dest::Int64 = 0,
 		st::Float64 = 0.0,
@@ -25,7 +25,7 @@ mutable struct MachineTravel
 	)
 		return new(
 			vehicle,
-			vehicleInd,
+			vehicle_index,
 			orig,
 			dest,
 			st,
@@ -33,7 +33,7 @@ mutable struct MachineTravel
 		)
 	end
 end
-Base.copy(s::MachineTravel) = MachineTravel(s.vehicle, s.vehicleInd, s.orig, s.dest, s.st, s.active)
+Base.copy(s::MachineTravel) = MachineTravel(s.vehicle, s.vehicle_index, s.orig, s.dest, s.st, s.active)
 
 mutable struct StatsSolution
 	n_vehicles_used::Float64

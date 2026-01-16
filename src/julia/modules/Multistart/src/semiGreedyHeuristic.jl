@@ -6,14 +6,14 @@ function getCandidateListByIncreaseInCompTime(
 )::Vector{InsertionData}
 	candList = InsertionData[]
 	for k in inst.K
-		for pPos in 2:length(sol.vehicles[k])
-			for dPos in pPos:length(sol.vehicles[k])
-				checkInsData = checkInsertion(sol, k, pPos, dPos, pJob, dJob, inst)
+		for p_pos in 2:length(sol.vehicles[k])
+			for dPos in p_pos:length(sol.vehicles[k])
+				checkInsData = checkInsertion(sol, k, p_pos, dPos, pJob, dJob, inst)
 				if !checkInsData.feasible
 					continue
 				end
 
-				push!(candList, InsertionData(true, checkInsData.cost, pPos, dPos, pJob, dJob, k, checkInsData.possibleMachineTravels))
+				push!(candList, InsertionData(true, checkInsData.cost, p_pos, dPos, pJob, dJob, k, checkInsData.possibleMachineTravels))
 			end
 		end
 	end
