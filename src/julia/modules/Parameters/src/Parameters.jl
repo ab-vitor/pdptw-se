@@ -20,7 +20,7 @@ mutable struct ParameterData
 	num_machs::Int
 	solver::String
 	maxtime::Int64 # Maxtime of any approach
-	printsol::Int
+	print_sol::Int
 	elevator::Int
 	make_instance_feasible::Bool
 	output::String
@@ -54,7 +54,7 @@ mutable struct ParameterData
 		greedy_service_order = "tightest_tw"
 		solver = "Gurobi"
 		maxtime = 999999999999999
-		printsol = 0
+		print_sol = 0
 		cutoff = 0
 		cutoffmachs = 0
 		num_machs = 0
@@ -94,7 +94,7 @@ mutable struct ParameterData
 			num_machs,
 			solver,
 			maxtime,
-			printsol,
+			print_sol,
 			elevator,
 			make_instance_feasible,
 			output,
@@ -168,8 +168,8 @@ function readInputParameters(ARGS)
 		elseif ARGS[param] == "--maxtime"
 			params.maxtime = parse(Int, ARGS[param+1])
 			param += 1
-		elseif ARGS[param] == "--printsol"
-			params.printsol = parse(Int, ARGS[param+1])
+		elseif ARGS[param] == "--print_sol"
+			params.print_sol = parse(Int, ARGS[param+1])
 			param += 1
 		elseif ARGS[param] == "--methodType"
 			params.methodType = ARGS[param+1]

@@ -59,7 +59,7 @@ function save_stats_solution(
 	inst::InstanceData,
 	bestSol::Solution,
 	params::ParameterData,
-)::StatsSolution
+)::SolutionStats
 	vehicles = bestSol.vehicles
 	machines = bestSol.machines
 	completionTimes = bestSol.completionTimes
@@ -102,7 +102,7 @@ function save_stats_solution(
 	min_max_load_all_vehicles = minimum(filter(load -> load > params.epsilon, max_load_vehicle))
 	mean_max_load_all_vehicles = sum(max_load_vehicle) / (n_vehicles * length(inst.K))
 
-	return StatsSolution(
+	return SolutionStats(
 		n_vehicles,
 		n_machines,
 		max_max_load_all_vehicles,

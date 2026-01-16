@@ -5,7 +5,7 @@ using Parameters
 using JuMP
 using Dates
 
-export VehicleStop, MachineTravel, StatsSolution, Solution
+export VehicleStop, MachineTravel, SolutionStats, Solution
 
 export LPSolution
 

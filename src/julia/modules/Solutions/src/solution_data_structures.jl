@@ -35,7 +35,7 @@ mutable struct MachineTravel
 end
 Base.copy(s::MachineTravel) = MachineTravel(s.vehicle, s.vehicle_index, s.orig, s.dest, s.st, s.active)
 
-mutable struct StatsSolution
+mutable struct SolutionStats
 	n_vehicles_used::Float64
 	n_machines_used::Float64
 	max_max_load_all_vehicles::Float64
@@ -52,7 +52,7 @@ mutable struct StatsSolution
 	avrg_machines_travel_time_no_vehicle::Float64
 	avrg_vehicles_waiting_time_for_a_machine_travel::Float64
 	avrg_vehicles_waiting_time_for_a_service::Float64
-	function StatsSolution(
+	function SolutionStats(
 		n_vehicles_used::Float64 = 0.0,
 		n_machines_used::Float64 = 0.0,
 		max_max_load_all_vehicles::Float64 = 0.0,
@@ -90,7 +90,7 @@ end
 
 import Base: show
 
-function show(io::IO, s::StatsSolution)
+function show(io::IO, s::SolutionStats)
     scalars = [
         "Vehicles used"                          => s.n_vehicles_used,
         "Machines used"                          => s.n_machines_used,
@@ -132,5 +132,5 @@ mutable struct Solution
 	completionTimes::Vector{Float64}
 	feasible::Bool
 	value::Float64
-	stats::StatsSolution
+	stats::SolutionStats
 end

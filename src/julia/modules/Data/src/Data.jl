@@ -9,7 +9,7 @@ include("structures.jl")
 include("auxiliary_functions.jl")
 include("statistics.jl")
 
-export InstanceData, read_data, Vehicle, Job, Machine, Point, instanceDataToCsvFiles
+export InstanceData, read_data, Vehicle, Job, Machine, Point, instance_data_to_csv_files
 
 function read_files(inst::InstanceData, params::ParameterData)::Nothing
 	vehicles = string(params.instPath, "vehicles.csv")
@@ -297,7 +297,7 @@ function read_data(params::ParameterData, instPath::Union{Nothing, String} = not
 	return inst
 end # function read_data()
 
-function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, methodCode::String)::Nothing
+function instance_data_to_csv_files(inst::InstanceData, params::ParameterData, methodCode::String)::Nothing
 	original_path = pwd()
 	cd(params.instPath)
 	cd("../../../")
@@ -343,7 +343,7 @@ function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, metho
 
 	cd(original_path)
 	return nothing
-end # function instanceDataToCsvFiles()
+end # function instance_data_to_csv_files()
 
 
 end # module Data

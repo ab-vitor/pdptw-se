@@ -7,400 +7,157 @@ using Random
 
 include("structures.jl")
 include("init_solution.jl")
+include("check_insertion.jl")
 include("update_solution.jl")
+include("post_processing.jl")
 
+"""
+	function flat_possible_machine_travels_chronologically(possible_machine_travels::Vector{Vector})::Vector{PossibleMachineTravel}
 
-function find_next_active_machine_travel(machine::Vector{MachineTravel}, pos::Ref{Int64})::MachineTravel
-	trv = machine[pos[]]
-	while !trv.active
-		pos[] += 1
-		trv = machine[pos[]]
-	end
-	return trv
-end # function find_next_active_machine_travel
+	Given a list of possible machine travels for each machine (possible_machine_travels),
+	the function flattens the list into a single list and sorts it in chronological order
+	(by start time).
 
-function analyse_possible_machine_travel_from_last_computed_possible_machine_travel!(
-	prev_stop::VehicleStop,
-	curr_stop::VehicleStop,
-	k::Int64,
-	curr_time::Float64,
-	inst::InstanceData,
-	machines::Vector{Vector{MachineTravel}},
-	possible_machine_travels::Vector{Vector},
-	h::Int64,
-	best_possible_machine_travel::Ref{PossibleMachineTravel},
-	start_h_pos::Ref{Int64},
-)::Nothing
-	last_possible_machine_travel = possible_machine_travels[h][end]
-	start_h_pos[] = last_possible_machine_travel.h_pos
-	trv_1 = last_possible_machine_travel
-	trv_2 = find_next_active_machine_travel(machines[h], start_h_pos)
-
-	trv_1_end = trv_1.st + inst.O[(inst.f[trv_1.orig][h], inst.f[trv_1.dest][h], h)]
-	h_arr = trv_1_end + inst.O[(inst.f[trv_1.dest][h], inst.f[prev_stop.node][h], h)]
-	k_arr = curr_time + inst.d_bar[prev_stop.node, h, k]
-	new_trv_end = max(h_arr, k_arr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-	if start_h_pos[] == length(machines[h]) || new_trv_end + inst.O[(inst.f[curr_stop.node][h], inst.f[trv_2.orig][h], h)] <= trv_2.st
-		deltaT = new_trv_end - curr_time
-		deltaT += inst.d_bar[curr_stop.node, h, k]
-		if !best_possible_machine_travel[].found || deltaT < best_possible_machine_travel[].deltaT
-			best_possible_machine_travel[] = PossibleMachineTravel(true, deltaT, h, start_h_pos[], max(h_arr, k_arr), prev_stop.node, curr_stop.node)
-		end
-	end
-	return nothing
-end # function analyse_possible_machine_travel_from_last_computed_possible_machine_travel!()
-
-function get_best_vehicle_travel_time(
-	prev_stop::VehicleStop,
-	curr_stop::VehicleStop,
-	k::Int64,
-	curr_time::Float64,
-	inst::InstanceData,
-	machines::Vector{Vector{MachineTravel}},
-	possible_machine_travels::Vector{Vector},
-)::Float64
-	if prev_stop.job.point.z == curr_stop.job.point.z
-		return inst.d[prev_stop.node, curr_stop.node, k]
-	end
-
-	best_possible_machine_travel = Ref(PossibleMachineTravel(false, 0, 0, 0, 0, 0, 0))
-	for h in inst.H_e[prev_stop.node][curr_stop.node]
-		start_h_pos = Ref(1)
-		if length(possible_machine_travels[h]) > 0
-			analyse_possible_machine_travel_from_last_computed_possible_machine_travel!(
-				prev_stop,
-				curr_stop,
-				k,
-				curr_time,
-				inst,
-				machines,
-				possible_machine_travels,
-				h,
-				best_possible_machine_travel,
-				start_h_pos,
-			)
-		end
-		curr_h_pos = Ref(start_h_pos[])
-		next_h_pos = Ref(curr_h_pos[] + 1)
-		while next_h_pos[] <= length(machines[h])
-			trv_1 = find_next_active_machine_travel(machines[h], curr_h_pos)
-			next_h_pos[] = curr_h_pos[] + 1
-
-			trv_2 = find_next_active_machine_travel(machines[h], next_h_pos)
-
-			if curr_h_pos[] == 1
-				trv_1_end = trv_1.st
-				h_arr = trv_1_end + inst.O[(inst.initial_station, inst.f[prev_stop.node][h], h)]
-			else
-				trv_1_end = trv_1.st + inst.O[(inst.f[trv_1.orig][h], inst.f[trv_1.dest][h], h)]
-				h_arr = trv_1_end + inst.O[(inst.f[trv_1.dest][h], inst.f[prev_stop.node][h], h)]
-			end
-			k_arr = curr_time + inst.d_bar[prev_stop.node, h, k]
-			new_trv_end = max(h_arr, k_arr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-			if next_h_pos[] == length(machines[h]) || new_trv_end + inst.O[(inst.f[curr_stop.node][h], inst.f[trv_2.orig][h], h)] <= trv_2.st
-				deltaT = new_trv_end - curr_time
-				deltaT += inst.d_bar[curr_stop.node, h, k]
-				if !best_possible_machine_travel[].found || deltaT < best_possible_machine_travel[].deltaT
-					best_possible_machine_travel[] =
-						PossibleMachineTravel(true, deltaT, h, next_h_pos[], max(h_arr, k_arr), prev_stop.node, curr_stop.node)
-				end
-			end
-			curr_h_pos[] += 1
-			next_h_pos[] += 1
-		end
-	end
-	if !best_possible_machine_travel[].found
-		# Shouldn't be executed
-		error("Error in get_best_vehicle_travel_time(): it should be always possible to schedule a new machine travel (time windows are checked later)")
-	end
-	push!(possible_machine_travels[best_possible_machine_travel[].h], best_possible_machine_travel[])
-
-	return best_possible_machine_travel[].deltaT
-end # function get_best_vehicle_travel_time()
-
-function get_vehicle_travel_time(
-	prev_stop::VehicleStop,
-	curr_stop::VehicleStop,
-	k::Int64,
-	inst::InstanceData,
-	machine_travels::Vector{PossibleMachineTravel},
-	last_mach_trv::Ref{Int64},
-	last_mach_trv_for_h::Vector{Int64},
-)
-	if prev_stop.job.point.z == curr_stop.job.point.z
-		curr_stop.mach = 0
-		return inst.d[prev_stop.node, curr_stop.node, k]
-	end
-
-	machTrv = machine_travels[last_mach_trv[]]
-	curr_stop.mach = machTrv.h
-	curr_stop.mach_index = machTrv.h_pos + last_mach_trv_for_h[machTrv.h] - 1
-	return machTrv.deltaT
-
-end # function get_vehicle_travel_time()
-
-function advance_best_time(
-	time::Float64,
-	prev_stop::VehicleStop,
-	curr_stop::VehicleStop,
-	k::Int64,
-	inst::InstanceData,
-	machines::Vector{Vector{MachineTravel}},
-	possible_machine_travels::Vector{Vector},
-)
-	time += inst.s[prev_stop.node]
-	time += get_best_vehicle_travel_time(prev_stop, curr_stop, k, time, inst, machines, possible_machine_travels)
-	time = max(time, curr_stop.job.earl)
-	return time
-end # function advance_best_time()
-
-function advance_time(
-	time::Float64,
-	prev_stop::VehicleStop,
-	curr_stop::VehicleStop,
-	k::Int64,
-	inst::InstanceData,
-	machine_travels::Vector{PossibleMachineTravel},
-	last_mach_trv::Ref{Int64},
-	last_mach_trv_for_h::Vector{Int64},
-)::Float64
-	time += inst.s[prev_stop.node]
-	time += get_vehicle_travel_time(prev_stop, curr_stop, k, inst, machine_travels, last_mach_trv, last_mach_trv_for_h)
-	time = max(time, curr_stop.job.earl)
-	return time
-end # function advance_time()
-
-function check_insertion(
-	sol::Solution,
-	k::Int64,
-	p_pos::Int64,
-	d_pos::Int64,
-	p_job::Int64,
-	dJob::Int64,
-	inst::InstanceData,
-	possible_machine_travels::Vector{Vector},
-)::CheckInsertionData
-	feasible = true
-	availableVehicle = true
-	cost = 0
-	loadCost = 0
-
-	prev = p_pos - 1
-	curr = p_pos
-	prev_stop = sol.vehicles[k][prev]
-	curr_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
-
-	time = prev_stop.servST
-	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels)
-	load = prev_stop.load + curr_stop.job.dem
-
-	if time > curr_stop.job.lat || load > inst.Q[k]
-		feasible = false
-		cost += max(0, time - curr_stop.job.lat)
-		availableVehicle = availableVehicle && !(load > maximum(inst.Q))
-		loadCost = max(loadCost, (load - inst.Q[k]) * inst.Q[k])
-	end
-
-	prev_stop = curr_stop
-	if p_pos != d_pos
-		curr_stop = sol.vehicles[k][curr]
-		time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels)
-		load += curr_stop.job.dem
-		if time > curr_stop.job.lat || load > inst.Q[k]
-			feasible = false
-			cost += max(0, time - curr_stop.job.lat)
-			availableVehicle = availableVehicle && !(load > maximum(inst.Q))
-			loadCost = max(loadCost, (load - inst.Q[k]) * inst.Q[k])
-		end
-
-		prev += 1
-		curr += 1
-		while curr < d_pos
-			prev_stop = sol.vehicles[k][prev]
-			curr_stop = sol.vehicles[k][curr]
-			time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels)
-			load += curr_stop.job.dem
-			if time > curr_stop.job.lat || load > inst.Q[k]
-				feasible = false
-				cost += max(0, time - curr_stop.job.lat)
-				availableVehicle = availableVehicle && !(load > maximum(inst.Q))
-				loadCost = max(loadCost, (load - inst.Q[k]) * inst.Q[k])
-			end	
-			prev += 1
-			curr += 1
-		end
-		prev_stop = sol.vehicles[k][prev]
-	end
-
-	curr_stop = VehicleStop(dJob, inst.jobs[inst.refs[dJob]], 0, 0, 0, 0)
-	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels)
-	load += curr_stop.job.dem
-	if time > curr_stop.job.lat
-		feasible = false
-		cost += max(0, time - curr_stop.job.lat)
-	end
-
-	prev_stop = curr_stop
-	curr_stop = sol.vehicles[k][curr]
-	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels)
-	load += curr_stop.job.dem
-	if time > curr_stop.job.lat
-		feasible = false
-		cost += max(0, time - curr_stop.job.lat)
-	end
-
-	prev += 1
-	curr += 1
-	while curr <= length(sol.vehicles[k])
-		prev_stop = sol.vehicles[k][prev]
-		curr_stop = sol.vehicles[k][curr]
-	time += inst.s[prev_stop.node]
-	time += get_best_vehicle_travel_time(prev_stop, curr_stop, k, time, inst, sol.machines, possible_machine_travels)
-		time = max(time, curr_stop.job.earl)
-		if time > curr_stop.job.lat
-			feasible = false
-			cost += max(0, time - curr_stop.job.lat)
-		end
-		prev += 1
-		curr += 1
-	end
-	if feasible
-		return CheckInsertionData(feasible, cost > 0, loadCost > 0, time - sol.vehicles[k][end].servST, 0, availableVehicle)
-	end
-
-	return CheckInsertionData(feasible, cost > 0, loadCost > 0, cost, loadCost, availableVehicle)
-end # function check_insertion()
-
-
-
-
-function flat_chronologically(possible_machine_travels::Vector{Vector})
+	The function returns the flattened and sorted list of possible machine travels.
+"""
+function flat_possible_machine_travels_chronologically(possible_machine_travels::Vector{Vector})::Vector{PossibleMachineTravel}
 	machine_travels = collect(Iterators.flatten(possible_machine_travels))
 	sort!(machine_travels, by = i -> (i.st))
 
 	return machine_travels
-end # function flat_chronologically()
+end # function flat_possible_machine_travels_chronologically()
 
+"""
+	function update_best_relax_data(
+		check_ins_data::CheckInsertionData,
+		best_relax_data::InsertionData,
+		p_pos::Int64,
+		d_pos::Int64,
+		p_job::Int64,
+		d_job::Int64,
+		k::Int64,
+		possible_machine_travels::Vector{Vector},
+	)::InsertionData
+
+	Given the results of an insertion check (check_ins_data), the current best relaxed insertion data
+	(best_relax_data), the positions to insert the pickup and delivery (p_pos and d_pos), the pickup and
+	delivery job indices (p_job and d_job), the vehicle index (k), and the possible machine travels already
+	computed (possible_machine_travels), the function updates the best relaxed insertion data if the current
+	insertion check results in a better relaxed insertion.
+
+	The function returns the updated best relaxed insertion data.
+"""
 function update_best_relax_data(
-	checkInsData::CheckInsertionData,
-	bestRelaxData::InsertionData,
+	check_ins_data::CheckInsertionData,
+	best_relax_data::InsertionData,
 	p_pos::Int64,
 	d_pos::Int64,
 	p_job::Int64,
-	dJob::Int64,
+	d_job::Int64,
 	k::Int64,
-	possible_machine_travels::Vector{Vector},
-)
-	feasible = checkInsData.feasible
-	twViol = checkInsData.twViol
-	capViol = checkInsData.capViol
-	cost = checkInsData.cost
-	loadCost = checkInsData.loadCost
-	if twViol && capViol && cost + loadCost < bestRelaxData.cost
-		machine_travels = flat_chronologically(possible_machine_travels)
-		bestRelaxData = InsertionData(feasible, cost + loadCost, p_pos, d_pos, p_job, dJob, k, machine_travels)
-	elseif cost > 0 && cost < bestRelaxData.cost
-		machine_travels = flat_chronologically(possible_machine_travels)
-		bestRelaxData = InsertionData(feasible, cost, p_pos, d_pos, p_job, dJob, k, machine_travels)
-	elseif loadCost > 0 && loadCost < bestRelaxData.cost
-		machine_travels = flat_chronologically(possible_machine_travels)
-		bestRelaxData = InsertionData(feasible, loadCost, p_pos, d_pos, p_job, dJob, k, machine_travels)
+	possible_machine_travels::Vector{Vector}
+)::InsertionData
+	feasible = check_ins_data.feasible
+	tw_violation = check_ins_data.tw_violation
+	cap_violation = check_ins_data.cap_violation
+	cost = check_ins_data.cost
+	load_cost = check_ins_data.load_cost
+	if tw_violation && cap_violation && cost + load_cost < best_relax_data.cost
+		machine_travels = flat_possible_machine_travels_chronologically(possible_machine_travels)
+		best_relax_data = InsertionData(feasible, cost + load_cost, p_pos, d_pos, p_job, d_job, k, machine_travels)
+	elseif cost > 0 && cost < best_relax_data.cost
+		machine_travels = flat_possible_machine_travels_chronologically(possible_machine_travels)
+		best_relax_data = InsertionData(feasible, cost, p_pos, d_pos, p_job, d_job, k, machine_travels)
+	elseif load_cost > 0 && load_cost < best_relax_data.cost
+		machine_travels = flat_possible_machine_travels_chronologically(possible_machine_travels)
+		best_relax_data = InsertionData(feasible, load_cost, p_pos, d_pos, p_job, d_job, k, machine_travels)
 	end
-	return bestRelaxData
+	return best_relax_data
 end # function update_best_relax_data()
 
-function get_insertion_with_less_increase_in_comp_time(inst::InstanceData, sol::Solution, p_job::Int64, dJob::Int64)
-	bestInsData = InsertionData(false, 0, 0, 0, 0, 0, 0, PossibleMachineTravel[])
-	bestRelaxData = InsertionData(false, Inf64, 0, 0, 0, 0, 0, PossibleMachineTravel[])
+"""
+	function get_insertion_with_less_increase_in_comp_time(
+		inst::InstanceData,
+		sol::Solution,
+		p_job::Int64,
+		d_job::Int64,
+	)::Tuple{InsertionData, InsertionData}
+
+	Given the instance data (inst), a solution (sol), and the pickup and delivery job indices
+	(p_job and d_job), the function searches for the best insertion of the pickup and delivery
+	nodes in the solution, considering all vehicles and all possible positions.
+
+	The function returns a tuple with two InsertionData structures:
+	- The first structure contains the best feasible insertion found.
+	- The second structure contains the best relaxed insertion found (if no feasible insertion exists).
+"""
+function get_insertion_with_less_increase_in_comp_time(inst::InstanceData, sol::Solution, p_job::Int64, d_job::Int64)
+	best_ins_data = InsertionData(false, 0, 0, 0, 0, 0, 0, PossibleMachineTravel[])
+	best_relax_data = InsertionData(false, Inf64, 0, 0, 0, 0, 0, PossibleMachineTravel[])
 	for k in inst.K
-		for p_pos in 2:length(sol.vehicles[k])
-			for d_pos in p_pos:length(sol.vehicles[k])
+		for p_pos in eachindex(sol.vehicles[k])[2:end]
+			for d_pos in eachindex(sol.vehicles[k])[p_pos:end]
 				possible_machine_travels = Vector[PossibleMachineTravel[] for _ in inst.H]
 				deactivate_machine_travels(k, sol, p_pos)
-				checkInsData = check_insertion(sol, k, p_pos, d_pos, p_job, dJob, inst, possible_machine_travels)
+				check_ins_data = check_insertion(sol, k, p_pos, d_pos, p_job, d_job, inst, possible_machine_travels)
 				reactivate_machine_travels(k, sol, p_pos)
-				if !checkInsData.feasible && checkInsData.availableVehicle
-					bestRelaxData = update_best_relax_data(checkInsData, bestRelaxData, p_pos, d_pos, p_job, dJob, k, possible_machine_travels)
+				if !check_ins_data.feasible && check_ins_data.available_vehicle
+					best_relax_data = update_best_relax_data(check_ins_data, best_relax_data, p_pos, d_pos, p_job, d_job, k, possible_machine_travels)
 					continue
-				elseif !checkInsData.availableVehicle
+				elseif !check_ins_data.available_vehicle
 					continue
 				end
 
-				if !bestInsData.feasible || checkInsData.cost < bestInsData.cost
-					machine_travels = flat_chronologically(possible_machine_travels)
-					bestInsData = InsertionData(true, checkInsData.cost, p_pos, d_pos, p_job, dJob, k, machine_travels)
+				if !best_ins_data.feasible || check_ins_data.cost < best_ins_data.cost
+					machine_travels = flat_possible_machine_travels_chronologically(possible_machine_travels)
+					best_ins_data = InsertionData(true, check_ins_data.cost, p_pos, d_pos, p_job, d_job, k, machine_travels)
 				end
 			end
 		end
 	end
-	return bestInsData, bestRelaxData
+	return best_ins_data, best_relax_data
 end # function get_insertion_with_less_increase_in_comp_time()
 
-function remove_dummy_objects!(sol::Solution, inst::InstanceData)
-	for h in inst.H
-		popfirst!(sol.machines[h])
-		pop!(sol.machines[h])
-	end
+"""
+	function greedy_heuristic_mutate(
+		inst::InstanceData,
+		params::ParameterData,
+	)::Solution
 
-	for k in inst.K
-		for i in 1:length(sol.vehicles[k])
-			if sol.vehicles[k][i].mach != 0
-				sol.vehicles[k][i].mach_index -= 1
-			end
-		end
-	end
-end # function remove_dummy_objects!()
+	Given the instance data (inst) and the parameter data (params), the function applies
+	the greedy heuristic mutation to generate a solution to the instance.
 
+	The instance might be modified if a feasible solution is found with relaxations and
+	the parameter make_instance_feasible is set to true.
+
+	The function returns the generated solution.
+"""
 function greedy_heuristic_mutate(inst::InstanceData, params::ParameterData)
 	sol = init_solution(inst)
-	nonServicedReqs = copy(get_service_order(inst, params))
-	idxReqToServe = 1
-	failedRedos = 0
-	lastIdxReqToServeFailed = 0
-	appliedRelaxation = false
-	while idxReqToServe <= length(nonServicedReqs) && failedRedos <= inst.n
-		p_job = nonServicedReqs[idxReqToServe]
-		dJob = p_job + inst.n
+	non_serviced_reqs = copy(get_service_order(inst, params))
+	idx_req_to_serve = 1
+	applied_relaxation = false
 
-		bestInsData, bestRelaxData = get_insertion_with_less_increase_in_comp_time(inst, sol, p_job, dJob)
+	while idx_req_to_serve <= length(non_serviced_reqs)
+		p_job = non_serviced_reqs[idx_req_to_serve]
+		d_job = p_job + inst.n
 
-		if bestInsData.feasible
-			sol = update_solution(sol, bestInsData, inst)
-			idxReqToServe += 1
+		best_ins_data, best_relax_data = get_insertion_with_less_increase_in_comp_time(inst, sol, p_job, d_job)
+
+		if best_ins_data.feasible
+			sol = update_solution(sol, best_ins_data, inst)
+			idx_req_to_serve += 1
 		elseif params.make_instance_feasible
-			appliedRelaxation = true
-			sol = update_solution_with_relaxation(sol, bestRelaxData, inst)
-			idxReqToServe += 1
+			applied_relaxation = true
+			sol = update_solution_with_relaxation(sol, best_relax_data, inst)
+			idx_req_to_serve += 1
 		else
-			lastIdxReqToServeFailed = idxReqToServe
-			sol = init_solution(inst)
-			failedReq = nonServicedReqs[idxReqToServe]
-			popat!(nonServicedReqs, idxReqToServe)
-			pushfirst!(nonServicedReqs, failedReq)
-			idxReqToServe = 1
-			failedRedos += 1
+			error("NoSolutionFound: Failed to insert the request ", p_job, " in the solution.")
 		end
 	end
 
-	remove_dummy_objects!(sol, inst)
-
-	sol.completionTimes = Float64[rt[length(rt)].servST for rt in sol.vehicles]
-	sol.value = sum(sol.completionTimes)
-	print_timeline_solution(inst, sol)
-	println(inst.name, ": ", sol.value)
-	if validate_solution(inst, sol, params)
-		sol.feasible = true
-		println("Feasible solution! :D")
-		if params.make_instance_feasible && params.methodCode == "greedy"
-			if appliedRelaxation
-				println("Updating instance...")
-			end
-			instanceDataToCsvFiles(inst, params, "g")
-		end
-	else
-		sol.feasible = false
-		println("Infeasible solution! :(")
-	end
+	post_processing!(sol, inst, params, applied_relaxation)
+	
 	return sol
 
 end # function greedy_heuristic_mutate()

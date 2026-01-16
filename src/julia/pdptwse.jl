@@ -42,7 +42,7 @@ end
 
 # Print solution details and validate solution
 if sol !== nothing
-	if params.printsol == 1
+	if params.print_sol == 1
 		print_timeline_solution(inst, sol)
 	end
 	

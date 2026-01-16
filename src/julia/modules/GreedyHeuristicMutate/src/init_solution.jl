@@ -41,17 +41,17 @@ function get_service_order(inst::InstanceData, params::ParameterData)
 end # function get_service_order()
 
 function init_solution(inst::InstanceData)
-	initialVehicleRoutes = init_vehicle_routes(inst)
-	initialMachineTravels = init_machine_travels(inst)
-	initialCompletionTimes = Float64[0 for _ in inst.K]
-	initialStats = StatsSolution()
+	initial_vehicle_routes = init_vehicle_routes(inst)
+	initial_machine_travels = init_machine_travels(inst)
+	initial_completion_times = Float64[0 for _ in inst.K]
+	initial_stats = SolutionStats()
 
 	return Solution(
-		initialVehicleRoutes,
-		initialMachineTravels,
-		initialCompletionTimes,
+		initial_vehicle_routes,
+		initial_machine_travels,
+		initial_completion_times,
 		false,
 		0.0,
-		initialStats,
+		initial_stats,
 	)
 end # function init_solution()
