@@ -1,4 +1,4 @@
-function printStats(extmd::ExternalMSLPData)::Nothing
+function print_stats(extmd::ExternalMSLPData)::Nothing
 	@printf("Best solution value: %.2f\n", extmd.bestSol.value)
 	@printf("Total time elapsed: %.6f\n", extmd.totalTimeElapsed)
 	@printf("Time to best: %.6f\n", extmd.timeToBest)
@@ -12,7 +12,7 @@ function printStats(extmd::ExternalMSLPData)::Nothing
 	return nothing
 end
 
-function calculateStats(extmd::ExternalMSLPData)::Nothing
+function calculate_stats(extmd::ExternalMSLPData)::Nothing
 	extmd.percentageInfeasibleSol = round(extmd.infeasibleSol / (extmd.iteration) * 100, digits = 4)
 	extmd.percentageLPImpr = round(extmd.lpImpr / max(1, extmd.lpRuns) * 100, digits = 4)
 	extmd.meanLPImprPercentage = round(extmd.sumLPImprPercentage / max(1, extmd.lpRuns) * 100, digits = 4)

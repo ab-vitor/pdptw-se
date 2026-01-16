@@ -16,17 +16,17 @@ using Dates
 using ProcUsage
 
 include("structs.jl")
-include("greedyUtils.jl")
+include("greedy_utils.jl")
 include("choose_candidate.jl")
-include("greedyHeuristic.jl")
-include("semiGreedyHeuristic.jl")
+include("greedy_heuristic.jl")
+include("semi_greedy_heuristic.jl")
 include("structures.jl")
-include("runMSLP.jl")
+include("run_MSLP.jl")
 include("statistics.jl")
 include("csv_results.jl")
 include("improvement.jl")
-include("postRunningMSLP.jl")
-include("printConfiguration.jl")
+include("post_running_MSLP.jl")
+include("print_configuration.jl")
 
 function multistartlpinitialsetup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
 	dummySol = greedyHeuristic(inst, params)
@@ -58,7 +58,7 @@ function multistartlp(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, param
 
 	if isMainMethod
 		println("\n[$(Dates.Time(Dates.now()))] Post running MSLP")
-		postRunningMSLP!(inst, extmd, allParams)
+		post_running_MSLP!(inst, extmd, allParams)
 	end
 
 	return extmd.bestSol

@@ -21,8 +21,8 @@ mutable struct InsertionData
 end
 
 mutable struct CheckInsertionData
-	feasible::Bool
-	cost::Float64
+	feasible::Bool # used to check if the insertion is feasible
+	cost::Float64 # cost added to current solution value
 	possibleMachineTravels::Vector{Vector{PossibleMachineTravel}} # all machine travels added after p_pos-1
 end
 

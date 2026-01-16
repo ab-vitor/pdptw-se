@@ -55,7 +55,7 @@ function calculate_rate_waiting_time_vehicles_for_a_service(inst::InstanceData, 
 	return vehicles_waiting_times_for_a_service
 end # function calculate_rate_waiting_time_vehicles_for_a_service()
 
-function save_stats_solution(
+function save_solution_stats(
 	inst::InstanceData,
 	bestSol::Solution,
 	params::ParameterData,
@@ -120,4 +120,4 @@ function save_stats_solution(
 		avrg_vehicles_waiting_time_for_a_machine_travel,
 		avrg_vehicles_waiting_time_for_a_service,
 	)
-end # function save_stats_solution()
+end # function save_solution_stats()
