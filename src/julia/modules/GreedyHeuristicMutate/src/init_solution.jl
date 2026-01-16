@@ -15,12 +15,12 @@ function init_vehicle_routes(inst::InstanceData)::Vector{Vector{VehicleStop}}
 	return vehicle_routes
 end # function init_vehicle_routes()
 
-function init_machine_travels(inst::InstanceData)
+function init_machine_travels(inst::InstanceData)::Vector{Vector{MachineTravel}}
 	# Insert a dummy MachineTravel in each machine travels list with start time at 0 (code simplification)
 	dummy_machine_travel = MachineTravel(0, 0, 0, 0, 0.0, true)
-	machineRoutes = Vector[MachineTravel[copy(dummy_machine_travel), copy(dummy_machine_travel)] for _ in inst.H]
+	machine_routes = Vector[MachineTravel[copy(dummy_machine_travel), copy(dummy_machine_travel)] for _ in inst.H]
 
-	return machineRoutes
+	return machine_routes
 end # function init_machine_travels()
 
 function get_service_order(inst::InstanceData, params::ParameterData)::Vector{Int64}
@@ -30,7 +30,7 @@ function get_service_order(inst::InstanceData, params::ParameterData)::Vector{In
 	error("Service order $(params.greedy_service_order) not implemented.")
 end # function get_service_order()
 
-function init_solution(inst::InstanceData)
+function init_solution(inst::InstanceData)::Solution
 	initial_vehicle_routes = init_vehicle_routes(inst)
 	initial_machine_travels = init_machine_travels(inst)
 	initial_completion_times = Float64[0 for _ in inst.K]
