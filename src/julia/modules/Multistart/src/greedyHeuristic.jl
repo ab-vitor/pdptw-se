@@ -1,22 +1,22 @@
 function getInsertionWithLessIncreaseInCompTime(
 	inst::InstanceData,
 	sol::Solution,
-	pJob::Int64,
+	p_job::Int64,
 	d_job::Int64,
 )::InsertionData
 	best_ins_data = InsertionData(false, Inf64, 0, 0, 0, 0, 0, PossibleMachineTravel[])
 	for k in inst.K
 		for p_pos in 2:length(sol.vehicles[k])
-			for dPos in p_pos:length(sol.vehicles[k])
-				check_ins_data = checkInsertion(sol, k, p_pos, dPos, pJob, d_job, inst)
+			for d_pos in p_pos:length(sol.vehicles[k])
+				check_ins_data = checkInsertion(sol, k, p_pos, d_pos, p_job, d_job, inst)
 				if check_ins_data.feasible
 					if check_ins_data.cost < best_ins_data.cost
 						best_ins_data = InsertionData(
 							check_ins_data.feasible,
 							check_ins_data.cost,
 							p_pos,
-							dPos,
-							pJob,
+							d_pos,
+							p_job,
 							d_job,
 							k,
 							check_ins_data.possibleMachineTravels,
@@ -35,10 +35,10 @@ function greedyHeuristic(inst::InstanceData, params::ParameterData)::Solution
 	idxReqToServe = 1
 	reqNotInserted = false
 	while idxReqToServe <= length(nonServicedReqs)
-		pJob = nonServicedReqs[idxReqToServe]
-		d_job = pJob + inst.n
+		p_job = nonServicedReqs[idxReqToServe]
+		d_job = p_job + inst.n
 
-		best_ins_data = getInsertionWithLessIncreaseInCompTime(inst, sol, pJob, d_job)
+		best_ins_data = getInsertionWithLessIncreaseInCompTime(inst, sol, p_job, d_job)
 
 		if best_ins_data.feasible
 			sol = updateSolution(sol, best_ins_data, inst)

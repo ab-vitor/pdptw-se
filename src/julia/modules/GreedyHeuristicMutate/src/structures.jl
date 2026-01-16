@@ -12,18 +12,18 @@ mutable struct InsertionData
 	feasible::Bool # used to check if the object is a feasible insertionData
 	cost::Float64 # cost added to current solution value
 	p_pos::Int64 # position where the pickup node will be placed
-	dPos::Int64 # position where the delivery node will be placed
-	pJob::Int64 # index of the pickup job in V_prime
+	d_pos::Int64 # position where the delivery node will be placed
+	p_job::Int64 # index of the pickup job in V_prime
 	d_job::Int64 # index of the delivert job in V_prime
 	k::Int64 # index of which vehicle is used
 	machine_travels::Vector{PossibleMachineTravel} # all machine travels added after p_pos-1
 end
 
 mutable struct CheckInsertionData
-	feasible::Bool
-	tw_violation::Bool
-	cap_violation::Bool
-	cost::Float64
-	load_cost::Float64
-	available_vehicle::Bool
+	feasible::Bool # used to check if the insertion is feasible
+	tw_violation::Bool # used to check if the insertion violates time windows
+	cap_violation::Bool # used to check if the insertion violates capacity constraints
+	cost::Float64 # cost added to current solution value
+	load_cost::Float64 # cost added due to capacity violations
+	available_vehicle::Bool # used to check if there is an available vehicle for the insertion
 end

@@ -83,7 +83,7 @@ function findFeasMtrvToInsertInMachine(
 	return PossibleMachineTravel(true, delta_t, h, posToInsert, max(hArr, kArr), prev_stop.node, curr_stop.node, vehicle_index)
 end # function findFeasMtrvToInsertInMachine()
 
-function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
+function analysePossibleMachineTravelFromLastComputed_possibleMachineTravel(
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
 	k::Int64,
@@ -127,7 +127,7 @@ function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
 		return true
 	end
 
-end # function analysePossibleMachineTravelFromLastComputedPossibleMachineTravel()
+end # function analysePossibleMachineTravelFromLastComputed_possibleMachineTravel()
 
 function getBestMachineTravelTime(
 	prev_stop::VehicleStop,
@@ -149,7 +149,7 @@ function getBestMachineTravelTime(
 
 		start_h_pos = Ref(1)
 		if length(possibleMachineTravels[h]) > 0 &&
-		   analysePossibleMachineTravelFromLastComputedPossibleMachineTravel(
+		   analysePossibleMachineTravelFromLastComputed_possibleMachineTravel(
 			prev_stop,
 			curr_stop,
 			k,
@@ -245,8 +245,8 @@ function checkInsertion(
 	sol::Solution,
 	k::Int64,
 	p_pos::Int64,
-	dPos::Int64,
-	pJob::Int64,
+	d_pos::Int64,
+	p_job::Int64,
 	d_job::Int64,
 	inst::InstanceData,
 )::CheckInsertionData
@@ -256,7 +256,7 @@ function checkInsertion(
 	prev = p_pos - 1
 	curr = p_pos
 	prev_stop = sol.vehicles[k][prev]
-	curr_stop = VehicleStop(pJob, inst.jobs[inst.refs[pJob]], 0, 0, 0, 0)
+	curr_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
 	time = prev_stop.servST
 	time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr, p_pos)
@@ -267,7 +267,7 @@ function checkInsertion(
 	end
 
 	prev_stop = curr_stop
-	if p_pos != dPos
+	if p_pos != d_pos
 		curr_stop = sol.vehicles[k][curr]
 		time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 1, p_pos)
 		load += curr_stop.job.dem
@@ -277,7 +277,7 @@ function checkInsertion(
 
 		prev += 1
 		curr += 1
-		while curr < dPos
+		while curr < d_pos
 			prev_stop = sol.vehicles[k][prev]
 			curr_stop = sol.vehicles[k][curr]
 			time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 1, p_pos)
@@ -311,7 +311,7 @@ function checkInsertion(
 	while curr <= length(sol.vehicles[k])
 		prev_stop = sol.vehicles[k][prev]
 		curr_stop = sol.vehicles[k][curr]
-		# if curr_stop.job.earl == 411 && p_pos == 3 && dPos == 3
+		# if curr_stop.job.earl == 411 && p_pos == 3 && d_pos == 3
 		# 	println("stophere")
 		# end
 		time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 2, p_pos)
@@ -364,8 +364,8 @@ end # function insertMachineTravels()
 function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceData)::Solution
 	k = insData.k
 	p_pos = insData.p_pos
-	dPos = insData.dPos
-	pJob = insData.pJob
+	d_pos = insData.d_pos
+	p_job = insData.p_job
 	d_job = insData.d_job
 	machine_travels = flatChronollogically(insData.machine_travels)
 
@@ -376,7 +376,7 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 	prev = p_pos - 1
 	curr = p_pos
 	prev_stop = sol.vehicles[k][prev]
-	pickupStop = VehicleStop(pJob, inst.jobs[inst.refs[pJob]], 0, 0, 0, 0)
+	pickupStop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
 	time = prev_stop.servST
 	time = advanceTime(time, prev_stop, pickupStop, k, inst, machine_travels, lastMachTrv)
@@ -386,7 +386,7 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 	pickupStop.load = load
 
 	prev_stop = pickupStop
-	if p_pos != dPos
+	if p_pos != d_pos
 		curr_stop = sol.vehicles[k][curr]
 		time = advanceTime(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv)
 		load += curr_stop.job.dem
@@ -396,7 +396,7 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 
 		prev += 1
 		curr += 1
-		while curr < dPos
+		while curr < d_pos
 			prev_stop = sol.vehicles[k][prev]
 			curr_stop = sol.vehicles[k][curr]
 			time = advanceTime(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv)
@@ -436,7 +436,7 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 		curr += 1
 	end
 
-	insert!(sol.vehicles[k], dPos, deliveryStop)
+	insert!(sol.vehicles[k], d_pos, deliveryStop)
 	insert!(sol.vehicles[k], p_pos, pickupStop)
 	insertMachineTravels(sol, machine_travels, k)
 	removeDeactivatedTravels(sol)

@@ -13,8 +13,8 @@ mutable struct InsertionData
 	feasible::Bool # used to check if the object is a feasible insertionData
 	cost::Float64 # cost added to current solution value
 	p_pos::Int64 # position where the pickup node will be placed
-	dPos::Int64 # position where the delivery node will be placed
-	pJob::Int64 # index of the pickup job in V_prime
+	d_pos::Int64 # position where the delivery node will be placed
+	p_job::Int64 # index of the pickup job in V_prime
 	d_job::Int64 # index of the delivert job in V_prime
 	k::Int64 # index of which vehicle is used
 	machine_travels::Vector{Vector{PossibleMachineTravel}} # all machine travels added after p_pos-1

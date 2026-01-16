@@ -1,19 +1,19 @@
 function getCandidateListByIncreaseInCompTime(
 	inst::InstanceData,
 	sol::Solution,
-	pJob::Int64,
+	p_job::Int64,
 	d_job::Int64,
 )::Vector{InsertionData}
 	cand_list = InsertionData[]
 	for k in inst.K
 		for p_pos in 2:length(sol.vehicles[k])
-			for dPos in p_pos:length(sol.vehicles[k])
-				check_ins_data = checkInsertion(sol, k, p_pos, dPos, pJob, d_job, inst)
+			for d_pos in p_pos:length(sol.vehicles[k])
+				check_ins_data = checkInsertion(sol, k, p_pos, d_pos, p_job, d_job, inst)
 				if !check_ins_data.feasible
 					continue
 				end
 
-				push!(cand_list, InsertionData(true, check_ins_data.cost, p_pos, dPos, pJob, d_job, k, check_ins_data.possibleMachineTravels))
+				push!(cand_list, InsertionData(true, check_ins_data.cost, p_pos, d_pos, p_job, d_job, k, check_ins_data.possibleMachineTravels))
 			end
 		end
 	end
@@ -26,10 +26,10 @@ function semiGreedyHeuristic(inst::InstanceData, params::ParameterData)::Solutio
 	idxReqToServe = 1
 	jumpedRequest = false
 	while idxReqToServe <= length(nonServicedReqs)
-		pJob = nonServicedReqs[idxReqToServe]
-		d_job = pJob + inst.n
+		p_job = nonServicedReqs[idxReqToServe]
+		d_job = p_job + inst.n
 
-		cand_list = getCandidateListByIncreaseInCompTime(inst, sol, pJob, d_job)
+		cand_list = getCandidateListByIncreaseInCompTime(inst, sol, p_job, d_job)
 		chosen = choose_candidate(cand_list, params)
 
 		if chosen.feasible
