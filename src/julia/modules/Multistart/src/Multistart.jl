@@ -34,7 +34,7 @@ include("print_configuration.jl")
 """
 function multistartlpinitialsetup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
 	dummy_sol = greedy_heuristic(inst)
-	# Formulations.run_LP_to_reschedule_solution(env, dummy_sol, inst, params)
+	Formulations.run_LP_to_reschedule_solution(env, dummy_sol, inst, params)
 	return nothing
 end
 

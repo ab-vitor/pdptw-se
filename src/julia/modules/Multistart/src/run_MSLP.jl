@@ -35,7 +35,7 @@ function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllP
 
 	if extmd.curr_sol.feasible
 		extmd.last_greedy_sol_value = extmd.curr_sol.value
-		# extmd.curr_sol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.curr_sol, inst, all_params.general)
+		extmd.curr_sol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.curr_sol, inst, all_params.general)
 		extmd.LP_runs += 1
 
 		if extmd.curr_sol.feasible && extmd.curr_sol.value < extmd.last_greedy_sol_value
@@ -63,7 +63,7 @@ function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllP
 		extmd.curr_sol = semi_greedy_heuristic(inst, all_params.general)
 		if extmd.curr_sol.feasible
 			extmd.last_greedy_sol_value = extmd.curr_sol.value
-			# extmd.curr_sol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.curr_sol, inst, all_params.general)
+			extmd.curr_sol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.curr_sol, inst, all_params.general)
 			extmd.LP_runs += 1
 
 			if extmd.curr_sol.value < extmd.last_greedy_sol_value
