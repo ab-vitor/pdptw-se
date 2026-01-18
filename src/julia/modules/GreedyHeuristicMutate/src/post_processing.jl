@@ -45,7 +45,7 @@ function post_processing!(sol::Solution, inst::InstanceData, params::ParameterDa
 	if validate_solution(inst, sol, params)
 		sol.feasible = true
 		println("Feasible solution! :D")
-		if params.make_instance_feasible && params.methodCode == "greedy"
+		if params.make_instance_feasible && params.method_code == "greedy"
 			if applied_relaxation
 				println("Updating instance...")
 			end

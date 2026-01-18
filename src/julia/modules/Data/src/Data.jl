@@ -12,9 +12,9 @@ include("statistics.jl")
 export InstanceData, read_data, Vehicle, Job, Machine, Point, instance_data_to_csv_files
 
 function read_files(inst::InstanceData, params::ParameterData)::Nothing
-	vehicles = string(params.instPath, "vehicles.csv")
-	jobs = string(params.instPath, "jobs.csv")
-	machines = string(params.instPath, "machines.csv")
+	vehicles = string(params.inst_path, "vehicles.csv")
+	jobs = string(params.inst_path, "jobs.csv")
+	machines = string(params.inst_path, "machines.csv")
 
 	f_vehicles = open(vehicles)
 	f_jobs = open(jobs)
@@ -54,12 +54,12 @@ function read_files(inst::InstanceData, params::ParameterData)::Nothing
 			push!(inst.machines, Machine(splited))
 		end
 	end
-	if params.cutoffmachs > 0
-		params.cutoffmachs = min(length(inst.machines), params.cutoffmachs)
+	if params.cut_off_machs > 0
+		params.cut_off_machs = min(length(inst.machines), params.cut_off_machs)
 	else
-		params.cutoffmachs = length(inst.machines)
+		params.cut_off_machs = length(inst.machines)
 	end
-	while !params.make_instance_feasible && length(inst.machines) > params.cutoffmachs
+	while !params.make_instance_feasible && length(inst.machines) > params.cut_off_machs
 		pop!(inst.machines)
 	end
 	println(inst.machines)
@@ -67,11 +67,11 @@ function read_files(inst::InstanceData, params::ParameterData)::Nothing
 end
 
 function build_refs(inst::InstanceData, params::ParameterData)::Nothing
-	cutoff = params.cutoff
-	if cutoff == 0
-		cutoff = div(length(inst.jobs) - 1, 2)
+	cut_off = params.cut_off
+	if cut_off == 0
+		cut_off = div(length(inst.jobs) - 1, 2)
 	end
-	inst.n = cutoff
+	inst.n = cut_off
 	# With these lists we can access pickup and delivery jobs in order
 	# like: First Job: 	<jobs[inst.refs[1]].id, jobs[inst.refs[n+1]].id, jobs[inst.refs[1]].dem>
 	#					 	<v_1, v_{n+1}, q_1>
@@ -82,7 +82,7 @@ function build_refs(inst::InstanceData, params::ParameterData)::Nothing
 		if cust.dem > 0
 			push!(inst.refs, i)
 		end
-		if length(inst.refs) == cutoff + 1
+		if length(inst.refs) == cut_off + 1
 			break
 		end
 	end
@@ -150,7 +150,7 @@ end
 
 function build_H(inst::InstanceData, params::ParameterData)::Nothing
 	inst.H = Int64[]
-	for i in 1:params.cutoffmachs
+	for i in 1:params.cut_off_machs
 		push!(inst.H, i)
 	end
 	println("H: ", inst.H)
@@ -266,18 +266,18 @@ function print_jobs(inst::InstanceData)::Nothing
 	return nothing
 end
 
-function read_data(params::ParameterData, instPath::Union{Nothing, String} = nothing)::InstanceData
-	if instPath !== nothing
-		params.instPath = instPath
+function read_data(params::ParameterData, inst_path::Union{Nothing, String} = nothing)::InstanceData
+	if inst_path !== nothing
+		params.inst_path = inst_path
 		Parameters.saveInstanceFullName!(params)
 	end
-	println("\n[$(Dates.Time(Dates.now()))] Running Data.read_data with file $(params.instPath)")
+	println("\n[$(Dates.Time(Dates.now()))] Running Data.read_data with file $(params.inst_path)")
 	inst = InstanceData()
 
 	inst.name = params.name
 	inst.group = params.group
 	inst.type = params.type
-	inst.fullname = params.fullname
+	inst.full_name = params.full_name
 
 	# * The building order matters
 	read_files(inst, params)
@@ -297,9 +297,9 @@ function read_data(params::ParameterData, instPath::Union{Nothing, String} = not
 	return inst
 end # function read_data()
 
-function instance_data_to_csv_files(inst::InstanceData, params::ParameterData, methodCode::String)::Nothing
+function instance_data_to_csv_files(inst::InstanceData, params::ParameterData, method_code::String)::Nothing
 	original_path = pwd()
-	cd(params.instPath)
+	cd(params.inst_path)
 	cd("../../../")
 	group = inst.group
 	if endswith(inst.group, "03M")
@@ -308,7 +308,7 @@ function instance_data_to_csv_files(inst::InstanceData, params::ParameterData, m
 		group = replace(inst.group, "05M" => "06M")
 	end
 
-	feasible_inst_path = string("../", basename(pwd()), "_f", methodCode, "/", group, "/", inst.type, "/", inst.name)
+	feasible_inst_path = string("../", basename(pwd()), "_f", method_code, "/", group, "/", inst.type, "/", inst.name)
 	if !ispath(feasible_inst_path)
 		mkpath(feasible_inst_path)
 	end

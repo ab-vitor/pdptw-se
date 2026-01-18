@@ -3,7 +3,7 @@ function print_configuration(inst::InstanceData, all_params::AllParams)::Nothing
 	------------------------------------------------------
 	"\n[$(Dates.Time(Dates.now()))] Running Multi Start Heuristic"
 	> Experiment started at $(Dates.now())
-	> Instance: $(inst.fullname)
+	> Instance: $(inst.full_name)
 	> Algorithm Parameters:
 	""")
 

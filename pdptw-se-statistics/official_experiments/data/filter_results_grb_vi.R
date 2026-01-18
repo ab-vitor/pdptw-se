@@ -28,7 +28,7 @@ for(i in seq_along(benchmarks)){
       select(
         name, group, type, full_name, time, 
         status, optimal, tle_feas, tle_not_feas, 
-        gen_config_filename, gap, obj_value, bestbound,
+        gen_config_file_name, gap, obj_value, bestbound,
         numnodes, constraints_used_melo_mip_str
       )
     
@@ -61,7 +61,7 @@ for(i in seq_along(benchmarks)){
     select(
       name, group, type, full_name, time, 
       status, optimal, tle_feas, tle_not_feas, 
-      gen_config_filename, gap, obj_value, bestbound,
+      gen_config_file_name, gap, obj_value, bestbound,
       numnodes, constraints_used_melo_mip_str
     )
   

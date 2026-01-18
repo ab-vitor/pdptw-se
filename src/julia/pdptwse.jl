@@ -24,17 +24,17 @@ if GRB_ENV !== nothing
 end
 
 # Read the parameters from command line
-params = readInputParameters(ARGS)
+params = read_input_parameters(ARGS)
 
 # Read instance data
 inst = read_data(params)
 
 # Solve the problem according to the selected method
 sol::Union{Nothing, Solution} = nothing
-if params.methodType == "heur"
-	if params.methodCode == "greedy"
+if params.method_type == "heur"
+	if params.method_code == "greedy"
 		sol = GreedyHeuristicMutate.greedy_heuristic_mutate(inst, params)
-	elseif params.methodCode == "mslp"
+	elseif params.method_code == "mslp"
 		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
 		sol = Multistart.multistartlp(GRB_ENV, inst, params)
 	end

@@ -4,7 +4,7 @@ function parse(::Type{String}, value::String)::String
 	return value
 end
 
-function load_general_configuration!(gen_config_file::String, params::ParameterData)::Nothing
+function load_general_configuration!(gen_config_file_path::String, params::ParameterData)::Nothing
 	# Create a dictionaty with fields and their types.
 	param_names_types = Dict(
 		[name => typ for (name, typ) in zip(fieldnames(ParameterData),
@@ -15,17 +15,17 @@ function load_general_configuration!(gen_config_file::String, params::ParameterD
 
 	lines = Array{String, 1}()
 	try
-		open(gen_config_file) do file
+		open(gen_config_file_path) do file
 			lines = readlines(file)
 		end
 	catch err
-		throw(LoadError(gen_config_file, 0,
-			"cannot read '$gen_config_file'"))
+		throw(LoadError(gen_config_file_path, 0,
+			"cannot read '$gen_config_file_path'"))
 	end
 
 	if length(lines) == 0
-		throw(LoadError(gen_config_file, 0,
-			"cannot read '$gen_config_file'"))
+		throw(LoadError(gen_config_file_path, 0,
+			"cannot read '$gen_config_file_path'"))
 	end
 
 	for (line_number, line) in enumerate(lines)
@@ -55,20 +55,20 @@ function load_general_configuration!(gen_config_file::String, params::ParameterD
 			if isa(err, BoundsError)
 				throw(
 					LoadError(
-						gen_config_file,
+						gen_config_file_path,
 						line_number,
 						"error line " *
-						"$line_number of '$gen_config_file': " *
+						"$line_number of '$gen_config_file_path': " *
 						"missing parameter or value",
 					),
 				)
 
 			elseif isa(err, KeyError)
-				throw(LoadError(gen_config_file, line_number,
+				throw(LoadError(gen_config_file_path, line_number,
 					"parameter '$param_name' unknown"))
 
 			elseif isa(err, ArgumentError)
-				throw(LoadError(gen_config_file, line_number,
+				throw(LoadError(gen_config_file_path, line_number,
 					"invalid value for '$param_name': $value"))
 			else
 				throw(err)

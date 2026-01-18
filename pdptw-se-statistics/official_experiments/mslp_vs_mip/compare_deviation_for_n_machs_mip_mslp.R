@@ -34,8 +34,8 @@ for (j in seq_along(variations)) {
     rename(mip_vi_sol = obj_value)
   
   csv_mslprf <- csv_mslpr %>%
-    select(fullname, name, group, value) %>%
-    rename(mslp_sol = value, full_name = fullname) %>%
+    select(full_name, name, group, value) %>%
+    rename(mslp_sol = value, full_name = full_name) %>%
     group_by(full_name, name, group) %>%
     summarise(mslp_min_sol = min(mslp_sol), .groups = "drop")
   

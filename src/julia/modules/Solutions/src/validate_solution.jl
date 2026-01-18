@@ -57,7 +57,7 @@ function capacity_const(inst::InstanceData, sol::Solution, params::ParameterData
 	for k in inst.K
 		rt = sol.vehicles[k]
 		for i in eachindex(rt)[2:end]
-			if abs(rt[i].load - (rt[i-1].load + rt[i].job.dem)) > params.epsilonCap
+			if abs(rt[i].load - (rt[i-1].load + rt[i].job.dem)) > params.epsilon_cap
 				println(
 					"Vehicle load just after leaving node ",
 					rt[i].job.id,
@@ -67,7 +67,7 @@ function capacity_const(inst::InstanceData, sol::Solution, params::ParameterData
 				)
 				return false
 			end
-			if rt[i].load + params.epsilonCap < 0 || rt[i].load > inst.vehicles[k].cap + params.epsilonCap
+			if rt[i].load + params.epsilon_cap < 0 || rt[i].load > inst.vehicles[k].cap + params.epsilon_cap
 				println(
 					"Vehicle capacity was violated at position ",
 					i,

@@ -48,7 +48,7 @@ function multistartlp(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, param
 	stop_params = load_stop_params(params)
 	all_params = AllParams(params, stop_params)
 
-	is_main_method = params.methodType == "heur" && params.methodCode == "mslp"
+	is_main_method = params.method_type == "heur" && params.method_code == "mslp"
 	if is_main_method
 		println("\n[$(Dates.Time(Dates.now()))] Print configuration")
 		print_configuration(inst, all_params)

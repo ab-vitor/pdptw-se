@@ -6,9 +6,9 @@ function post_running_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_par
 	extmd.best_sol.stats = solution_stats
 
 	if all_params.stop.rule != TARGET
-		println("[$(Dates.Time(Dates.now()))] Writing results to CSV file: ", all_params.general.csvfilename)
+		println("[$(Dates.Time(Dates.now()))] Writing results to CSV file: ", all_params.general.csv_file_name)
 		csvrow = csvresults(inst, extmd, all_params)
-		CSVUtils.write_csv_with_flock(all_params.general.csvfilename, csvrow)
+		CSVUtils.write_csv_with_flock(all_params.general.csv_file_name, csvrow)
 
 		save_summarized_solution(extmd.best_sol, inst, all_params.general)
 		save_solution_timeline(extmd.best_sol, inst, all_params.general)

@@ -4,7 +4,7 @@ def parse(value: str) -> str:
     return value
 
 
-def load_general_configuration(gen_config_file: str, params:ParameterData) -> None:
+def load_general_configuration(gen_config_file_path: str, params:ParameterData) -> None:
     # Create a dictionary with fields and their types.
     param_names_types = {
         name: typ for name, typ in zip(params.__dataclass_fields__.keys(), params.__dataclass_fields__.values())
@@ -14,13 +14,13 @@ def load_general_configuration(gen_config_file: str, params:ParameterData) -> No
 
     lines = []
     try:
-        with open(gen_config_file, 'r') as file:
+        with open(gen_config_file_path, 'r') as file:
             lines = file.readlines()
     except Exception as err:
-        raise RuntimeError(f"Cannot read '{gen_config_file}'") from err
+        raise RuntimeError(f"Cannot read '{gen_config_file_path}'") from err
 
     if len(lines) == 0:
-        raise RuntimeError(f"Cannot read '{gen_config_file}'")
+        raise RuntimeError(f"Cannot read '{gen_config_file_path}'")
 
     for line_number, line in enumerate(lines, start=1):
         line = line.strip()
@@ -45,15 +45,15 @@ def load_general_configuration(gen_config_file: str, params:ParameterData) -> No
 
         except ValueError:
             raise RuntimeError(
-                f"Error on line {line_number} of '{gen_config_file}': missing parameter or value"
+                f"Error on line {line_number} of '{gen_config_file_path}': missing parameter or value"
             )
         except KeyError as err:
             raise RuntimeError(
-                f"Error on line {line_number} of '{gen_config_file}': {err}"
+                f"Error on line {line_number} of '{gen_config_file_path}': {err}"
             )
         except Exception as err:
             raise RuntimeError(
-                f"Error on line {line_number} of '{gen_config_file}': invalid value for '{param_name}': {value}"
+                f"Error on line {line_number} of '{gen_config_file_path}': invalid value for '{param_name}': {value}"
             ) from err
 
     return None

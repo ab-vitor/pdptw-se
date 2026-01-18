@@ -1,7 +1,7 @@
 function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Solution, inst::InstanceData, params::ParameterData)::Solution
 	if params.solver == "Gurobi"
 		model = Model(() -> Gurobi.Optimizer(env))
-		if params.outputFlagGrbMSLP == 0
+		if params.output_flag_grb_MSLP == 0
 			set_attribute(model, "OutputFlag", 0)
 			set_silent(model)
 		end
@@ -18,7 +18,7 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 			error("Number of threads must be greater than zero")
 		end
 		set_attribute(model, "Threads", params.threads)
-		set_attribute(model, "Method", Int(params.solverMethod))
+		set_attribute(model, "Method", Int(params.solver_method))
 	else
 		error("No solver selected")
 	end

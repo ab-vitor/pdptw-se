@@ -82,7 +82,7 @@ for(i in seq_along(variations)){
   )
   
   csv_results_vi_test <- csv_results_vi_test %>%
-    select(-gen_config_filename)
+    select(-gen_config_file_name)
   
   dir.create(path_to_csv_output, showWarnings = FALSE)
 

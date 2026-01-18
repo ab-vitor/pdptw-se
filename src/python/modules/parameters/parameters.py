@@ -36,10 +36,10 @@ def save_instance_full_name(params: ParameterData) -> None:
         params.type = f"t{params.name[2]}"
         params.group = path_splitted[-2]
 
-    if params.cutoff_machs <= 0:
-        params.cutoff_machs = int(params.group[-3:-1])
+    if params.cut_off_machs <= 0:
+        params.cut_off_machs = int(params.group[-3:-1])
 
-    params.group = f"{params.group[:-3]}{params.cutoff_machs:02d}M"
+    params.group = f"{params.group[:-3]}{params.cut_off_machs:02d}M"
     params.full_name = f"{params.name}_{params.type}_{params.group}"
 
     print(f"Instance: {params.full_name}")
@@ -53,10 +53,10 @@ def read_input_parameters(args: list[str]) -> ParameterData:
         if args[i] == "--inst":
             params.inst_path = args[i + 1]
             i += 1
-        elif args[i] == "--gen_config_file":
-            params.gen_config_file = args[i + 1]
-            params.gen_config_filename = os.path.basename(params.gen_config_file)[:-5]
-            load_general_configuration(params.gen_config_file, params)
+        elif args[i] == "--gen_config_file_path":
+            params.gen_config_file_path = args[i + 1]
+            params.gen_config_file_name = os.path.basename(params.gen_config_file_path)[:-5]
+            load_general_configuration(params.gen_config_file_path, params)
             i += 1
         elif args[i] == "--solver":
             params.solver = args[i + 1]
@@ -76,11 +76,11 @@ def read_input_parameters(args: list[str]) -> ParameterData:
         elif args[i] == "--greedy_service_order":
             params.greedy_service_order = args[i + 1]
             i += 1
-        elif args[i] == "--cutoff":
-            params.cutoff = int(args[i + 1])
+        elif args[i] == "--cut_off":
+            params.cut_off = int(args[i + 1])
             i += 1
-        elif args[i] == "--cutoff_machs":
-            params.cutoff_machs = int(args[i + 1])
+        elif args[i] == "--cut_off_machs":
+            params.cut_off_machs = int(args[i + 1])
             i += 1
         elif args[i] == "--elevator":
             params.elevator = 1
@@ -203,16 +203,16 @@ def read_input_parameters(args: list[str]) -> ParameterData:
     if not params.inst_path.endswith("/"):
         params.inst_path += "/"
 
-    params.gen_config_filename = os.path.basename(params.gen_config_file)[:-5]
+    params.gen_config_file_name = os.path.basename(params.gen_config_file_path)[:-5]
     params.rng = random.Random(params.seed)
     save_instance_full_name(params)
     print(params)
     if not params.output.endswith("/"):
         params.output += "/"
     params.csv_file_name = f"{params.output}{params.method_type}_{params.method_code}/outputs/csvresults_{params.method_type}_{params.method_code}.csv"
-    params.sol_file_name = f"{params.output}{params.method_type}_{params.method_code}/solutions/{params.group}/{params.name}_sol_{params.gen_config_filename}.txt"
-    params.timeline_file_name = f"{params.output}{params.method_type}_{params.method_code}/timelines/{params.group}/{params.name}_timeline_{params.gen_config_filename}.txt"
-    params.grb_file_name = f"{params.output}{params.method_type}_{params.method_code}/gurobi/{params.group}/{params.name}_grb_{params.gen_config_filename}.log"
+    params.sol_file_name = f"{params.output}{params.method_type}_{params.method_code}/solutions/{params.group}/{params.name}_sol_{params.gen_config_file_name}.txt"
+    params.timeline_file_name = f"{params.output}{params.method_type}_{params.method_code}/timelines/{params.group}/{params.name}_timeline_{params.gen_config_file_name}.txt"
+    params.grb_file_name = f"{params.output}{params.method_type}_{params.method_code}/gurobi/{params.group}/{params.name}_grb_{params.gen_config_file_name}.log"
     parse_constraints_used_melo_mip(params)
     print("Constraints active in melo MIP")
     for i in range(1,50):

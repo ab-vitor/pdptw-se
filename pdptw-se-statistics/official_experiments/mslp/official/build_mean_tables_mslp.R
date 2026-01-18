@@ -31,7 +31,7 @@ for (j in seq_along(variations)) {
       mutate(value = ifelse(is.infinite(value), NA, value))
   
     grouped_avrg_group_instname_mslp <- csvr_mslp %>%
-      group_by(fullname, group) %>%
+      group_by(full_name, group) %>%
       summarise(
         minbestsol = ifelse(all(!is.na(value)), min(value, na.rm = T), NA),
         meanbestsol = ifelse(all(!is.na(value)), mean(value, na.rm = T), NA),

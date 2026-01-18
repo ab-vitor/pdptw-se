@@ -21,7 +21,7 @@ for (j in seq_along(benchmarks)) {
     select(
       name, group, type, alpha, 
       seed, value, feasible, 
-      total_time_elapsed, fullname, n,
+      total_time_elapsed, full_name, n,
       iteration_to_best, time_to_best, iteration,
       percentage_infeasible_sol, mean_LP_impr_percentage
     )

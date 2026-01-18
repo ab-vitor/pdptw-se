@@ -44,7 +44,7 @@ mutable struct InstanceData
 	name::String # instance name
 	group::String # group name
 	type::String # type of instance
-	fullname::String # full name of instance
+	full_name::String # full name of instance
 	vehicles::Vector{Vehicle} # list of vehicles
 	vehicle_types::Vector{Vehicle} # list of vehicle types
 	jobs::Vector{Job} # list of requests
@@ -80,7 +80,7 @@ mutable struct InstanceData
 		name = ""
 		group = ""
 		type = ""
-		fullname = ""
+		full_name = ""
 		vehicles = Vehicle[]
 		vehicle_types = Vehicle[]
 		jobs = Job[]
@@ -115,7 +115,7 @@ mutable struct InstanceData
 			name,
 			group,
 			type,
-			fullname,
+			full_name,
 			vehicles,
 			vehicle_types,
 			jobs,

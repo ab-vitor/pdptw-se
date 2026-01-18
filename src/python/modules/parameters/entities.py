@@ -15,11 +15,11 @@ class ParameterData:
     full_name: str = ""
     method_type: str = "heur"
     method_code: str = "mslp"
-    gen_config_file: str = "configs/mslp/genconfig_mslp.conf"
-    gen_config_filename: str = field(init=False)
+    gen_config_file_path: str = "configs/mslp/genconfig_mslp.conf"
+    gen_config_file_name: str = field(init=False)
     greedy_service_order: str = "tightest_tw"
-    cutoff: int = 0
-    cutoff_machs: int = 0
+    cut_off: int = 0
+    cut_off_machs: int = 0
     solver: str = "Gurobi"
     max_time: int = 7200
     gurobi_cuts: int = 1
@@ -71,5 +71,5 @@ class ParameterData:
     threads: int = 16
 
     def __post_init__(self):
-        self.gen_config_filename = os.path.basename(self.gen_config_file)[:-5]
+        self.gen_config_file_name = os.path.basename(self.gen_config_file_path)[:-5]
         self.rng = random.Random(self.seed)
