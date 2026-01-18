@@ -1,7 +1,7 @@
 mutable struct StopParams
     rule::StopRule # stopping rule
     argument::Float64 # target value or iteration/time limit
-    maximum_time::Int64 # any approach stop time
+    maximum_time::Float64 # any approach stop time
 end
 
 mutable struct AllParams
@@ -85,7 +85,7 @@ function load_stop_params(params::ParameterData)
 		stop_argument = parse(Int64, params.mslpa)
 	end
 
-	maximum_time = params.maxtime
+	maximum_time = params.max_time
 	if maximum_time <= 0
 		error("Maximum time must be larger than 0.0. Given $maximum_time.")
 	end

@@ -18,7 +18,7 @@ mutable struct ParameterData
 	cut_off::Int # Cut-off value for the instance
 	cut_off_machs::Int # Cut-off value for the number of machines
 	solver::String # Solver to be used: Gurobi
-	maxtime::Int64 # Maxtime of any approach
+	max_time::Float64 # Maxtime of any approach
 	print_sol::Int # Print solution flag
 	elevator::Int # Elevator constraint flag
 	make_instance_feasible::Bool # Make instance feasible flag
@@ -51,7 +51,7 @@ mutable struct ParameterData
 		gen_config_file_name = basename(gen_config_file_path)[1:end-5]
 		greedy_service_order = "tightest_tw"
 		solver = "Gurobi"
-		maxtime = 999999999999999
+		max_time = Inf64
 		print_sol = 0
 		cut_off = 0
 		cut_off_machs = 0
@@ -88,7 +88,7 @@ mutable struct ParameterData
 			cut_off,
 			cut_off_machs,
 			solver,
-			maxtime,
+			max_time,
 			print_sol,
 			elevator,
 			make_instance_feasible,
@@ -153,8 +153,8 @@ function read_input_parameters(ARGS::Vector{String})::ParameterData
 		elseif ARGS[param] == "--solver"
 			params.solver = ARGS[param+1]
 			param += 1
-		elseif ARGS[param] == "--maxtime"
-			params.maxtime = parse(Int, ARGS[param+1])
+		elseif ARGS[param] == "--max_time"
+			params.max_time = parse(Int, ARGS[param+1])
 			param += 1
 		elseif ARGS[param] == "--print_sol"
 			params.print_sol = parse(Int, ARGS[param+1])
