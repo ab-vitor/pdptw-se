@@ -1,3 +1,18 @@
+"""
+	function find_active_machine_travel(
+		machine::Vector{MachineTravel},
+		pos::Ref{Int64},
+		k::Int64,
+		p_pos::Int64,
+		i::Int64 = 1,
+	)::MachineTravel
+
+	Given a list of machine travels `machine`, a position reference `pos`, a vehicle `k`, and a position `p_pos`,
+	this function iterates through the machine travels starting from `pos` until it finds
+	the next active machine travel for vehicle `k` that has a vehicle index greater than or equal
+	to `p_pos`. The position reference `pos` is updated to point to the next position after the 
+	found machine travel.
+"""
 function find_active_machine_travel(machine::Vector{MachineTravel}, pos::Ref{Int64}, k::Int64, p_pos::Int64, i::Int64 = 1)::MachineTravel
 	if pos[] > length(machine)
 		return MachineTravel(k, p_pos)
@@ -12,6 +27,26 @@ function find_active_machine_travel(machine::Vector{MachineTravel}, pos::Ref{Int
 	return trv
 end # function find_active_machine_travel()
 
+"""
+	function find_feas_mtrv_to_insert_in_machine(
+		machine::Vector{MachineTravel},
+		h::Int64,
+		start::Int64,
+		k::Int64,
+		p_pos::Int64,
+		dep_time::Float64,
+		LB_new_trv_end::Float64,
+		prev_stop::VehicleStop,
+		curr_stop::VehicleStop,
+		vehicle_index::Int64,
+		inst::InstanceData,
+	)::PossibleMachineTravel
+
+	Searches for a feasible machine travel to insert into the machine travels list `machine` for a given
+	vehicle `k` and position `p_pos`. The search starts from index `start` and considers the time window constraints
+	of the `prev_stop` and `curr_stop`. If a feasible insertion is found, it returns a `PossibleMachineTravel` object
+	indicating the details of the insertion; otherwise, it returns a dummy `PossibleMachineTravel` indicating no feasible insertion.
+"""
 function find_feas_mtrv_to_insert_in_machine(
 	machine::Vector{MachineTravel},
 	h::Int64,
@@ -46,7 +81,16 @@ function find_feas_mtrv_to_insert_in_machine(
 					return dummy_mtrv
 				elseif new_trv_end + inst.O[(inst.f[curr_stop.node][h], inst.f[trv.orig][h], h)] <= trv.st
 					delta_t = k_arr_at_curr_node - dep_time
-					return PossibleMachineTravel(true, delta_t, h, pos_to_insert, max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
+					return PossibleMachineTravel(
+						true,
+						delta_t,
+						h,
+						pos_to_insert,
+						max(h_arr, k_arr),
+						prev_stop.node,
+						curr_stop.node,
+						vehicle_index,
+					)
 				end
 			end
 			prev_active_mtrv_pos = pos_to_insert
@@ -83,6 +127,27 @@ function find_feas_mtrv_to_insert_in_machine(
 	return PossibleMachineTravel(true, delta_t, h, pos_to_insert, max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
 end # function find_feas_mtrv_to_insert_in_machine()
 
+"""
+	function analyze_possible_machine_travel_from_last_computed_possible_machine_travel(
+		prev_stop::VehicleStop,
+		curr_stop::VehicleStop,
+		k::Int64,
+		curr_time::Float64,
+		inst::InstanceData,
+		machine::Vector{MachineTravel},
+		possible_machine_travels::Vector{Vector},
+		h::Int64,
+		best_possible_machine_travel::Ref{PossibleMachineTravel},
+		start_h_pos::Ref{Int64},
+		vehicle_index::Int64,
+		p_pos::Int64,
+	)::Bool
+
+	Analyzes the last computed possible machine travel for a given machine `h` to determine if it can be used
+	to satisfy the time window constraints of the `curr_stop`. If feasible, it updates the `best_possible_machine_travel`
+	reference with the new possible machine travel details. The function returns `true` if a feasible machine travel
+	is found or if the last computed travel cannot satisfy the time window; otherwise, it returns `false`.
+"""
 function analyze_possible_machine_travel_from_last_computed_possible_machine_travel(
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
@@ -128,6 +193,24 @@ function analyze_possible_machine_travel_from_last_computed_possible_machine_tra
 	return true
 end # function analyze_possible_machine_travel_from_last_computed_possible_machine_travel()
 
+"""
+	function get_best_machine_travel_time(
+		prev_stop::VehicleStop,
+		curr_stop::VehicleStop,
+		k::Int64,
+		dep_time::Float64,
+		inst::InstanceData,
+		machines::Vector{Vector{MachineTravel}},
+		possible_machine_travels::Vector{Vector},
+		vehicle_index::Int64,
+		p_pos::Int64,
+	)::Float64
+
+	Finds the best machine travel time for a vehicle `k` traveling from `prev_stop` to `curr_stop`.
+	It iterates through all available machines and checks for feasible machine travels that satisfy
+	the time window constraints. The function returns the minimum travel time found; if no feasible
+	travel is found, it returns `Inf` to indicate infeasibility.
+"""
 function get_best_machine_travel_time(
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
@@ -184,7 +267,23 @@ function get_best_machine_travel_time(
 	return best_possible_machine_travel[].delta_t
 end # function get_best_machine_travel_time()
 
+"""
+	function advance_best_time(
+		time::Float64,
+		prev_stop::VehicleStop,
+		curr_stop::VehicleStop,
+		k::Int64,
+		inst::InstanceData,
+		machines::Vector{Vector{MachineTravel}},
+		possible_machine_travels::Vector{Vector},
+		vehicle_index::Int64,
+		p_pos::Int64,
+	)::Float64
 
+	Advances the current time from `prev_stop` to `curr_stop` for vehicle `k`, considering
+	either same-region travel or machine travel between regions. It updates the time
+	accordingly and ensures it respects the earliest time window of the `curr_stop`.
+"""
 function advance_best_time(
 	time::Float64,
 	prev_stop::VehicleStop,
@@ -206,6 +305,21 @@ function advance_best_time(
 	return time
 end # function advance_best_time()
 
+"""
+	function advance_time(
+		time::Float64,
+		prev_stop::VehicleStop,
+		curr_stop::VehicleStop,
+		k::Int64,
+		inst::InstanceData,
+		machine_travels::Vector{PossibleMachineTravel},
+		last_mach_trv::Ref{Int64},
+	)::Float64
+
+	Advances the current time from `prev_stop` to `curr_stop` for vehicle `k`, using
+	precomputed machine travels when necessary. It updates the time accordingly and
+	ensures it respects the earliest time window of the `curr_stop`.
+"""
 function advance_time(
 	time::Float64,
 	prev_stop::VehicleStop,
@@ -229,6 +343,17 @@ function advance_time(
 	return time
 end # function advance_time()
 
+"""
+	function deactivate_machine_travels(
+		k::Int64,
+		sol::Solution,
+		p_pos::Int64,
+	)::Nothing
+
+	Deactivates all machine travels in the solution `sol` for vehicle `k` that have
+	a vehicle index greater than or equal to `p_pos`. This is done by setting the
+	`active` attribute of the relevant machine travels to `false`.
+"""
 function deactivate_machine_travels(k::Int64, sol::Solution, p_pos::Int64)::Nothing
 	for h in eachindex(sol.machines)
 		for i in length(sol.machines[h]):-1:1
@@ -240,6 +365,22 @@ function deactivate_machine_travels(k::Int64, sol::Solution, p_pos::Int64)::Noth
 	return nothing
 end # function deactivate_machine_travels()
 
+"""
+	function check_insertion(
+		sol::Solution,
+		k::Int64,
+		p_pos::Int64,
+		d_pos::Int64,
+		p_job::Int64,
+		d_job::Int64,
+		inst::InstanceData,
+	)::CheckInsertionData
+
+	Checks the feasibility of inserting pickup and delivery jobs into the vehicle route
+	of vehicle `k` at positions `p_pos` and `d_pos`, respectively. It verifies time window
+	and capacity constraints, returning a `CheckInsertionData` object indicating whether
+	the insertion is feasible, the associated cost, and any possible machine travels.
+"""
 function check_insertion(
 	sol::Solution,
 	k::Int64,
@@ -322,6 +463,13 @@ function check_insertion(
 	return CheckInsertionData(true, cost, possible_machine_travels)
 end # function check_insertion()
 
+"""
+	function remove_deactivated_travels(sol::Solution)::Nothing
+
+	Removes all deactivated machine travels from the solution `sol`. A machine travel is considered
+	deactivated if its `active` attribute is set to `false`. The function iterates through each
+	machine's travels and removes any deactivated ones.
+"""
 function remove_deactivated_travels(sol::Solution)::Nothing
 	for h in eachindex(sol.machines)
 		for i in length(sol.machines[h]):-1:1
@@ -333,6 +481,14 @@ function remove_deactivated_travels(sol::Solution)::Nothing
 	return nothing
 end # function remove_deactivated_travels()
 
+"""
+	function update_machines_indexes(sol::Solution)::Nothing
+
+	Updates the machine indexes in the solution `sol` to ensure that each vehicle's
+	machine index corresponds to its position in the machine travels list. This is
+	done by iterating through each machine's travels and updating the `mach_index`
+	attribute of the corresponding vehicle stops.
+"""
 function update_machines_indexes(sol::Solution)::Nothing
 	for h in eachindex(sol.machines)
 		for i in eachindex(sol.machines[h])[1:end]
@@ -343,11 +499,22 @@ function update_machines_indexes(sol::Solution)::Nothing
 	return nothing
 end # function update_machines_indexes
 
+"""
+	function insert_machine_travels(
+		sol::Solution,
+		machine_travels::Vector{PossibleMachineTravel},
+		k::Int64,
+	)::Nothing
+
+	Inserts the given `machine_travels` into the solution `sol` for vehicle `k`.
+	Each machine travel is added to the corresponding machine's travels list
+	at the specified position, marking them as active.
+"""
 function insert_machine_travels(
 	sol::Solution,
 	machine_travels::Vector{PossibleMachineTravel},
 	k::Int64,
-)
+)::Nothing
 	active = true
 	for i in length(machine_travels):-1:1
 		mach_trv = machine_travels[i]
@@ -357,8 +524,21 @@ function insert_machine_travels(
 			MachineTravel(k, mach_trv.vehicle_index, mach_trv.orig, mach_trv.dest, mach_trv.st, active),
 		)
 	end
+	return nothing
 end # function insert_machine_travels()
 
+"""
+	function update_solution(
+		sol::Solution,
+		ins_data::InsertionData,
+		inst::InstanceData,
+	)::Solution
+
+	Updates the solution `sol` by inserting pickup and delivery jobs at specified positions
+	for vehicle `k`, as defined in `ins_data`. It recalculates service start times and loads
+	for the affected vehicle route, updates machine travels, and adjusts the solution's
+	completion times and value accordingly.
+"""
 function update_solution(sol::Solution, ins_data::InsertionData, inst::InstanceData)::Solution
 	k = ins_data.k
 	p_pos = ins_data.p_pos
@@ -444,6 +624,12 @@ function update_solution(sol::Solution, ins_data::InsertionData, inst::InstanceD
 	return sol
 end # function update_solution()
 
+"""
+	function tightest_time_windows(inst::InstanceData)::Vector{Int64}
+
+	Returns a vector of request indices sorted by the tightness of their time windows,
+	where tightness is defined as the difference between the latest and earliest service times.
+"""
 function tightest_time_windows(inst::InstanceData)::Vector{Int64}
 	reqs = copy(inst.V_p)
 	sort!(reqs, by = i -> (inst.l[i] - inst.e[i]))
@@ -451,6 +637,13 @@ function tightest_time_windows(inst::InstanceData)::Vector{Int64}
 	return reqs
 end # function tightest_time_windows()
 
+"""
+	function random_order_nodes(inst::InstanceData, params::ParameterData)::Vector{Int64}
+
+	Generates a random order of request indices using the random number generator
+	specified in `params`. The function returns a vector of request indices in
+	random order.
+"""
 function random_order_nodes(inst::InstanceData, params::ParameterData)::Vector{Int64}
 	rkvector = rand(params.rng, Float64, inst.n)
 	order_nodes = sortperm(rkvector) .+ 1
@@ -458,6 +651,13 @@ function random_order_nodes(inst::InstanceData, params::ParameterData)::Vector{I
 	return order_nodes
 end # function random_order_nodes
 
+"""
+	function init_vehicle_routes(inst::InstanceData)::Vector{Vector{VehicleStop}}
+
+	Initializes the vehicle routes for each vehicle in the instance `inst` by
+	creating a route that starts and ends at the depot. Each vehicle route
+	contains two stops: the start depot and the end depot (depot's copy).
+"""
 function init_vehicle_routes(inst::InstanceData)::Vector{Vector{VehicleStop}}
 	# Start depot -> 1 in inst.Vprime, which is equivalent to 0 in paper
 	first_vehicle_stop = VehicleStop(1, inst.jobs[inst.refs[1]], 0, 0, 0, 0)
@@ -469,6 +669,12 @@ function init_vehicle_routes(inst::InstanceData)::Vector{Vector{VehicleStop}}
 	return vehicle_routes
 end # function init_vehicle_routes()
 
+"""
+	function init_machine_travels(inst::InstanceData)::Vector{Vector{MachineTravel}}
+
+	Initializes the machine travels for each machine in the instance `inst` by
+	creating an empty list of machine travels for each machine.
+"""
 function init_machine_travels(inst::InstanceData)::Vector{Vector{MachineTravel}}
 	# Insert a dummy MachineTravel in each machine travels list with start time at 0 (code simplification)
 	machine_routes = Vector{MachineTravel}[[] for _ in inst.H]
@@ -476,6 +682,13 @@ function init_machine_travels(inst::InstanceData)::Vector{Vector{MachineTravel}}
 	return machine_routes
 end # function init_machine_travels()
 
+"""
+	function get_service_order(inst::InstanceData, params::ParameterData)::Vector{Int64}
+
+	Determines the service order of requests based on the specified strategy
+	in `params`. It supports "tightest_tw" for tightest time windows and
+	"random" for a random order of requests.
+"""
 function get_service_order(inst::InstanceData, params::ParameterData)::Vector{Int64}
 	if params.greedy_service_order == "tightest_tw"
 		return tightest_time_windows(inst)
@@ -486,6 +699,13 @@ function get_service_order(inst::InstanceData, params::ParameterData)::Vector{In
 	error("Unknown greedy service order: $(params.greedy_service_order)")
 end # function get_service_order()
 
+"""
+	function init_solution(inst::InstanceData)::Solution
+
+	Initializes a solution for the instance `inst` by creating initial vehicle routes,
+	machine travels, and completion times. The solution is set as infeasible with
+	a value of 0.0 and default statistics.
+"""
 function init_solution(inst::InstanceData)::Solution
 	initial_vehicle_routes = init_vehicle_routes(inst)
 	initial_machine_travels = init_machine_travels(inst)
@@ -498,9 +718,18 @@ function init_solution(inst::InstanceData)::Solution
 		initial_completion_times,
 		false,
 		0.0,
-		initial_stats)
+		initial_stats,
+	)
 end # function init_solution()
 
+"""
+	flat_machine_travels_chronollogically(
+		possible_machine_travels::Vector{Vector{PossibleMachineTravel}},
+	)::Vector{PossibleMachineTravel}
+
+	Flattens a vector of vectors of `PossibleMachineTravel` objects into a single
+	vector and sorts them in chronological order based on their start times.
+"""
 function flat_machine_travels_chronollogically(
 	possible_machine_travels::Vector{Vector{PossibleMachineTravel}},
 )::Vector{PossibleMachineTravel}
