@@ -41,6 +41,14 @@ function get_insertion_with_less_increase_in_comp_time(
 	return best_ins_data
 end # function get_insertion_with_less_increase_in_comp_time()
 
+"""
+	function greedy_heuristic(inst::InstanceData)::Solution
+
+	Construct a solution for the given instance data `inst` using a greedy heuristic
+	approach that inserts requests based on the tightest time windows first.
+
+	Returns a `Solution` object representing the constructed solution.
+"""
 function greedy_heuristic(inst::InstanceData)::Solution
 	sol = init_solution(inst)
 	non_serviced_reqs = copy(tightest_time_windows(inst))

@@ -1,5 +1,11 @@
-using Random
-
+"""
+	function choose_candidate(cand_list::Vector{InsertionData}, params::ParameterData) -> InsertionData
+	
+	Selects a candidate from the provided list `cand_list` using a semi-greedy approach
+	based on the parameters specified in `params`. The function constructs a restricted
+	candidate list (RCL) containing candidates whose costs are within a certain threshold
+	of the minimum cost candidate. A candidate is then randomly selected from the RCL.
+"""
 function choose_candidate(cand_list::Vector{InsertionData}, params::ParameterData)
 	if length(cand_list) == 0
 		return InsertionData(false, Inf64, 0, 0, 0, 0, 0, PossibleMachineTravel[])

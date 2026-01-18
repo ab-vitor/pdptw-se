@@ -1,4 +1,4 @@
-function update_current_results!(extmd::ExternalMSLPData, _::AllParams)::Nothing
+function update_current_results!(extmd::ExternalMSLPData)::Nothing
 	extmd.time_to_best = cpu_times()[1] - extmd.start_time
 	extmd.iteration_to_best = extmd.iteration
 	extmd.best_sol = extmd.curr_sol

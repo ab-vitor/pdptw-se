@@ -16,10 +16,7 @@ using Dates
 using ProcUsage
 
 include("structs.jl")
-include("greedy_utils.jl")
-include("choose_candidate.jl")
-include("greedy_heuristic.jl")
-include("semi_greedy_heuristic.jl")
+include("heuristic/heuristic.jl")
 include("structures.jl")
 include("run_MSLP.jl")
 include("statistics.jl")

@@ -46,7 +46,7 @@ function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllP
 			)
 		end
 		if extmd.curr_sol.feasible
-			update_current_results!(extmd, all_params)
+			update_current_results!(extmd)
 		else
 			extmd.best_sol = extmd.curr_sol
 			extmd.best_sol.value = Inf64
@@ -78,7 +78,7 @@ function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllP
 		end
 
 		if extmd.curr_sol.feasible && extmd.curr_sol.value + all_params.general.epsilon < extmd.best_sol.value
-			update_current_results!(extmd, all_params)
+			update_current_results!(extmd)
 		end
 
 		run = continue_running_MSLP(extmd, all_params)
