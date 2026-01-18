@@ -17,28 +17,27 @@ mutable struct ParameterData
 	greedy_service_order::String # Service order in greedy heuristic: tightest_tw, random
 	cut_off::Int # Cut-off value for the instance
 	cut_off_machs::Int # Cut-off value for the number of machines
-	solver::String
+	solver::String # Solver to be used: Gurobi
 	maxtime::Int64 # Maxtime of any approach
-	print_sol::Int
-	elevator::Int
-	make_instance_feasible::Bool
-	output::String
-	suff_outputs::String
-	suff_csv::String
-	epsilon::Float64
-	epsilon_cap::Float64
-	seed::Int
-	rng::Random.MersenneTwister
-	alpha::Float64
-	maxiter::Int64
-	output_flag_grb_MSLP::Int64
+	print_sol::Int # Print solution flag
+	elevator::Int # Elevator constraint flag
+	make_instance_feasible::Bool # Make instance feasible flag
+	output::String # Output folder
+	suff_outputs::String # Suffix for output files
+	suff_csv::String # Suffix for csv files
+	epsilon::Float64 # dealing with imprecision issues
+	epsilon_cap::Float64 # dealing with imprecision issues for capacities
+	seed::Int # Seed for random number generator
+	rng::Random.MersenneTwister # Random number generator
+	alpha::Float64 # Alpha parameter for semi-greedy heuristic
+	output_flag_grb_MSLP::Int64 # output flag for Gurobi in MSLP
 	mslpr::String # stop rule Mulsti-Start LP (MSLP)
 	mslpa::String # stop argument given mslpr
-	csv_file_name::String
-	sol_file_name::String
-	timeline_file_name::String
-	threads::Int
-	solver_method::SolverMethod
+	csv_file_name::String # CSV file name
+	sol_file_name::String # Solution file name
+	timeline_file_name::String # Timeline file name
+	threads::Int # Number of threads for the solver
+	solver_method::SolverMethod # Solver method for Gurobi
 
 	function ParameterData()
 		inst_path = "../../benchmark_multi_island_v5/instances/orig_ams_fg/12R_12V_04I_04M/t2/lr202/"
@@ -65,7 +64,6 @@ mutable struct ParameterData
 		epsilon_cap = 0.5 # dealing with imprecision issues
 		seed = 0
 		alpha = 0.2
-		maxiter = 1e6
 		output_flag_grb_MSLP = 0
 		mslpr = "M" # check Enumerations Module
 		mslpa = "60"
@@ -102,7 +100,6 @@ mutable struct ParameterData
 			seed,
 			rng,
 			alpha,
-			maxiter,
 			output_flag_grb_MSLP,
 			mslpr,
 			mslpa,
@@ -117,7 +114,7 @@ end
 
 export ParameterData, read_input_parameters
 
-function saveInstanceFullName!(params::ParameterData)::Nothing
+function save_instance_full_name!(params::ParameterData)::Nothing
 	pathSplitted = splitpath(params.inst_path)
 
 	params.name = pathSplitted[end] # e.g.: lr202
@@ -125,7 +122,7 @@ function saveInstanceFullName!(params::ParameterData)::Nothing
 	params.group = pathSplitted[end-2] # e.g.: 60R_60V_04I_06M
 
 	if params.cut_off_machs <= 0
-		params.cut_off_machs = parse(Int64, params.group[end-2:end-1])
+		params.cut_off_machs = parse(Int64, params.group[end-2:end-1]) # take the last two digits before 'M', e.g.: 06 from 60R_60V_04I_06M
 	end
 	params.group = string(params.group[1:end-3], @sprintf("%02d", params.cut_off_machs), "M")
 
@@ -137,7 +134,7 @@ end
 
 include("load_general_configuration.jl")
 
-function read_input_parameters(ARGS)
+function read_input_parameters(ARGS::Vector{String})::ParameterData
 	println("Running Parameters.read_input_parameters")
 
 	### Set standard values for the parameters ###
@@ -202,11 +199,8 @@ function read_input_parameters(ARGS)
 		elseif ARGS[param] == "--alpha"
 			params.alpha = parse(Float64, ARGS[param+1])
 			param += 1
-		elseif ARGS[param] == "--maxiter"
-			params.maxiter = parse(Int64, ARGS[param+1])
-			param += 1
-		elseif ARGS[param] == "--outputFlagGrb"
-			params.outputFlagGrb = parse(Int64, ARGS[param+1])
+		elseif ARGS[param] == "--output_flag_grb"
+			params.output_flag_grb = parse(Int64, ARGS[param+1])
 			param += 1
 		elseif ARGS[param] == "--mslpr"
 			params.mslpr = ARGS[param+1]
@@ -244,7 +238,7 @@ function read_input_parameters(ARGS)
 		params.output = params.output[1:end-1]
 	end
 	params.rng = MersenneTwister(params.seed)
-	saveInstanceFullName!(params)
+	save_instance_full_name!(params)
 	params.csv_file_name = string(
 		params.output, "/",
 		params.method_type, "_",
