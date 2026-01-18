@@ -1,12 +1,12 @@
 mutable struct VehicleStop
 	node::Int64 # node id in inst.Vprime
 	job::Job # the job the vehicle is doing
-	servST::Float64 # the arrival time at this job
+	serv_start_time::Float64 # the arrival time at this job
 	mach::Int64 # which machine was used
 	mach_index::Int64 # index in machine's travel vector
 	load::Float64 # load of the vehicle
 end
-Base.copy(s::VehicleStop) = VehicleStop(s.node, s.job, s.servST, s.mach, s.mach_index, s.load)
+Base.copy(s::VehicleStop) = VehicleStop(s.node, s.job, s.serv_start_time, s.mach, s.mach_index, s.load)
 
 mutable struct MachineTravel
 	vehicle::Int64 # which vehicle is being transported
@@ -129,7 +129,7 @@ end
 mutable struct Solution
 	vehicles::Vector{Vector{VehicleStop}}
 	machines::Vector{Vector{MachineTravel}}
-	completionTimes::Vector{Float64}
+	completion_times::Vector{Float64}
 	feasible::Bool
 	value::Float64
 	stats::SolutionStats

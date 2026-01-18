@@ -150,25 +150,25 @@ function update_solution(sol::Solution, insData::InsertionData, inst::InstanceDa
 	prev = p_pos - 1
 	curr = p_pos
 	prev_stop = sol.vehicles[k][prev]
-	pickupStop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
+	pickup_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
-	time = prev_stop.servST
-	time = advance_time(time, prev_stop, pickupStop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
-	load = prev_stop.load + pickupStop.job.dem
+	time = prev_stop.serv_start_time
+	time = advance_time(time, prev_stop, pickup_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
+	load = prev_stop.load + pickup_stop.job.dem
 
-	pickupStop.servST = time
-	pickupStop.load = load
-	if pickupStop.mach != 0
+	pickup_stop.serv_start_time = time
+	pickup_stop.load = load
+	if pickup_stop.mach != 0
 		insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr, k)
 	end
 
-	prev_stop = pickupStop
+	prev_stop = pickup_stop
 	if p_pos != d_pos
 		curr_stop = sol.vehicles[k][curr]
 		time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
 		load += curr_stop.job.dem
 
-		curr_stop.servST = time
+		curr_stop.serv_start_time = time
 		curr_stop.load = load
 		if curr_stop.mach != 0
 			insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 1, k)
@@ -182,7 +182,7 @@ function update_solution(sol::Solution, insData::InsertionData, inst::InstanceDa
 			time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
 			load += curr_stop.job.dem
 
-			curr_stop.servST = time
+			curr_stop.serv_start_time = time
 			curr_stop.load = load
 			if curr_stop.mach != 0
 				insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 1, k)
@@ -194,22 +194,22 @@ function update_solution(sol::Solution, insData::InsertionData, inst::InstanceDa
 		prev_stop = sol.vehicles[k][prev]
 	end
 
-	deliveryStop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
-	time = advance_time(time, prev_stop, deliveryStop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
-	load += deliveryStop.job.dem
+	delivery_stop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
+	time = advance_time(time, prev_stop, delivery_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
+	load += delivery_stop.job.dem
 
-	deliveryStop.servST = time
-	deliveryStop.load = load
-	if deliveryStop.mach != 0
+	delivery_stop.serv_start_time = time
+	delivery_stop.load = load
+	if delivery_stop.mach != 0
 		insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 1, k)
 	end
 
-	prev_stop = deliveryStop
+	prev_stop = delivery_stop
 	curr_stop = sol.vehicles[k][curr]
 	time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
 	load += curr_stop.job.dem
 
-	curr_stop.servST = time
+	curr_stop.serv_start_time = time
 	if curr_stop.mach != 0
 		insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 2, k)
 	end
@@ -222,7 +222,7 @@ function update_solution(sol::Solution, insData::InsertionData, inst::InstanceDa
 		time += inst.s[prev_stop.node]
 		time += get_vehicle_travel_time(prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
 		time = max(time, curr_stop.job.earl)
-		curr_stop.servST = time
+		curr_stop.serv_start_time = time
 		if curr_stop.mach != 0
 			insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 2, k)
 		end
@@ -230,8 +230,8 @@ function update_solution(sol::Solution, insData::InsertionData, inst::InstanceDa
 		curr += 1
 	end
 
-	insert!(sol.vehicles[k], d_pos, deliveryStop)
-	insert!(sol.vehicles[k], p_pos, pickupStop)
+	insert!(sol.vehicles[k], d_pos, delivery_stop)
+	insert!(sol.vehicles[k], p_pos, pickup_stop)
 	remove_deactivated_travels(sol)
 	update_machines_indexes(sol)
 
@@ -254,15 +254,15 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 	prev = p_pos - 1
 	curr = p_pos
 	prev_stop = sol.vehicles[k][prev]
-	pickupStop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
+	pickup_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
-	time = prev_stop.servST
-	time = advance_time(time, prev_stop, pickupStop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
-	load = Int64(prev_stop.load + pickupStop.job.dem)
-	if time > pickupStop.job.lat
-		delta = ceil(time) - inst.jobs[inst.refs[pickupStop.node]].lat
-		inst.jobs[inst.refs[pickupStop.node]].lat += delta
-		inst.jobs[inst.refs[pickupStop.node]].earl += delta
+	time = prev_stop.serv_start_time
+	time = advance_time(time, prev_stop, pickup_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
+	load = Int64(prev_stop.load + pickup_stop.job.dem)
+	if time > pickup_stop.job.lat
+		delta = ceil(time) - inst.jobs[inst.refs[pickup_stop.node]].lat
+		inst.jobs[inst.refs[pickup_stop.node]].lat += delta
+		inst.jobs[inst.refs[pickup_stop.node]].earl += delta
 	end
 	if load > inst.Q[k]
 		new_cap = smallest_greater_capacity(inst.vehicle_types, load)
@@ -270,13 +270,13 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 		inst.Q[k] = new_cap
 	end
 
-	pickupStop.servST = time
-	pickupStop.load = load
-	if pickupStop.mach != 0
+	pickup_stop.serv_start_time = time
+	pickup_stop.load = load
+	if pickup_stop.mach != 0
 		insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr, k)
 	end
 
-	prev_stop = pickupStop
+	prev_stop = pickup_stop
 	if p_pos != d_pos
 		curr_stop = sol.vehicles[k][curr]
 		time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
@@ -292,7 +292,7 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 			inst.Q[k] = new_cap
 		end
 
-		curr_stop.servST = time
+		curr_stop.serv_start_time = time
 		curr_stop.load = load
 		if curr_stop.mach != 0
 			insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 1, k)
@@ -316,7 +316,7 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 				inst.Q[k] = new_cap
 			end
 
-			curr_stop.servST = time
+			curr_stop.serv_start_time = time
 			curr_stop.load = load
 			if curr_stop.mach != 0
 				insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 1, k)
@@ -328,22 +328,22 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 		prev_stop = sol.vehicles[k][prev]
 	end
 
-	deliveryStop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
-	time = advance_time(time, prev_stop, deliveryStop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
-	load += deliveryStop.job.dem
-	if time > deliveryStop.job.lat
-		delta = ceil(time) - inst.jobs[inst.refs[deliveryStop.node]].lat
-		inst.jobs[inst.refs[deliveryStop.node]].lat += delta
-		inst.jobs[inst.refs[deliveryStop.node]].earl += delta
+	delivery_stop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
+	time = advance_time(time, prev_stop, delivery_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
+	load += delivery_stop.job.dem
+	if time > delivery_stop.job.lat
+		delta = ceil(time) - inst.jobs[inst.refs[delivery_stop.node]].lat
+		inst.jobs[inst.refs[delivery_stop.node]].lat += delta
+		inst.jobs[inst.refs[delivery_stop.node]].earl += delta
 	end
 
-	deliveryStop.servST = time
-	deliveryStop.load = load
-	if deliveryStop.mach != 0
+	delivery_stop.serv_start_time = time
+	delivery_stop.load = load
+	if delivery_stop.mach != 0
 		insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 1, k)
 	end
 
-	prev_stop = deliveryStop
+	prev_stop = delivery_stop
 	curr_stop = sol.vehicles[k][curr]
 	time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv, lastMachTrvForH)
 	load += curr_stop.job.dem
@@ -353,7 +353,7 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 		inst.jobs[inst.refs[curr_stop.node]].earl += delta
 	end
 
-	curr_stop.servST = time
+	curr_stop.serv_start_time = time
 	if curr_stop.mach != 0
 		insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 2, k)
 	end
@@ -371,7 +371,7 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 			inst.jobs[inst.refs[curr_stop.node]].lat += delta
 			inst.jobs[inst.refs[curr_stop.node]].earl += delta
 		end
-		curr_stop.servST = time
+		curr_stop.serv_start_time = time
 		if curr_stop.mach != 0
 			insert_machine_travel(sol, machine_travels, lastMachTrv, lastMachTrvForH, curr + 2, k)
 		end
@@ -379,8 +379,8 @@ function update_solution_with_relaxation(sol::Solution, rlxData::InsertionData, 
 		curr += 1
 	end
 
-	insert!(sol.vehicles[k], d_pos, deliveryStop)
-	insert!(sol.vehicles[k], p_pos, pickupStop)
+	insert!(sol.vehicles[k], d_pos, delivery_stop)
+	insert!(sol.vehicles[k], p_pos, pickup_stop)
 	remove_deactivated_travels(sol)
 	update_machines_indexes(sol)
 	inst.jobs[1].earl = 0

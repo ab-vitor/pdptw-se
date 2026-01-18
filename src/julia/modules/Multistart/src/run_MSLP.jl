@@ -1,71 +1,88 @@
-function continueRunningMSLP(extmd::ExternalMSLPData, allParams::AllParams)::Bool
-	# currentTimeElapsed = (CPUtime_us() - extmd.startTime)/1e6
-	currentTimeElapsed = cpu_times()[1] - extmd.startTime
+"""
+	function continue_running_MSLP(extmd::ExternalMSLPData, all_params::AllParams)::Bool
+
+	Determine whether the Multi-Start Local Search Procedure (MSLP) should continue running
+	based on the stopping criteria defined in `all_params`.
+
+	# Arguments
+	- `extmd::ExternalMSLPData`: The external MSLP data containing the current state of the algorithm.
+	- `all_params::AllParams`: The parameters defining the stopping criteria.
+
+	# Returns
+	- `Bool`: `true` if MSLP should continue running, `false` otherwise.
+"""
+function continue_running_MSLP(extmd::ExternalMSLPData, all_params::AllParams)::Bool
+	current_time_elapsed = cpu_times()[1] - extmd.start_time
 	return !(
-		currentTimeElapsed >= allParams.stop.maximum_time ||
-		(allParams.stop.rule == ITERATIONS && extmd.iteration >= allParams.stop.argument) ||
-		(allParams.stop.rule == FEASIBILITY && extmd.bestSol.feasible) ||
-		(allParams.stop.rule == MAXTIME && currentTimeElapsed >= allParams.stop.argument) ||
-		(allParams.stop.rule == TARGET && extmd.bestSol.value <= allParams.stop.argument + allParams.general.epsilon)
+		current_time_elapsed >= all_params.stop.maximum_time ||
+		(all_params.stop.rule == ITERATIONS && extmd.iteration >= all_params.stop.argument) ||
+		(all_params.stop.rule == FEASIBILITY && extmd.best_sol.feasible) ||
+		(all_params.stop.rule == MAXTIME && current_time_elapsed >= all_params.stop.argument) ||
+		(all_params.stop.rule == TARGET && extmd.best_sol.value <= all_params.stop.argument + all_params.general.epsilon)
 	)
 end
 
-function runMSLP!(inst::InstanceData, extmd::ExternalMSLPData, allParams::AllParams)::Nothing
+"""
+	function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllParams)
+
+	Run the Multi-Start Local Search Procedure (MSLP) on the given instance data `inst`,
+	using the external MSLP data `extmd` and the parameters specified in `all_params`.
+	Updates the `extmd` with the best solution found and various statistics during the run.
+"""
+function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllParams)::Nothing
 	println("objValue;greedysol;iteration;time")
-	extmd.currSol = greedyHeuristic(inst, allParams.general)
+	extmd.curr_sol = greedy_heuristic(inst)
 
-	if extmd.currSol.feasible
-		extmd.lastSGreedySolValue = extmd.currSol.value
-		extmd.currSol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.currSol, inst, allParams.general)
-		extmd.lpRuns += 1
+	if extmd.curr_sol.feasible
+		extmd.last_greedy_sol_value = extmd.curr_sol.value
+		# extmd.curr_sol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.curr_sol, inst, all_params.general)
+		extmd.LP_runs += 1
 
-		if extmd.currSol.feasible && extmd.currSol.value < extmd.lastSGreedySolValue
-			extmd.lpImpr += 1
-			extmd.sumLPImprPercentage += round(
-				(extmd.lastSGreedySolValue - extmd.currSol.value) / extmd.lastSGreedySolValue,
+		if extmd.curr_sol.feasible && extmd.curr_sol.value < extmd.last_greedy_sol_value
+			extmd.LP_impr += 1
+			extmd.sum_LP_impr_percentage += round(
+				(extmd.last_greedy_sol_value - extmd.curr_sol.value) / extmd.last_greedy_sol_value,
 				digits = 4,
 			)
 		end
-		if extmd.currSol.feasible
-			updateCurrentResults!(extmd, allParams)
+		if extmd.curr_sol.feasible
+			update_current_results!(extmd, all_params)
 		else
-			extmd.bestSol = extmd.currSol
-			extmd.bestSol.value = Inf64
+			extmd.best_sol = extmd.curr_sol
+			extmd.best_sol.value = Inf64
 		end
 	else
-		extmd.infeasibleSol += 1
-		extmd.bestSol = extmd.currSol
-		extmd.bestSol.value = Inf64
-		# println("/!\\ First greedy heuristic solution was not feasible...")
+		extmd.infeasible_sol += 1
+		extmd.best_sol = extmd.curr_sol
+		extmd.best_sol.value = Inf64
 	end
 
-	run = continueRunningMSLP(extmd, allParams)
+	run = continue_running_MSLP(extmd, all_params)
 	while run
 		extmd.iteration += 1
-		extmd.currSol = semiGreedyHeuristic(inst, allParams.general)
-		if extmd.currSol.feasible
-			extmd.lastSGreedySolValue = extmd.currSol.value
-			extmd.currSol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.currSol, inst, allParams.general)
-			extmd.lpRuns += 1
+		extmd.curr_sol = semi_greedy_heuristic(inst, all_params.general)
+		if extmd.curr_sol.feasible
+			extmd.last_greedy_sol_value = extmd.curr_sol.value
+			# extmd.curr_sol = Formulations.run_LP_to_reschedule_solution(extmd.env, extmd.curr_sol, inst, all_params.general)
+			extmd.LP_runs += 1
 
-			if extmd.currSol.value < extmd.lastSGreedySolValue
-				extmd.lpImpr += 1
-				extmd.sumLPImprPercentage += round(
-					(extmd.lastSGreedySolValue - extmd.currSol.value) / extmd.lastSGreedySolValue,
+			if extmd.curr_sol.value < extmd.last_greedy_sol_value
+				extmd.LP_impr += 1
+				extmd.sum_LP_impr_percentage += round(
+					(extmd.last_greedy_sol_value - extmd.curr_sol.value) / extmd.last_greedy_sol_value,
 					digits = 4,
 				)
 			end
 		else
-			extmd.infeasibleSol += 1
+			extmd.infeasible_sol += 1
 		end
 
-		if extmd.currSol.feasible && extmd.currSol.value + allParams.general.epsilon < extmd.bestSol.value
-			updateCurrentResults!(extmd, allParams)
+		if extmd.curr_sol.feasible && extmd.curr_sol.value + all_params.general.epsilon < extmd.best_sol.value
+			update_current_results!(extmd, all_params)
 		end
 
-		run = continueRunningMSLP(extmd, allParams)
+		run = continue_running_MSLP(extmd, all_params)
 	end
-	# extmd.totalTimeElapsed = (CPUtime_us() - extmd.startTime)/1e6
-	extmd.totalTimeElapsed = cpu_times()[1] - extmd.startTime
+	extmd.total_time_elapsed = cpu_times()[1] - extmd.start_time
 	println("\n[$(Dates.Time(Dates.now()))] Finished running MSLP")
 end

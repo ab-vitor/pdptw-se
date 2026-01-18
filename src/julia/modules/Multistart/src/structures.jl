@@ -1,6 +1,6 @@
 mutable struct StopParams
-    rule::StopRule
-    argument::Float64
+    rule::StopRule # stopping rule
+    argument::Float64 # target value or iteration/time limit
     maximum_time::Int64 # any approach stop time
 end
 
@@ -10,68 +10,68 @@ mutable struct AllParams
 end
 
 mutable struct ExternalMSLPData
-    bestSol::Union{Solution, Nothing}
-    currSol::Union{Solution, Nothing}
-    lastSGreedySolValue::Float64
+    best_sol::Union{Solution, Nothing} # best solution found
+    curr_sol::Union{Solution, Nothing} # current solution being processed
+    last_greedy_sol_value::Float64 # last greedy solution value (pure greedy or semi-greedy)
 
-    env::Union{Gurobi.Env, Nothing}
-    startTime::Float64
-    iteration::Int64
+    env::Union{Gurobi.Env, Nothing} # Gurobi environment
+    start_time::Float64 # start time of the MSLP run
+    iteration::Int64 # current iteration number
 
-    timeToBest::Float64
-    iterationToBest::Int64
-    largestUpdateOffset::Int64
+    time_to_best::Float64 # time to best solution
+    iteration_to_best::Int64 # iteration to best solution
+    largest_update_offset::Int64 # largest offset between best solution updates
 
-    lpRuns::Int64
-    lpImpr::Int64
-    sumLPImprPercentage::Float64
-    infeasibleSol::Int64
-    totalTimeElapsed::Float64
-    percentageInfeasibleSol::Float64
-    percentageLPImpr::Float64
-    meanLPImprPercentage::Float64
+    LP_runs::Int64 # number of LP runs
+    LP_impr::Int64 # number of LP improvements
+    sum_LP_impr_percentage::Float64 # sum of LP improvement percentages
+    infeasible_sol::Int64 # number of infeasible solutions
+    total_time_elapsed::Float64 # total time elapsed
+    percentage_infeasible_sol::Float64 # percentage of infeasible solutions
+    percentage_LP_impr::Float64 # percentage of LP improvements
+    mean_LP_impr_percentage::Float64 # mean LP improvement percentage
 
-    countImprovements::Int64
+    count_improvements::Int64
 
     function ExternalMSLPData(
-        bestSol::Union{Solution, Nothing} = nothing,
-        currSol::Union{Solution, Nothing} = nothing,
-        lastSGreedySolValue::Float64 = 0.0,
+        best_sol::Union{Solution, Nothing} = nothing,
+        curr_sol::Union{Solution, Nothing} = nothing,
+        last_greedy_sol_value::Float64 = 0.0,
         env::Union{Gurobi.Env, Nothing} = nothing,
-        startTime::Float64 = 0.0,
+        start_time::Float64 = 0.0,
         iteration::Int64 = 0,
-        timeToBest::Float64 = 0.0,
-        iterationToBest::Int64 = 0,
-        largestUpdateOffset::Int64 = 0,
-        lpRuns::Int64 = 0,
-        lpImpr::Int64 = 0,
-        sumLPImprPercentage::Float64 = 0.0,
-        infeasibleSol::Int64 = 0,
-        totalTimeElapsed::Float64 = 0.0,
-        percentageInfeasibleSol::Float64 = 0.0,
-        percentageLPImpr::Float64 = 0.0,
-        meanLPImprPercentage::Float64 = 0.0,
-        countImprovements::Int64 = 0,
+        time_to_best::Float64 = 0.0,
+        iteration_to_best::Int64 = 0,
+        largest_update_offset::Int64 = 0,
+        LP_runs::Int64 = 0,
+        LP_impr::Int64 = 0,
+        sum_LP_impr_percentage::Float64 = 0.0,
+        infeasible_sol::Int64 = 0,
+        total_time_elapsed::Float64 = 0.0,
+        percentage_infeasible_sol::Float64 = 0.0,
+        percentage_LP_impr::Float64 = 0.0,
+        mean_LP_impr_percentage::Float64 = 0.0,
+        count_improvements::Int64 = 0,
     )
         new(
-            bestSol,
-            currSol,
-            lastSGreedySolValue,
+            best_sol,
+            curr_sol,
+            last_greedy_sol_value,
             env,
-            startTime,
+            start_time,
             iteration,
-            timeToBest,
-            iterationToBest,
-            largestUpdateOffset,
-            lpRuns,
-            lpImpr,
-            sumLPImprPercentage,
-            infeasibleSol,
-            totalTimeElapsed,
-            percentageInfeasibleSol,
-            percentageLPImpr,
-            meanLPImprPercentage,
-            countImprovements
+            time_to_best,
+            iteration_to_best,
+            largest_update_offset,
+            LP_runs,
+            LP_impr,
+            sum_LP_impr_percentage,
+            infeasible_sol,
+            total_time_elapsed,
+            percentage_infeasible_sol,
+            percentage_LP_impr,
+            mean_LP_impr_percentage,
+            count_improvements
         )
     end
 end
@@ -90,7 +90,7 @@ function load_stop_params(params::ParameterData)
 		error("Maximum time must be larger than 0.0. Given $maximum_time.")
 	end
 
-	stopParams = StopParams(stop_rule, stop_argument, maximum_time)
-	return stopParams
+	stop_params = StopParams(stop_rule, stop_argument, maximum_time)
+	return stop_params
 end
 

@@ -1,4 +1,16 @@
-function getCandidateListByIncreaseInCompTime(
+"""
+	function get_candidate_list_by_increase_in_comp_time(
+		inst::InstanceData,
+		sol::Solution,
+		p_job::Int64,
+		d_job::Int64,
+	)::Vector{InsertionData}
+
+	Generate a list of all feasible insertion candidates for the pickup job `p_job` and delivery job `d_job`
+	into the current solution `sol` for the given instance data `inst`. Each candidate is represented 
+	by an `InsertionData` object.
+"""
+function get_candidate_list_by_increase_in_comp_time(
 	inst::InstanceData,
 	sol::Solution,
 	p_job::Int64,
@@ -6,50 +18,51 @@ function getCandidateListByIncreaseInCompTime(
 )::Vector{InsertionData}
 	cand_list = InsertionData[]
 	for k in inst.K
-		for p_pos in 2:length(sol.vehicles[k])
-			for d_pos in p_pos:length(sol.vehicles[k])
-				check_ins_data = checkInsertion(sol, k, p_pos, d_pos, p_job, d_job, inst)
+		for p_pos in eachindex(sol.vehicles[k])[2:end]
+			for d_pos in eachindex(sol.vehicles[k])[p_pos:end]
+				check_ins_data = check_insertion(sol, k, p_pos, d_pos, p_job, d_job, inst)
 				if !check_ins_data.feasible
 					continue
 				end
 
-				push!(cand_list, InsertionData(true, check_ins_data.cost, p_pos, d_pos, p_job, d_job, k, check_ins_data.possibleMachineTravels))
+				push!(cand_list, InsertionData(true, check_ins_data.cost, p_pos, d_pos, p_job, d_job, k, check_ins_data.possible_machine_travels))
 			end
 		end
 	end
 	return cand_list
-end # function getCandidateListByIncreaseInCompTime()
+end # function get_candidate_list_by_increase_in_comp_time()
 
-function semiGreedyHeuristic(inst::InstanceData, params::ParameterData)::Solution
-	sol = initSolution(inst)
-	nonServicedReqs = copy(getServiceOrder(inst, params))
-	idxReqToServe = 1
-	jumpedRequest = false
-	while idxReqToServe <= length(nonServicedReqs)
-		p_job = nonServicedReqs[idxReqToServe]
+"""
+	function semi_greedy_heuristic(inst::InstanceData, params::ParameterData)
+
+	Construct a solution for the given instance data `inst` using a semi-greedy heuristic
+	approach based on the parameters specified in `params`.
+
+	Returns a `Solution` object representing the constructed solution.
+"""
+function semi_greedy_heuristic(inst::InstanceData, params::ParameterData)::Solution
+	sol = init_solution(inst)
+	non_serviced_reqs = copy(get_service_order(inst, params))
+	idx_req_to_serve = 1
+	req_not_inserted = false
+	while idx_req_to_serve <= length(non_serviced_reqs) && !req_not_inserted
+		p_job = non_serviced_reqs[idx_req_to_serve]
 		d_job = p_job + inst.n
 
-		cand_list = getCandidateListByIncreaseInCompTime(inst, sol, p_job, d_job)
+		cand_list = get_candidate_list_by_increase_in_comp_time(inst, sol, p_job, d_job)
 		chosen = choose_candidate(cand_list, params)
 
 		if chosen.feasible
-			sol = updateSolution(sol, chosen, inst)
+			sol = update_solution(sol, chosen, inst)
 		else
-			jumpedRequest = true
-			idxReqToServe = length(nonServicedReqs)
+			req_not_inserted = true
 		end
-		idxReqToServe += 1
+		idx_req_to_serve += 1
 	end
 
-	updateMachinesIndexes(sol)
+	update_machines_indexes(sol)
 
-	sol.feasible = !jumpedRequest
-
-	# if  validate_solution(inst, sol, params)
-	# 	sol.feasible = true
-	# else
-	# 	sol.feasible = false
-	# end
+	sol.feasible = !req_not_inserted
 
 	return sol
-end # function semiGreedyHeuristic()
+end # function semi_greedy_heuristic()

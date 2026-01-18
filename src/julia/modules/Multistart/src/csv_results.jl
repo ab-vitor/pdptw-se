@@ -1,13 +1,13 @@
 function csvresults(
 	inst::InstanceData,
 	extmd::ExternalMSLPData,
-	allParams::AllParams,
+	all_params::AllParams,
 )
-	gp = allParams.general
-	stats = extmd.bestSol.stats
+	gp = all_params.general
+	stats = extmd.best_sol.stats
 
 	newResultData = Dict()
-	for s in (inst, extmd, gp, stats, extmd.bestSol)
+	for s in (inst, extmd, gp, stats, extmd.best_sol)
 		for (k, v) in structToKeyInDict(s)
 			newResultData[k] = v
 		end

@@ -94,14 +94,14 @@ function consecutive_stops_vehicles_const(inst::InstanceData, sol::Solution, par
 			cur = rt[i-1]
 			nxt = rt[i]
 			if nxt.job.point.z == cur.job.point.z &&
-			   nxt.servST + params.epsilon < cur.servST + inst.s[cur.node] + inst.d[cur.node, nxt.node, k]
+			   nxt.serv_start_time + params.epsilon < cur.serv_start_time + inst.s[cur.node] + inst.d[cur.node, nxt.node, k]
 				println(
 					"It's impossible to start the service time of request ",
 					cur.job.id,
 					" at ",
-					cur.servST,
+					cur.serv_start_time,
 					" and arrive at ",
-					nxt.servST,
+					nxt.serv_start_time,
 					" in job ",
 					nxt.job.id,
 				)
@@ -163,14 +163,14 @@ end # function consecutive_travels_machines_const()
 function time_window_const(inst::InstanceData, sol::Solution, params::ParameterData)
 	for k in inst.K
 		for stop in sol.vehicles[k]
-			if stop.servST > stop.job.lat + params.epsilon
+			if stop.serv_start_time > stop.job.lat + params.epsilon
 				println(
 					"Vehicle ",
 					k,
 					" arrived at job ",
 					stop.job.id,
 					" after (",
-					stop.servST,
+					stop.serv_start_time,
 					") the end of time window (",
 					stop.job.lat,
 					")",
@@ -188,7 +188,7 @@ function vehicle_machine_travel_synchronization_const(inst::InstanceData, sol::S
 		for travel in sol.machines[h]
 			cStop = sol.vehicles[travel.vehicle][travel.vehicle_index-1]
 			nStop = sol.vehicles[travel.vehicle][travel.vehicle_index]
-			if travel.st + params.epsilon < cStop.servST + inst.s[travel.orig] + inst.d_bar[travel.orig, h, travel.vehicle]
+			if travel.st + params.epsilon < cStop.serv_start_time + inst.s[travel.orig] + inst.d_bar[travel.orig, h, travel.vehicle]
 				println(
 					"Start time of the travel ",
 					(cStop.job.id, nStop.job.id),
@@ -199,12 +199,12 @@ function vehicle_machine_travel_synchronization_const(inst::InstanceData, sol::S
 					". (",
 					travel.st,
 					") < (",
-					cStop.servST + inst.s[travel.orig] + inst.d_bar[travel.orig, h, travel.vehicle],
+					cStop.serv_start_time + inst.s[travel.orig] + inst.d_bar[travel.orig, h, travel.vehicle],
 					")",
 				)
 				return false
 			end
-			if nStop.servST + params.epsilon <
+			if nStop.serv_start_time + params.epsilon <
 			   travel.st + inst.O[(inst.f[travel.orig][h], inst.f[travel.dest][h], h)] + inst.d_bar[travel.dest, h, travel.vehicle]
 				println(
 					"Arrival time of vehicle ",
@@ -216,7 +216,7 @@ function vehicle_machine_travel_synchronization_const(inst::InstanceData, sol::S
 					" is before the given arrival time. (",
 					travel.st + inst.O[(inst.f[travel.orig][h], inst.f[travel.dest][h], h)] + inst.d_bar[travel.dest, h, travel.vehicle],
 					") < (",
-					nStop.servST,
+					nStop.serv_start_time,
 					")",
 				)
 				return false
@@ -229,9 +229,9 @@ end # function vehicle_machine_travel_synchronization_const
 
 function completion_times_const(inst::InstanceData, sol::Solution, params::ParameterData)
 	for k in inst.K
-		completion_time = sol.vehicles[k][end].servST - sol.vehicles[k][1].servST
-		if abs(completion_time - sol.completionTimes[k]) > params.epsilon
-			println("Completion time calculated (", completion_time, ") is different from expected (", sol.completionTimes[k], ")")
+		completion_time = sol.vehicles[k][end].serv_start_time - sol.vehicles[k][1].serv_start_time
+		if abs(completion_time - sol.completion_times[k]) > params.epsilon
+			println("Completion time calculated (", completion_time, ") is different from expected (", sol.completion_times[k], ")")
 			return false
 		end
 	end

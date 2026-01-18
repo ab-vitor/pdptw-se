@@ -7,13 +7,13 @@ function updateSolFromLPSol!(
 	for k in inst.K
 		rt = sol.vehicles[k]
 		if length(rt) > 2
-			rt[1].servST = lpSol.tstart[k]
+			rt[1].serv_start_time = lpSol.tstart[k]
 			for stop in rt[2:end-1]
-				stop.servST = lpSol.t[stop.node]
+				stop.serv_start_time = lpSol.t[stop.node]
 			end
-			rt[end].servST = lpSol.tfinal[k]
+			rt[end].serv_start_time = lpSol.tfinal[k]
 		end
-		sol.completionTimes[k] = lpSol.C[k]
+		sol.completion_times[k] = lpSol.C[k]
 	end
 
 	for h in inst.H

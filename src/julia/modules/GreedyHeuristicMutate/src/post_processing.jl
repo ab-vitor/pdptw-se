@@ -38,8 +38,8 @@ end # function remove_dummy_objects!()
 function post_processing!(sol::Solution, inst::InstanceData, params::ParameterData, applied_relaxation::Bool)::Nothing
     remove_dummy_objects!(sol, inst)
 
-	sol.completionTimes = Float64[rt[length(rt)].servST for rt in sol.vehicles]
-	sol.value = sum(sol.completionTimes)
+	sol.completion_times = Float64[rt[length(rt)].serv_start_time for rt in sol.vehicles]
+	sol.value = sum(sol.completion_times)
 	print_timeline_solution(inst, sol)
 	println(inst.name, ": ", sol.value)
 	if validate_solution(inst, sol, params)

@@ -35,8 +35,8 @@ for (j in seq_along(variations)) {
       summarise(
         minbestsol = ifelse(all(!is.na(value)), min(value, na.rm = T), NA),
         meanbestsol = ifelse(all(!is.na(value)), mean(value, na.rm = T), NA),
-        meancputimetobest = ifelse(all(!is.na(timeToBest)), mean(timeToBest, na.rm = T), NA),
-        meancputime = ifelse(all(!is.na(totalTimeElapsed)), mean(totalTimeElapsed, na.rm = T), NA),
+        meancputimetobest = ifelse(all(!is.na(time_to_best)), mean(time_to_best, na.rm = T), NA),
+        meancputime = ifelse(all(!is.na(total_time_elapsed)), mean(total_time_elapsed, na.rm = T), NA),
         .groups = "drop"
       )
     

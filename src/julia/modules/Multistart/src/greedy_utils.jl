@@ -1,4 +1,4 @@
-function findActiveMachineTravel(machine::Vector{MachineTravel}, pos::Ref{Int64}, k::Int64, p_pos::Int64, i::Int64 = 1)::MachineTravel
+function find_active_machine_travel(machine::Vector{MachineTravel}, pos::Ref{Int64}, k::Int64, p_pos::Int64, i::Int64 = 1)::MachineTravel
 	if pos[] > length(machine)
 		return MachineTravel(k, p_pos)
 	end
@@ -10,155 +10,154 @@ function findActiveMachineTravel(machine::Vector{MachineTravel}, pos::Ref{Int64}
 		trv = machine[pos[]]
 	end
 	return trv
-end # function findActiveMachineTravel()
+end # function find_active_machine_travel()
 
-function findFeasMtrvToInsertInMachine(
+function find_feas_mtrv_to_insert_in_machine(
 	machine::Vector{MachineTravel},
 	h::Int64,
 	start::Int64,
 	k::Int64,
 	p_pos::Int64,
-	depTime::Float64,
-	lbNewTrvEnd::Float64,
+	dep_time::Float64,
+	LB_new_trv_end::Float64,
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
 	vehicle_index::Int64,
 	inst::InstanceData,
 )::PossibleMachineTravel
-	dummyMtrv = PossibleMachineTravel(false, 0, 0, 0, 0, 0, 0, 0)
-	prevActiveMtrvPos = start - 1
-	for posToInsert in eachindex(machine)[start:end]
-		trv = machine[posToInsert]
+	dummy_mtrv = PossibleMachineTravel(false, 0, 0, 0, 0, 0, 0, 0)
+	prev_active_mtrv_pos = start - 1
+	for pos_to_insert in eachindex(machine)[start:end]
+		trv = machine[pos_to_insert]
 		if trv.vehicle != k || trv.vehicle_index < p_pos
-			if lbNewTrvEnd + inst.O[(inst.f[curr_stop.node][h], inst.f[trv.orig][h], h)] <= trv.st
-				if prevActiveMtrvPos == 0
-					initStationDepTime = inst.e[inst.depot_begin]
-					hArr = initStationDepTime + inst.O[(inst.initial_station, inst.f[prev_stop.node][h], h)]
+			if LB_new_trv_end + inst.O[(inst.f[curr_stop.node][h], inst.f[trv.orig][h], h)] <= trv.st
+				if prev_active_mtrv_pos == 0
+					init_station_dep_time = inst.e[inst.depot_begin]
+					h_arr = init_station_dep_time + inst.O[(inst.initial_station, inst.f[prev_stop.node][h], h)]
 				else
-					prevActTrv = machine[prevActiveMtrvPos]
-					prevActTrvEnd = prevActTrv.st + inst.O[(inst.f[prevActTrv.orig][h], inst.f[prevActTrv.dest][h], h)]
-					hArr = prevActTrvEnd + inst.O[(inst.f[prevActTrv.dest][h], inst.f[prev_stop.node][h], h)]
+					prev_act_trv = machine[prev_active_mtrv_pos]
+					prev_act_trv_end = prev_act_trv.st + inst.O[(inst.f[prev_act_trv.orig][h], inst.f[prev_act_trv.dest][h], h)]
+					h_arr = prev_act_trv_end + inst.O[(inst.f[prev_act_trv.dest][h], inst.f[prev_stop.node][h], h)]
 				end
-				kArr = depTime + inst.d_bar[prev_stop.node, h, k]
-				newTrvEnd = max(hArr, kArr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-				kArrAtCurrNode = newTrvEnd + inst.d_bar[curr_stop.node, h, k]
-				if kArrAtCurrNode > curr_stop.job.lat
-					return dummyMtrv
-				elseif newTrvEnd + inst.O[(inst.f[curr_stop.node][h], inst.f[trv.orig][h], h)] <= trv.st
-					delta_t = kArrAtCurrNode - depTime
-					return PossibleMachineTravel(true, delta_t, h, posToInsert, max(hArr, kArr), prev_stop.node, curr_stop.node, vehicle_index)
+				k_arr = dep_time + inst.d_bar[prev_stop.node, h, k]
+				new_trv_end = max(h_arr, k_arr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
+				k_arr_at_curr_node = new_trv_end + inst.d_bar[curr_stop.node, h, k]
+				if k_arr_at_curr_node > curr_stop.job.lat
+					return dummy_mtrv
+				elseif new_trv_end + inst.O[(inst.f[curr_stop.node][h], inst.f[trv.orig][h], h)] <= trv.st
+					delta_t = k_arr_at_curr_node - dep_time
+					return PossibleMachineTravel(true, delta_t, h, pos_to_insert, max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
 				end
 			end
-			prevActiveMtrvPos = posToInsert
+			prev_active_mtrv_pos = pos_to_insert
 		end
 	end
 
-	if prevActiveMtrvPos == 0
-		posToInsert = 1
-		initStationDepTime = inst.e[inst.depot_begin]
-		hArr = initStationDepTime + inst.O[(inst.initial_station, inst.f[prev_stop.node][h], h)]
-		kArr = depTime + inst.d_bar[prev_stop.node, h, k]
-		newTrvEnd = max(hArr, kArr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-		kArrAtCurrNode = newTrvEnd + inst.d_bar[curr_stop.node, h, k]
-		if kArrAtCurrNode > curr_stop.job.lat
-			return dummyMtrv
+	if prev_active_mtrv_pos == 0
+		pos_to_insert = 1
+		init_station_dep_time = inst.e[inst.depot_begin]
+		h_arr = init_station_dep_time + inst.O[(inst.initial_station, inst.f[prev_stop.node][h], h)]
+		k_arr = dep_time + inst.d_bar[prev_stop.node, h, k]
+		new_trv_end = max(h_arr, k_arr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
+		k_arr_at_curr_node = new_trv_end + inst.d_bar[curr_stop.node, h, k]
+		if k_arr_at_curr_node > curr_stop.job.lat
+			return dummy_mtrv
 		else
-			delta_t = kArrAtCurrNode - depTime
-			return PossibleMachineTravel(true, delta_t, h, posToInsert, max(hArr, kArr), prev_stop.node, curr_stop.node, vehicle_index)
+			delta_t = k_arr_at_curr_node - dep_time
+			return PossibleMachineTravel(true, delta_t, h, pos_to_insert, max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
 		end
 	end
 
-	posToInsert = length(machine) + 1
-	prevActTrv = machine[prevActiveMtrvPos]
-	prevActTrvEnd = prevActTrv.st + inst.O[(inst.f[prevActTrv.orig][h], inst.f[prevActTrv.dest][h], h)]
-	hArr = prevActTrvEnd + inst.O[(inst.f[prevActTrv.dest][h], inst.f[prev_stop.node][h], h)]
-	kArr = depTime + inst.d_bar[prev_stop.node, h, k]
-	newTrvEnd = max(hArr, kArr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-	kArrAtCurrNode = newTrvEnd + inst.d_bar[curr_stop.node, h, k]
-	if kArrAtCurrNode > curr_stop.job.lat
-		return dummyMtrv
+	pos_to_insert = length(machine) + 1
+	prev_act_trv = machine[prev_active_mtrv_pos]
+	prev_act_trv_end = prev_act_trv.st + inst.O[(inst.f[prev_act_trv.orig][h], inst.f[prev_act_trv.dest][h], h)]
+	h_arr = prev_act_trv_end + inst.O[(inst.f[prev_act_trv.dest][h], inst.f[prev_stop.node][h], h)]
+	k_arr = dep_time + inst.d_bar[prev_stop.node, h, k]
+	new_trv_end = max(h_arr, k_arr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
+	k_arr_at_curr_node = new_trv_end + inst.d_bar[curr_stop.node, h, k]
+	if k_arr_at_curr_node > curr_stop.job.lat
+		return dummy_mtrv
 	end
 
-	delta_t = kArrAtCurrNode - depTime
-	return PossibleMachineTravel(true, delta_t, h, posToInsert, max(hArr, kArr), prev_stop.node, curr_stop.node, vehicle_index)
-end # function findFeasMtrvToInsertInMachine()
+	delta_t = k_arr_at_curr_node - dep_time
+	return PossibleMachineTravel(true, delta_t, h, pos_to_insert, max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
+end # function find_feas_mtrv_to_insert_in_machine()
 
-function analysePossibleMachineTravelFromLastComputed_possibleMachineTravel(
+function analyze_possible_machine_travel_from_last_computed_possible_machine_travel(
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
 	k::Int64,
 	curr_time::Float64,
 	inst::InstanceData,
 	machine::Vector{MachineTravel},
-	possibleMachineTravels::Vector{Vector},
+	possible_machine_travels::Vector{Vector},
 	h::Int64,
-	bestPossibleMachineTravel::Ref{PossibleMachineTravel},
+	best_possible_machine_travel::Ref{PossibleMachineTravel},
 	start_h_pos::Ref{Int64},
 	vehicle_index::Int64,
 	p_pos::Int64,
 )::Bool
-	lastPMtrv = possibleMachineTravels[h][end]
-	start_h_pos[] = lastPMtrv.h_pos
-	lastPMtrvEnd = lastPMtrv.st + inst.O[(inst.f[lastPMtrv.orig][h], inst.f[lastPMtrv.dest][h], h)]
-	hArr = lastPMtrvEnd + inst.O[(inst.f[lastPMtrv.dest][h], inst.f[prev_stop.node][h], h)]
-	kArr = curr_time + inst.d_bar[prev_stop.node, h, k]
-	newTrvEnd = max(hArr, kArr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-	kArrAtCurrNode = newTrvEnd + inst.d_bar[curr_stop.node, h, k]
-	if kArrAtCurrNode > curr_stop.job.lat
+	last_possible_mtrv = possible_machine_travels[h][end]
+	start_h_pos[] = last_possible_mtrv.h_pos
+	last_possible_mtrv_end = last_possible_mtrv.st + inst.O[(inst.f[last_possible_mtrv.orig][h], inst.f[last_possible_mtrv.dest][h], h)]
+	h_arr = last_possible_mtrv_end + inst.O[(inst.f[last_possible_mtrv.dest][h], inst.f[prev_stop.node][h], h)]
+	k_arr = curr_time + inst.d_bar[prev_stop.node, h, k]
+	new_trv_end = max(h_arr, k_arr) + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
+	k_arr_at_curr_node = new_trv_end + inst.d_bar[curr_stop.node, h, k]
+	if k_arr_at_curr_node > curr_stop.job.lat
 		return true
 	end
-	nextTrv = findActiveMachineTravel(machine, start_h_pos, k, p_pos)
-	if !(nextTrv.vehicle == k && nextTrv.vehicle_index >= p_pos)
-		if newTrvEnd + inst.O[(inst.f[curr_stop.node][h], inst.f[nextTrv.orig][h], h)] <= nextTrv.st
-			delta_t = kArrAtCurrNode - curr_time
-			if delta_t < bestPossibleMachineTravel[].delta_t
-				bestPossibleMachineTravel[] =
-					PossibleMachineTravel(true, delta_t, h, start_h_pos[], max(hArr, kArr), prev_stop.node, curr_stop.node, vehicle_index)
+	next_trv = find_active_machine_travel(machine, start_h_pos, k, p_pos)
+	if !(next_trv.vehicle == k && next_trv.vehicle_index >= p_pos)
+		if new_trv_end + inst.O[(inst.f[curr_stop.node][h], inst.f[next_trv.orig][h], h)] <= next_trv.st
+			delta_t = k_arr_at_curr_node - curr_time
+			if delta_t < best_possible_machine_travel[].delta_t
+				best_possible_machine_travel[] =
+					PossibleMachineTravel(true, delta_t, h, start_h_pos[], max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
 			end
 			return true
 		end
 		return false
-	else
-		delta_t = kArrAtCurrNode - curr_time
-		if delta_t < bestPossibleMachineTravel[].delta_t
-			bestPossibleMachineTravel[] =
-				PossibleMachineTravel(true, delta_t, h, start_h_pos[], max(hArr, kArr), prev_stop.node, curr_stop.node, vehicle_index)
-		end
-		return true
 	end
 
-end # function analysePossibleMachineTravelFromLastComputed_possibleMachineTravel()
+	delta_t = k_arr_at_curr_node - curr_time
+	if delta_t < best_possible_machine_travel[].delta_t
+		best_possible_machine_travel[] =
+			PossibleMachineTravel(true, delta_t, h, start_h_pos[], max(h_arr, k_arr), prev_stop.node, curr_stop.node, vehicle_index)
+	end
+	return true
+end # function analyze_possible_machine_travel_from_last_computed_possible_machine_travel()
 
-function getBestMachineTravelTime(
+function get_best_machine_travel_time(
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
 	k::Int64,
-	depTime::Float64,
+	dep_time::Float64,
 	inst::InstanceData,
 	machines::Vector{Vector{MachineTravel}},
-	possibleMachineTravels::Vector{Vector},
+	possible_machine_travels::Vector{Vector},
 	vehicle_index::Int64,
 	p_pos::Int64,
 )::Float64
-	bestPossibleMachineTravel = Ref(PossibleMachineTravel(false, Inf64, 0, 0, 0, 0, 0, 0))
+	best_possible_machine_travel = Ref(PossibleMachineTravel(false, Inf64, 0, 0, 0, 0, 0, 0))
 	for h in inst.H_e[prev_stop.node][curr_stop.node]
-		lbNewTrvEnd = depTime + inst.d_bar[prev_stop.node, h, k] + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
-		if lbNewTrvEnd + inst.d_bar[curr_stop.node, h, k] > curr_stop.job.lat
+		LB_new_trv_end = dep_time + inst.d_bar[prev_stop.node, h, k] + inst.O[(inst.f[prev_stop.node][h], inst.f[curr_stop.node][h], h)]
+		if LB_new_trv_end + inst.d_bar[curr_stop.node, h, k] > curr_stop.job.lat
 			continue
 		end
 
 		start_h_pos = Ref(1)
-		if length(possibleMachineTravels[h]) > 0 &&
-		   analysePossibleMachineTravelFromLastComputed_possibleMachineTravel(
+		if length(possible_machine_travels[h]) > 0 &&
+		   analyze_possible_machine_travel_from_last_computed_possible_machine_travel(
 			prev_stop,
 			curr_stop,
 			k,
-			depTime,
+			dep_time,
 			inst,
 			machines[h],
-			possibleMachineTravels,
+			possible_machine_travels,
 			h,
-			bestPossibleMachineTravel,
+			best_possible_machine_travel,
 			start_h_pos,
 			vehicle_index,
 			p_pos,
@@ -166,35 +165,34 @@ function getBestMachineTravelTime(
 			continue
 		end
 
-		mtrv = findFeasMtrvToInsertInMachine(
+		mtrv = find_feas_mtrv_to_insert_in_machine(
 			machines[h], h, start_h_pos[],
-			k, p_pos, depTime, lbNewTrvEnd,
+			k, p_pos, dep_time, LB_new_trv_end,
 			prev_stop, curr_stop, vehicle_index, inst,
 		)
-		if mtrv.found && mtrv.delta_t < bestPossibleMachineTravel[].delta_t
-			bestPossibleMachineTravel[] = mtrv
+		if mtrv.found && mtrv.delta_t < best_possible_machine_travel[].delta_t
+			best_possible_machine_travel[] = mtrv
 		end
 	end
-	if !bestPossibleMachineTravel[].found
+	if !best_possible_machine_travel[].found
+		# If it wasn't found, it means that time window at curr_stop cannot be satisfied
+		# thus we return Inf to indicate infeasibility
 		return Inf64
-		# # Shouldn't be executed
-		# println("Houston, we have a problem")
-		# exit(0)
 	end
-	push!(possibleMachineTravels[bestPossibleMachineTravel[].h], bestPossibleMachineTravel[])
+	push!(possible_machine_travels[best_possible_machine_travel[].h], best_possible_machine_travel[])
 
-	return bestPossibleMachineTravel[].delta_t
-end # function getBestMachineTravelTime()
+	return best_possible_machine_travel[].delta_t
+end # function get_best_machine_travel_time()
 
 
-function advanceBestTime(
+function advance_best_time(
 	time::Float64,
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
 	k::Int64,
 	inst::InstanceData,
 	machines::Vector{Vector{MachineTravel}},
-	possibleMachineTravels::Vector{Vector},
+	possible_machine_travels::Vector{Vector},
 	vehicle_index::Int64,
 	p_pos::Int64,
 )::Float64
@@ -202,46 +200,47 @@ function advanceBestTime(
 	if prev_stop.job.point.z == curr_stop.job.point.z
 		time += inst.d[prev_stop.node, curr_stop.node, k]
 	else
-		time += getBestMachineTravelTime(prev_stop, curr_stop, k, time, inst, machines, possibleMachineTravels, vehicle_index, p_pos)
+		time += get_best_machine_travel_time(prev_stop, curr_stop, k, time, inst, machines, possible_machine_travels, vehicle_index, p_pos)
 	end
 	time = max(time, curr_stop.job.earl)
 	return time
-end # function advanceBestTime()
+end # function advance_best_time()
 
-function advanceTime(
+function advance_time(
 	time::Float64,
 	prev_stop::VehicleStop,
 	curr_stop::VehicleStop,
 	k::Int64,
 	inst::InstanceData,
 	machine_travels::Vector{PossibleMachineTravel},
-	lastMachTrv::Ref{Int64},
+	last_mach_trv::Ref{Int64},
 )::Float64
 	time += inst.s[prev_stop.node]
 	if prev_stop.job.point.z == curr_stop.job.point.z
 		curr_stop.mach = 0
 		time += inst.d[prev_stop.node, curr_stop.node, k]
 	else
-		mach_trv = machine_travels[lastMachTrv[]]
+		mach_trv = machine_travels[last_mach_trv[]]
 		curr_stop.mach = mach_trv.h
-		lastMachTrv[] += 1
+		last_mach_trv[] += 1
 		time += mach_trv.delta_t
 	end
 	time = max(time, curr_stop.job.earl)
 	return time
-end # function advanceTime()
+end # function advance_time()
 
-function deactivateMachineTravels(k::Int64, sol::Solution, p_pos::Int64)
-	for h in 1:length(sol.machines)
+function deactivate_machine_travels(k::Int64, sol::Solution, p_pos::Int64)::Nothing
+	for h in eachindex(sol.machines)
 		for i in length(sol.machines[h]):-1:1
 			if sol.machines[h][i].vehicle == k && sol.machines[h][i].vehicle_index >= p_pos
 				sol.machines[h][i].active = false
 			end
 		end
 	end
-end # function deactivateMachineTravels()
+	return nothing
+end # function deactivate_machine_travels()
 
-function checkInsertion(
+function check_insertion(
 	sol::Solution,
 	k::Int64,
 	p_pos::Int64,
@@ -251,28 +250,28 @@ function checkInsertion(
 	inst::InstanceData,
 )::CheckInsertionData
 
-	possibleMachineTravels = Vector[PossibleMachineTravel[] for _ in inst.H]
+	possible_machine_travels = Vector[PossibleMachineTravel[] for _ in inst.H]
 
 	prev = p_pos - 1
 	curr = p_pos
 	prev_stop = sol.vehicles[k][prev]
 	curr_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
-	time = prev_stop.servST
-	time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr, p_pos)
+	time = prev_stop.serv_start_time
+	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels, curr, p_pos)
 	load = prev_stop.load + curr_stop.job.dem
 
 	if time > curr_stop.job.lat || load > inst.Q[k]
-		return CheckInsertionData(false, 0, possibleMachineTravels)
+		return CheckInsertionData(false, 0, possible_machine_travels)
 	end
 
 	prev_stop = curr_stop
 	if p_pos != d_pos
 		curr_stop = sol.vehicles[k][curr]
-		time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 1, p_pos)
+		time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels, curr + 1, p_pos)
 		load += curr_stop.job.dem
 		if time > curr_stop.job.lat || load > inst.Q[k]
-			return CheckInsertionData(false, 0, possibleMachineTravels)
+			return CheckInsertionData(false, 0, possible_machine_travels)
 		end
 
 		prev += 1
@@ -280,10 +279,10 @@ function checkInsertion(
 		while curr < d_pos
 			prev_stop = sol.vehicles[k][prev]
 			curr_stop = sol.vehicles[k][curr]
-			time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 1, p_pos)
+			time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels, curr + 1, p_pos)
 			load += curr_stop.job.dem
 			if time > curr_stop.job.lat || load > inst.Q[k]
-				return CheckInsertionData(false, 0, possibleMachineTravels)
+				return CheckInsertionData(false, 0, possible_machine_travels)
 			end
 			prev += 1
 			curr += 1
@@ -292,18 +291,18 @@ function checkInsertion(
 	end
 
 	curr_stop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
-	time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 1, p_pos)
+	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels, curr + 1, p_pos)
 	load += curr_stop.job.dem
 	if time > curr_stop.job.lat
-		return CheckInsertionData(false, 0, possibleMachineTravels)
+		return CheckInsertionData(false, 0, possible_machine_travels)
 	end
 
 	prev_stop = curr_stop
 	curr_stop = sol.vehicles[k][curr]
-	time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 2, p_pos)
+	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels, curr + 2, p_pos)
 	load += curr_stop.job.dem
 	if time > curr_stop.job.lat
-		return CheckInsertionData(false, 0, possibleMachineTravels)
+		return CheckInsertionData(false, 0, possible_machine_travels)
 	end
 
 	prev += 1
@@ -311,41 +310,40 @@ function checkInsertion(
 	while curr <= length(sol.vehicles[k])
 		prev_stop = sol.vehicles[k][prev]
 		curr_stop = sol.vehicles[k][curr]
-		# if curr_stop.job.earl == 411 && p_pos == 3 && d_pos == 3
-		# 	println("stophere")
-		# end
-		time = advanceBestTime(time, prev_stop, curr_stop, k, inst, sol.machines, possibleMachineTravels, curr + 2, p_pos)
+		time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels, curr + 2, p_pos)
 		if time > curr_stop.job.lat
-			return CheckInsertionData(false, 0, possibleMachineTravels)
+			return CheckInsertionData(false, 0, possible_machine_travels)
 		end
 		prev += 1
 		curr += 1
 	end
 
-	cost = time - sol.vehicles[k][end].servST
-	return CheckInsertionData(true, cost, possibleMachineTravels)
-end # function checkInsertion()
+	cost = time - sol.vehicles[k][end].serv_start_time
+	return CheckInsertionData(true, cost, possible_machine_travels)
+end # function check_insertion()
 
-function removeDeactivatedTravels(sol::Solution)
-	for h in 1:length(sol.machines)
+function remove_deactivated_travels(sol::Solution)::Nothing
+	for h in eachindex(sol.machines)
 		for i in length(sol.machines[h]):-1:1
 			if !sol.machines[h][i].active
 				splice!(sol.machines[h], i)
 			end
 		end
 	end
-end # function removeDeactivatedTravels()
+	return nothing
+end # function remove_deactivated_travels()
 
-function updateMachinesIndexes(sol::Solution)
-	for h in 1:length(sol.machines)
+function update_machines_indexes(sol::Solution)::Nothing
+	for h in eachindex(sol.machines)
 		for i in eachindex(sol.machines[h])[1:end]
 			mach_trv = sol.machines[h][i]
 			sol.vehicles[mach_trv.vehicle][mach_trv.vehicle_index].mach_index = i
 		end
 	end
-end # function updateMachinesIndexes
+	return nothing
+end # function update_machines_indexes
 
-function insertMachineTravels(
+function insert_machine_travels(
 	sol::Solution,
 	machine_travels::Vector{PossibleMachineTravel},
 	k::Int64,
@@ -359,39 +357,39 @@ function insertMachineTravels(
 			MachineTravel(k, mach_trv.vehicle_index, mach_trv.orig, mach_trv.dest, mach_trv.st, active),
 		)
 	end
-end # function insertMachineTravels()
+end # function insert_machine_travels()
 
-function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceData)::Solution
-	k = insData.k
-	p_pos = insData.p_pos
-	d_pos = insData.d_pos
-	p_job = insData.p_job
-	d_job = insData.d_job
-	machine_travels = flatChronollogically(insData.machine_travels)
+function update_solution(sol::Solution, ins_data::InsertionData, inst::InstanceData)::Solution
+	k = ins_data.k
+	p_pos = ins_data.p_pos
+	d_pos = ins_data.d_pos
+	p_job = ins_data.p_job
+	d_job = ins_data.d_job
+	machine_travels = flat_machine_travels_chronollogically(ins_data.machine_travels)
 
-	deactivateMachineTravels(k, sol, p_pos)
+	deactivate_machine_travels(k, sol, p_pos)
 
-	lastMachTrv = Ref(1)
+	last_mach_trv = Ref(1)
 
 	prev = p_pos - 1
 	curr = p_pos
 	prev_stop = sol.vehicles[k][prev]
-	pickupStop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
+	pickup_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
-	time = prev_stop.servST
-	time = advanceTime(time, prev_stop, pickupStop, k, inst, machine_travels, lastMachTrv)
-	load = prev_stop.load + pickupStop.job.dem
+	time = prev_stop.serv_start_time
+	time = advance_time(time, prev_stop, pickup_stop, k, inst, machine_travels, last_mach_trv)
+	load = prev_stop.load + pickup_stop.job.dem
 
-	pickupStop.servST = time
-	pickupStop.load = load
+	pickup_stop.serv_start_time = time
+	pickup_stop.load = load
 
-	prev_stop = pickupStop
+	prev_stop = pickup_stop
 	if p_pos != d_pos
 		curr_stop = sol.vehicles[k][curr]
-		time = advanceTime(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv)
+		time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, last_mach_trv)
 		load += curr_stop.job.dem
 
-		curr_stop.servST = time
+		curr_stop.serv_start_time = time
 		curr_stop.load = load
 
 		prev += 1
@@ -399,10 +397,10 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 		while curr < d_pos
 			prev_stop = sol.vehicles[k][prev]
 			curr_stop = sol.vehicles[k][curr]
-			time = advanceTime(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv)
+			time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, last_mach_trv)
 			load += curr_stop.job.dem
 
-			curr_stop.servST = time
+			curr_stop.serv_start_time = time
 			curr_stop.load = load
 
 			prev += 1
@@ -411,111 +409,103 @@ function updateSolution(sol::Solution, insData::InsertionData, inst::InstanceDat
 		prev_stop = sol.vehicles[k][prev]
 	end
 
-	deliveryStop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
-	time = advanceTime(time, prev_stop, deliveryStop, k, inst, machine_travels, lastMachTrv)
-	load += deliveryStop.job.dem
+	delivery_stop = VehicleStop(d_job, inst.jobs[inst.refs[d_job]], 0, 0, 0, 0)
+	time = advance_time(time, prev_stop, delivery_stop, k, inst, machine_travels, last_mach_trv)
+	load += delivery_stop.job.dem
 
-	deliveryStop.servST = time
-	deliveryStop.load = load
+	delivery_stop.serv_start_time = time
+	delivery_stop.load = load
 
-	prev_stop = deliveryStop
+	prev_stop = delivery_stop
 	curr_stop = sol.vehicles[k][curr]
-	time = advanceTime(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv)
+	time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, last_mach_trv)
 	load += curr_stop.job.dem
 
-	curr_stop.servST = time
+	curr_stop.serv_start_time = time
 
 	prev += 1
 	curr += 1
 	while curr <= length(sol.vehicles[k])
 		prev_stop = sol.vehicles[k][prev]
 		curr_stop = sol.vehicles[k][curr]
-		time = advanceTime(time, prev_stop, curr_stop, k, inst, machine_travels, lastMachTrv)
-		curr_stop.servST = time
+		time = advance_time(time, prev_stop, curr_stop, k, inst, machine_travels, last_mach_trv)
+		curr_stop.serv_start_time = time
 		prev += 1
 		curr += 1
 	end
 
-	insert!(sol.vehicles[k], d_pos, deliveryStop)
-	insert!(sol.vehicles[k], p_pos, pickupStop)
-	insertMachineTravels(sol, machine_travels, k)
-	removeDeactivatedTravels(sol)
-	sol.completionTimes[k] = sol.vehicles[k][end].servST
-	sol.value += insData.cost
+	insert!(sol.vehicles[k], d_pos, delivery_stop)
+	insert!(sol.vehicles[k], p_pos, pickup_stop)
+	insert_machine_travels(sol, machine_travels, k)
+	remove_deactivated_travels(sol)
+	sol.completion_times[k] = sol.vehicles[k][end].serv_start_time
+	sol.value += ins_data.cost
 
 	return sol
-end # function updateSolution()
+end # function update_solution()
 
-function tightestTimeWindows(inst::InstanceData)::Vector{Int64}
+function tightest_time_windows(inst::InstanceData)::Vector{Int64}
 	reqs = copy(inst.V_p)
 	sort!(reqs, by = i -> (inst.l[i] - inst.e[i]))
 
 	return reqs
-end # function tightestTimeWindows()
+end # function tightest_time_windows()
 
-function earliestTimeWindows(inst::InstanceData)::Vector{Int64}
-	reqs = copy(inst.V_p)
-	sort!(reqs, by = i -> inst.l[i])
-
-end # function earliest_time_windows()
-
-function randomOrderNodes(inst::InstanceData, params::ParameterData)::Vector{Int64}
+function random_order_nodes(inst::InstanceData, params::ParameterData)::Vector{Int64}
 	rkvector = rand(params.rng, Float64, inst.n)
-	orderNodes = sortperm(rkvector) .+ 1
+	order_nodes = sortperm(rkvector) .+ 1
 
-	return orderNodes
-end # function randomOrderNodes
+	return order_nodes
+end # function random_order_nodes
 
-function initVehicleRoutes(inst::InstanceData)::Vector{Vector{VehicleStop}}
+function init_vehicle_routes(inst::InstanceData)::Vector{Vector{VehicleStop}}
 	# Start depot -> 1 in inst.Vprime, which is equivalent to 0 in paper
-	firstVehicleStop = VehicleStop(1, inst.jobs[inst.refs[1]], 0, 0, 0, 0)
+	first_vehicle_stop = VehicleStop(1, inst.jobs[inst.refs[1]], 0, 0, 0, 0)
 	# End depot -> 2*inst.n+2 in inst.Vprime, which is equivalent to 2*n+1 in paper
-	lastVehicleStop = VehicleStop(2 * inst.n + 2, inst.jobs[inst.refs[2*inst.n+2]], 0, 0, 0, 0)
+	last_vehicle_stop = VehicleStop(2 * inst.n + 2, inst.jobs[inst.refs[2*inst.n+2]], 0, 0, 0, 0)
 
-	vehicleRoutes = Vector{VehicleStop}[[copy(firstVehicleStop), copy(lastVehicleStop)] for _ in inst.K]
+	vehicle_routes = Vector{VehicleStop}[[copy(first_vehicle_stop), copy(last_vehicle_stop)] for _ in inst.K]
 
-	return vehicleRoutes
-end # function initVehicleRoutes()
+	return vehicle_routes
+end # function init_vehicle_routes()
 
-function initMachineTravels(inst::InstanceData)::Vector{Vector{MachineTravel}}
+function init_machine_travels(inst::InstanceData)::Vector{Vector{MachineTravel}}
 	# Insert a dummy MachineTravel in each machine travels list with start time at 0 (code simplification)
-	machineRoutes = Vector{MachineTravel}[[] for _ in inst.H]
+	machine_routes = Vector{MachineTravel}[[] for _ in inst.H]
 
-	return machineRoutes
-end # function initMachineTravels()
+	return machine_routes
+end # function init_machine_travels()
 
-function getServiceOrder(inst::InstanceData, params::ParameterData)::Vector{Int64}
+function get_service_order(inst::InstanceData, params::ParameterData)::Vector{Int64}
 	if params.greedy_service_order == "tightest_tw"
-		return tightestTimeWindows(inst)
-	elseif params.greedy_service_order == "earliest_tw"
-		return earliestTimeWindows(inst)
+		return tightest_time_windows(inst)
 	elseif params.greedy_service_order == "random"
-		return randomOrderNodes(inst, params)
+		return random_order_nodes(inst, params)
 	end
 
-	return inst.V_p # just in case
-end # function getServiceOrder()
+	error("Unknown greedy service order: $(params.greedy_service_order)")
+end # function get_service_order()
 
-function initSolution(inst::InstanceData)::Solution
-	initialVehicleRoutes = initVehicleRoutes(inst)
-	initialMachineTravels = initMachineTravels(inst)
-	initialCompletionTimes = Float64[0 for _ in inst.K]
-	initialStats = SolutionStats()
+function init_solution(inst::InstanceData)::Solution
+	initial_vehicle_routes = init_vehicle_routes(inst)
+	initial_machine_travels = init_machine_travels(inst)
+	initial_completion_times = Float64[0 for _ in inst.K]
+	initial_stats = SolutionStats()
 
 	return Solution(
-		initialVehicleRoutes,
-		initialMachineTravels,
-		initialCompletionTimes,
+		initial_vehicle_routes,
+		initial_machine_travels,
+		initial_completion_times,
 		false,
 		0.0,
-		initialStats)
-end # function initSolution()
+		initial_stats)
+end # function init_solution()
 
-function flatChronollogically(
-	possibleMachineTravels::Vector{Vector{PossibleMachineTravel}},
+function flat_machine_travels_chronollogically(
+	possible_machine_travels::Vector{Vector{PossibleMachineTravel}},
 )::Vector{PossibleMachineTravel}
-	machine_travels = collect(Iterators.flatten(possibleMachineTravels))
+	machine_travels = collect(Iterators.flatten(possible_machine_travels))
 	sort!(machine_travels, by = i -> (i.st))
 
 	return machine_travels
-end # function flatChronollogically()
+end # function flat_machine_travels_chronollogically()

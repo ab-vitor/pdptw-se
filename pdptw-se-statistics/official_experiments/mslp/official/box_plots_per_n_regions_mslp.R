@@ -15,11 +15,11 @@ for (j in seq_along(variations)) {
   
   csv_mslpr <- csv_mslpr_complete %>%
     mutate(
-      perc_feasible = 100 - percentageInfeasibleSol,
-      meanLPImprPercentage = ifelse(feasible, meanLPImprPercentage, NA),
+      perc_feasible = 100 - percentage_infeasible_sol,
+      mean_LP_impr_percentage = ifelse(feasible, mean_LP_impr_percentage, NA),
       feasible = feasible == "true"
     ) %>%
-    select(-percentageInfeasibleSol)
+    select(-percentage_infeasible_sol)
   
   
   csv_mslpr$type <- substr(csv_mslpr$type, 2, 2)
@@ -28,8 +28,8 @@ for (j in seq_along(variations)) {
   count_csv_mslpr <- csv_mslpr %>%
     group_by(n_regions) %>%
     summarise(
-      count_obs_type1 = sum(!is.na(meanLPImprPercentage) & type == "1"),
-      count_obs_type2 = sum(!is.na(meanLPImprPercentage) & type == "2"),
+      count_obs_type1 = sum(!is.na(mean_LP_impr_percentage) & type == "1"),
+      count_obs_type2 = sum(!is.na(mean_LP_impr_percentage) & type == "2"),
       .groups = "drop"
     )
   
@@ -77,7 +77,7 @@ for (j in seq_along(variations)) {
       csv_mslpr,
       aes(
         x = as.factor(type),
-        y = meanLPImprPercentage,
+        y = mean_LP_impr_percentage,
         group = interaction(type, n_regions),
         fill = n_regions
       )

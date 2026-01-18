@@ -21,9 +21,9 @@ for (j in seq_along(benchmarks)) {
     select(
       name, group, type, alpha, 
       seed, value, feasible, 
-      totalTimeElapsed, fullname, n,
-      iterationToBest, timeToBest, iteration,
-      percentageInfeasibleSol, meanLPImprPercentage
+      total_time_elapsed, fullname, n,
+      iteration_to_best, time_to_best, iteration,
+      percentage_infeasible_sol, mean_LP_impr_percentage
     )
   
   ouput_name <- paste0(csv_input_filename, "_", variations[j], ext_csv)

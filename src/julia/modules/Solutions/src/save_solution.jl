@@ -11,7 +11,7 @@ function save_summarized_solution(sol::Solution, inst::InstanceData, params::Par
 	for k in inst.K
 		write(file, "Vehicle " * string(inst.vehicles[k].id) * ":\n\t")
 		rt = sol.vehicles[k]
-		write(file, "Start = " * string(round(rt[1].servST, digits = 2)) * "\n\t")
+		write(file, "Start = " * string(round(rt[1].serv_start_time, digits = 2)) * "\n\t")
 		for fid in eachindex(rt)
 			write(file, string(rt[fid].job.id) * " ")
 		end

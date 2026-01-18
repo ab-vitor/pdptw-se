@@ -1,4 +1,16 @@
-function getInsertionWithLessIncreaseInCompTime(
+"""
+	function get_insertion_with_less_increase_in_comp_time(
+		inst::InstanceData,
+		sol::Solution,
+		p_job::Int64,
+		d_job::Int64,
+	)::InsertionData
+
+	Find the best feasible insertion for the pickup job `p_job` and delivery job `d_job`
+	into the current solution `sol` for the given instance data `inst`,
+	that results in the least increase in completion time.
+"""
+function get_insertion_with_less_increase_in_comp_time(
 	inst::InstanceData,
 	sol::Solution,
 	p_job::Int64,
@@ -6,9 +18,9 @@ function getInsertionWithLessIncreaseInCompTime(
 )::InsertionData
 	best_ins_data = InsertionData(false, Inf64, 0, 0, 0, 0, 0, PossibleMachineTravel[])
 	for k in inst.K
-		for p_pos in 2:length(sol.vehicles[k])
-			for d_pos in p_pos:length(sol.vehicles[k])
-				check_ins_data = checkInsertion(sol, k, p_pos, d_pos, p_job, d_job, inst)
+		for p_pos in eachindex(sol.vehicles[k])[2:end]
+			for d_pos in eachindex(sol.vehicles[k])[p_pos:end]
+				check_ins_data = check_insertion(sol, k, p_pos, d_pos, p_job, d_job, inst)
 				if check_ins_data.feasible
 					if check_ins_data.cost < best_ins_data.cost
 						best_ins_data = InsertionData(
@@ -19,7 +31,7 @@ function getInsertionWithLessIncreaseInCompTime(
 							p_job,
 							d_job,
 							k,
-							check_ins_data.possibleMachineTravels,
+							check_ins_data.possible_machine_travels,
 						)
 					end
 				end
@@ -27,37 +39,30 @@ function getInsertionWithLessIncreaseInCompTime(
 		end
 	end
 	return best_ins_data
-end # function getInsertionWithLessIncreaseInCompTime()
+end # function get_insertion_with_less_increase_in_comp_time()
 
-function greedyHeuristic(inst::InstanceData, params::ParameterData)::Solution
-	sol = initSolution(inst)
-	nonServicedReqs = copy(tightestTimeWindows(inst))
-	idxReqToServe = 1
-	reqNotInserted = false
-	while idxReqToServe <= length(nonServicedReqs)
-		p_job = nonServicedReqs[idxReqToServe]
+function greedy_heuristic(inst::InstanceData)::Solution
+	sol = init_solution(inst)
+	non_serviced_reqs = copy(tightest_time_windows(inst))
+	idx_req_to_serve = 1
+	req_not_inserted = false
+	while idx_req_to_serve <= length(non_serviced_reqs) && !req_not_inserted
+		p_job = non_serviced_reqs[idx_req_to_serve]
 		d_job = p_job + inst.n
 
-		best_ins_data = getInsertionWithLessIncreaseInCompTime(inst, sol, p_job, d_job)
+		best_ins_data = get_insertion_with_less_increase_in_comp_time(inst, sol, p_job, d_job)
 
 		if best_ins_data.feasible
-			sol = updateSolution(sol, best_ins_data, inst)
+			sol = update_solution(sol, best_ins_data, inst)
 		else
-			reqNotInserted = true
-			idxReqToServe = length(nonServicedReqs)
+			req_not_inserted = true
 		end
-		idxReqToServe += 1
+		idx_req_to_serve += 1
 	end
 
-	updateMachinesIndexes(sol)
+	update_machines_indexes(sol)
 
-	sol.feasible = !reqNotInserted
+	sol.feasible = !req_not_inserted
 
-	# print_timeline_solution(inst, sol)
-	# if validate_solution(inst, sol, params)
-	# 	sol.feasible = true
-	# else
-	# 	sol.feasible = false
-	# end
 	return sol
-end # function greedyHeuristic()
+end # function greedy_heuristic()

@@ -224,7 +224,7 @@ function check_insertion(
 	prev_stop = sol.vehicles[k][prev]
 	curr_stop = VehicleStop(p_job, inst.jobs[inst.refs[p_job]], 0, 0, 0, 0)
 
-	time = prev_stop.servST
+	time = prev_stop.serv_start_time
 	time = advance_best_time(time, prev_stop, curr_stop, k, inst, sol.machines, possible_machine_travels)
 	load = prev_stop.load + curr_stop.job.dem
 
@@ -299,7 +299,7 @@ function check_insertion(
 		curr += 1
 	end
 	if feasible
-		return CheckInsertionData(feasible, cost > 0, load_cost > 0, time - sol.vehicles[k][end].servST, 0, available_vehicle)
+		return CheckInsertionData(feasible, cost > 0, load_cost > 0, time - sol.vehicles[k][end].serv_start_time, 0, available_vehicle)
 	end
 
 	return CheckInsertionData(feasible, cost > 0, load_cost > 0, cost, load_cost, available_vehicle)

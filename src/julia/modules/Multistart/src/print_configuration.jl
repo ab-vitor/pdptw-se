@@ -1,4 +1,4 @@
-function printConfiguration(inst::InstanceData, allParams::AllParams)::Nothing
+function print_configuration(inst::InstanceData, all_params::AllParams)::Nothing
 	print("""
 	------------------------------------------------------
 	"\n[$(Dates.Time(Dates.now()))] Running Multi Start Heuristic"
@@ -11,11 +11,11 @@ function printConfiguration(inst::InstanceData, allParams::AllParams)::Nothing
 	output_string = ""
     output_string *= "\n\t>Stop params:\n"
 	for field in fieldnames(StopParams)
-		output_string *= "\t\t>  - $field $(getfield(allParams.stop, field))\n"
+		output_string *= "\t\t>  - $field $(getfield(all_params.stop, field))\n"
 	end
     output_string *= "\n\t>General params:\n"
 	for field in fieldnames(ParameterData)
-		output_string *= "\t\t>  - $field $(getfield(allParams.general, field))\n"
+		output_string *= "\t\t>  - $field $(getfield(all_params.general, field))\n"
 	end
 	println(output_string)
 	println("------------------------------------------------------")

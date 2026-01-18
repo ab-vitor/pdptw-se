@@ -8,7 +8,7 @@ function printStopDetail(stop::VehicleStop)::Nothing
 	println("\t\tservt: ", stop.job.servt)
 	println("\t\tpid: ", stop.job.pid)
 	println("\t\tdid: ", stop.job.did)
-	println("\t\tservST: ", stop.servST)
+	println("\t\tserv_start_time: ", stop.serv_start_time)
 	println("\t\t(h, h_ind): ", (stop.mach - 1, stop.mach_index))
 	println("\t\tload: ", stop.load)
 	println()
@@ -19,7 +19,7 @@ function printVehicleDetail(inst::InstanceData, sol::Solution, k)::Nothing
 	vehicle = sol.vehicles[k]
 	zk = vehicle[1].job.point.z
 	printStopDetail(vehicle[1])
-	timer = vehicle[1].servST
+	timer = vehicle[1].serv_start_time
 	for i in eachindex(vehicle)[2:end]
 		timer += vehicle[i-1].job.servt
 		println("\tFinished service at time: ", timer)
@@ -66,18 +66,18 @@ function printVehicleDetail(inst::InstanceData, sol::Solution, k)::Nothing
 			)
 			timer += inst.d_bar[vehicle[i].node, h, k]
 			println("\t\tVehicle arrival at task: ", timer)
-			println("\t\tWaiting time until service start time: ", round(vehicle[i].servST - timer, digits = 2))
+			println("\t\tWaiting time until service start time: ", round(vehicle[i].serv_start_time - timer, digits = 2))
 			println()
 			printStopDetail(vehicle[i])
 		else
 			println("\tTask ", vehicle[i-1].job.id, " -> Task ", vehicle[i].job.id, ": ", inst.d[vehicle[i-1].node, vehicle[i].node, k])
 			timer += inst.d[vehicle[i-1].node, vehicle[i].node, k]
 			println("\tVehicle arrival at task: ", timer)
-			println("\tWaiting time until service start time: ", round(vehicle[i].servST - timer, digits = 2))
+			println("\tWaiting time until service start time: ", round(vehicle[i].serv_start_time - timer, digits = 2))
 			println()
 			printStopDetail(vehicle[i])
 		end
-		timer = vehicle[i].servST
+		timer = vehicle[i].serv_start_time
 		zk = vehicle[i].job.point.z
 	end
 	return nothing
@@ -125,7 +125,7 @@ function print_timeline_solution(inst::InstanceData, sol::Solution)::Nothing
 	end
 	println("-------------------| COMPL. TIMES |-------------------\n")
 	for k in inst.K
-		println("Vehicle ", inst.vehicles[k].id, " : ", sol.completionTimes[k])
+		println("Vehicle ", inst.vehicles[k].id, " : ", sol.completion_times[k])
 	end
 
 	println("-------------------| STATISTICS |-------------------\n")
@@ -133,7 +133,7 @@ function print_timeline_solution(inst::InstanceData, sol::Solution)::Nothing
 
 	println("----------------------------------------------------\n")
 
-	println("TOTAL: ", sum(sol.completionTimes))
+	println("TOTAL: ", sum(sol.completion_times))
 	println()
 	return nothing
 end # function print_timeline_solution()
