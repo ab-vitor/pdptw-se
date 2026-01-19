@@ -1,3 +1,0 @@
-# MSLP
-
-- preliminar tests mslp
