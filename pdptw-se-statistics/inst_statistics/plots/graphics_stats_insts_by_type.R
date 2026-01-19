@@ -88,7 +88,7 @@ save_boxplot <- function(stats, yvar, ylab, inst, ylim = NULL, breaks = NULL,
   }
   
   print(p)
-  filename <- paste0("plots/stats_insts/boxplot_stats_by_type_",
+  filename <- paste0("inst_statistics/plots/boxplot_stats_by_type_",
                      filename_suffix %||% yvar, "_", inst, ".pdf")
   # ggsave(filename, plot = p, width = 5, height = 4) # uncomment this line to save box plot
 }
