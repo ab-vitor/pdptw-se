@@ -269,7 +269,7 @@ end
 function read_data(params::ParameterData, inst_path::Union{Nothing, String} = nothing)::InstanceData
 	if inst_path !== nothing
 		params.inst_path = inst_path
-		Parameters.saveInstanceFullName!(params)
+		Parameters.save_instance_full_name!(params)
 	end
 	println("\n[$(Dates.Time(Dates.now()))] Running Data.read_data with file $(params.inst_path)")
 	inst = InstanceData()

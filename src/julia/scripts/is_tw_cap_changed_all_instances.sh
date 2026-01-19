@@ -1,23 +1,25 @@
 set=$1
-group=$2
-is_big=$3
-# echo Group: $group
 cd ..
 
-if [ "$is_big" = false ]; then
-  for i in $(seq 1 5); do
-    julia --quiet is_tw_cap_changed.jl ../../${set}/instances/orig_ams/${group}/t1/lr10${i}/ ../../${set}/instances/orig_ams_fg/${group}/t1/lr10${i}/
+echo "group;instname;tw_shift;cap_incr"
+for group in ../../instances/${set}/orig_ams/*04M; do
+  group_name=$(basename $group)
+  for i in $(seq 1 10); do
+    idx=$(printf "%02d" "$i")
+    julia --quiet is_tw_cap_changed.jl ../../instances/${set}/orig_ams/${group_name}/t1/lr1${idx}/ ../../instances/${set}/orig_ams_fg/${group_name}/t1/lr1${idx}/
   done
-  for i in $(seq 1 5); do
-    julia --quiet is_tw_cap_changed.jl ../../${set}/instances/orig_ams/${group}/t2/lr20${i}/ ../../${set}/instances/orig_ams_fg/${group}/t2/lr20${i}/
+  for i in $(seq 1 10); do
+    idx=$(printf "%02d" "$i")
+    julia --quiet is_tw_cap_changed.jl ../../instances/${set}/orig_ams/${group_name}/t2/lr2${idx}/ ../../instances/${set}/orig_ams_fg/${group_name}/t2/lr2${idx}/
   done
-fi
+done
 
-if [ "$is_big" = true ]; then
-  for i in $(seq 1 5); do
-    julia --quiet is_tw_cap_changed.jl ../../${set}/instances/orig_ams/${group}/t1/LR1_2_${i}/ ../../${set}/instances/orig_ams_fg/${group}/t1/LR1_2_${i}/
+for group in ../../instances/${set}/orig_ams/*06M; do
+  group_name=$(basename $group)
+  for i in $(seq 1 10); do
+    julia --quiet is_tw_cap_changed.jl ../../instances/${set}/orig_ams/${group_name}/t1/LR1_2_${i}/ ../../instances/${set}/orig_ams_fg/${group_name}/t1/LR1_2_${i}/
   done
-  for i in $(seq 1 5); do
-    julia --quiet is_tw_cap_changed.jl ../../${set}/instances/orig_ams/${group}/t2/LR2_2_${i}/ ../../${set}/instances/orig_ams_fg/${group}/t2/LR2_2_${i}/
+  for i in $(seq 1 10); do
+    julia --quiet is_tw_cap_changed.jl ../../instances/${set}/orig_ams/${group_name}/t2/LR2_2_${i}/ ../../instances/${set}/orig_ams_fg/${group_name}/t2/LR2_2_${i}/
   done
-fi
+done
