@@ -24,7 +24,7 @@ mutable struct ParameterData
 	seed::Int # Seed for random number generator
 	rng::Random.MersenneTwister # Random number generator
 	alpha::Float64 # Alpha parameter for semi-greedy heuristic
-	output_flag_grb_MSLP::Int64 # output flag for Gurobi in MSLP
+	output_flag_grb_MSLP::Int64 # output flag for Gurobi in MSLP. 0 - no output, 1 - normal output
 	mslpr::String # stop rule Mulsti-Start LP (MSLP). See Enumerations Module
 	mslpa::String # stop argument given mslpr. See Enumerations Module
 	csv_file_name::String # CSV file name
