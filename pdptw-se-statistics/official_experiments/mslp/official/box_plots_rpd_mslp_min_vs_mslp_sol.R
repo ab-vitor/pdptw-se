@@ -77,12 +77,6 @@ for (j in seq_along(variations)) {
   
   p <- ggplot(csvr_mslp, aes(x = type, y = rpd_mslp_sol_min, fill=n_reqs, group = as.factor(interaction(type, n_reqs)))) +
     geom_boxplot() +
-    # geom_point(
-    #   aes(x = type, y = rpd_mslp_sol_min, grouop = interaction(type, n_reqs)),
-    #   shape = 21,
-    #   position = position_jitter(width = 0.2, height = 0),
-    #   alpha = 0.5,
-    # ) +
     labs(x = "Type", y = "Solution value RPD (%)", fill = "Num. of reqs.") +
     scale_color_brewer(palette = "Set1") +
     theme(legend.position = "top", text = element_text(size = 13)) +

@@ -57,6 +57,6 @@ for(i in seq_along(variations)){
   
   
   print(p)
-  # filename <- paste0("./official_experiments/grb_vs_hx/plots/boxplots_dev_by_type_", variations[i], ".pdf")
-  # ggsave(filename, plot = p, width = 5, height = 4)
+  filename <- paste0("./official_experiments/grb_vs_hx/plots/boxplots_dev_by_type_", variations[i], ".pdf")
+  # ggsave(filename, plot = p, width = 5, height = 4) # uncomment to save the plots
 }
