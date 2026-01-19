@@ -498,7 +498,7 @@ def gen_inst_files(filename, group, new_group):
         os.chdir("../../../../../../src/julia/")
 
         global min_n_machines
-        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --cutoffmachs {min_n_machines}"
+        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --cut_off_machs {min_n_machines}"
         subprocess.run(cmd_str, shell=True)
 
         os.chdir(inst_location)

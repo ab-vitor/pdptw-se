@@ -48,8 +48,8 @@ def read_files(inst: InstanceData, params: ParameterData) -> None:
             existing.points.append(Point.from_list(row[1:4]))
         else:
             inst.machines.append(Machine.from_list(row))
-    # cutoff inst.machines
-    while len(inst.machines) > params.cutoff_machs:
+    # cut_off inst.machines
+    while len(inst.machines) > params.cut_off_machs:
         inst.machines.pop()
 
     print("machines:", inst.machines)
@@ -57,9 +57,9 @@ def read_files(inst: InstanceData, params: ParameterData) -> None:
 
 
 def build_refs(inst: InstanceData, params: ParameterData) -> None:
-    # determine cutoff for inst.jobs
-    cutoff = params.cutoff or (len(inst.jobs) - 1) // 2
-    inst.n = cutoff
+    # determine cut_off for inst.jobs
+    cut_off = params.cut_off or (len(inst.jobs) - 1) // 2
+    inst.n = cut_off
 
     # build inst.refs
     inst.refs = [0]  # zero-based index for depot
@@ -67,7 +67,7 @@ def build_refs(inst: InstanceData, params: ParameterData) -> None:
     for i, job in enumerate(inst.jobs):
         if job.dem > 0:
             inst.refs.append(i)
-        if len(inst.refs) - 1 == cutoff:
+        if len(inst.refs) - 1 == cut_off:
             break
 
     prefs = inst.refs[1:].copy()

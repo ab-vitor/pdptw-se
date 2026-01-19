@@ -5,21 +5,21 @@ using Parameters
 using JuMP
 using Dates
 
-export VehicleStop, MachineTravel, StatsSolution, Solution
+export VehicleStop, MachineTravel, SolutionStats, Solution
 
-export MIPVarsSolution, MIPStats, MIPSolution, LPSolution
+export LPSolution
 
-export createSolutionMelo, saveSolutionToFile, saveSolutionTimeline,
-	printDetailMeloFormulationSolution, validateSolution
+export save_summarized_solution, save_solution_timeline,
+	print_timeline_solution, validate_solution
 
 
-include("solutionDataStructures.jl")
-include("MIPSolutionDataStructures.jl")
-include("printDetailed.jl")
-include("validateSolution.jl")
+include("solution_data_structures.jl")
+include("LP_solution_data_structures.jl")
+include("print_timeline_solution.jl")
+include("validate_solution.jl")
 include("statistics.jl")
-include("convertSol.jl")
-include("writeSol.jl")
+include("convert_solution.jl")
+include("save_solution.jl")
 
 
 end # module

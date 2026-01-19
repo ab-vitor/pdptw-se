@@ -4,13 +4,8 @@ using JuMP
 using Gurobi
 using Data
 using Parameters
-using GreedyHeuristicMutate
 using Solutions
-using CSVUtils
-using DataFrames
 
-export meloFormulation, MIPModel, createMeloMIPModel
-
-include("MeloFormulation/MeloFormulation.jl")
+include("LP_formulation/LP_formulation.jl")
 
 end # module

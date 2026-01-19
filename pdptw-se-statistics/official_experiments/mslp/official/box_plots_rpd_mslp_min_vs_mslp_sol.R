@@ -25,16 +25,16 @@ for (j in seq_along(variations)) {
     filter(n > 12)
   
   csvr_mslp_best <- csvr_mslp %>%
-    group_by(fullname, group, type) %>%
+    group_by(full_name, group, type) %>%
     summarise(
       mslp_min_sol = min(mslp_sol, na.rm = T),
       .groups = "drop"
     )
   
-  csvr_mslp <- left_join(csvr_mslp, csvr_mslp_best, by = c("fullname", "group", "type"))
+  csvr_mslp <- left_join(csvr_mslp, csvr_mslp_best, by = c("full_name", "group", "type"))
   
   csvr_mslp <- csvr_mslp %>%
-    select(fullname, type, group, mslp_sol, mslp_min_sol) %>%
+    select(full_name, type, group, mslp_sol, mslp_min_sol) %>%
     mutate(
       mslp_sol = ifelse(is.infinite(mslp_sol), NA, mslp_sol),
       mslp_min_sol = ifelse(is.infinite(mslp_min_sol), NA, mslp_min_sol)

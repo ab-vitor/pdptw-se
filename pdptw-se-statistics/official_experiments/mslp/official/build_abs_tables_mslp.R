@@ -29,7 +29,7 @@ for (j in seq_along(variations)) {
       mutate(value = ifelse(is.infinite(value), NA, value))
     
     grouped_abs_group_instname_mslp <- csvr_mslp %>%
-      group_by(fullname, group) %>%
+      group_by(full_name, group) %>%
       summarise(
         feas_exec = sum(feasible),
         exec = n(),

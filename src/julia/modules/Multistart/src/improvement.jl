@@ -1,18 +1,17 @@
-function updateCurrentResults!(extmd::ExternalMSLPData, _::AllParams)::Nothing
-	# extmd.timeToBest = (CPUtime_us() - extmd.startTime) / 1e6
-	extmd.timeToBest = cpu_times()[1] - extmd.startTime
-	extmd.iterationToBest = extmd.iteration
-	extmd.bestSol = extmd.currSol
-	update_offset = extmd.iteration - extmd.iterationToBest
-	extmd.largestUpdateOffset = max(extmd.largestUpdateOffset, update_offset)
-	extmd.countImprovements += 1
+function update_current_results!(extmd::ExternalMSLPData)::Nothing
+	extmd.time_to_best = cpu_times()[1] - extmd.start_time
+	extmd.iteration_to_best = extmd.iteration
+	extmd.best_sol = extmd.curr_sol
+	update_offset = extmd.iteration - extmd.iteration_to_best
+	extmd.largest_update_offset = max(extmd.largest_update_offset, update_offset)
+	extmd.count_improvements += 1
 
 	@printf(
 		"%.2f;%.2f;%d;%.6f\n",
-		extmd.bestSol.value,
-		extmd.lastSGreedySolValue,
+		extmd.best_sol.value,
+		extmd.last_greedy_sol_value,
 		extmd.iteration,
-		extmd.timeToBest
+		extmd.time_to_best
 	)
     return nothing
 end

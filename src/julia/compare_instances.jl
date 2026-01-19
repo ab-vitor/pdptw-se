@@ -1,9 +1,4 @@
 push!(LOAD_PATH, "modules/")
-# push!(DEPOT_PATH, JULIA_DEPOT_PATH)
-using Pkg
-#Pkg.activate(".")
-# Pkg.instantiate()
-# Pkg.build()
 
 import Data
 using Parameters
@@ -14,8 +9,8 @@ redirect_stdout(devnull)
 params = ParameterData()
 
 # Read instance data
-inst1 = Data.readData(params, ARGS[1])
-inst2 = Data.readData(params, ARGS[2])
+inst1 = Data.read_data(params, ARGS[1])
+inst2 = Data.read_data(params, ARGS[2])
 
 redirect_stdout(oldstd)
 Data.compare_orig_instance_with_modified(inst1, inst2)

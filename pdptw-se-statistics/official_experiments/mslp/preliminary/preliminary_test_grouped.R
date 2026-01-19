@@ -58,10 +58,10 @@ for (j in seq_along(variations)) {
   
   csv_results <- csv_results %>%
     mutate(across(value, ~ ifelse(is.infinite(.x), NA, .x))) %>%
-    select(fullname, type, alpha, seed, value, feasible)
+    select(full_name, type, alpha, seed, value, feasible)
   
   csv_results_minbestsol <- csv_results %>%
-    group_by(fullname, type) %>%
+    group_by(full_name, type) %>%
     mutate(
       minbestsol = if (all(is.na(value))) NA else min(value)
     ) %>%
@@ -76,8 +76,8 @@ for (j in seq_along(variations)) {
       )
     )
   
-  # --- Group by fullname, type, alpha ---
-  grouped_full <- compute_grouped_stats(csv_results_rpd, c("fullname", "type", "alpha"))
+  # --- Group by full_name, type, alpha ---
+  grouped_full <- compute_grouped_stats(csv_results_rpd, c("full_name", "type", "alpha"))
   
   # Separate by type
   grouped_t1 <- grouped_full %>% filter(type == "t1")
@@ -89,7 +89,7 @@ for (j in seq_along(variations)) {
   dir.create(dirname(output_base_1), showWarnings = FALSE, recursive = TRUE)
   dir.create(dirname(output_base_2), showWarnings = FALSE, recursive = TRUE)
     
-  # --- Write grouped by fullname/type/alpha ---
+  # --- Write grouped by full_name/type/alpha ---
   write_csv(grouped_full, paste0(output_base_1, "_", variations[j], ".csv"))
   write_csv(grouped_t1, paste0(output_base_1, "_type_1_", variations[j], ".csv"))
   write_csv(grouped_t2, paste0(output_base_1, "_type_2_", variations[j], ".csv"))

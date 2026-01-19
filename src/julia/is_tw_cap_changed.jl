@@ -14,8 +14,8 @@ redirect_stdout(devnull)
 params = ParameterData()
 
 # Read instance data
-inst1 = Data.readData(params, ARGS[1])
-inst2 = Data.readData(params, ARGS[2])
+inst1 = Data.read_data(params, ARGS[1])
+inst2 = Data.read_data(params, ARGS[2])
 
 redirect_stdout(oldstd)
 Data.is_tw_cap_changed(inst1, inst2)

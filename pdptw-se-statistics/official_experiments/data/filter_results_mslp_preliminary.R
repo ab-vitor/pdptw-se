@@ -18,7 +18,7 @@ for (j in seq_along(benchmarks)) {
   
   csv_results <- csv_results %>%
     mutate(across(value, ~ ifelse(is.infinite(.x), NA, .x))) %>%
-    select(fullname, type, alpha, seed, value, feasible)
+    select(full_name, type, alpha, seed, value, feasible)
   
   ouput_name <- paste0(csv_input_filename, "_", variations[j], ext_csv)
   ouput_path <- file.path(off_exp, "data", "mslp_preliminary", ouput_name)

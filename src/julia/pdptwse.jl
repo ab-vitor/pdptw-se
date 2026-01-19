@@ -1,8 +1,4 @@
 push!(LOAD_PATH, "modules/")
-# using Pkg
-# Pkg.activate(".")
-# Pkg.instantiate()
-# Pkg.build()
 
 using Data
 using Parameters
@@ -12,8 +8,8 @@ using JuMP
 using GreedyHeuristicMutate
 using Multistart
 using Solutions
-using LNS
 
+# Check if Gurobi is available
 const GRB_ENV = let
     try
         @eval using Gurobi
@@ -24,46 +20,35 @@ const GRB_ENV = let
 end
 if GRB_ENV !== nothing
 	Model(() -> Gurobi.Optimizer(GRB_ENV))
-	# Model(Gurobi.Optimizer)
+	# Model(Gurobi.Optimizer) # for debugging purposes
 end
 
 # Read the parameters from command line
-params = readInputParameters(ARGS)
+params = read_input_parameters(ARGS)
 
 # Read instance data
-inst = readData(params)
+inst = read_data(params)
 
+# Solve the problem according to the selected method
 sol::Union{Nothing, Solution} = nothing
-if params.methodType == "form"
-	if params.methodCode == "melo"
-		sol = meloFormulation(GRB_ENV, inst, params)
-	elseif params.methodCode == "barbosa"
-		sol = barbosaFormulation(GRB_ENV, inst, params)
+if params.method_type == "heur"
+	if params.method_code == "greedy"
+		sol = GreedyHeuristicMutate.greedy_heuristic_mutate(inst, params)
+	elseif params.method_code == "mslp"
+		Multistart.multistart_LP_initial_setup(GRB_ENV, inst, params)
+		sol = Multistart.multi_start_LP(GRB_ENV, inst, params)
 	end
-elseif params.methodType == "heur"
-	if params.methodCode == "greedy"
-		sol = GreedyHeuristicMutate.greedyHeuristicMutate(inst, params)
-	elseif params.methodCode == "lmns"
-		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
-		sol = LNS.lmns(GRB_ENV, inst, params)
-	elseif params.methodCode == "mssg"
-		sol = Multistart.multistart_semi_greedy(inst, params)
-	elseif params.methodCode == "mslp"
-		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
-		sol = Multistart.multistartlp(GRB_ENV, inst, params)
-	end
-elseif params.methodType == "preprocessing"
-	Data.write_preprocessingdata_to_csv(inst, params)
 end
 
+# Print solution details and validate solution
 if sol !== nothing
-	if params.printsol == 1
-		printDetailMeloFormulationSolution(inst, sol)
+	if params.print_sol == 1
+		print_timeline_solution(inst, sol)
 	end
 	
-	if validateSolution(inst, sol, params)
-		println("Everything is awesome!")
+	if validate_solution(inst, sol, params)
+		println("Feasible solution! :D")
 	else
-		println("Infeasible solution :(")
+		println("Infeasible solution! :(")
 	end
 end

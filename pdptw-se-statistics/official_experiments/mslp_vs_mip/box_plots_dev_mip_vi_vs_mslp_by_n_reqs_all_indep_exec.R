@@ -36,7 +36,7 @@ for (j in seq_along(variations)) {
     )
   
   csvr_mslp <- csvr_mslp_complete %>%
-    rename(full_name = fullname, mslp_sol = value) %>%
+    rename(full_name = full_name, mslp_sol = value) %>%
     filter(n <= 12)
   
   

@@ -7,14 +7,14 @@ using Parameters
 
 include("structures.jl")
 include("auxiliary_functions.jl")
-include("preprocessing.jl")
+include("statistics.jl")
 
-export InstanceData, readData, Vehicle, Job, Machine, Point, instanceDataToCsvFiles
+export InstanceData, read_data, Vehicle, Job, Machine, Point, instance_data_to_csv_files
 
 function read_files(inst::InstanceData, params::ParameterData)::Nothing
-	vehicles = string(params.instPath, "vehicles.csv")
-	jobs = string(params.instPath, "jobs.csv")
-	machines = string(params.instPath, "machines.csv")
+	vehicles = string(params.inst_path, "vehicles.csv")
+	jobs = string(params.inst_path, "jobs.csv")
+	machines = string(params.inst_path, "machines.csv")
 
 	f_vehicles = open(vehicles)
 	f_jobs = open(jobs)
@@ -54,12 +54,12 @@ function read_files(inst::InstanceData, params::ParameterData)::Nothing
 			push!(inst.machines, Machine(splited))
 		end
 	end
-	if params.cutoffmachs > 0
-		params.cutoffmachs = min(length(inst.machines), params.cutoffmachs)
+	if params.cut_off_machs > 0
+		params.cut_off_machs = min(length(inst.machines), params.cut_off_machs)
 	else
-		params.cutoffmachs = length(inst.machines)
+		params.cut_off_machs = length(inst.machines)
 	end
-	while !params.make_instance_feasible && length(inst.machines) > params.cutoffmachs
+	while !params.make_instance_feasible && length(inst.machines) > params.cut_off_machs
 		pop!(inst.machines)
 	end
 	println(inst.machines)
@@ -67,11 +67,11 @@ function read_files(inst::InstanceData, params::ParameterData)::Nothing
 end
 
 function build_refs(inst::InstanceData, params::ParameterData)::Nothing
-	cutoff = params.cutoff
-	if cutoff == 0
-		cutoff = div(length(inst.jobs) - 1, 2)
+	cut_off = params.cut_off
+	if cut_off == 0
+		cut_off = div(length(inst.jobs) - 1, 2)
 	end
-	inst.n = cutoff
+	inst.n = cut_off
 	# With these lists we can access pickup and delivery jobs in order
 	# like: First Job: 	<jobs[inst.refs[1]].id, jobs[inst.refs[n+1]].id, jobs[inst.refs[1]].dem>
 	#					 	<v_1, v_{n+1}, q_1>
@@ -82,7 +82,7 @@ function build_refs(inst::InstanceData, params::ParameterData)::Nothing
 		if cust.dem > 0
 			push!(inst.refs, i)
 		end
-		if length(inst.refs) == cutoff + 1
+		if length(inst.refs) == cut_off + 1
 			break
 		end
 	end
@@ -145,14 +145,12 @@ function build_vehicle_sets(inst::InstanceData)::Nothing
 	end
 	# println("Q: ", inst.Q)
 
-	inst.max_Q = maximum(inst.Q)
-	# println("max_Q: ", inst.max_Q)
 	return nothing
 end
 
 function build_H(inst::InstanceData, params::ParameterData)::Nothing
 	inst.H = Int64[]
-	for i in 1:params.cutoffmachs
+	for i in 1:params.cut_off_machs
 		push!(inst.H, i)
 	end
 	println("H: ", inst.H)
@@ -169,12 +167,6 @@ function build_d_bar(inst::InstanceData)::Nothing
 		else
 			inst.d_bar[i, h, k] = Inf64
 		end
-	end
-	inst.d_bar_min::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.H)))
-	inst.d_bar_max::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.H)))
-	for i in inst.Vprime, h in inst.H
-		inst.d_bar_min[i, h] = minimum(inst.d_bar[i, h, :])
-		inst.d_bar_max[i, h] = maximum(inst.d_bar[i, h, :])
 	end
 	return nothing
 end
@@ -207,26 +199,12 @@ function build_O(inst::InstanceData, params::ParameterData)::Nothing
 			end
 		end
 	end
-	# for h in inst.H
-	# 	for i in 1:length(inst.machines[h].points)
-	# 		inst.O[(i, inst.Sprime_h[h][end], h)] = 0
-	# 	end
-	# end
 	for o in inst.O
 		println("o: ", o)
 	end
 	println()
 	# println("O: ", inst.O)
 	return nothing
-end
-
-function can_be_used_to_traverse_the_arc(i::Int, j::Int, h::Int, inst::InstanceData)::Bool
-	job_i_z = inst.jobs[inst.refs[i]].point.z
-	job_j_z = inst.jobs[inst.refs[j]].point.z
-	has_station_for_i = any(p -> p.z == job_i_z, inst.machines[h].points)
-	has_station_for_j = any(p -> p.z == job_j_z, inst.machines[h].points)
-
-	return has_station_for_i && has_station_for_j
 end
 
 function build_H_e(inst::InstanceData)::Nothing
@@ -244,26 +222,6 @@ function build_H_e(inst::InstanceData)::Nothing
 		end
 	end
 	# println("H_e ", inst.H_e)
-	return nothing
-end
-
-function build_H_eprime(inst::InstanceData)::Nothing
-	inst.H_eprime = []
-	for i in inst.Vprime
-		push!(inst.H_eprime, [])
-		for j in inst.Vprime
-			push!(inst.H_eprime[i], [])
-			for iprime in inst.Vprime
-				push!(inst.H_eprime[i][j], [])
-				for jprime in inst.Vprime
-					set1 = Set(inst.H_e[i][j])
-					set2 = Set(inst.H_e[iprime][jprime])
-					intersection = collect(intersect(set1, set2))
-					push!(inst.H_eprime[i][j][iprime], intersection)
-				end
-			end
-		end
-	end
 	return nothing
 end
 
@@ -291,148 +249,11 @@ function build_requests(inst::InstanceData)::Nothing
 	end
 	println("q: ", inst.q)
 
-	inst.max_q = maximum(inst.q)
 
 	inst.s = Int64[]
 	for i in inst.Vprime
 		push!(inst.s, inst.jobs[inst.refs[i]].servt)
 	end
-	inst.max_s = maximum(inst.s)
-	return nothing
-end
-
-function build_arcs(inst::InstanceData)::Nothing
-	inst.A = Tuple{Int64, Int64}[]
-	inst.ppd.arcs = length(inst.Vprime) * length(inst.Vprime)
-	for i in inst.Vprime, j in inst.Vprime
-		if !is_arc_infeasible(i, j, inst)
-			push!(inst.A, (i, j))
-		end
-	end
-	# println("A: ", inst.A)
-
-	inst.A_m = Tuple{Int64, Int64}[]
-	inst.A_s = Tuple{Int64, Int64}[]
-	for (i, j) in inst.A
-		if inst.jobs[inst.refs[i]].point.z != inst.jobs[inst.refs[j]].point.z
-			push!(inst.A_m, (i, j))
-		else
-			push!(inst.A_s, (i, j))
-		end
-	end
-	# println("A_m: ", inst.A_m)
-	# println("A_s: ", inst.A_s)
-	return nothing
-end
-
-function build_barbosa_formulation_data(inst::InstanceData)::Nothing
-	inst.L_K = copy(inst.Vprime)
-	length_L_H = 0
-	for i in inst.V_p
-		nodes = Int64[1, i, i+inst.n, 1]
-		for j in eachindex(nodes)[2:end]
-			if inst.jobs[inst.refs[nodes[j]]].point.z != inst.jobs[inst.refs[nodes[j-1]]].point.z
-				length_L_H += 1
-			end
-		end
-	end
-	inst.L_H = Int64[i for i in 1:length_L_H]
-	println("L_K: ", inst.L_K)
-	println("L_H: ", inst.L_H)
-
-	inst.F_h = Vector[]
-	for h in inst.H
-		push!(inst.F_h, Int64[])
-		for mpt in inst.machines[h].points
-			push!(inst.F_h[h], mpt.z)
-		end
-	end
-	println("F_h: ", inst.F_h)
-
-	inst.S_h = Vector[]
-	for h in inst.H
-		push!(inst.S_h, Int64[])
-		for i in 1:length(inst.F_h[h])
-			push!(inst.S_h[h], i)
-		end
-	end
-	println("S_h: ", inst.S_h)
-
-	inst.Sprime_h = deepcopy(inst.S_h)
-	for h in inst.H
-		push!(inst.Sprime_h[h], length(inst.F_h[h]) + 1)
-	end
-	println("Sprime_h: ", inst.Sprime_h)
-	return nothing
-end
-
-function build_minimums_and_maximums(inst::InstanceData)::Nothing
-	inst.dmax_vehicle::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.Vprime)))
-	for i in inst.Vprime, j in inst.Vprime
-		inst.dmax_vehicle[i, j] = maximum(inst.d[i, j, :])
-	end
-	inst.dmin_vehicle::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.Vprime)))
-	for i in inst.Vprime, j in inst.Vprime
-		inst.dmin_vehicle[i, j] = minimum(inst.d[i, j, :])
-	end
-end
-
-function build_feas_gamma(inst::InstanceData)::Nothing
-	inst.feas_gamma = zeros(Float64, length(inst.Vprime), length(inst.Vprime), length(inst.Vprime), length(inst.Vprime), length(inst.H))
-	for (i, j) in inst.A_m
-		for (ip, jp) in inst.A_m
-			for h in intersect(inst.H_e[i][j], inst.H_e[ip][jp])
-				inst.ppd.gamma_vars += 1
-				if is_precede_possible(i, j, ip, jp, h, inst)
-					inst.feas_gamma[i, j, ip, jp, h] = 1.0
-					inst.ppd.feas_gamma_vars += 1
-				end
-			end
-		end
-	end
-	return nothing
-end
-
-function build_big_M(inst::InstanceData)::Nothing
-	inst.max_d::Float64 = maximum(inst.d)
-
-	inst.M = Int64[]
-
-	M1 = inst.max_Q + inst.max_q + 1
-	M1 = ceil(M1)
-	push!(inst.M, M1)
-
-	M2 = inst.jobs[1].lat + inst.max_s + inst.max_d + 1
-	M2 = ceil(M2)
-	push!(inst.M, M2)
-
-	M3 = inst.jobs[1].lat + inst.max_d + 1
-	M3 = ceil(M3)
-	push!(inst.M, M3)
-
-	max_d_bar = maximum([inst.d_bar[i, h, k] for i in inst.Vprime for h in inst.H for k in inst.K if inst.f[i][h] != -1])
-	M4 = inst.jobs[1].lat + inst.max_s + max_d_bar + 1
-	M4 = ceil(M4)
-	push!(inst.M, M4)
-
-	M5 = inst.jobs[1].lat + max_d_bar + 1
-	M5 = ceil(M5)
-	push!(inst.M, M5)
-
-	max_O =
-		maximum([inst.O[(i, j, h)] for h in inst.H for i in 1:length(inst.machines[h].points) for j in 1:length(inst.machines[h].points)])
-	M6 = inst.jobs[1].lat + max_O + max_d_bar + 1
-	M6 = ceil(M6)
-	push!(inst.M, M6)
-
-	M7 = inst.jobs[1].lat + 2 * max_O + 1
-	M7 = ceil(M7)
-	push!(inst.M, M7)
-
-	M8 = max_O + 1
-	M8 = ceil(M8)
-	push!(inst.M, M8)
-	println(inst.M)
 	return nothing
 end
 
@@ -445,38 +266,18 @@ function print_jobs(inst::InstanceData)::Nothing
 	return nothing
 end
 
-function print_preprocessingdata(ppd::PreprocessingData)::Nothing
-	println()
-	println("### Preprocessing Data ###")
-	for field in fieldnames(typeof(ppd))
-		fname = String(field)
-		value = getfield(ppd, field)
-		if occursin("arc", fname)
-			perc = ppd.arcs != 0 ? round(100 * value / ppd.arcs; digits = 2) : 0
-			println("\t-> $(fname): $(value) ($(perc)%)")
-		elseif occursin("gamma", fname)
-			perc = ppd.gamma_vars != 0 ? round(100 * value / ppd.gamma_vars; digits = 2) : 0
-			println("\t-> $(fname): $(value) ($(perc)%)")
-		elseif occursin("machine", fname)
-			println("\t-> $(fname): $(value)")
-		end
+function read_data(params::ParameterData, inst_path::Union{Nothing, String} = nothing)::InstanceData
+	if inst_path !== nothing
+		params.inst_path = inst_path
+		Parameters.save_instance_full_name!(params)
 	end
-	println("##########################")
-	return nothing
-end
-
-function readData(params::ParameterData, instPath::Union{Nothing, String} = nothing)::InstanceData
-	if instPath !== nothing
-		params.instPath = instPath
-		Parameters.saveInstanceFullName!(params)
-	end
-	println("\n[$(Dates.Time(Dates.now()))] Running Data.readData with file $(params.instPath)")
+	println("\n[$(Dates.Time(Dates.now()))] Running Data.read_data with file $(params.inst_path)")
 	inst = InstanceData()
 
 	inst.name = params.name
 	inst.group = params.group
 	inst.type = params.type
-	inst.fullname = params.fullname
+	inst.full_name = params.full_name
 
 	# * The building order matters
 	read_files(inst, params)
@@ -490,24 +291,15 @@ function readData(params::ParameterData, instPath::Union{Nothing, String} = noth
 	build_station_point_mapper(inst)
 	build_O(inst, params)
 	build_H_e(inst)
-	# build_H_eprime(inst)
 	build_d(inst)
-	build_minimums_and_maximums(inst)
-	build_eprime_lprime!(inst)
-	build_arcs(inst)
-	build_big_M(inst)
-	# preprocess_H_e!(inst)
-	# build_H_eprime(inst)
-	# build_feas_gamma(inst)
 
 	print_jobs(inst)
-	print_preprocessingdata(inst.ppd)
 	return inst
-end # function readData()
+end # function read_data()
 
-function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, methodCode::String)::Nothing
+function instance_data_to_csv_files(inst::InstanceData, params::ParameterData, method_code::String)::Nothing
 	original_path = pwd()
-	cd(params.instPath)
+	cd(params.inst_path)
 	cd("../../../")
 	group = inst.group
 	if endswith(inst.group, "03M")
@@ -516,7 +308,7 @@ function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, metho
 		group = replace(inst.group, "05M" => "06M")
 	end
 
-	feasible_inst_path = string("../", basename(pwd()), "_f", methodCode, "/", group, "/", inst.type, "/", inst.name)
+	feasible_inst_path = string("../", basename(pwd()), "_f", method_code, "/", group, "/", inst.type, "/", inst.name)
 	if !ispath(feasible_inst_path)
 		mkpath(feasible_inst_path)
 	end
@@ -551,89 +343,7 @@ function instanceDataToCsvFiles(inst::InstanceData, params::ParameterData, metho
 
 	cd(original_path)
 	return nothing
-end # function instanceDataToCsvFiles()
+end # function instance_data_to_csv_files()
 
-
-function write_preprocessingdata_to_csv(inst::InstanceData, params::ParameterData)::Nothing
-	ppd = inst.ppd
-	output_dir = joinpath(params.output, "preprocessing")
-	mkpath(output_dir)
-	file_path = joinpath(output_dir, "preprocessing.csv")
-
-	# Instance metadata fields
-	instance_info = Dict(
-		"name" => inst.name,
-		"group" => inst.group,
-		"type" => inst.type,
-	)
-
-	fieldnames = vcat(
-		["name", "group", "type"],
-		[
-			"arc_removals",
-			"arc_removals_is_loop",
-			"arc_removals_is_delivery_to_pickup",
-			"arc_removals_is_depot_begin_to_delivery",
-			"arc_removals_is_pickup_to_depot_end",
-			"arc_removals_is_dest_depot_begin",
-			"arc_removals_is_orig_depot_end",
-			"arc_removals_is_capacity_violated",
-			"arc_removals_is_time_window_limited",
-			"arc_removals_is_time_window_pairing_limited",
-			"arc_removals_is_indirect_request_service_impossible",
-			"gamma_vars",
-			"feas_gamma_vars",
-			"infeas_gamma_vars_is_next_mtrv_unreachable",
-			"infeas_gamma_vars_is_iprime_jprime_eq_i_j",
-			"machine_removal_for_an_arc",
-		],
-	)
-	write_header = false
-
-	if !isfile(file_path)
-		write_header = true
-	else
-		try
-			open(file_path, "r") do f
-				first_line = readline(f)
-				if isempty(first_line)
-					write_header = true
-				end
-			end
-		catch
-			write_header = true
-		end
-	end
-
-	open(file_path, "a") do f
-		if write_header
-			println(f, join(fieldnames, ","))
-		end
-		row = [
-			inst.name,
-			inst.group,
-			inst.type,
-			ppd.arc_removals,
-			ppd.arc_removals_is_loop,
-			ppd.arc_removals_is_delivery_to_pickup,
-			ppd.arc_removals_is_depot_begin_to_delivery,
-			ppd.arc_removals_is_pickup_to_depot_end,
-			ppd.arc_removals_is_dest_depot_begin,
-			ppd.arc_removals_is_orig_depot_end,
-			ppd.arc_removals_is_capacity_violated,
-			ppd.arc_removals_is_time_window_limited,
-			ppd.arc_removals_is_time_window_pairing_limited,
-			ppd.arc_removals_is_indirect_request_service_impossible,
-			ppd.gamma_vars,
-			ppd.feas_gamma_vars,
-			ppd.infeas_gamma_vars_is_next_mtrv_unreachable,
-			ppd.infeas_gamma_vars_is_iprime_jprime_eq_i_j,
-			ppd.machine_removal_for_an_arc,
-		]
-		println(f, join(row, ","))
-	end
-	return nothing
-end
-include("Statistics.jl")
 
 end # module Data
