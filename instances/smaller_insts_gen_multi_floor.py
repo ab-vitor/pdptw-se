@@ -7,7 +7,11 @@ import numpy as np
 import subprocess
 import argparse
 
-
+"""
+    def extract_inst_jobs(inst_lines)
+    
+    Extracts job data from instance lines and returns a DataFrame.
+"""
 def extract_inst_jobs(inst_lines):
     col_names = ["job_no", "x", "y", "dem", "earl", "lat", "servt", "pid", "did"]
     inst_jobs = pd.DataFrame(inst_lines[1:], columns=col_names, index=None)
@@ -326,7 +330,7 @@ def gen_inst_files(filename, group, new_group):
     vehicles.to_csv("vehicles.csv", header=False, index=False)
     machines.to_csv("machines.csv", header=False, index=False)
 
-    # savePltFigInstanceMap(jobs, machines, filename) # uncomment to save instance map figure
+    # savePltFigInstanceMap(jobs, machines, filename) # uncomment to save instance map illustration
 
     if mf != "none":
         inst_location = os.getcwd()
@@ -334,7 +338,7 @@ def gen_inst_files(filename, group, new_group):
         os.chdir("../../../../../../src/julia/")
 
         global min_n_machines
-        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --elevator --cut_off_machs {min_n_machines}"
+        cmd_str = f"julia pdptwse.jl --method_type heur --method_code {mf} --inst_path ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --elevator --cut_off_machs {min_n_machines}"
         subprocess.run(cmd_str, shell=True)
 
         os.chdir(inst_location)

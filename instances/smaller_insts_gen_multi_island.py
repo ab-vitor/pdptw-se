@@ -490,7 +490,7 @@ def gen_inst_files(filename, group, new_group):
     vehicles.to_csv("vehicles.csv", header=False, index=False)
     machines.to_csv("machines.csv", header=False, index=False)
 
-    # savePltFigInstanceMap(jobs, machines, convex_hulls) # uncomment to save instance map figure
+    # savePltFigInstanceMap(jobs, machines, convex_hulls) # uncomment to save instance map illustration
 
     if mf != "none":
         inst_location = os.getcwd()
@@ -498,7 +498,7 @@ def gen_inst_files(filename, group, new_group):
         os.chdir("../../../../../../src/julia/")
 
         global min_n_machines
-        cmd_str = f"julia pdptwse.jl --methodType heur --methodCode {mf} --inst ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --cut_off_machs {min_n_machines}"
+        cmd_str = f"julia pdptwse.jl --method_type heur --method_code {mf} --inst_path ../../instances/{new_group}/{type_code}/{filename}/ --make_instance_feasible --cut_off_machs {min_n_machines}"
         subprocess.run(cmd_str, shell=True)
 
         os.chdir(inst_location)
