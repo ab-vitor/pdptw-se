@@ -52,15 +52,7 @@ for (j in seq_along(variations)) {
   csv_results$n_reqs <- substr(csv_results$group, 1, 2)
   csv_results$n_regions <- substr(csv_results$group, 9, 10)
   csv_results$n_machs <- substr(csv_results$group, 13, 14)
-  # if (j == 1) {
-  #   csv_results <-
-  #     subset(csv_results,!(n_reqs == "10" &
-  #                            n_regions == "04" | n_reqs == "12"))
-  # } else if (j == 2) {
-  #   csv_results <-
-  #     subset(csv_results,!(n_reqs == "10" & n_regions == "04" | n_reqs == "12" & n_regions == "02" & n_machs == "04"))
-  # }
-  
+
   counts_type_n_reqs <- csv_results %>%
     filter(feas_sol == 1) %>%
     group_by(type, n_reqs) %>%
