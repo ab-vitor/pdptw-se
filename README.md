@@ -32,7 +32,6 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
     - `time_and_optimality_gap/`: for the time and optimality gap analysis.
 - `src/`: algorithmic code.
   - `julia/`: Multi-start heuristic with a Linear Programming (LP) improvement procedure (MSLP), and the heuristic to ensure instance feasibility.
-  - `python/`: Mixed integer programming (MIP) formulation, Hexaly formulation (MIP in hexaly format).
 
 ## Julia code organiztion
 
