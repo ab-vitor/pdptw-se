@@ -26,25 +26,25 @@ include("post_running_MSLP.jl")
 include("print_configuration.jl")
 
 """
-	function multistartlpinitialsetup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
+	function multistart_LP_initial_setup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
 	
 	Performs an initial setup for the Multi-Start LP heuristic by generating a dummy solution 
 	using a greedy heuristic and rescheduling it using LP.
 	This enables a faster execution of the Multi-Start LP heuristic in subsequent runs.
 """
-function multistartlpinitialsetup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
+function multistart_LP_initial_setup(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Nothing
 	dummy_sol = greedy_heuristic(inst)
 	Formulations.run_LP_to_reschedule_solution(env, dummy_sol, inst, params)
 	return nothing
 end
 
 """
-	function multistartlp(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Solution
+	function multi_start_LP(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Solution
 	
 	Executes the Multi-Start heuristic with LP improvement procedure on the given instance with the specified parameters.
 	Returns the best solution found during the execution.
 """
-function multistartlp(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Solution
+function multi_start_LP(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, params::ParameterData)::Solution
 	stop_params = load_stop_params(params)
 	all_params = AllParams(params, stop_params)
 
@@ -71,6 +71,6 @@ function multistartlp(env::Union{Gurobi.Env, Nothing}, inst::InstanceData, param
 	end
 
 	return extmd.best_sol
-end # function multistartlp()
+end # function multi_start_LP()
 
 end # module Multistart

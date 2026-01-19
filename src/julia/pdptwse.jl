@@ -35,8 +35,8 @@ if params.method_type == "heur"
 	if params.method_code == "greedy"
 		sol = GreedyHeuristicMutate.greedy_heuristic_mutate(inst, params)
 	elseif params.method_code == "mslp"
-		Multistart.multistartlpinitialsetup(GRB_ENV, inst, params)
-		sol = Multistart.multistartlp(GRB_ENV, inst, params)
+		Multistart.multistart_LP_initial_setup(GRB_ENV, inst, params)
+		sol = Multistart.multi_start_LP(GRB_ENV, inst, params)
 	end
 end
 
