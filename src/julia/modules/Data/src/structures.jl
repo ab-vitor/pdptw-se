@@ -57,13 +57,10 @@ mutable struct InstanceData
 	Vprime::Vector{Int64} # all the nodes, including a returning depot
 	e::Vector{Int64} # early time for i in Vprime
 	l::Vector{Int64} # late time for i in Vprime
-	eprime::Vector{Float64} # early possible time for i in Vprime given any vehicle
-	lprime::Vector{Float64} # late possible time for i in Vprime given any vehicle
 	q::Vector{Int64} # demands
 	K::Vector{Int64} # vehicles
 	Q::Vector{Int64} # capacities
 	d::Array{Float64, 3} # dist from node i to node j using vehicle k
-	dmin_vehicle::Array{Float64, 2} # dist min from node i to node j from all vehicles
 	H::Vector{Int64} # machines
 	H_e::Vector{Vector{Vector{Int64}}} # for each arc, the machines that can attend
 	d_bar::Array{Float64, 3} # distance from node i to machine h using vehicle k
@@ -96,13 +93,10 @@ mutable struct InstanceData
 		Vprime = Int64[]
 		e = Int64[]
 		l = Int64[]
-		eprime = Int64[]
-		lprime = Int64[]
 		q = Int64[]
 		K = Int64[]
 		Q = Int64[]
 		d = Array{Float64, 3}(undef, 0, 0, 0)
-		dmin_vehicle = Array{Float64, 2}(undef, 0, 0)
 		H = Int64[]
 		H_e = Vector{Vector{Vector{Int64}}}()
 		d_bar = Array{Float64, 3}(undef, 0, 0, 0)
@@ -134,13 +128,10 @@ mutable struct InstanceData
 			Vprime,
 			e,
 			l,
-			eprime,
-			lprime,
 			q,
 			K,
 			Q,
 			d,
-			dmin_vehicle,
 			H,
 			H_e,
 			d_bar,
