@@ -3,6 +3,8 @@ import fcntl
 import pandas as pd
 from enum import Enum
 
+# The idea was to write into a CSV file without concurrence,
+# but it didn't work as expected. At least, it writes the CSV correctly.
 
 def parse_field(field: str) -> str:
     if isinstance(field, Enum):
