@@ -20,7 +20,7 @@ const GRB_ENV = let
 end
 if GRB_ENV !== nothing
 	Model(() -> Gurobi.Optimizer(GRB_ENV))
-	# Model(Gurobi.Optimizer)
+	# Model(Gurobi.Optimizer) # for debugging purposes
 end
 
 # Read the parameters from command line
