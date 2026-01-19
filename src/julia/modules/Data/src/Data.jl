@@ -239,6 +239,38 @@ function build_d(inst::InstanceData)::Nothing
 	return nothing
 end
 
+function build_minimum_distances(inst::InstanceData)::Nothing
+	inst.dmin_vehicle::Array{Float64, 2} = zeros(Float64, (length(inst.Vprime), length(inst.Vprime)))
+	for i in inst.Vprime, j in inst.Vprime
+		inst.dmin_vehicle[i, j] = minimum(inst.d[i, j, :])
+	end
+end
+
+function build_eprime_lprime!(inst::InstanceData)
+    inst.eprime = copy(inst.e)
+    inst.lprime = copy(inst.l)
+
+    for i in inst.V_p
+        inst.lprime[i + inst.n] = min(
+            inst.l[i + inst.n],
+            inst.l[inst.depot_end] - inst.dmin_vehicle[i + inst.n, inst.depot_end] - inst.s[i + inst.n]
+        )
+        inst.lprime[i] = min(
+            inst.l[i],
+            inst.l[i + inst.n] - inst.dmin_vehicle[i, i + inst.n] - inst.s[i]
+        )
+        inst.eprime[i] = max(
+            inst.e[i],
+            inst.e[inst.depot_begin] + inst.dmin_vehicle[inst.depot_begin, i]
+        )
+        inst.eprime[i + inst.n] = max(
+            inst.e[i + inst.n],
+            inst.e[i] + inst.s[i] + inst.dmin_vehicle[i, i + inst.n]
+        )
+    end
+    return nothing
+end
+
 function build_requests(inst::InstanceData)::Nothing
 	inst.e = Int64[inst.jobs[inst.refs[i]].earl for i in inst.Vprime]
 	inst.l = Int64[inst.jobs[inst.refs[i]].lat for i in inst.Vprime]
@@ -292,6 +324,8 @@ function read_data(params::ParameterData, inst_path::Union{Nothing, String} = no
 	build_O(inst, params)
 	build_H_e(inst)
 	build_d(inst)
+	build_minimum_distances(inst)
+	build_eprime_lprime!(inst)
 
 	print_jobs(inst)
 	return inst
