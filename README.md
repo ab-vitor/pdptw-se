@@ -16,9 +16,9 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
     - `lrc*`: randomized-clustered instances.
     - `lr*`: randomized instances (used to generate the pdptw-se instances).
   - `pdptw_200_li_lim/`: original pdptw instances with about 200 tasks (about 100 pickup and delivery requests).
-    - `lc*`: clustered instances.
-    - `lrc*`: randomized-clustered instances.
-    - `lr*`: randomized instances (used to generate the pdptw-se instances).
+    - `LC*`: clustered instances.
+    - `LCR*`: randomized-clustered instances.
+    - `LR*`: randomized instances (used to generate the pdptw-se instances).
 - `pdptw-se-statistics/`: paper experiment data and data processing scripts along with the resulting outputs (tables, plots, etc.).
   - `inst_statistics/`: instance statistics data regarding time window and capacity changes, scripts and their output tables.
   - `official_experiments/`: data, scripts and their output tables and plots.
