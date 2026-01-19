@@ -57,12 +57,12 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 
 	# c49
 	for k in inst.K
-		if length(L_k[k]) > 0 && inst.jobs[inst.refs[inst.depot_begin]].point.z == inst.jobs[inst.refs[sigma[k][1]]].point.z
+		if length(L_k[k]) > 0 && inst.jobs[inst.refs[1]].point.z == inst.jobs[inst.refs[sigma[k][1]]].point.z
 			@constraint(
 				model,
 				t[sigma[k][1]] >=
 				tstart[k] +
-				inst.d[inst.depot_begin, sigma[k][1], k],
+				inst.d[1, sigma[k][1], k],
 				base_name = "c49"
 			)
 		end
@@ -70,7 +70,7 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 
 	# c50 and c51
 	for h in inst.H, l in L_h[h]
-		if psi[h][l][1] != inst.depot_begin
+		if psi[h][l][1] != 1
 			@constraint(
 				model,
 				alpha[psi[h][l][1], psi[h][l][2], h] >=
@@ -80,7 +80,7 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 				base_name = "c50"
 			)
 		else
-			@constraint(model, alpha[inst.depot_begin, psi[h][l][2], h] >= tstart[psi[h][l][3]] + inst.d_bar[inst.depot_begin, h, psi[h][l][3]], base_name = "c51")
+			@constraint(model, alpha[1, psi[h][l][2], h] >= tstart[psi[h][l][3]] + inst.d_bar[1, h, psi[h][l][3]], base_name = "c51")
 		end
 	end
 
@@ -128,7 +128,7 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 			@constraint(
 				model,
 				alpha[psi[h][1][1], psi[h][1][2], h] >=
-				inst.O[(inst.initial_station, inst.f[psi[h][1][1]][h], h)],
+				inst.O[(1, inst.f[psi[h][1][1]][h], h)],
 				base_name = "c54"
 			)
 		end
@@ -173,8 +173,8 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 
 	# c58
 	for i in inst.V_p_d
-		@constraint(model, inst.eprime[i] <= t[i], base_name = "c58_p1")
-		@constraint(model, t[i] <= inst.lprime[i], base_name = "c58_p2")
+		@constraint(model, inst.e[i] <= t[i], base_name = "c58_p1")
+		@constraint(model, t[i] <= inst.l[i], base_name = "c58_p2")
 	end
 
 	# c59
@@ -213,14 +213,14 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 
 	# println(status)
 
-	obj_value = objective_value(model)
-	if abs(sol.value - obj_value) < params.epsilon
+	objValue = objective_value(model)
+	if abs(sol.value - objValue) < params.epsilon
 		return sol
 	end
-	best_bound = objective_bound(model)
-	num_nodes = node_count(model)
+	bestbound = objective_bound(model)
+	numnodes = node_count(model)
 	time = solve_time(model)
-	gap = 100 * (obj_value - best_bound) / obj_value
+	gap = 100 * (objValue - bestbound) / objValue
 
 	t = value.(t)
 	tstart = value.(tstart)
@@ -228,8 +228,8 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 	C = value.(C)
 	alpha = value.(alpha)
 
-	lp_sol = LPSolution(t, tstart, tfinal, C, alpha, status, opt, tle, obj_value, best_bound, num_nodes, time, gap)
-	Solutions.update_sol_from_LP_sol!(sol, lp_sol, inst, params)
+	lpSol = LPSolution(t, tstart, tfinal, C, alpha, status, opt, tle, objValue, bestbound, numnodes, time, gap)
+	Solutions.updateSolFromLPSol!(sol, lpSol, inst, params)
 
 	return sol
 end # function run_LP_to_reschedule_solution()

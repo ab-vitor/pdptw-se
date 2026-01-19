@@ -1,4 +1,4 @@
-function update_sol_from_LP_sol!(
+function updateSolFromLPSol!(
 	sol::Solution,
 	lpSol::LPSolution,
 	inst::InstanceData,
@@ -24,6 +24,6 @@ function update_sol_from_LP_sol!(
 	end
 
 	sol.feasible = true
-	sol.value = lpSol.obj_value
+	sol.value = lpSol.objValue
 	return nothing
-end # function update_sol_from_LP_sol!()
+end # function updateSolFromLPSol!()
