@@ -229,7 +229,7 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 	alpha = value.(alpha)
 
 	LP_sol = LPSolution(t, tstart, tfinal, C, alpha, status, opt, tle, obj_value, best_bound, num_nodes, time, gap)
-	Solutions.update_sol_from_LP_sol!(sol, LP_sol, inst, params)
+	Solutions.update_sol_from_LP_sol!(sol, LP_sol, inst)
 
 	return sol
 end # function run_LP_to_reschedule_solution()

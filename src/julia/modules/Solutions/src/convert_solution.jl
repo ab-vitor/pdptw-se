@@ -2,7 +2,6 @@ function update_sol_from_LP_sol!(
 	sol::Solution,
 	LP_sol::LPSolution,
 	inst::InstanceData,
-	params::ParameterData,
 )::Nothing
 	for k in inst.K
 		rt = sol.vehicles[k]
