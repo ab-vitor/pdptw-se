@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/dados/rmelo/PDPTW-SE/src/python/pdptwse.py", line 45, in <module>
+    sol = melo_mip_formulation(GRB_ENV, inst, params)
+  File "/dados/rmelo/PDPTW-SE/src/python/modules/formulations/melo_mip_formulation/melo_mip_formulation.py", line 45, in melo_mip_formulation
+    mip_model: MIPModel = create_melo_mip_model(env, inst, params)
+  File "/dados/rmelo/PDPTW-SE/src/python/modules/formulations/melo_mip_formulation/create_melo_mip_model.py", line 36, in create_melo_mip_model
+    model = Model(env=env)
+  File "src/gurobipy/_model.pyx", line 146, in gurobipy._model.Model.__init__
+  File "src/gurobipy/gurobi.pxi", line 60, in gurobipy._core.gurobi._getdefaultenv
+  File "src/gurobipy/env.pxi", line 108, in gurobipy._core.Env.__init__
+gurobipy._exception.GurobiError: Overage for too long, 3 active sessions and over the baseline for 33 minutes

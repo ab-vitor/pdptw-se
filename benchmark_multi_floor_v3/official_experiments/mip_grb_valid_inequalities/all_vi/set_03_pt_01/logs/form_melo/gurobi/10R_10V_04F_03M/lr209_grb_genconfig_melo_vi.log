@@ -1,0 +1,107 @@
+
+Gurobi 12.0.2 (linux64) logging started Wed Oct  1 23:08:34 2025
+
+Set parameter LogFile to value "/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_grb_valid_inequalities/all_vi/set_03_pt_01/logs/form_melo/gurobi/10R_10V_04F_03M/lr209_grb_genconfig_melo_vi.log"
+Set parameter Seed to value 0
+Gurobi Optimizer version 12.0.2 build v12.0.2rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 8 threads
+
+Non-default parameters:
+TimeLimit  600
+Heuristics  0
+Cuts  1
+Threads  8
+
+Academic license 2661775 - for non-commercial use only - registered to me___@dcc.ufba.br
+Optimize a model with 391722 rows, 91979 columns and 1020720 nonzeros
+Model fingerprint: 0x097a5c1a
+Variable types: 829 continuous, 91150 integer (91150 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+03]
+  RHS range        [1e+00, 2e+03]
+Presolve removed 183051 rows and 14046 columns (presolve time = 5s)...
+Presolve removed 183051 rows and 15689 columns (presolve time = 11s)...
+Presolve removed 187747 rows and 15679 columns
+Presolve time: 11.64s
+Presolved: 203975 rows, 76300 columns, 666856 nonzeros
+Variable types: 809 continuous, 75491 integer (75491 binary)
+
+Deterministic concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Root barrier log...
+
+Ordering time: 0.66s
+
+Barrier performed 0 iterations in 13.32 seconds (18.03 work units)
+Barrier solve interrupted - model solved by another algorithm
+
+Concurrent spin time: 0.18s (can be avoided by choosing Method=3)
+
+Solved with primal simplex
+
+Root relaxation: objective 0.000000e+00, 1287 iterations, 1.40 seconds (1.65 work units)
+Total elapsed time = 16.64s (DegenMoves)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0   66          -    0.00000      -     -   18s
+     0     0    0.00000    0  269          -    0.00000      -     -   26s
+     0     0    0.00000    0  262          -    0.00000      -     -   26s
+     0     0    0.00000    0   89          -    0.00000      -     -   44s
+     0     0    0.00000    0  142          -    0.00000      -     -   46s
+     0     0    0.00000    0  203          -    0.00000      -     -   47s
+     0     0    0.00000    0   76          -    0.00000      -     -   63s
+     0     0    0.00000    0  303          -    0.00000      -     -   72s
+     0     0    0.00000    0  223          -    0.00000      -     -   73s
+     0     0    0.00000    0   79          -    0.00000      -     -   86s
+     0     0    0.00000    0  187          -    0.00000      -     -   88s
+     0     0    0.00000    0  100          -    0.00000      -     -   96s
+     0     0    0.00000    0  134          -    0.00000      -     -   96s
+     0     0    0.00000    0  128          -    0.00000      -     -  110s
+     0     0    0.00000    0  131          -    0.00000      -     -  111s
+     0     0    0.00000    0  100          -    0.00000      -     -  118s
+     0     0    0.00000    0  109          -    0.00000      -     -  118s
+     0     0    0.00000    0  111          -    0.00000      -     -  145s
+     0     0    0.00000    0  111          -    0.00000      -     -  148s
+     0     2    0.00000    0  110          -    0.00000      -     -  153s
+     1     5    0.00000    1  125          -    0.00000      -  8119  158s
+     7    15    0.00000    3  163          -    0.00000      -  4516  174s
+    14    23    0.00000    4  159          -    0.00000      -  4480  177s
+    22    99    0.00000    5  143          -    0.00000      -  4395  184s
+   100   178    0.00000   12   50          -    0.00000      -  1231  199s
+   195   256  349.42490   16  150          -    0.00000      -  1218  227s
+   323   439 infeasible   24               -    0.00000      -  1118  259s
+   612   671 infeasible   36               -    0.00000      -  1009  307s
+  1091   915 infeasible   32               -    0.00000      -  1065  349s
+  1591  1160 infeasible   21               -    0.00000      -  1081  388s
+  2087  1510    0.00000   39  136          -    0.00000      -  1089  428s
+* 2386  1510              67    1234.2900000    0.00000   100%  1058  428s
+  2763  1487  121.23098   41  203 1234.29000    0.00000   100%  1014  565s
+
+Cutting planes:
+  Learned: 1
+  Gomory: 1
+  Cover: 4
+  Implied bound: 30
+  Clique: 5
+  MIR: 13
+  Flow cover: 53
+  GUB cover: 2
+  Zero half: 5
+  RLT: 41
+  Relax-and-lift: 158
+  BQP: 8
+
+Explored 2764 nodes (2982883 simplex iterations) in 600.14 seconds (779.16 work units)
+Thread count was 8 (of 16 available processors)
+
+Solution count 1: 1234.29 
+
+Time limit reached
+Best objective 1.234290000000e+03, best bound 5.684341886081e-13, gap 100.0000%

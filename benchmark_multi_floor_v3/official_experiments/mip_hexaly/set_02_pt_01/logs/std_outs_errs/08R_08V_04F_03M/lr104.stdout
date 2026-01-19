@@ -1,0 +1,5048 @@
+Set parameter WLSAccessID
+Set parameter WLSSecret
+Set parameter LicenseID to value 2661775
+Academic license 2661775 - for non-commercial use only - registered to me___@dcc.ufba.br
+Parameter 'method_type' with value 'form' successfully set as form of type <class 'str'>
+Parameter 'method_code' with value 'melo_hx' successfully set as melo_hx of type <class 'str'>
+Parameter 'seed' with value '0' successfully set as 0 of type <class 'int'>
+Parameter 'hx_max_time' with value '3600' successfully set as 3600 of type <class 'int'>
+Parameter 'elevator' with value '1' successfully set as 1 of type <class 'int'>
+Parameter 'threads' with value '8' successfully set as 8 of type <class 'int'>
+Parameter 'print_sol' with value '1' successfully set as 1 of type <class 'int'>
+Parameter 'constraints_used_melo_mip_str' with value '1-29' successfully set as 1-29 of type <class 'str'>
+Instance: lr104_t1_08R_08V_04F_03M
+ParameterData(inst_path='/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/../../../instances/orig_ams_fg/08R_08V_04F_04M/t1/lr104/', name='lr104', type='t1', group='08R_08V_04F_03M', full_name='lr104_t1_08R_08V_04F_03M', method_type='form', method_code='melo_hx', gen_config_file='/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/configs/genconfig_melo_hx.conf', gen_config_filename='genconfig_melo_hx', greedy_service_order='tightest_tw', cutoff=0, cutoff_machs=3, solver='Gurobi', max_time=7200, gurobi_cuts=1, type_user_cut=0, mip_presolve=-1, print_sol=1, max_nodes=-1, elevator=1, make_instance_feasible=False, output='/dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/logs', epsilon=0.005, epsilon_cap=0.5, warm_start=False, seed=0, rng=<random.Random object at 0x55a738851420>, alpha=0.2, max_iter=1000000, output_flag_grb_mip=0, output_flag_grb_mslp=0, output_flag_grb_lmns=0, mslp_r='M', mslp_a='60', lmns_r='M', lmns_a='60', lmns_repair_time=30.0, lmns_mip_focus=0, lmns_gap_to_bigger_destruction=50, lmns_gap_to_smaller_destruction=95, lmns_weight_shaw_dist_prox=1.0, lmns_weight_shaw_earl_prox=1.0, lmns_weight_shaw_same_route=1.0, lmns_weight_shaw_demand_sim=1.0, lmns_req_r_apply_mip_start=True, lmns_acceptance_criteria='H', lmns_metropolis_temp=100.0, lmns_simulated_annealing_temp=100.0, lmns_simulated_annealing_cool=0.95, mip_max_time=3600, hx_max_time=3600, csv_file_name='', sol_file_name='', timeline_file_name='', grb_file_name='', validate_synchronization=True, constraints_used_melo_mip_str='1-29', constraints_used_melo_mip=None, run_callback_melo_mip=False, mip_heuristics=0.05, threads=8)
+Constraints active in melo MIP
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 
+[Reading Data] Using files at /dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/../../../instances/orig_ams_fg/08R_08V_04F_04M/t1/lr104/
+vehicles: [Vehicle(id=0, cap=26), Vehicle(id=1, cap=33), Vehicle(id=2, cap=40), Vehicle(id=3, cap=40), Vehicle(id=4, cap=40), Vehicle(id=5, cap=33), Vehicle(id=6, cap=33), Vehicle(id=7, cap=26)]
+vehicle_types: [Vehicle(id=7, cap=26), Vehicle(id=6, cap=33), Vehicle(id=4, cap=40)]
+machines: [Machine(id=0, points=[Point(x=35, y=38, z=0), Point(x=35, y=38, z=1), Point(x=35, y=38, z=2), Point(x=35, y=38, z=3)], spd=0.2), Machine(id=1, points=[Point(x=37, y=38, z=0), Point(x=37, y=38, z=1), Point(x=37, y=38, z=2), Point(x=37, y=38, z=3)], spd=0.2), Machine(id=2, points=[Point(x=33, y=38, z=0), Point(x=33, y=38, z=1), Point(x=33, y=38, z=2), Point(x=33, y=38, z=3)], spd=0.2)]
+refs: [0, 1, 2, 3, 5, 6, 7, 8, 9, 14, 10, 16, 11, 15, 12, 13, 4, 0]
+V: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+V_p: [1, 2, 3, 4, 5, 6, 7, 8]
+V_d: [9, 10, 11, 12, 13, 14, 15, 16]
+V_p_d: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+Vprime: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+q: [0, 7, 19, 3, 12, 19, 20, 2, 12, -7, -19, -3, -12, -19, -20, -2, -12, 0]
+H: [0, 1, 2]
+Machine points:
+# Machine 0
+	Point(x=35, y=38, z=0)
+	Point(x=35, y=38, z=1)
+	Point(x=35, y=38, z=2)
+	Point(x=35, y=38, z=3)
+
+# Machine 1
+	Point(x=37, y=38, z=0)
+	Point(x=37, y=38, z=1)
+	Point(x=37, y=38, z=2)
+	Point(x=37, y=38, z=3)
+
+# Machine 2
+	Point(x=33, y=38, z=0)
+	Point(x=33, y=38, z=1)
+	Point(x=33, y=38, z=2)
+	Point(x=33, y=38, z=3)
+
+f: [[0 0 0]
+ [3 3 3]
+ [0 0 0]
+ [2 2 2]
+ [2 2 2]
+ [0 0 0]
+ [3 3 3]
+ [1 1 1]
+ [2 2 2]
+ [0 0 0]
+ [3 3 3]
+ [0 0 0]
+ [3 3 3]
+ [2 2 2]
+ [1 1 1]
+ [0 0 0]
+ [1 1 1]
+ [0 0 0]]
+(0, 0, 0) 0.0
+(0, 1, 0) 5.0
+(0, 2, 0) 10.0
+(0, 3, 0) 15.0
+(1, 0, 0) 5.0
+(1, 1, 0) 0.0
+(1, 2, 0) 5.0
+(1, 3, 0) 10.0
+(2, 0, 0) 10.0
+(2, 1, 0) 5.0
+(2, 2, 0) 0.0
+(2, 3, 0) 5.0
+(3, 0, 0) 15.0
+(3, 1, 0) 10.0
+(3, 2, 0) 5.0
+(3, 3, 0) 0.0
+(0, 0, 1) 0.0
+(0, 1, 1) 5.0
+(0, 2, 1) 10.0
+(0, 3, 1) 15.0
+(1, 0, 1) 5.0
+(1, 1, 1) 0.0
+(1, 2, 1) 5.0
+(1, 3, 1) 10.0
+(2, 0, 1) 10.0
+(2, 1, 1) 5.0
+(2, 2, 1) 0.0
+(2, 3, 1) 5.0
+(3, 0, 1) 15.0
+(3, 1, 1) 10.0
+(3, 2, 1) 5.0
+(3, 3, 1) 0.0
+(0, 0, 2) 0.0
+(0, 1, 2) 5.0
+(0, 2, 2) 10.0
+(0, 3, 2) 15.0
+(1, 0, 2) 5.0
+(1, 1, 2) 0.0
+(1, 2, 2) 5.0
+(1, 3, 2) 10.0
+(2, 0, 2) 10.0
+(2, 1, 2) 5.0
+(2, 2, 2) 0.0
+(2, 3, 2) 5.0
+(3, 0, 2) 15.0
+(3, 1, 2) 10.0
+(3, 2, 2) 5.0
+(3, 3, 2) 0.0
+Number of arcs: 52
+M:  (0, np.int64(0)) (1, np.int64(61)) (2, np.int64(382)) (3, np.int64(372)) (4, np.int64(343)) (5, np.int64(333)) (6, np.int64(348)) (7, np.int64(326)) (8, np.int64(16))
+JOBS in the order of refs (Vprime)
+Node 0: Job(id=0, point=Point(x=35, y=35, z=0), dem=0, earl=0, lat=295, servt=0, pid=0, did=0)
+Node 1: Job(id=2, point=Point(x=35, y=17, z=3), dem=7, earl=0, lat=202, servt=10, pid=0, did=74)
+Node 2: Job(id=4, point=Point(x=55, y=20, z=0), dem=19, earl=149, lat=159, servt=10, pid=0, did=25)
+Node 3: Job(id=6, point=Point(x=25, y=30, z=2), dem=3, earl=0, lat=208, servt=10, pid=0, did=96)
+Node 4: Job(id=11, point=Point(x=20, y=65, z=2), dem=12, earl=67, lat=77, servt=10, pid=0, did=31)
+Node 5: Job(id=12, point=Point(x=50, y=35, z=0), dem=19, earl=0, lat=205, servt=10, pid=0, did=79)
+Node 6: Job(id=14, point=Point(x=15, y=10, z=3), dem=20, earl=0, lat=187, servt=10, pid=0, did=44)
+Node 7: Job(id=17, point=Point(x=5, y=30, z=1), dem=2, earl=0, lat=189, servt=10, pid=0, did=45)
+Node 8: Job(id=18, point=Point(x=20, y=40, z=2), dem=12, earl=0, lat=204, servt=10, pid=0, did=8)
+Node 9: Job(id=74, point=Point(x=46, y=13, z=0), dem=-7, earl=149, lat=159, servt=10, pid=2, did=0)
+Node 10: Job(id=25, point=Point(x=65, y=20, z=3), dem=-19, earl=223, lat=233, servt=10, pid=4, did=0)
+Node 11: Job(id=96, point=Point(x=22, y=27, z=0), dem=-3, earl=0, lat=204, servt=10, pid=6, did=0)
+Node 12: Job(id=31, point=Point(x=31, y=52, z=3), dem=-12, earl=0, lat=202, servt=10, pid=11, did=0)
+Node 13: Job(id=79, point=Point(x=57, y=48, z=2), dem=-19, earl=92, lat=102, servt=10, pid=12, did=0)
+Node 14: Job(id=44, point=Point(x=11, y=14, z=1), dem=-20, earl=131, lat=141, servt=10, pid=14, did=0)
+Node 15: Job(id=45, point=Point(x=6, y=38, z=0), dem=-2, earl=0, lat=190, servt=10, pid=17, did=0)
+Node 16: Job(id=8, point=Point(x=10, y=43, z=1), dem=-12, earl=95, lat=105, servt=10, pid=18, did=0)
+Node 17: Job(id=0, point=Point(x=35, y=35, z=0), dem=0, earl=0, lat=295, servt=0, pid=0, did=0)
+
+### Preprocessing Data ###
+	-> arcs: 324 (100.0%)
+	-> arc_removals: 272 (83.95%)
+	-> arc_removals_is_loop: 18 (5.56%)
+	-> arc_removals_is_delivery_to_pickup: 10 (3.09%)
+	-> arc_removals_is_depot_begin_to_delivery: 8 (2.47%)
+	-> arc_removals_is_pickup_to_depot_end: 8 (2.47%)
+	-> arc_removals_is_dest_depot_begin: 16 (4.94%)
+	-> arc_removals_is_orig_depot_end: 15 (4.63%)
+	-> arc_removals_is_capacity_violated: 0 (0.0%)
+	-> arc_removals_is_time_window_limited: 125 (38.58%)
+	-> arc_removals_is_time_window_pairing_limited: 69 (21.3%)
+	-> arc_removals_is_indirect_request_service_impossible: 3 (0.93%)
+	-> gamma_vars: 3537 (100.0%)
+	-> feas_gamma_vars: 2378 (67.23%)
+	-> infeas_gamma_vars_is_next_mtrv_unreachable: 1056 (29.86%)
+	-> infeas_gamma_vars_is_iprime_jprime_eq_i_j: 103 (2.91%)
+	-> machine_removal_for_an_arc: 5 (1.54%)
+##########################
+
+### Model variables summary ###
+	-> Total number of variables: 3176
+		- x: 416
+		- z: 144
+		- t: 16
+		- tstart: 8
+		- tfinal: 8
+		- phi: 103
+		- alpha: 103
+		- gamma: 2378
+	-> Number of binary variables: 3041
+
+
+[09:38:19] Adding routing constraints
+[09:38:19] Adding scheduling constraints
+[09:38:19] Adding objective function
+
+Model:  expressions = 49715, decisions = 3184, constraints = 12357, objectives = 1
+Param:  time limit = 3600 sec, no iteration limit, nb threads = 8
+        seed = 0
+
+[objective direction ]:     minimize
+
+[  0 sec,       0 itr]: No feasible solution found (infeas = 56)
+[  1 sec,   15245 itr]: No feasible solution found (infeas = 56)
+[  2 sec,   47716 itr]: No feasible solution found (infeas = 8)
+[  3 sec,   47716 itr]: No feasible solution found (infeas = 8)
+[  4 sec,   70376 itr]: No feasible solution found (infeas = 8)
+[  5 sec,  118635 itr]: No feasible solution found (infeas = 8)
+[  6 sec,  146008 itr]:       1126.5
+[ optimality gap     ]:       83.52%
+[  7 sec,  146008 itr]:       1126.5
+[  8 sec,  173214 itr]:       1126.5
+[  9 sec,  226840 itr]:       1126.5
+[ 10 sec,  254787 itr]:      1124.06
+[ 11 sec,  254787 itr]:      1107.59
+[ 12 sec,  286856 itr]:      1107.59
+[ 13 sec,  316692 itr]:      1104.48
+[ 14 sec,  345300 itr]:      1104.48
+[ 15 sec,  367865 itr]:      1104.48
+[ 16 sec,  391336 itr]:      1104.48
+[ optimality gap     ]:       83.19%
+[ 17 sec,  420542 itr]:      1104.48
+[ 18 sec,  449650 itr]:      1104.48
+[ 19 sec,  474222 itr]:      1104.48
+[ 20 sec,  525242 itr]:      1102.16
+[ 21 sec,  546693 itr]:      1102.16
+[ 22 sec,  546693 itr]:      1102.16
+[ 23 sec,  573040 itr]:      1102.16
+[ 24 sec,  599180 itr]:      1102.16
+[ 25 sec,  623792 itr]:      1102.16
+[ 26 sec,  650803 itr]:      1102.16
+[ optimality gap     ]:       83.15%
+[ 27 sec,  676547 itr]:      1102.16
+[ 28 sec,  702317 itr]:      1102.16
+[ 29 sec,  732877 itr]:      1102.16
+[ 30 sec,  755243 itr]:      1102.16
+[ 31 sec,  783121 itr]:      1102.16
+[ 32 sec,  808703 itr]:      1102.16
+[ 33 sec,  832406 itr]:      1102.16
+[ 34 sec,  880721 itr]:      1102.16
+[ 35 sec,  905063 itr]:      1102.16
+[ 36 sec,  905063 itr]:      1101.74
+[ optimality gap     ]:       83.15%
+[ 37 sec,  922037 itr]:      1101.74
+[ 38 sec,  940740 itr]:      1098.43
+[ 39 sec,  957848 itr]:      1098.43
+[ 40 sec,  985270 itr]:      1098.43
+[ 41 sec, 1014560 itr]:      1098.43
+[ 42 sec, 1043887 itr]:      1098.43
+[ 43 sec, 1075595 itr]:      1098.43
+[ 44 sec, 1101407 itr]:      1095.74
+[ 45 sec, 1129214 itr]:      1095.74
+[ 46 sec, 1157374 itr]:      1095.74
+[ optimality gap     ]:       83.06%
+[ 47 sec, 1186428 itr]:      1095.74
+[ 48 sec, 1211662 itr]:      1095.74
+[ 49 sec, 1241419 itr]:      1095.74
+[ 50 sec, 1299111 itr]:      1095.74
+[ 51 sec, 1299111 itr]:      1095.74
+[ 52 sec, 1326781 itr]:      1095.74
+[ 53 sec, 1353338 itr]:      1095.74
+[ 54 sec, 1378812 itr]:      1095.74
+[ 55 sec, 1405814 itr]:      1095.74
+[ 56 sec, 1434635 itr]:      1095.74
+[ optimality gap     ]:       83.06%
+[ 57 sec, 1461035 itr]:      1095.74
+[ 58 sec, 1486394 itr]:      1095.74
+[ 59 sec, 1515574 itr]:      1095.74
+[ 60 sec, 1536506 itr]:      1095.74
+[ 61 sec, 1562575 itr]:      1095.74
+[ 62 sec, 1591261 itr]:      1095.74
+[ 63 sec, 1621181 itr]:      1095.74
+[ 64 sec, 1678432 itr]:      1095.74
+[ 65 sec, 1678432 itr]:      1095.74
+[ 66 sec, 1703395 itr]:      1095.62
+[ optimality gap     ]:       83.05%
+[ 67 sec, 1724548 itr]:      1095.62
+[ 68 sec, 1756373 itr]:      1095.62
+[ 69 sec, 1786628 itr]:      1095.62
+[ 70 sec, 1847500 itr]:      1095.62
+[ 71 sec, 1847500 itr]:      1095.05
+[ 72 sec, 1908369 itr]:      1095.05
+[ 73 sec, 1908369 itr]:      1095.05
+[ 74 sec, 1938703 itr]:      1095.05
+[ 75 sec, 1970749 itr]:      1095.05
+[ 76 sec, 2002727 itr]:      1095.05
+[ optimality gap     ]:       83.04%
+[ 77 sec, 2064794 itr]:      1095.05
+[ 78 sec, 2064794 itr]:      1094.83
+[ 79 sec, 2124703 itr]:      1094.83
+[ 80 sec, 2124703 itr]:      1094.83
+[ 81 sec, 2152102 itr]:      1094.83
+[ 82 sec, 2186078 itr]:      1094.83
+[ 83 sec, 2218534 itr]:      1094.83
+[ 84 sec, 2246953 itr]:      1094.83
+[ 85 sec, 2273098 itr]:      1094.83
+[ 86 sec, 2297977 itr]:      1094.83
+[ optimality gap     ]:       76.95%
+[ 87 sec, 2321434 itr]:      1094.83
+[ 88 sec, 2346561 itr]:      1094.83
+[ 89 sec, 2373238 itr]:      1094.19
+[ 90 sec, 2399939 itr]:      1094.19
+[ 91 sec, 2448568 itr]:       1093.8
+[ 92 sec, 2448568 itr]:       1093.8
+[ 93 sec, 2503814 itr]:       1093.8
+[ 94 sec, 2503814 itr]:       1093.8
+[ 95 sec, 2527195 itr]:       1093.8
+[ 96 sec, 2552138 itr]:       1093.8
+[ optimality gap     ]:       76.93%
+[ 97 sec, 2580065 itr]:       1093.8
+[ 98 sec, 2607988 itr]:       1093.8
+[ 99 sec, 2664312 itr]:       1093.8
+[100 sec, 2664312 itr]:       1093.8
+[101 sec, 2690170 itr]:       1093.8
+[102 sec, 2714188 itr]:       1093.8
+[103 sec, 2740980 itr]:       1093.8
+[104 sec, 2767876 itr]:       1093.8
+[105 sec, 2795627 itr]:       1093.8
+[106 sec, 2820008 itr]:       1093.8
+[ optimality gap     ]:       76.93%
+[107 sec, 2844351 itr]:       1093.8
+[108 sec, 2872101 itr]:       1093.8
+[109 sec, 2898924 itr]:       1093.8
+[110 sec, 2925458 itr]:       1093.8
+[111 sec, 2980656 itr]:       1093.8
+[112 sec, 2980656 itr]:       1093.8
+[113 sec, 3036448 itr]:       1093.8
+[114 sec, 3036448 itr]:       1093.8
+[115 sec, 3063717 itr]:       1093.8
+[116 sec, 3092449 itr]:       1093.8
+[ optimality gap     ]:       76.93%
+[117 sec, 3118814 itr]:       1093.8
+[118 sec, 3147739 itr]:       1093.8
+[119 sec, 3176199 itr]:       1093.8
+[120 sec, 3202649 itr]:       1093.8
+[121 sec, 3256260 itr]:       1093.8
+[122 sec, 3256260 itr]:       1093.8
+[123 sec, 3284743 itr]:       1093.8
+[124 sec, 3309719 itr]:       1093.8
+[125 sec, 3336045 itr]:       1093.8
+[126 sec, 3364964 itr]:       1093.8
+[ optimality gap     ]:       75.33%
+[127 sec, 3420522 itr]:       1093.8
+[128 sec, 3420522 itr]:       1093.8
+[129 sec, 3450272 itr]:       1093.8
+[130 sec, 3506897 itr]:       1093.8
+[131 sec, 3533621 itr]:       1093.8
+[132 sec, 3533621 itr]:       1093.8
+[133 sec, 3562126 itr]:       1093.8
+[134 sec, 3587431 itr]:       1093.8
+[135 sec, 3645709 itr]:       1093.8
+[136 sec, 3645709 itr]:       1093.8
+[ optimality gap     ]:       75.33%
+[137 sec, 3674877 itr]:       1093.8
+[138 sec, 3702850 itr]:       1093.8
+[139 sec, 3729781 itr]:       1093.8
+[140 sec, 3756379 itr]:       1093.8
+[141 sec, 3779375 itr]:       1093.8
+[142 sec, 3836304 itr]:       1093.8
+[143 sec, 3836304 itr]:       1093.8
+[144 sec, 3861153 itr]:       1093.8
+[145 sec, 3888118 itr]:       1093.8
+[146 sec, 3914924 itr]:       1093.8
+[ optimality gap     ]:       75.33%
+[147 sec, 3939638 itr]:       1093.8
+[148 sec, 3966219 itr]:       1093.8
+[149 sec, 3993591 itr]:       1093.8
+[150 sec, 4021658 itr]:       1093.8
+[151 sec, 4051243 itr]:       1093.8
+[152 sec, 4080619 itr]:       1093.8
+[153 sec, 4108920 itr]:       1093.8
+[154 sec, 4137546 itr]:       1093.8
+[155 sec, 4166284 itr]:       1093.8
+[156 sec, 4195182 itr]:       1093.8
+[ optimality gap     ]:       68.36%
+[157 sec, 4250464 itr]:       1093.8
+[158 sec, 4250464 itr]:       1093.8
+[159 sec, 4279671 itr]:       1093.8
+[160 sec, 4307595 itr]:       1093.8
+[161 sec, 4337720 itr]:       1093.8
+[162 sec, 4368064 itr]:       1093.8
+[163 sec, 4398736 itr]:       1093.8
+[164 sec, 4425859 itr]:       1093.8
+[165 sec, 4455504 itr]:       1093.8
+[166 sec, 4484277 itr]:       1093.8
+[ optimality gap     ]:       68.36%
+[167 sec, 4543474 itr]:       1093.8
+[168 sec, 4571059 itr]:       1093.8
+[169 sec, 4571059 itr]:       1093.8
+[170 sec, 4599504 itr]:       1093.8
+[171 sec, 4627644 itr]:       1093.8
+[172 sec, 4654873 itr]:       1093.8
+[173 sec, 4681556 itr]:       1093.8
+[174 sec, 4711251 itr]:       1093.8
+[175 sec, 4738320 itr]:       1093.8
+[176 sec, 4767378 itr]:       1093.8
+[ optimality gap     ]:       65.85%
+[177 sec, 4797747 itr]:       1093.8
+[178 sec, 4827153 itr]:       1093.8
+[179 sec, 4857174 itr]:       1093.8
+[180 sec, 4885393 itr]:       1093.8
+[181 sec, 4916490 itr]:       1093.8
+[182 sec, 4946855 itr]:       1093.8
+[183 sec, 4976537 itr]:       1093.8
+[184 sec, 5036855 itr]:       1093.8
+[185 sec, 5036855 itr]:       1093.8
+[186 sec, 5096511 itr]:       1093.8
+[ optimality gap     ]:       65.85%
+[187 sec, 5096511 itr]:       1093.8
+[188 sec, 5128407 itr]:       1093.8
+[189 sec, 5156025 itr]:       1093.8
+[190 sec, 5210473 itr]:       1093.8
+[191 sec, 5210473 itr]:       1093.8
+[192 sec, 5263552 itr]:       1093.8
+[193 sec, 5263552 itr]:       1093.8
+[194 sec, 5292714 itr]:       1093.8
+[195 sec, 5320511 itr]:       1093.8
+[196 sec, 5347140 itr]:       1093.8
+[ optimality gap     ]:       65.85%
+[197 sec, 5373856 itr]:       1093.8
+[198 sec, 5404026 itr]:       1093.8
+[199 sec, 5459774 itr]:       1093.8
+[200 sec, 5459774 itr]:       1093.8
+[201 sec, 5490247 itr]:       1093.8
+[202 sec, 5518683 itr]:       1093.8
+[203 sec, 5572422 itr]:       1093.8
+[204 sec, 5572422 itr]:       1093.8
+[205 sec, 5601928 itr]:       1093.8
+[206 sec, 5658159 itr]:       1093.8
+[ optimality gap     ]:       62.19%
+[207 sec, 5658159 itr]:       1093.8
+[208 sec, 5688216 itr]:       1093.8
+[209 sec, 5746547 itr]:       1093.8
+[210 sec, 5773827 itr]:       1093.8
+[211 sec, 5773827 itr]:       1093.8
+[212 sec, 5801716 itr]:       1093.8
+[213 sec, 5828129 itr]:       1093.8
+[214 sec, 5888885 itr]:       1093.8
+[215 sec, 5917442 itr]:       1093.8
+[216 sec, 5917442 itr]:       1093.8
+[ optimality gap     ]:       62.19%
+[217 sec, 5947839 itr]:       1093.8
+[218 sec, 5978916 itr]:       1093.8
+[219 sec, 6008788 itr]:       1093.8
+[220 sec, 6037925 itr]:       1093.8
+[221 sec, 6069640 itr]:       1093.8
+[222 sec, 6097870 itr]:       1093.8
+[223 sec, 6122248 itr]:       1093.8
+[224 sec, 6170217 itr]:       1093.8
+[225 sec, 6170217 itr]:       1093.8
+[226 sec, 6199226 itr]:       1093.8
+[ optimality gap     ]:       60.70%
+[227 sec, 6228902 itr]:       1093.8
+[228 sec, 6244531 itr]:       1093.8
+[229 sec, 6262946 itr]:       1093.8
+[230 sec, 6276430 itr]:       1093.8
+[231 sec, 6287810 itr]:       1093.8
+[232 sec, 6298781 itr]:       1093.8
+[233 sec, 6318754 itr]:       1093.8
+[234 sec, 6318754 itr]:       1093.8
+[235 sec, 6328410 itr]:       1093.8
+[236 sec, 6337960 itr]:       1093.8
+[ optimality gap     ]:       60.70%
+[237 sec, 6358940 itr]:       1093.8
+[238 sec, 6358940 itr]:       1093.8
+[239 sec, 6368205 itr]:       1093.8
+[240 sec, 6376630 itr]:       1093.8
+[241 sec, 6386542 itr]:       1093.8
+[242 sec, 6396757 itr]:       1093.8
+[243 sec, 6407415 itr]:       1093.8
+[244 sec, 6417481 itr]:       1093.8
+[245 sec, 6428301 itr]:       1093.8
+[246 sec, 6438342 itr]:       1093.8
+[ optimality gap     ]:       58.48%
+[247 sec, 6459174 itr]:       1093.8
+[248 sec, 6459174 itr]:       1093.8
+[249 sec, 6468824 itr]:       1093.8
+[250 sec, 6479683 itr]:       1093.8
+[251 sec, 6490099 itr]:       1093.8
+[252 sec, 6501049 itr]:       1093.8
+[253 sec, 6511321 itr]:       1093.8
+[254 sec, 6522703 itr]:       1093.8
+[255 sec, 6546372 itr]:       1093.8
+[256 sec, 6546372 itr]:       1093.8
+[ optimality gap     ]:       58.48%
+[257 sec, 6554380 itr]:       1093.8
+[258 sec, 6563376 itr]:       1093.8
+[259 sec, 6571786 itr]:       1093.8
+[260 sec, 6579716 itr]:       1093.8
+[261 sec, 6587969 itr]:       1093.8
+[262 sec, 6595927 itr]:       1093.8
+[263 sec, 6604445 itr]:       1093.8
+[264 sec, 6612806 itr]:       1093.8
+[265 sec, 6629841 itr]:       1093.8
+[266 sec, 6638327 itr]:       1093.8
+[ optimality gap     ]:       58.45%
+[267 sec, 6638327 itr]:       1093.8
+[268 sec, 6647470 itr]:       1093.8
+[269 sec, 6656021 itr]:       1093.8
+[270 sec, 6664385 itr]:       1093.8
+[271 sec, 6675943 itr]:       1093.8
+[272 sec, 6698470 itr]:       1093.8
+[273 sec, 6723660 itr]:       1093.8
+[274 sec, 6747818 itr]:       1093.8
+[275 sec, 6769585 itr]:       1093.8
+[276 sec, 6795495 itr]:       1093.8
+[ optimality gap     ]:       58.45%
+[277 sec, 6840119 itr]:       1093.8
+[278 sec, 6840119 itr]:       1093.8
+[279 sec, 6886754 itr]:       1093.8
+[280 sec, 6886754 itr]:       1093.8
+[281 sec, 6911446 itr]:       1093.8
+[282 sec, 6932500 itr]:       1093.8
+[283 sec, 6957510 itr]:       1093.8
+[284 sec, 6982284 itr]:       1093.8
+[285 sec, 7004319 itr]:       1093.8
+[286 sec, 7057657 itr]:       1093.8
+[ optimality gap     ]:       58.45%
+[287 sec, 7057657 itr]:       1093.8
+[288 sec, 7083362 itr]:       1093.8
+[289 sec, 7104946 itr]:       1093.8
+[290 sec, 7128680 itr]:       1093.8
+[291 sec, 7152734 itr]:       1093.8
+[292 sec, 7175204 itr]:       1093.8
+[293 sec, 7199129 itr]:       1093.8
+[294 sec, 7223746 itr]:       1093.8
+[295 sec, 7247262 itr]:       1093.8
+[296 sec, 7273020 itr]:       1093.8
+[ optimality gap     ]:       57.68%
+[297 sec, 7328309 itr]:       1093.8
+[298 sec, 7328309 itr]:       1093.8
+[299 sec, 7355054 itr]:       1093.8
+[300 sec, 7382038 itr]:       1093.8
+[301 sec, 7410264 itr]:       1093.8
+[302 sec, 7438624 itr]:       1093.8
+[303 sec, 7466688 itr]:       1093.8
+[304 sec, 7483840 itr]:       1093.8
+[305 sec, 7497726 itr]:       1093.8
+[306 sec, 7506649 itr]:       1093.8
+[ optimality gap     ]:       55.88%
+[307 sec, 7514018 itr]:       1093.8
+[308 sec, 7521483 itr]:       1093.8
+[309 sec, 7528675 itr]:       1093.8
+[310 sec, 7535816 itr]:       1093.8
+[311 sec, 7543188 itr]:       1093.8
+[312 sec, 7550761 itr]:       1093.8
+[313 sec, 7567132 itr]:       1093.8
+[314 sec, 7567132 itr]:       1093.8
+[315 sec, 7584213 itr]:       1093.8
+[316 sec, 7584213 itr]:       1093.8
+[ optimality gap     ]:       55.88%
+[317 sec, 7592872 itr]:       1093.8
+[318 sec, 7600954 itr]:       1093.8
+[319 sec, 7608659 itr]:       1093.8
+[320 sec, 7615738 itr]:       1093.8
+[321 sec, 7623653 itr]:       1093.8
+[322 sec, 7631078 itr]:       1093.8
+[323 sec, 7638050 itr]:       1093.8
+[324 sec, 7646057 itr]:       1093.8
+[325 sec, 7654315 itr]:       1093.8
+[326 sec, 7662614 itr]:       1093.8
+[ optimality gap     ]:       55.88%
+[327 sec, 7670555 itr]:       1093.8
+[328 sec, 7686672 itr]:       1093.8
+[329 sec, 7686672 itr]:       1093.8
+[330 sec, 7694755 itr]:       1093.8
+[331 sec, 7703054 itr]:       1093.8
+[332 sec, 7710641 itr]:       1093.8
+[333 sec, 7718451 itr]:       1093.8
+[334 sec, 7727033 itr]:       1093.8
+[335 sec, 7743154 itr]:       1093.8
+[336 sec, 7743154 itr]:       1093.8
+[ optimality gap     ]:       55.88%
+[337 sec, 7752088 itr]:       1093.8
+[338 sec, 7760850 itr]:       1093.8
+[339 sec, 7769173 itr]:       1093.8
+[340 sec, 7777321 itr]:       1093.8
+[341 sec, 7785457 itr]:       1093.8
+[342 sec, 7800709 itr]:       1093.8
+[343 sec, 7800709 itr]:       1093.8
+[344 sec, 7808787 itr]:       1093.8
+[345 sec, 7817055 itr]:       1093.8
+[346 sec, 7825600 itr]:       1093.8
+[ optimality gap     ]:       55.70%
+[347 sec, 7833712 itr]:       1093.8
+[348 sec, 7841298 itr]:       1093.8
+[349 sec, 7849186 itr]:       1093.8
+[350 sec, 7857030 itr]:       1093.8
+[351 sec, 7864799 itr]:       1093.8
+[352 sec, 7870385 itr]:       1093.8
+[353 sec, 7886246 itr]:       1093.8
+[354 sec, 7886246 itr]:       1093.8
+[355 sec, 7894763 itr]:       1093.8
+[356 sec, 7903399 itr]:       1093.8
+[ optimality gap     ]:       55.70%
+[357 sec, 7912132 itr]:       1093.8
+[358 sec, 7919562 itr]:       1093.8
+[359 sec, 7927298 itr]:       1093.8
+[360 sec, 7935006 itr]:       1093.8
+[361 sec, 7943443 itr]:       1093.8
+[362 sec, 7951138 itr]:       1093.8
+[363 sec, 7959277 itr]:       1093.8
+[364 sec, 7967164 itr]:       1093.8
+[365 sec, 7983186 itr]:       1093.8
+[366 sec, 7983186 itr]:       1093.8
+[ optimality gap     ]:       54.78%
+[367 sec, 7991846 itr]:       1093.8
+[368 sec, 7998843 itr]:       1093.8
+[369 sec, 8006795 itr]:       1093.8
+[370 sec, 8013775 itr]:       1093.8
+[371 sec, 8022031 itr]:       1093.8
+[372 sec, 8030387 itr]:       1093.8
+[373 sec, 8038883 itr]:       1093.8
+[374 sec, 8047308 itr]:       1093.8
+[375 sec, 8056304 itr]:       1093.8
+[376 sec, 8064538 itr]:       1093.8
+[ optimality gap     ]:       54.68%
+[377 sec, 8072831 itr]:       1093.8
+[378 sec, 8080931 itr]:       1093.8
+[379 sec, 8089571 itr]:       1093.8
+[380 sec, 8097071 itr]:       1093.8
+[381 sec, 8105882 itr]:       1093.8
+[382 sec, 8114327 itr]:       1093.8
+[383 sec, 8123664 itr]:       1093.8
+[384 sec, 8131087 itr]:       1093.8
+[385 sec, 8140178 itr]:       1093.8
+[386 sec, 8148421 itr]:       1093.8
+[ optimality gap     ]:       54.68%
+[387 sec, 8156468 itr]:       1093.8
+[388 sec, 8165939 itr]:       1093.8
+[389 sec, 8175311 itr]:       1093.8
+[390 sec, 8188204 itr]:       1093.8
+[391 sec, 8200787 itr]:       1093.8
+[392 sec, 8213011 itr]:       1093.8
+[393 sec, 8225455 itr]:       1093.8
+[394 sec, 8238940 itr]:       1093.8
+[395 sec, 8250856 itr]:       1093.8
+[396 sec, 8262565 itr]:       1093.8
+[ optimality gap     ]:       54.68%
+[397 sec, 8273923 itr]:       1093.8
+[398 sec, 8286507 itr]:       1093.8
+[399 sec, 8298749 itr]:       1093.8
+[400 sec, 8309920 itr]:       1093.8
+[401 sec, 8321891 itr]:       1093.8
+[402 sec, 8346813 itr]:       1093.8
+[403 sec, 8346813 itr]:       1093.8
+[404 sec, 8360672 itr]:       1093.8
+[405 sec, 8373375 itr]:       1093.8
+[406 sec, 8386647 itr]:       1093.8
+[ optimality gap     ]:       54.32%
+[407 sec, 8399434 itr]:       1093.8
+[408 sec, 8409220 itr]:       1093.8
+[409 sec, 8421797 itr]:       1093.8
+[410 sec, 8434304 itr]:       1093.8
+[411 sec, 8445595 itr]:       1093.8
+[412 sec, 8458422 itr]:       1093.8
+[413 sec, 8471126 itr]:       1093.8
+[414 sec, 8484361 itr]:       1093.8
+[415 sec, 8497402 itr]:       1093.8
+[416 sec, 8509396 itr]:       1093.8
+[ optimality gap     ]:       54.32%
+[417 sec, 8522323 itr]:       1093.8
+[418 sec, 8533669 itr]:       1093.8
+[419 sec, 8544219 itr]:       1093.8
+[420 sec, 8564935 itr]:       1093.8
+[421 sec, 8586444 itr]:       1093.8
+[422 sec, 8607462 itr]:       1093.8
+[423 sec, 8629004 itr]:       1093.8
+[424 sec, 8648195 itr]:       1093.8
+[425 sec, 8667510 itr]:       1093.8
+[426 sec, 8687512 itr]:       1093.8
+[ optimality gap     ]:       54.24%
+[427 sec, 8709956 itr]:       1093.8
+[428 sec, 8733914 itr]:       1093.8
+[429 sec, 8754779 itr]:       1093.8
+[430 sec, 8776119 itr]:       1093.8
+[431 sec, 8795499 itr]:       1093.8
+[432 sec, 8818531 itr]:       1093.8
+[433 sec, 8839201 itr]:       1093.8
+[434 sec, 8862893 itr]:       1093.8
+[435 sec, 8908132 itr]:       1093.8
+[436 sec, 8908132 itr]:       1093.8
+[ optimality gap     ]:       54.24%
+[437 sec, 8930000 itr]:       1093.8
+[438 sec, 8950042 itr]:       1093.8
+[439 sec, 8971090 itr]:       1093.8
+[440 sec, 8992188 itr]:       1093.8
+[441 sec, 9034618 itr]:       1093.8
+[442 sec, 9034618 itr]:       1093.8
+[443 sec, 9054740 itr]:       1093.8
+[444 sec, 9074009 itr]:       1093.8
+[445 sec, 9092316 itr]:       1093.8
+[446 sec, 9135761 itr]:       1093.8
+[ optimality gap     ]:       54.08%
+[447 sec, 9135761 itr]:       1093.8
+[448 sec, 9156646 itr]:       1093.8
+[449 sec, 9175777 itr]:       1093.8
+[450 sec, 9196616 itr]:       1093.8
+[451 sec, 9238378 itr]:       1093.8
+[452 sec, 9238378 itr]:       1093.8
+[453 sec, 9258685 itr]:       1093.8
+[454 sec, 9278278 itr]:       1093.8
+[455 sec, 9299754 itr]:       1093.8
+[456 sec, 9321297 itr]:       1093.8
+[ optimality gap     ]:       53.25%
+[457 sec, 9340918 itr]:       1093.8
+[458 sec, 9361292 itr]:       1093.8
+[459 sec, 9405836 itr]:       1093.8
+[460 sec, 9405836 itr]:       1093.8
+[461 sec, 9423286 itr]:       1093.8
+[462 sec, 9444413 itr]:       1093.8
+[463 sec, 9465680 itr]:       1093.8
+[464 sec, 9485597 itr]:       1093.8
+[465 sec, 9527203 itr]:       1093.8
+[466 sec, 9527203 itr]:       1093.8
+[ optimality gap     ]:       53.25%
+[467 sec, 9547603 itr]:       1093.8
+[468 sec, 9586239 itr]:       1093.8
+[469 sec, 9586239 itr]:       1093.8
+[470 sec, 9608568 itr]:       1093.8
+[471 sec, 9626521 itr]:       1093.8
+[472 sec, 9649267 itr]:       1093.8
+[473 sec, 9667762 itr]:       1093.8
+[474 sec, 9691366 itr]:       1093.8
+[475 sec, 9712868 itr]:       1093.8
+[476 sec, 9735010 itr]:       1093.8
+[ optimality gap     ]:       52.60%
+[477 sec, 9755018 itr]:       1093.8
+[478 sec, 9775546 itr]:       1093.8
+[479 sec, 9797762 itr]:       1093.8
+[480 sec, 9819648 itr]:       1093.8
+[481 sec, 9844088 itr]:       1093.8
+[482 sec, 9865098 itr]:       1093.8
+[483 sec, 9885414 itr]:       1093.8
+[484 sec, 9906769 itr]:      1093.42
+[485 sec, 9922791 itr]:      1093.42
+[486 sec, 9943873 itr]:      1093.42
+[ optimality gap     ]:       52.59%
+[487 sec, 9962076 itr]:      1093.42
+[488 sec, 9980554 itr]:      1093.42
+[489 sec, 9999786 itr]:      1093.42
+[490 sec, 10016845 itr]:      1093.42
+[491 sec, 10033306 itr]:      1093.42
+[492 sec, 10051748 itr]:      1093.42
+[493 sec, 10071384 itr]:      1093.42
+[494 sec, 10090982 itr]:      1093.42
+[495 sec, 10111969 itr]:      1093.42
+[496 sec, 10129408 itr]:      1093.42
+[ optimality gap      ]:       52.51%
+[497 sec, 10149784 itr]:      1093.42
+[498 sec, 10168967 itr]:      1093.42
+[499 sec, 10187989 itr]:      1093.42
+[500 sec, 10229694 itr]:      1093.42
+[501 sec, 10229694 itr]:      1093.42
+[502 sec, 10248913 itr]:      1093.42
+[503 sec, 10270987 itr]:      1093.42
+[504 sec, 10290463 itr]:      1093.42
+[505 sec, 10311773 itr]:      1093.42
+[506 sec, 10331061 itr]:      1093.42
+[ optimality gap      ]:       50.31%
+[507 sec, 10350448 itr]:      1093.42
+[508 sec, 10369197 itr]:      1093.42
+[509 sec, 10389053 itr]:      1093.42
+[510 sec, 10410685 itr]:      1093.42
+[511 sec, 10429087 itr]:      1093.42
+[512 sec, 10448204 itr]:      1093.42
+[513 sec, 10470701 itr]:      1093.42
+[514 sec, 10491879 itr]:      1093.42
+[515 sec, 10512450 itr]:      1093.42
+[516 sec, 10532908 itr]:      1093.42
+[ optimality gap      ]:       49.86%
+[517 sec, 10554031 itr]:      1093.42
+[518 sec, 10595339 itr]:      1093.42
+[519 sec, 10595339 itr]:      1093.42
+[520 sec, 10616660 itr]:      1093.42
+[521 sec, 10637585 itr]:      1093.42
+[522 sec, 10657733 itr]:      1093.42
+[523 sec, 10677410 itr]:      1093.42
+[524 sec, 10696559 itr]:      1093.42
+[525 sec, 10718353 itr]:      1093.42
+[526 sec, 10756584 itr]:      1093.42
+[ optimality gap      ]:       49.01%
+[527 sec, 10756584 itr]:      1093.42
+[528 sec, 10776475 itr]:      1093.42
+[529 sec, 10796532 itr]:      1093.42
+[530 sec, 10816513 itr]:      1093.42
+[531 sec, 10837641 itr]:      1093.42
+[532 sec, 10856921 itr]:      1093.42
+[533 sec, 10877730 itr]:      1093.42
+[534 sec, 10915386 itr]:      1093.42
+[535 sec, 10934222 itr]:      1093.42
+[536 sec, 10934222 itr]:      1093.42
+[ optimality gap      ]:       49.00%
+[537 sec, 10957775 itr]:      1093.42
+[538 sec, 10979192 itr]:      1093.42
+[539 sec, 10997871 itr]:      1093.42
+[540 sec, 11018082 itr]:      1093.42
+[541 sec, 11039167 itr]:      1093.42
+[542 sec, 11056437 itr]:      1093.42
+[543 sec, 11075923 itr]:      1093.42
+[544 sec, 11096544 itr]:      1093.42
+[545 sec, 11135422 itr]:      1093.42
+[546 sec, 11155324 itr]:      1093.42
+[ optimality gap      ]:       48.94%
+[547 sec, 11155324 itr]:      1093.42
+[548 sec, 11178326 itr]:      1093.42
+[549 sec, 11220613 itr]:      1093.42
+[550 sec, 11220613 itr]:      1093.42
+[551 sec, 11243660 itr]:      1093.42
+[552 sec, 11281915 itr]:      1093.42
+[553 sec, 11281915 itr]:      1093.42
+[554 sec, 11300955 itr]:      1093.42
+[555 sec, 11319508 itr]:      1093.42
+[556 sec, 11335830 itr]:      1093.42
+[ optimality gap      ]:       48.90%
+[557 sec, 11354686 itr]:      1093.42
+[558 sec, 11372851 itr]:      1093.42
+[559 sec, 11410627 itr]:      1093.42
+[560 sec, 11410627 itr]:      1093.42
+[561 sec, 11431842 itr]:      1093.42
+[562 sec, 11453836 itr]:      1093.42
+[563 sec, 11471300 itr]:      1093.42
+[564 sec, 11488757 itr]:      1093.42
+[565 sec, 11507979 itr]:      1093.42
+[566 sec, 11530477 itr]:      1093.42
+[ optimality gap      ]:       48.90%
+[567 sec, 11552342 itr]:      1093.42
+[568 sec, 11573485 itr]:      1093.42
+[569 sec, 11593345 itr]:      1093.42
+[570 sec, 11610795 itr]:      1093.42
+[571 sec, 11630404 itr]:      1093.42
+[572 sec, 11650355 itr]:      1093.42
+[573 sec, 11691663 itr]:      1093.42
+[574 sec, 11691663 itr]:      1093.42
+[575 sec, 11712707 itr]:      1093.42
+[576 sec, 11732134 itr]:      1093.42
+[ optimality gap      ]:       48.90%
+[577 sec, 11749691 itr]:      1093.42
+[578 sec, 11767454 itr]:      1093.42
+[579 sec, 11786390 itr]:      1093.42
+[580 sec, 11807626 itr]:      1093.42
+[581 sec, 11828906 itr]:      1093.42
+[582 sec, 11849070 itr]:      1093.42
+[583 sec, 11865012 itr]:      1093.42
+[584 sec, 11886179 itr]:      1093.42
+[585 sec, 11904252 itr]:      1093.42
+[586 sec, 11923165 itr]:      1093.42
+[ optimality gap      ]:       48.90%
+[587 sec, 11941603 itr]:      1093.42
+[588 sec, 11961191 itr]:      1093.42
+[589 sec, 11981337 itr]:      1093.42
+[590 sec, 12001455 itr]:      1093.42
+[591 sec, 12043352 itr]:      1093.42
+[592 sec, 12043352 itr]:      1093.42
+[593 sec, 12062216 itr]:      1093.42
+[594 sec, 12083346 itr]:      1093.42
+[595 sec, 12103029 itr]:      1093.42
+[596 sec, 12121368 itr]:      1093.42
+[ optimality gap      ]:       48.90%
+[597 sec, 12139703 itr]:      1093.42
+[598 sec, 12179870 itr]:      1093.42
+[599 sec, 12179870 itr]:      1093.42
+[600 sec, 12196867 itr]:      1093.42
+[601 sec, 12234224 itr]:      1093.42
+[602 sec, 12234224 itr]:      1093.42
+[603 sec, 12253058 itr]:      1093.42
+[604 sec, 12272276 itr]:      1093.42
+[605 sec, 12291577 itr]:      1093.42
+[606 sec, 12310996 itr]:      1093.42
+[ optimality gap      ]:       48.55%
+[607 sec, 12330087 itr]:      1093.42
+[608 sec, 12349666 itr]:      1093.42
+[609 sec, 12368010 itr]:      1093.42
+[610 sec, 12387889 itr]:      1093.42
+[611 sec, 12408238 itr]:      1093.42
+[612 sec, 12428771 itr]:      1093.42
+[613 sec, 12448325 itr]:      1093.42
+[614 sec, 12465624 itr]:      1093.42
+[615 sec, 12484249 itr]:      1093.42
+[616 sec, 12505354 itr]:      1093.42
+[ optimality gap      ]:       48.49%
+[617 sec, 12519721 itr]:      1093.42
+[618 sec, 12540869 itr]:      1093.42
+[619 sec, 12560423 itr]:      1093.42
+[620 sec, 12580126 itr]:      1093.42
+[621 sec, 12599292 itr]:      1093.42
+[622 sec, 12636260 itr]:      1093.42
+[623 sec, 12636260 itr]:      1093.42
+[624 sec, 12653857 itr]:      1093.42
+[625 sec, 12674546 itr]:      1093.42
+[626 sec, 12695919 itr]:      1093.42
+[ optimality gap      ]:       48.41%
+[627 sec, 12736924 itr]:      1093.42
+[628 sec, 12736924 itr]:      1093.42
+[629 sec, 12756128 itr]:      1093.42
+[630 sec, 12777194 itr]:      1093.42
+[631 sec, 12796805 itr]:      1093.42
+[632 sec, 12812023 itr]:      1093.42
+[633 sec, 12830266 itr]:      1093.42
+[634 sec, 12847915 itr]:      1093.42
+[635 sec, 12868168 itr]:      1093.42
+[636 sec, 12888690 itr]:      1093.42
+[ optimality gap      ]:       48.35%
+[637 sec, 12908896 itr]:      1093.42
+[638 sec, 12931282 itr]:      1093.42
+[639 sec, 12951381 itr]:      1093.42
+[640 sec, 12993581 itr]:      1093.42
+[641 sec, 12993581 itr]:      1093.42
+[642 sec, 13013429 itr]:      1093.42
+[643 sec, 13030671 itr]:      1093.42
+[644 sec, 13073218 itr]:      1093.42
+[645 sec, 13073218 itr]:      1093.42
+[646 sec, 13091258 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[647 sec, 13112563 itr]:      1093.42
+[648 sec, 13132322 itr]:      1093.42
+[649 sec, 13153193 itr]:      1093.42
+[650 sec, 13171998 itr]:      1093.42
+[651 sec, 13190466 itr]:      1093.42
+[652 sec, 13230174 itr]:      1093.42
+[653 sec, 13230174 itr]:      1093.42
+[654 sec, 13250030 itr]:      1093.42
+[655 sec, 13267464 itr]:      1093.42
+[656 sec, 13286127 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[657 sec, 13326573 itr]:      1093.42
+[658 sec, 13326573 itr]:      1093.42
+[659 sec, 13344748 itr]:      1093.42
+[660 sec, 13362751 itr]:      1093.42
+[661 sec, 13382302 itr]:      1093.42
+[662 sec, 13401855 itr]:      1093.42
+[663 sec, 13422326 itr]:      1093.42
+[664 sec, 13443775 itr]:      1093.42
+[665 sec, 13464057 itr]:      1093.42
+[666 sec, 13484601 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[667 sec, 13503162 itr]:      1093.42
+[668 sec, 13520340 itr]:      1093.42
+[669 sec, 13539674 itr]:      1093.42
+[670 sec, 13557203 itr]:      1093.42
+[671 sec, 13577619 itr]:      1093.42
+[672 sec, 13595485 itr]:      1093.42
+[673 sec, 13614179 itr]:      1093.42
+[674 sec, 13633745 itr]:      1093.42
+[675 sec, 13651844 itr]:      1093.42
+[676 sec, 13671621 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[677 sec, 13691294 itr]:      1093.42
+[678 sec, 13711474 itr]:      1093.42
+[679 sec, 13730460 itr]:      1093.42
+[680 sec, 13749708 itr]:      1093.42
+[681 sec, 13767930 itr]:      1093.42
+[682 sec, 13787423 itr]:      1093.42
+[683 sec, 13804114 itr]:      1093.42
+[684 sec, 13824694 itr]:      1093.42
+[685 sec, 13842754 itr]:      1093.42
+[686 sec, 13859147 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[687 sec, 13879977 itr]:      1093.42
+[688 sec, 13898889 itr]:      1093.42
+[689 sec, 13919931 itr]:      1093.42
+[690 sec, 13937715 itr]:      1093.42
+[691 sec, 13959733 itr]:      1093.42
+[692 sec, 13980789 itr]:      1093.42
+[693 sec, 14000216 itr]:      1093.42
+[694 sec, 14020533 itr]:      1093.42
+[695 sec, 14037399 itr]:      1093.42
+[696 sec, 14056048 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[697 sec, 14077988 itr]:      1093.42
+[698 sec, 14097840 itr]:      1093.42
+[699 sec, 14116739 itr]:      1093.42
+[700 sec, 14137602 itr]:      1093.42
+[701 sec, 14156592 itr]:      1093.42
+[702 sec, 14175967 itr]:      1093.42
+[703 sec, 14194256 itr]:      1093.42
+[704 sec, 14214430 itr]:      1093.42
+[705 sec, 14234237 itr]:      1093.42
+[706 sec, 14253489 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[707 sec, 14271905 itr]:      1093.42
+[708 sec, 14312516 itr]:      1093.42
+[709 sec, 14312516 itr]:      1093.42
+[710 sec, 14331187 itr]:      1093.42
+[711 sec, 14351050 itr]:      1093.42
+[712 sec, 14371751 itr]:      1093.42
+[713 sec, 14394069 itr]:      1093.42
+[714 sec, 14413962 itr]:      1093.42
+[715 sec, 14432200 itr]:      1093.42
+[716 sec, 14451326 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[717 sec, 14473585 itr]:      1093.42
+[718 sec, 14492411 itr]:      1093.42
+[719 sec, 14511760 itr]:      1093.42
+[720 sec, 14531847 itr]:      1093.42
+[721 sec, 14548262 itr]:      1093.42
+[722 sec, 14567601 itr]:      1093.42
+[723 sec, 14583177 itr]:      1093.42
+[724 sec, 14603114 itr]:      1093.42
+[725 sec, 14619980 itr]:      1093.42
+[726 sec, 14660146 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[727 sec, 14660146 itr]:      1093.42
+[728 sec, 14682384 itr]:      1093.42
+[729 sec, 14701704 itr]:      1093.42
+[730 sec, 14718942 itr]:      1093.42
+[731 sec, 14740270 itr]:      1093.42
+[732 sec, 14759041 itr]:      1093.42
+[733 sec, 14778938 itr]:      1093.42
+[734 sec, 14800208 itr]:      1093.42
+[735 sec, 14819262 itr]:      1093.42
+[736 sec, 14835622 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[737 sec, 14848998 itr]:      1093.42
+[738 sec, 14868908 itr]:      1093.42
+[739 sec, 14883909 itr]:      1093.42
+[740 sec, 14904487 itr]:      1093.42
+[741 sec, 14924189 itr]:      1093.42
+[742 sec, 14945501 itr]:      1093.42
+[743 sec, 14963128 itr]:      1093.42
+[744 sec, 14982722 itr]:      1093.42
+[745 sec, 14998220 itr]:      1093.42
+[746 sec, 15015957 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[747 sec, 15034737 itr]:      1093.42
+[748 sec, 15054359 itr]:      1093.42
+[749 sec, 15071862 itr]:      1093.42
+[750 sec, 15091011 itr]:      1093.42
+[751 sec, 15108773 itr]:      1093.42
+[752 sec, 15128163 itr]:      1093.42
+[753 sec, 15148078 itr]:      1093.42
+[754 sec, 15167985 itr]:      1093.42
+[755 sec, 15186165 itr]:      1093.42
+[756 sec, 15206772 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[757 sec, 15224264 itr]:      1093.42
+[758 sec, 15243133 itr]:      1093.42
+[759 sec, 15261582 itr]:      1093.42
+[760 sec, 15281747 itr]:      1093.42
+[761 sec, 15300435 itr]:      1093.42
+[762 sec, 15317640 itr]:      1093.42
+[763 sec, 15335601 itr]:      1093.42
+[764 sec, 15351017 itr]:      1093.42
+[765 sec, 15371226 itr]:      1093.42
+[766 sec, 15388363 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[767 sec, 15405508 itr]:      1093.42
+[768 sec, 15426044 itr]:      1093.42
+[769 sec, 15444480 itr]:      1093.42
+[770 sec, 15462084 itr]:      1093.42
+[771 sec, 15481099 itr]:      1093.42
+[772 sec, 15499567 itr]:      1093.42
+[773 sec, 15536689 itr]:      1093.42
+[774 sec, 15536689 itr]:      1093.42
+[775 sec, 15555399 itr]:      1093.42
+[776 sec, 15574486 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[777 sec, 15593148 itr]:      1093.42
+[778 sec, 15610492 itr]:      1093.42
+[779 sec, 15628189 itr]:      1093.42
+[780 sec, 15648231 itr]:      1093.42
+[781 sec, 15666234 itr]:      1093.42
+[782 sec, 15684676 itr]:      1093.42
+[783 sec, 15701615 itr]:      1093.42
+[784 sec, 15718399 itr]:      1093.42
+[785 sec, 15736597 itr]:      1093.42
+[786 sec, 15756078 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[787 sec, 15773342 itr]:      1093.42
+[788 sec, 15791512 itr]:      1093.42
+[789 sec, 15809121 itr]:      1093.42
+[790 sec, 15825521 itr]:      1093.42
+[791 sec, 15842880 itr]:      1093.42
+[792 sec, 15863963 itr]:      1093.42
+[793 sec, 15881688 itr]:      1093.42
+[794 sec, 15897174 itr]:      1093.42
+[795 sec, 15911938 itr]:      1093.42
+[796 sec, 15928765 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[797 sec, 15945331 itr]:      1093.42
+[798 sec, 15964743 itr]:      1093.42
+[799 sec, 15985577 itr]:      1093.42
+[800 sec, 15998422 itr]:      1093.42
+[801 sec, 16014202 itr]:      1093.42
+[802 sec, 16029229 itr]:      1093.42
+[803 sec, 16044998 itr]:      1093.42
+[804 sec, 16062756 itr]:      1093.42
+[805 sec, 16091907 itr]:      1093.42
+[806 sec, 16091907 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[807 sec, 16106941 itr]:      1093.42
+[808 sec, 16137862 itr]:      1093.42
+[809 sec, 16137862 itr]:      1093.42
+[810 sec, 16153876 itr]:      1093.42
+[811 sec, 16171926 itr]:      1093.42
+[812 sec, 16190219 itr]:      1093.42
+[813 sec, 16208984 itr]:      1093.42
+[814 sec, 16225151 itr]:      1093.42
+[815 sec, 16239137 itr]:      1093.42
+[816 sec, 16257083 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[817 sec, 16276377 itr]:      1093.42
+[818 sec, 16292648 itr]:      1093.42
+[819 sec, 16308570 itr]:      1093.42
+[820 sec, 16324658 itr]:      1093.42
+[821 sec, 16341172 itr]:      1093.42
+[822 sec, 16357514 itr]:      1093.42
+[823 sec, 16374052 itr]:      1093.42
+[824 sec, 16392575 itr]:      1093.42
+[825 sec, 16412307 itr]:      1093.42
+[826 sec, 16429381 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[827 sec, 16449886 itr]:      1093.42
+[828 sec, 16467974 itr]:      1093.42
+[829 sec, 16484425 itr]:      1093.42
+[830 sec, 16503018 itr]:      1093.42
+[831 sec, 16518560 itr]:      1093.42
+[832 sec, 16535637 itr]:      1093.42
+[833 sec, 16553973 itr]:      1093.42
+[834 sec, 16571009 itr]:      1093.42
+[835 sec, 16587966 itr]:      1093.42
+[836 sec, 16607065 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[837 sec, 16624880 itr]:      1093.42
+[838 sec, 16644087 itr]:      1093.42
+[839 sec, 16660429 itr]:      1093.42
+[840 sec, 16677950 itr]:      1093.42
+[841 sec, 16697886 itr]:      1093.42
+[842 sec, 16715752 itr]:      1093.42
+[843 sec, 16733377 itr]:      1093.42
+[844 sec, 16750495 itr]:      1093.42
+[845 sec, 16767549 itr]:      1093.42
+[846 sec, 16786016 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[847 sec, 16802778 itr]:      1093.42
+[848 sec, 16821561 itr]:      1093.42
+[849 sec, 16838206 itr]:      1093.42
+[850 sec, 16856124 itr]:      1093.42
+[851 sec, 16873213 itr]:      1093.42
+[852 sec, 16892477 itr]:      1093.42
+[853 sec, 16915426 itr]:      1093.42
+[854 sec, 16936610 itr]:      1093.42
+[855 sec, 16953759 itr]:      1093.42
+[856 sec, 16989694 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[857 sec, 16989694 itr]:      1093.42
+[858 sec, 17009325 itr]:      1093.42
+[859 sec, 17027144 itr]:      1093.42
+[860 sec, 17046645 itr]:      1093.42
+[861 sec, 17065451 itr]:      1093.42
+[862 sec, 17083165 itr]:      1093.42
+[863 sec, 17101360 itr]:      1093.42
+[864 sec, 17121021 itr]:      1093.42
+[865 sec, 17140437 itr]:      1093.42
+[866 sec, 17158763 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[867 sec, 17173809 itr]:      1093.42
+[868 sec, 17191070 itr]:      1093.42
+[869 sec, 17206589 itr]:      1093.42
+[870 sec, 17225076 itr]:      1093.42
+[871 sec, 17243722 itr]:      1093.42
+[872 sec, 17262054 itr]:      1093.42
+[873 sec, 17302317 itr]:      1093.42
+[874 sec, 17302317 itr]:      1093.42
+[875 sec, 17319319 itr]:      1093.42
+[876 sec, 17338762 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[877 sec, 17354484 itr]:      1093.42
+[878 sec, 17373196 itr]:      1093.42
+[879 sec, 17410524 itr]:      1093.42
+[880 sec, 17410524 itr]:      1093.42
+[881 sec, 17444910 itr]:      1093.42
+[882 sec, 17444910 itr]:      1093.42
+[883 sec, 17464096 itr]:      1093.42
+[884 sec, 17484080 itr]:      1093.42
+[885 sec, 17500804 itr]:      1093.42
+[886 sec, 17518795 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[887 sec, 17536895 itr]:      1093.42
+[888 sec, 17551887 itr]:      1093.42
+[889 sec, 17569022 itr]:      1093.42
+[890 sec, 17586694 itr]:      1093.42
+[891 sec, 17602971 itr]:      1093.42
+[892 sec, 17622276 itr]:      1093.42
+[893 sec, 17641656 itr]:      1093.42
+[894 sec, 17657954 itr]:      1093.42
+[895 sec, 17677973 itr]:      1093.42
+[896 sec, 17693663 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[897 sec, 17710442 itr]:      1093.42
+[898 sec, 17728862 itr]:      1093.42
+[899 sec, 17764027 itr]:      1093.42
+[900 sec, 17764027 itr]:      1093.42
+[901 sec, 17781815 itr]:      1093.42
+[902 sec, 17799528 itr]:      1093.42
+[903 sec, 17816239 itr]:      1093.42
+[904 sec, 17836926 itr]:      1093.42
+[905 sec, 17854276 itr]:      1093.42
+[906 sec, 17868391 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[907 sec, 17886385 itr]:      1093.42
+[908 sec, 17904439 itr]:      1093.42
+[909 sec, 17926192 itr]:      1093.42
+[910 sec, 17942551 itr]:      1093.42
+[911 sec, 17959402 itr]:      1093.42
+[912 sec, 17977587 itr]:      1093.42
+[913 sec, 17991933 itr]:      1093.42
+[914 sec, 18007928 itr]:      1093.42
+[915 sec, 18025804 itr]:      1093.42
+[916 sec, 18042018 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[917 sec, 18059216 itr]:      1093.42
+[918 sec, 18078629 itr]:      1093.42
+[919 sec, 18114054 itr]:      1093.42
+[920 sec, 18135279 itr]:      1093.42
+[921 sec, 18135279 itr]:      1093.42
+[922 sec, 18152707 itr]:      1093.42
+[923 sec, 18169687 itr]:      1093.42
+[924 sec, 18184786 itr]:      1093.42
+[925 sec, 18200440 itr]:      1093.42
+[926 sec, 18217794 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[927 sec, 18234338 itr]:      1093.42
+[928 sec, 18254318 itr]:      1093.42
+[929 sec, 18272947 itr]:      1093.42
+[930 sec, 18290098 itr]:      1093.42
+[931 sec, 18310081 itr]:      1093.42
+[932 sec, 18327842 itr]:      1093.42
+[933 sec, 18344649 itr]:      1093.42
+[934 sec, 18360426 itr]:      1093.42
+[935 sec, 18374533 itr]:      1093.42
+[936 sec, 18391896 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[937 sec, 18407243 itr]:      1093.42
+[938 sec, 18423194 itr]:      1093.42
+[939 sec, 18436358 itr]:      1093.42
+[940 sec, 18451241 itr]:      1093.42
+[941 sec, 18467705 itr]:      1093.42
+[942 sec, 18486381 itr]:      1093.42
+[943 sec, 18499711 itr]:      1093.42
+[944 sec, 18515805 itr]:      1093.42
+[945 sec, 18535883 itr]:      1093.42
+[946 sec, 18550951 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[947 sec, 18570620 itr]:      1093.42
+[948 sec, 18586365 itr]:      1093.42
+[949 sec, 18600918 itr]:      1093.42
+[950 sec, 18620225 itr]:      1093.42
+[951 sec, 18635943 itr]:      1093.42
+[952 sec, 18651307 itr]:      1093.42
+[953 sec, 18668850 itr]:      1093.42
+[954 sec, 18686075 itr]:      1093.42
+[955 sec, 18701905 itr]:      1093.42
+[956 sec, 18718767 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[957 sec, 18737262 itr]:      1093.42
+[958 sec, 18756913 itr]:      1093.42
+[959 sec, 18775836 itr]:      1093.42
+[960 sec, 18790703 itr]:      1093.42
+[961 sec, 18807524 itr]:      1093.42
+[962 sec, 18825259 itr]:      1093.42
+[963 sec, 18842417 itr]:      1093.42
+[964 sec, 18860012 itr]:      1093.42
+[965 sec, 18875850 itr]:      1093.42
+[966 sec, 18888750 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[967 sec, 18906437 itr]:      1093.42
+[968 sec, 18924614 itr]:      1093.42
+[969 sec, 18940438 itr]:      1093.42
+[970 sec, 18956753 itr]:      1093.42
+[971 sec, 18975228 itr]:      1093.42
+[972 sec, 18994316 itr]:      1093.42
+[973 sec, 19013040 itr]:      1093.42
+[974 sec, 19030542 itr]:      1093.42
+[975 sec, 19046851 itr]:      1093.42
+[976 sec, 19063962 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[977 sec, 19080062 itr]:      1093.42
+[978 sec, 19097326 itr]:      1093.42
+[979 sec, 19117128 itr]:      1093.42
+[980 sec, 19133913 itr]:      1093.42
+[981 sec, 19150303 itr]:      1093.42
+[982 sec, 19167196 itr]:      1093.42
+[983 sec, 19184643 itr]:      1093.42
+[984 sec, 19204264 itr]:      1093.42
+[985 sec, 19224722 itr]:      1093.42
+[986 sec, 19244279 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[987 sec, 19260576 itr]:      1093.42
+[988 sec, 19279542 itr]:      1093.42
+[989 sec, 19298317 itr]:      1093.42
+[990 sec, 19315894 itr]:      1093.42
+[991 sec, 19333431 itr]:      1093.42
+[992 sec, 19351081 itr]:      1093.42
+[993 sec, 19366195 itr]:      1093.42
+[994 sec, 19384827 itr]:      1093.42
+[995 sec, 19403168 itr]:      1093.42
+[996 sec, 19418276 itr]:      1093.42
+[ optimality gap      ]:       47.27%
+[997 sec, 19432506 itr]:      1093.42
+[998 sec, 19451596 itr]:      1093.42
+[999 sec, 19471797 itr]:      1093.42
+[1000 sec, 19489472 itr]:      1093.42
+[1001 sec, 19506505 itr]:      1093.42
+[1002 sec, 19524174 itr]:      1093.42
+[1003 sec, 19564086 itr]:      1093.42
+[1004 sec, 19564086 itr]:      1093.42
+[1005 sec, 19579760 itr]:      1093.42
+[1006 sec, 19599435 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1007 sec, 19616248 itr]:      1093.42
+[1008 sec, 19633487 itr]:      1093.42
+[1009 sec, 19647267 itr]:      1093.42
+[1010 sec, 19664853 itr]:      1093.42
+[1011 sec, 19685260 itr]:      1093.42
+[1012 sec, 19703489 itr]:      1093.42
+[1013 sec, 19719645 itr]:      1093.42
+[1014 sec, 19754227 itr]:      1093.42
+[1015 sec, 19754227 itr]:      1093.42
+[1016 sec, 19773539 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1017 sec, 19793929 itr]:      1093.42
+[1018 sec, 19808468 itr]:      1093.42
+[1019 sec, 19828501 itr]:      1093.42
+[1020 sec, 19842840 itr]:      1093.42
+[1021 sec, 19878789 itr]:      1093.42
+[1022 sec, 19878789 itr]:      1093.42
+[1023 sec, 19895788 itr]:      1093.42
+[1024 sec, 19914450 itr]:      1093.42
+[1025 sec, 19932630 itr]:      1093.42
+[1026 sec, 19954768 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1027 sec, 19975318 itr]:      1093.42
+[1028 sec, 19994005 itr]:      1093.42
+[1029 sec, 20030890 itr]:      1093.42
+[1030 sec, 20049047 itr]:      1093.42
+[1031 sec, 20049047 itr]:      1093.42
+[1032 sec, 20065919 itr]:      1093.42
+[1033 sec, 20085190 itr]:      1093.42
+[1034 sec, 20104108 itr]:      1093.42
+[1035 sec, 20121490 itr]:      1093.42
+[1036 sec, 20138203 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1037 sec, 20155247 itr]:      1093.42
+[1038 sec, 20174175 itr]:      1093.42
+[1039 sec, 20194720 itr]:      1093.42
+[1040 sec, 20215259 itr]:      1093.42
+[1041 sec, 20234291 itr]:      1093.42
+[1042 sec, 20253259 itr]:      1093.42
+[1043 sec, 20270227 itr]:      1093.42
+[1044 sec, 20289678 itr]:      1093.42
+[1045 sec, 20307797 itr]:      1093.42
+[1046 sec, 20326908 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1047 sec, 20345203 itr]:      1093.42
+[1048 sec, 20363529 itr]:      1093.42
+[1049 sec, 20381469 itr]:      1093.42
+[1050 sec, 20401679 itr]:      1093.42
+[1051 sec, 20419529 itr]:      1093.42
+[1052 sec, 20438566 itr]:      1093.42
+[1053 sec, 20459390 itr]:      1093.42
+[1054 sec, 20478195 itr]:      1093.42
+[1055 sec, 20496912 itr]:      1093.42
+[1056 sec, 20517630 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1057 sec, 20537143 itr]:      1093.42
+[1058 sec, 20555980 itr]:      1093.42
+[1059 sec, 20574392 itr]:      1093.42
+[1060 sec, 20590096 itr]:      1093.42
+[1061 sec, 20605555 itr]:      1093.42
+[1062 sec, 20624870 itr]:      1093.42
+[1063 sec, 20640571 itr]:      1093.42
+[1064 sec, 20659787 itr]:      1093.42
+[1065 sec, 20676804 itr]:      1093.42
+[1066 sec, 20713570 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1067 sec, 20713570 itr]:      1093.42
+[1068 sec, 20732588 itr]:      1093.42
+[1069 sec, 20751435 itr]:      1093.42
+[1070 sec, 20767233 itr]:      1093.42
+[1071 sec, 20783539 itr]:      1093.42
+[1072 sec, 20801143 itr]:      1093.42
+[1073 sec, 20817959 itr]:      1093.42
+[1074 sec, 20835725 itr]:      1093.42
+[1075 sec, 20852200 itr]:      1093.42
+[1076 sec, 20871296 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1077 sec, 20887822 itr]:      1093.42
+[1078 sec, 20904138 itr]:      1093.42
+[1079 sec, 20920325 itr]:      1093.42
+[1080 sec, 20938352 itr]:      1093.42
+[1081 sec, 20954840 itr]:      1093.42
+[1082 sec, 20969001 itr]:      1093.42
+[1083 sec, 20999538 itr]:      1093.42
+[1084 sec, 20999538 itr]:      1093.42
+[1085 sec, 21014967 itr]:      1093.42
+[1086 sec, 21030936 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1087 sec, 21047608 itr]:      1093.42
+[1088 sec, 21064709 itr]:      1093.42
+[1089 sec, 21080891 itr]:      1093.42
+[1090 sec, 21099944 itr]:      1093.42
+[1091 sec, 21117020 itr]:      1093.42
+[1092 sec, 21130631 itr]:      1093.42
+[1093 sec, 21150357 itr]:      1093.42
+[1094 sec, 21167338 itr]:      1093.42
+[1095 sec, 21185096 itr]:      1093.42
+[1096 sec, 21203770 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1097 sec, 21220708 itr]:      1093.42
+[1098 sec, 21236328 itr]:      1093.42
+[1099 sec, 21251243 itr]:      1093.42
+[1100 sec, 21265557 itr]:      1093.42
+[1101 sec, 21283085 itr]:      1093.42
+[1102 sec, 21302403 itr]:      1093.42
+[1103 sec, 21320218 itr]:      1093.42
+[1104 sec, 21337437 itr]:      1093.42
+[1105 sec, 21355599 itr]:      1093.42
+[1106 sec, 21372889 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1107 sec, 21388242 itr]:      1093.42
+[1108 sec, 21408673 itr]:      1093.42
+[1109 sec, 21425252 itr]:      1093.42
+[1110 sec, 21443292 itr]:      1093.42
+[1111 sec, 21478481 itr]:      1093.42
+[1112 sec, 21478481 itr]:      1093.42
+[1113 sec, 21494908 itr]:      1093.42
+[1114 sec, 21507853 itr]:      1093.42
+[1115 sec, 21527789 itr]:      1093.42
+[1116 sec, 21545535 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1117 sec, 21563455 itr]:      1093.42
+[1118 sec, 21577853 itr]:      1093.42
+[1119 sec, 21595155 itr]:      1093.42
+[1120 sec, 21612218 itr]:      1093.42
+[1121 sec, 21632213 itr]:      1093.42
+[1122 sec, 21650858 itr]:      1093.42
+[1123 sec, 21683736 itr]:      1093.42
+[1124 sec, 21683736 itr]:      1093.42
+[1125 sec, 21697989 itr]:      1093.42
+[1126 sec, 21716804 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1127 sec, 21734218 itr]:      1093.42
+[1128 sec, 21750363 itr]:      1093.42
+[1129 sec, 21766388 itr]:      1093.42
+[1130 sec, 21783640 itr]:      1093.42
+[1131 sec, 21804026 itr]:      1093.42
+[1132 sec, 21823220 itr]:      1093.42
+[1133 sec, 21836713 itr]:      1093.42
+[1134 sec, 21853208 itr]:      1093.42
+[1135 sec, 21870077 itr]:      1093.42
+[1136 sec, 21886072 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1137 sec, 21904176 itr]:      1093.42
+[1138 sec, 21920687 itr]:      1093.42
+[1139 sec, 21936590 itr]:      1093.42
+[1140 sec, 21955365 itr]:      1093.42
+[1141 sec, 21972474 itr]:      1093.42
+[1142 sec, 21990797 itr]:      1093.42
+[1143 sec, 22008175 itr]:      1093.42
+[1144 sec, 22026192 itr]:      1093.42
+[1145 sec, 22044290 itr]:      1093.42
+[1146 sec, 22060524 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1147 sec, 22080064 itr]:      1093.42
+[1148 sec, 22112778 itr]:      1093.42
+[1149 sec, 22112778 itr]:      1093.42
+[1150 sec, 22130127 itr]:      1093.42
+[1151 sec, 22148887 itr]:      1093.42
+[1152 sec, 22182036 itr]:      1093.42
+[1153 sec, 22182036 itr]:      1093.42
+[1154 sec, 22198082 itr]:      1093.42
+[1155 sec, 22216005 itr]:      1093.42
+[1156 sec, 22234140 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1157 sec, 22249854 itr]:      1093.42
+[1158 sec, 22267513 itr]:      1093.42
+[1159 sec, 22286468 itr]:      1093.42
+[1160 sec, 22305978 itr]:      1093.42
+[1161 sec, 22323073 itr]:      1093.42
+[1162 sec, 22341089 itr]:      1093.42
+[1163 sec, 22358384 itr]:      1093.42
+[1164 sec, 22376230 itr]:      1093.42
+[1165 sec, 22390364 itr]:      1093.42
+[1166 sec, 22406489 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1167 sec, 22425822 itr]:      1093.42
+[1168 sec, 22444328 itr]:      1093.42
+[1169 sec, 22461891 itr]:      1093.42
+[1170 sec, 22480706 itr]:      1093.42
+[1171 sec, 22501474 itr]:      1093.42
+[1172 sec, 22519091 itr]:      1093.42
+[1173 sec, 22537396 itr]:      1093.42
+[1174 sec, 22555086 itr]:      1093.42
+[1175 sec, 22571948 itr]:      1093.42
+[1176 sec, 22591795 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1177 sec, 22629091 itr]:      1093.42
+[1178 sec, 22629091 itr]:      1093.42
+[1179 sec, 22646940 itr]:      1093.42
+[1180 sec, 22667067 itr]:      1093.42
+[1181 sec, 22688418 itr]:      1093.42
+[1182 sec, 22708143 itr]:      1093.42
+[1183 sec, 22725243 itr]:      1093.42
+[1184 sec, 22745251 itr]:      1093.42
+[1185 sec, 22765207 itr]:      1093.42
+[1186 sec, 22784186 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1187 sec, 22802354 itr]:      1093.42
+[1188 sec, 22813489 itr]:      1093.42
+[1189 sec, 22830482 itr]:      1093.42
+[1190 sec, 22848024 itr]:      1093.42
+[1191 sec, 22865293 itr]:      1093.42
+[1192 sec, 22881626 itr]:      1093.42
+[1193 sec, 22898249 itr]:      1093.42
+[1194 sec, 22912638 itr]:      1093.42
+[1195 sec, 22927072 itr]:      1093.42
+[1196 sec, 22961245 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1197 sec, 22961245 itr]:      1093.42
+[1198 sec, 22980703 itr]:      1093.42
+[1199 sec, 22997540 itr]:      1093.42
+[1200 sec, 23016332 itr]:      1093.42
+[1201 sec, 23033233 itr]:      1093.42
+[1202 sec, 23052545 itr]:      1093.42
+[1203 sec, 23069075 itr]:      1093.42
+[1204 sec, 23084882 itr]:      1093.42
+[1205 sec, 23100501 itr]:      1093.42
+[1206 sec, 23118742 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1207 sec, 23133755 itr]:      1093.42
+[1208 sec, 23148395 itr]:      1093.42
+[1209 sec, 23190525 itr]:      1093.42
+[1210 sec, 23190525 itr]:      1093.42
+[1211 sec, 23222224 itr]:      1093.42
+[1212 sec, 23222224 itr]:      1093.42
+[1213 sec, 23239630 itr]:      1093.42
+[1214 sec, 23256868 itr]:      1093.42
+[1215 sec, 23273200 itr]:      1093.42
+[1216 sec, 23288342 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1217 sec, 23305984 itr]:      1093.42
+[1218 sec, 23321022 itr]:      1093.42
+[1219 sec, 23338156 itr]:      1093.42
+[1220 sec, 23356246 itr]:      1093.42
+[1221 sec, 23369097 itr]:      1093.42
+[1222 sec, 23385873 itr]:      1093.42
+[1223 sec, 23406066 itr]:      1093.42
+[1224 sec, 23420536 itr]:      1093.42
+[1225 sec, 23437802 itr]:      1093.42
+[1226 sec, 23454846 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1227 sec, 23470222 itr]:      1093.42
+[1228 sec, 23486694 itr]:      1093.42
+[1229 sec, 23500498 itr]:      1093.42
+[1230 sec, 23517777 itr]:      1093.42
+[1231 sec, 23534120 itr]:      1093.42
+[1232 sec, 23548131 itr]:      1093.42
+[1233 sec, 23566846 itr]:      1093.42
+[1234 sec, 23584490 itr]:      1093.42
+[1235 sec, 23599982 itr]:      1093.42
+[1236 sec, 23618175 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1237 sec, 23636646 itr]:      1093.42
+[1238 sec, 23654118 itr]:      1093.42
+[1239 sec, 23666414 itr]:      1093.42
+[1240 sec, 23681636 itr]:      1093.42
+[1241 sec, 23696581 itr]:      1093.42
+[1242 sec, 23711886 itr]:      1093.42
+[1243 sec, 23729616 itr]:      1093.42
+[1244 sec, 23748966 itr]:      1093.42
+[1245 sec, 23764446 itr]:      1093.42
+[1246 sec, 23782938 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1247 sec, 23802728 itr]:      1093.42
+[1248 sec, 23820985 itr]:      1093.42
+[1249 sec, 23836980 itr]:      1093.42
+[1250 sec, 23852850 itr]:      1093.42
+[1251 sec, 23870327 itr]:      1093.42
+[1252 sec, 23903657 itr]:      1093.42
+[1253 sec, 23903657 itr]:      1093.42
+[1254 sec, 23921216 itr]:      1093.42
+[1255 sec, 23938260 itr]:      1093.42
+[1256 sec, 23953368 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1257 sec, 23969511 itr]:      1093.42
+[1258 sec, 23984627 itr]:      1093.42
+[1259 sec, 24004301 itr]:      1093.42
+[1260 sec, 24023489 itr]:      1093.42
+[1261 sec, 24037780 itr]:      1093.42
+[1262 sec, 24052968 itr]:      1093.42
+[1263 sec, 24070189 itr]:      1093.42
+[1264 sec, 24087649 itr]:      1093.42
+[1265 sec, 24105031 itr]:      1093.42
+[1266 sec, 24123852 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1267 sec, 24144367 itr]:      1093.42
+[1268 sec, 24180395 itr]:      1093.42
+[1269 sec, 24180395 itr]:      1093.42
+[1270 sec, 24198145 itr]:      1093.42
+[1271 sec, 24214404 itr]:      1093.42
+[1272 sec, 24250689 itr]:      1093.42
+[1273 sec, 24250689 itr]:      1093.42
+[1274 sec, 24265980 itr]:      1093.42
+[1275 sec, 24281703 itr]:      1093.42
+[1276 sec, 24297100 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1277 sec, 24316540 itr]:      1093.42
+[1278 sec, 24330814 itr]:      1093.42
+[1279 sec, 24346224 itr]:      1093.42
+[1280 sec, 24364018 itr]:      1093.42
+[1281 sec, 24381173 itr]:      1093.42
+[1282 sec, 24398235 itr]:      1093.42
+[1283 sec, 24415641 itr]:      1093.42
+[1284 sec, 24430048 itr]:      1093.42
+[1285 sec, 24446816 itr]:      1093.42
+[1286 sec, 24466140 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1287 sec, 24498124 itr]:      1093.42
+[1288 sec, 24498124 itr]:      1093.42
+[1289 sec, 24516035 itr]:      1093.42
+[1290 sec, 24534824 itr]:      1093.42
+[1291 sec, 24553276 itr]:      1093.42
+[1292 sec, 24570287 itr]:      1093.42
+[1293 sec, 24589597 itr]:      1093.42
+[1294 sec, 24608082 itr]:      1093.42
+[1295 sec, 24625276 itr]:      1093.42
+[1296 sec, 24643031 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1297 sec, 24660479 itr]:      1093.42
+[1298 sec, 24674686 itr]:      1093.42
+[1299 sec, 24694851 itr]:      1093.42
+[1300 sec, 24713412 itr]:      1093.42
+[1301 sec, 24731105 itr]:      1093.42
+[1302 sec, 24746889 itr]:      1093.42
+[1303 sec, 24767316 itr]:      1093.42
+[1304 sec, 24783776 itr]:      1093.42
+[1305 sec, 24817586 itr]:      1093.42
+[1306 sec, 24817586 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1307 sec, 24833253 itr]:      1093.42
+[1308 sec, 24848965 itr]:      1093.42
+[1309 sec, 24867477 itr]:      1093.42
+[1310 sec, 24885763 itr]:      1093.42
+[1311 sec, 24902569 itr]:      1093.42
+[1312 sec, 24923930 itr]:      1093.42
+[1313 sec, 24938800 itr]:      1093.42
+[1314 sec, 24971360 itr]:      1093.42
+[1315 sec, 24971360 itr]:      1093.42
+[1316 sec, 24990500 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1317 sec, 25009040 itr]:      1093.42
+[1318 sec, 25026925 itr]:      1093.42
+[1319 sec, 25042894 itr]:      1093.42
+[1320 sec, 25063529 itr]:      1093.42
+[1321 sec, 25101226 itr]:      1093.42
+[1322 sec, 25118418 itr]:      1093.42
+[1323 sec, 25118418 itr]:      1093.42
+[1324 sec, 25138682 itr]:      1093.42
+[1325 sec, 25159260 itr]:      1093.42
+[1326 sec, 25177559 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1327 sec, 25197732 itr]:      1093.42
+[1328 sec, 25215915 itr]:      1093.42
+[1329 sec, 25234581 itr]:      1093.42
+[1330 sec, 25250892 itr]:      1093.42
+[1331 sec, 25270934 itr]:      1093.42
+[1332 sec, 25290741 itr]:      1093.42
+[1333 sec, 25311485 itr]:      1093.42
+[1334 sec, 25329864 itr]:      1093.42
+[1335 sec, 25348723 itr]:      1093.42
+[1336 sec, 25366743 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1337 sec, 25387365 itr]:      1093.42
+[1338 sec, 25426302 itr]:      1093.42
+[1339 sec, 25426302 itr]:      1093.42
+[1340 sec, 25447765 itr]:      1093.42
+[1341 sec, 25467098 itr]:      1093.42
+[1342 sec, 25486212 itr]:      1093.42
+[1343 sec, 25503893 itr]:      1093.42
+[1344 sec, 25523956 itr]:      1093.42
+[1345 sec, 25539662 itr]:      1093.42
+[1346 sec, 25577785 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1347 sec, 25577785 itr]:      1093.42
+[1348 sec, 25599873 itr]:      1093.42
+[1349 sec, 25619702 itr]:      1093.42
+[1350 sec, 25642377 itr]:      1093.42
+[1351 sec, 25660698 itr]:      1093.42
+[1352 sec, 25674941 itr]:      1093.42
+[1353 sec, 25694804 itr]:      1093.42
+[1354 sec, 25714406 itr]:      1093.42
+[1355 sec, 25732713 itr]:      1093.42
+[1356 sec, 25751178 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1357 sec, 25771915 itr]:      1093.42
+[1358 sec, 25791557 itr]:      1093.42
+[1359 sec, 25814681 itr]:      1093.42
+[1360 sec, 25832752 itr]:      1093.42
+[1361 sec, 25854794 itr]:      1093.42
+[1362 sec, 25869469 itr]:      1093.42
+[1363 sec, 25889970 itr]:      1093.42
+[1364 sec, 25911115 itr]:      1093.42
+[1365 sec, 25928629 itr]:      1093.42
+[1366 sec, 25947427 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1367 sec, 25967226 itr]:      1093.42
+[1368 sec, 25985596 itr]:      1093.42
+[1369 sec, 26008151 itr]:      1093.42
+[1370 sec, 26026928 itr]:      1093.42
+[1371 sec, 26047970 itr]:      1093.42
+[1372 sec, 26067424 itr]:      1093.42
+[1373 sec, 26084414 itr]:      1093.42
+[1374 sec, 26104093 itr]:      1093.42
+[1375 sec, 26122643 itr]:      1093.42
+[1376 sec, 26140160 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1377 sec, 26159133 itr]:      1093.42
+[1378 sec, 26178853 itr]:      1093.42
+[1379 sec, 26197319 itr]:      1093.42
+[1380 sec, 26215007 itr]:      1093.42
+[1381 sec, 26233788 itr]:      1093.42
+[1382 sec, 26251945 itr]:      1093.42
+[1383 sec, 26269751 itr]:      1093.42
+[1384 sec, 26289114 itr]:      1093.42
+[1385 sec, 26309757 itr]:      1093.42
+[1386 sec, 26327230 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1387 sec, 26346722 itr]:      1093.42
+[1388 sec, 26364931 itr]:      1093.42
+[1389 sec, 26385373 itr]:      1093.42
+[1390 sec, 26400987 itr]:      1093.42
+[1391 sec, 26417287 itr]:      1093.42
+[1392 sec, 26436581 itr]:      1093.42
+[1393 sec, 26454817 itr]:      1093.42
+[1394 sec, 26469856 itr]:      1093.42
+[1395 sec, 26488822 itr]:      1093.42
+[1396 sec, 26510231 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1397 sec, 26527952 itr]:      1093.42
+[1398 sec, 26546009 itr]:      1093.42
+[1399 sec, 26564513 itr]:      1093.42
+[1400 sec, 26583591 itr]:      1093.42
+[1401 sec, 26602023 itr]:      1093.42
+[1402 sec, 26617545 itr]:      1093.42
+[1403 sec, 26636729 itr]:      1093.42
+[1404 sec, 26653499 itr]:      1093.42
+[1405 sec, 26671344 itr]:      1093.42
+[1406 sec, 26688961 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1407 sec, 26708694 itr]:      1093.42
+[1408 sec, 26727580 itr]:      1093.42
+[1409 sec, 26750908 itr]:      1093.42
+[1410 sec, 26769960 itr]:      1093.42
+[1411 sec, 26790066 itr]:      1093.42
+[1412 sec, 26808034 itr]:      1093.42
+[1413 sec, 26826194 itr]:      1093.42
+[1414 sec, 26846380 itr]:      1093.42
+[1415 sec, 26864022 itr]:      1093.42
+[1416 sec, 26886126 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1417 sec, 26906363 itr]:      1093.42
+[1418 sec, 26924547 itr]:      1093.42
+[1419 sec, 26942931 itr]:      1093.42
+[1420 sec, 26978959 itr]:      1093.42
+[1421 sec, 26978959 itr]:      1093.42
+[1422 sec, 26999623 itr]:      1093.42
+[1423 sec, 27019629 itr]:      1093.42
+[1424 sec, 27037767 itr]:      1093.42
+[1425 sec, 27055394 itr]:      1093.42
+[1426 sec, 27077173 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1427 sec, 27101081 itr]:      1093.42
+[1428 sec, 27121368 itr]:      1093.42
+[1429 sec, 27139669 itr]:      1093.42
+[1430 sec, 27159901 itr]:      1093.42
+[1431 sec, 27178831 itr]:      1093.42
+[1432 sec, 27220410 itr]:      1093.42
+[1433 sec, 27220410 itr]:      1093.42
+[1434 sec, 27237544 itr]:      1093.42
+[1435 sec, 27256079 itr]:      1093.42
+[1436 sec, 27272950 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1437 sec, 27291523 itr]:      1093.42
+[1438 sec, 27311530 itr]:      1093.42
+[1439 sec, 27333051 itr]:      1093.42
+[1440 sec, 27353531 itr]:      1093.42
+[1441 sec, 27372304 itr]:      1093.42
+[1442 sec, 27392398 itr]:      1093.42
+[1443 sec, 27410343 itr]:      1093.42
+[1444 sec, 27429420 itr]:      1093.42
+[1445 sec, 27443815 itr]:      1093.42
+[1446 sec, 27461602 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1447 sec, 27480844 itr]:      1093.42
+[1448 sec, 27496972 itr]:      1093.42
+[1449 sec, 27516428 itr]:      1093.42
+[1450 sec, 27534065 itr]:      1093.42
+[1451 sec, 27568825 itr]:      1093.42
+[1452 sec, 27568825 itr]:      1093.42
+[1453 sec, 27586638 itr]:      1093.42
+[1454 sec, 27603398 itr]:      1093.42
+[1455 sec, 27618922 itr]:      1093.42
+[1456 sec, 27638506 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1457 sec, 27672062 itr]:      1093.42
+[1458 sec, 27672062 itr]:      1093.42
+[1459 sec, 27691189 itr]:      1093.42
+[1460 sec, 27725276 itr]:      1093.42
+[1461 sec, 27725276 itr]:      1093.42
+[1462 sec, 27741790 itr]:      1093.42
+[1463 sec, 27762262 itr]:      1093.42
+[1464 sec, 27780024 itr]:      1093.42
+[1465 sec, 27801248 itr]:      1093.42
+[1466 sec, 27820101 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1467 sec, 27834786 itr]:      1093.42
+[1468 sec, 27851509 itr]:      1093.42
+[1469 sec, 27867672 itr]:      1093.42
+[1470 sec, 27905382 itr]:      1093.42
+[1471 sec, 27905382 itr]:      1093.42
+[1472 sec, 27925414 itr]:      1093.42
+[1473 sec, 27943375 itr]:      1093.42
+[1474 sec, 27960305 itr]:      1093.42
+[1475 sec, 27979544 itr]:      1093.42
+[1476 sec, 28000170 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1477 sec, 28018738 itr]:      1093.42
+[1478 sec, 28035143 itr]:      1093.42
+[1479 sec, 28051788 itr]:      1093.42
+[1480 sec, 28067192 itr]:      1093.42
+[1481 sec, 28103290 itr]:      1093.42
+[1482 sec, 28103290 itr]:      1093.42
+[1483 sec, 28142733 itr]:      1093.42
+[1484 sec, 28142733 itr]:      1093.42
+[1485 sec, 28162901 itr]:      1093.42
+[1486 sec, 28183042 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1487 sec, 28201548 itr]:      1093.42
+[1488 sec, 28218792 itr]:      1093.42
+[1489 sec, 28240336 itr]:      1093.42
+[1490 sec, 28259448 itr]:      1093.42
+[1491 sec, 28277753 itr]:      1093.42
+[1492 sec, 28298720 itr]:      1093.42
+[1493 sec, 28318921 itr]:      1093.42
+[1494 sec, 28339681 itr]:      1093.42
+[1495 sec, 28358495 itr]:      1093.42
+[1496 sec, 28377688 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1497 sec, 28395173 itr]:      1093.42
+[1498 sec, 28412836 itr]:      1093.42
+[1499 sec, 28430491 itr]:      1093.42
+[1500 sec, 28448940 itr]:      1093.42
+[1501 sec, 28469657 itr]:      1093.42
+[1502 sec, 28488539 itr]:      1093.42
+[1503 sec, 28507688 itr]:      1093.42
+[1504 sec, 28526333 itr]:      1093.42
+[1505 sec, 28548407 itr]:      1093.42
+[1506 sec, 28568408 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1507 sec, 28582987 itr]:      1093.42
+[1508 sec, 28598872 itr]:      1093.42
+[1509 sec, 28615835 itr]:      1093.42
+[1510 sec, 28634814 itr]:      1093.42
+[1511 sec, 28656517 itr]:      1093.42
+[1512 sec, 28679733 itr]:      1093.42
+[1513 sec, 28697727 itr]:      1093.42
+[1514 sec, 28720177 itr]:      1093.42
+[1515 sec, 28738719 itr]:      1093.42
+[1516 sec, 28758823 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1517 sec, 28775498 itr]:      1093.42
+[1518 sec, 28795250 itr]:      1093.42
+[1519 sec, 28818194 itr]:      1093.42
+[1520 sec, 28838247 itr]:      1093.42
+[1521 sec, 28856345 itr]:      1093.42
+[1522 sec, 28873540 itr]:      1093.42
+[1523 sec, 28893612 itr]:      1093.42
+[1524 sec, 28912307 itr]:      1093.42
+[1525 sec, 28933062 itr]:      1093.42
+[1526 sec, 28953387 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1527 sec, 28971161 itr]:      1093.42
+[1528 sec, 28990066 itr]:      1093.42
+[1529 sec, 29009728 itr]:      1093.42
+[1530 sec, 29028711 itr]:      1093.42
+[1531 sec, 29047317 itr]:      1093.42
+[1532 sec, 29071004 itr]:      1093.42
+[1533 sec, 29089451 itr]:      1093.42
+[1534 sec, 29111138 itr]:      1093.42
+[1535 sec, 29127753 itr]:      1093.42
+[1536 sec, 29149275 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1537 sec, 29165724 itr]:      1093.42
+[1538 sec, 29183225 itr]:      1093.42
+[1539 sec, 29200954 itr]:      1093.42
+[1540 sec, 29218223 itr]:      1093.42
+[1541 sec, 29239156 itr]:      1093.42
+[1542 sec, 29256455 itr]:      1093.42
+[1543 sec, 29275800 itr]:      1093.42
+[1544 sec, 29296673 itr]:      1093.42
+[1545 sec, 29315344 itr]:      1093.42
+[1546 sec, 29351949 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1547 sec, 29351949 itr]:      1093.42
+[1548 sec, 29372098 itr]:      1093.42
+[1549 sec, 29390686 itr]:      1093.42
+[1550 sec, 29406284 itr]:      1093.42
+[1551 sec, 29423087 itr]:      1093.42
+[1552 sec, 29442589 itr]:      1093.42
+[1553 sec, 29478636 itr]:      1093.42
+[1554 sec, 29478636 itr]:      1093.42
+[1555 sec, 29495641 itr]:      1093.42
+[1556 sec, 29512791 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1557 sec, 29533196 itr]:      1093.42
+[1558 sec, 29552098 itr]:      1093.42
+[1559 sec, 29571879 itr]:      1093.42
+[1560 sec, 29591789 itr]:      1093.42
+[1561 sec, 29610586 itr]:      1093.42
+[1562 sec, 29628612 itr]:      1093.42
+[1563 sec, 29647693 itr]:      1093.42
+[1564 sec, 29667200 itr]:      1093.42
+[1565 sec, 29681911 itr]:      1093.42
+[1566 sec, 29699758 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1567 sec, 29720205 itr]:      1093.42
+[1568 sec, 29739515 itr]:      1093.42
+[1569 sec, 29779996 itr]:      1093.42
+[1570 sec, 29779996 itr]:      1093.42
+[1571 sec, 29797629 itr]:      1093.42
+[1572 sec, 29814148 itr]:      1093.42
+[1573 sec, 29830420 itr]:      1093.42
+[1574 sec, 29848231 itr]:      1093.42
+[1575 sec, 29883064 itr]:      1093.42
+[1576 sec, 29901306 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1577 sec, 29901306 itr]:      1093.42
+[1578 sec, 29921274 itr]:      1093.42
+[1579 sec, 29939984 itr]:      1093.42
+[1580 sec, 29958562 itr]:      1093.42
+[1581 sec, 29975285 itr]:      1093.42
+[1582 sec, 29993052 itr]:      1093.42
+[1583 sec, 30011252 itr]:      1093.42
+[1584 sec, 30031169 itr]:      1093.42
+[1585 sec, 30050832 itr]:      1093.42
+[1586 sec, 30069569 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1587 sec, 30087983 itr]:      1093.42
+[1588 sec, 30108661 itr]:      1093.42
+[1589 sec, 30145977 itr]:      1093.42
+[1590 sec, 30145977 itr]:      1093.42
+[1591 sec, 30162633 itr]:      1093.42
+[1592 sec, 30183336 itr]:      1093.42
+[1593 sec, 30203446 itr]:      1093.42
+[1594 sec, 30223971 itr]:      1093.42
+[1595 sec, 30241891 itr]:      1093.42
+[1596 sec, 30258782 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1597 sec, 30276645 itr]:      1093.42
+[1598 sec, 30296538 itr]:      1093.42
+[1599 sec, 30314570 itr]:      1093.42
+[1600 sec, 30335195 itr]:      1093.42
+[1601 sec, 30354829 itr]:      1093.42
+[1602 sec, 30373944 itr]:      1093.42
+[1603 sec, 30409208 itr]:      1093.42
+[1604 sec, 30409208 itr]:      1093.42
+[1605 sec, 30427943 itr]:      1093.42
+[1606 sec, 30446976 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1607 sec, 30470144 itr]:      1093.42
+[1608 sec, 30487099 itr]:      1093.42
+[1609 sec, 30508175 itr]:      1093.42
+[1610 sec, 30527249 itr]:      1093.42
+[1611 sec, 30547543 itr]:      1093.42
+[1612 sec, 30569813 itr]:      1093.42
+[1613 sec, 30582786 itr]:      1093.42
+[1614 sec, 30605517 itr]:      1093.42
+[1615 sec, 30626504 itr]:      1093.42
+[1616 sec, 30647184 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1617 sec, 30666887 itr]:      1093.42
+[1618 sec, 30683824 itr]:      1093.42
+[1619 sec, 30703075 itr]:      1093.42
+[1620 sec, 30722386 itr]:      1093.42
+[1621 sec, 30740319 itr]:      1093.42
+[1622 sec, 30758995 itr]:      1093.42
+[1623 sec, 30776381 itr]:      1093.42
+[1624 sec, 30794776 itr]:      1093.42
+[1625 sec, 30814490 itr]:      1093.42
+[1626 sec, 30837191 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1627 sec, 30853814 itr]:      1093.42
+[1628 sec, 30872524 itr]:      1093.42
+[1629 sec, 30894883 itr]:      1093.42
+[1630 sec, 30915386 itr]:      1093.42
+[1631 sec, 30936204 itr]:      1093.42
+[1632 sec, 30955298 itr]:      1093.42
+[1633 sec, 30973814 itr]:      1093.42
+[1634 sec, 30992855 itr]:      1093.42
+[1635 sec, 31011511 itr]:      1093.42
+[1636 sec, 31027500 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1637 sec, 31064705 itr]:      1093.42
+[1638 sec, 31064705 itr]:      1093.42
+[1639 sec, 31089123 itr]:      1093.42
+[1640 sec, 31107936 itr]:      1093.42
+[1641 sec, 31128921 itr]:      1093.42
+[1642 sec, 31148639 itr]:      1093.42
+[1643 sec, 31164403 itr]:      1093.42
+[1644 sec, 31184067 itr]:      1093.42
+[1645 sec, 31206299 itr]:      1093.42
+[1646 sec, 31228057 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1647 sec, 31248136 itr]:      1093.42
+[1648 sec, 31268032 itr]:      1093.42
+[1649 sec, 31286159 itr]:      1093.42
+[1650 sec, 31304782 itr]:      1093.42
+[1651 sec, 31325341 itr]:      1093.42
+[1652 sec, 31346663 itr]:      1093.42
+[1653 sec, 31364316 itr]:      1093.42
+[1654 sec, 31383216 itr]:      1093.42
+[1655 sec, 31404495 itr]:      1093.42
+[1656 sec, 31423843 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1657 sec, 31442257 itr]:      1093.42
+[1658 sec, 31462997 itr]:      1093.42
+[1659 sec, 31482983 itr]:      1093.42
+[1660 sec, 31502798 itr]:      1093.42
+[1661 sec, 31520649 itr]:      1093.42
+[1662 sec, 31543101 itr]:      1093.42
+[1663 sec, 31562889 itr]:      1093.42
+[1664 sec, 31581267 itr]:      1093.42
+[1665 sec, 31617437 itr]:      1093.42
+[1666 sec, 31617437 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1667 sec, 31632976 itr]:      1093.42
+[1668 sec, 31650900 itr]:      1093.42
+[1669 sec, 31669922 itr]:      1093.42
+[1670 sec, 31687452 itr]:      1093.42
+[1671 sec, 31707647 itr]:      1093.42
+[1672 sec, 31723778 itr]:      1093.42
+[1673 sec, 31741971 itr]:      1093.42
+[1674 sec, 31760243 itr]:      1093.42
+[1675 sec, 31778247 itr]:      1093.42
+[1676 sec, 31793670 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1677 sec, 31812215 itr]:      1093.42
+[1678 sec, 31831260 itr]:      1093.42
+[1679 sec, 31850012 itr]:      1093.42
+[1680 sec, 31867972 itr]:      1093.42
+[1681 sec, 31886298 itr]:      1093.42
+[1682 sec, 31905077 itr]:      1093.42
+[1683 sec, 31923340 itr]:      1093.42
+[1684 sec, 31946311 itr]:      1093.42
+[1685 sec, 31966253 itr]:      1093.42
+[1686 sec, 31986832 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1687 sec, 32005906 itr]:      1093.42
+[1688 sec, 32025022 itr]:      1093.42
+[1689 sec, 32041900 itr]:      1093.42
+[1690 sec, 32081711 itr]:      1093.42
+[1691 sec, 32081711 itr]:      1093.42
+[1692 sec, 32100225 itr]:      1093.42
+[1693 sec, 32123258 itr]:      1093.42
+[1694 sec, 32140967 itr]:      1093.42
+[1695 sec, 32158678 itr]:      1093.42
+[1696 sec, 32179047 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1697 sec, 32193709 itr]:      1093.42
+[1698 sec, 32213336 itr]:      1093.42
+[1699 sec, 32233172 itr]:      1093.42
+[1700 sec, 32256192 itr]:      1093.42
+[1701 sec, 32275475 itr]:      1093.42
+[1702 sec, 32292597 itr]:      1093.42
+[1703 sec, 32309113 itr]:      1093.42
+[1704 sec, 32327271 itr]:      1093.42
+[1705 sec, 32347617 itr]:      1093.42
+[1706 sec, 32366851 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1707 sec, 32385602 itr]:      1093.42
+[1708 sec, 32404950 itr]:      1093.42
+[1709 sec, 32422124 itr]:      1093.42
+[1710 sec, 32441231 itr]:      1093.42
+[1711 sec, 32456324 itr]:      1093.42
+[1712 sec, 32477212 itr]:      1093.42
+[1713 sec, 32494749 itr]:      1093.42
+[1714 sec, 32512196 itr]:      1093.42
+[1715 sec, 32532075 itr]:      1093.42
+[1716 sec, 32552099 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1717 sec, 32572289 itr]:      1093.42
+[1718 sec, 32590015 itr]:      1093.42
+[1719 sec, 32610281 itr]:      1093.42
+[1720 sec, 32646891 itr]:      1093.42
+[1721 sec, 32646891 itr]:      1093.42
+[1722 sec, 32668352 itr]:      1093.42
+[1723 sec, 32687420 itr]:      1093.42
+[1724 sec, 32704943 itr]:      1093.42
+[1725 sec, 32720948 itr]:      1093.42
+[1726 sec, 32740147 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1727 sec, 32761231 itr]:      1093.42
+[1728 sec, 32779470 itr]:      1093.42
+[1729 sec, 32798608 itr]:      1093.42
+[1730 sec, 32818767 itr]:      1093.42
+[1731 sec, 32835259 itr]:      1093.42
+[1732 sec, 32853880 itr]:      1093.42
+[1733 sec, 32873447 itr]:      1093.42
+[1734 sec, 32890542 itr]:      1093.42
+[1735 sec, 32910176 itr]:      1093.42
+[1736 sec, 32930673 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1737 sec, 32950487 itr]:      1093.42
+[1738 sec, 32971438 itr]:      1093.42
+[1739 sec, 32989449 itr]:      1093.42
+[1740 sec, 33011015 itr]:      1093.42
+[1741 sec, 33029931 itr]:      1093.42
+[1742 sec, 33047732 itr]:      1093.42
+[1743 sec, 33068734 itr]:      1093.42
+[1744 sec, 33087309 itr]:      1093.42
+[1745 sec, 33106633 itr]:      1093.42
+[1746 sec, 33122389 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1747 sec, 33140736 itr]:      1093.42
+[1748 sec, 33157938 itr]:      1093.42
+[1749 sec, 33177517 itr]:      1093.42
+[1750 sec, 33197596 itr]:      1093.42
+[1751 sec, 33215070 itr]:      1093.42
+[1752 sec, 33233383 itr]:      1093.42
+[1753 sec, 33249484 itr]:      1093.42
+[1754 sec, 33267680 itr]:      1093.42
+[1755 sec, 33287927 itr]:      1093.42
+[1756 sec, 33306796 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1757 sec, 33324538 itr]:      1093.42
+[1758 sec, 33341475 itr]:      1093.42
+[1759 sec, 33361922 itr]:      1093.42
+[1760 sec, 33382560 itr]:      1093.42
+[1761 sec, 33401919 itr]:      1093.42
+[1762 sec, 33420065 itr]:      1093.42
+[1763 sec, 33436811 itr]:      1093.42
+[1764 sec, 33454716 itr]:      1093.42
+[1765 sec, 33472937 itr]:      1093.42
+[1766 sec, 33490270 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1767 sec, 33509545 itr]:      1093.42
+[1768 sec, 33528660 itr]:      1093.42
+[1769 sec, 33551320 itr]:      1093.42
+[1770 sec, 33571003 itr]:      1093.42
+[1771 sec, 33590396 itr]:      1093.42
+[1772 sec, 33608332 itr]:      1093.42
+[1773 sec, 33627478 itr]:      1093.42
+[1774 sec, 33642785 itr]:      1093.42
+[1775 sec, 33661488 itr]:      1093.42
+[1776 sec, 33680283 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1777 sec, 33697884 itr]:      1093.42
+[1778 sec, 33715686 itr]:      1093.42
+[1779 sec, 33732645 itr]:      1093.42
+[1780 sec, 33754069 itr]:      1093.42
+[1781 sec, 33788284 itr]:      1093.42
+[1782 sec, 33788284 itr]:      1093.42
+[1783 sec, 33809239 itr]:      1093.42
+[1784 sec, 33825682 itr]:      1093.42
+[1785 sec, 33844853 itr]:      1093.42
+[1786 sec, 33860596 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1787 sec, 33879553 itr]:      1093.42
+[1788 sec, 33898229 itr]:      1093.42
+[1789 sec, 33917156 itr]:      1093.42
+[1790 sec, 33936019 itr]:      1093.42
+[1791 sec, 33957541 itr]:      1093.42
+[1792 sec, 33975594 itr]:      1093.42
+[1793 sec, 33996481 itr]:      1093.42
+[1794 sec, 34018309 itr]:      1093.42
+[1795 sec, 34035356 itr]:      1093.42
+[1796 sec, 34057082 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1797 sec, 34076874 itr]:      1093.42
+[1798 sec, 34093423 itr]:      1093.42
+[1799 sec, 34111734 itr]:      1093.42
+[1800 sec, 34130735 itr]:      1093.42
+[1801 sec, 34149995 itr]:      1093.42
+[1802 sec, 34169503 itr]:      1093.42
+[1803 sec, 34186077 itr]:      1093.42
+[1804 sec, 34202596 itr]:      1093.42
+[1805 sec, 34219820 itr]:      1093.42
+[1806 sec, 34234378 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1807 sec, 34252475 itr]:      1093.42
+[1808 sec, 34269589 itr]:      1093.42
+[1809 sec, 34289837 itr]:      1093.42
+[1810 sec, 34306199 itr]:      1093.42
+[1811 sec, 34325085 itr]:      1093.42
+[1812 sec, 34342139 itr]:      1093.42
+[1813 sec, 34362572 itr]:      1093.42
+[1814 sec, 34384013 itr]:      1093.42
+[1815 sec, 34401406 itr]:      1093.42
+[1816 sec, 34420554 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1817 sec, 34431300 itr]:      1093.42
+[1818 sec, 34443361 itr]:      1093.42
+[1819 sec, 34456117 itr]:      1093.42
+[1820 sec, 34472217 itr]:      1093.42
+[1821 sec, 34484350 itr]:      1093.42
+[1822 sec, 34501301 itr]:      1093.42
+[1823 sec, 34512670 itr]:      1093.42
+[1824 sec, 34526267 itr]:      1093.42
+[1825 sec, 34534615 itr]:      1093.42
+[1826 sec, 34544587 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1827 sec, 34554902 itr]:      1093.42
+[1828 sec, 34563241 itr]:      1093.42
+[1829 sec, 34576983 itr]:      1093.42
+[1830 sec, 34587782 itr]:      1093.42
+[1831 sec, 34597112 itr]:      1093.42
+[1832 sec, 34607435 itr]:      1093.42
+[1833 sec, 34616361 itr]:      1093.42
+[1834 sec, 34625453 itr]:      1093.42
+[1835 sec, 34635743 itr]:      1093.42
+[1836 sec, 34645953 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1837 sec, 34653944 itr]:      1093.42
+[1838 sec, 34662215 itr]:      1093.42
+[1839 sec, 34671264 itr]:      1093.42
+[1840 sec, 34678879 itr]:      1093.42
+[1841 sec, 34687861 itr]:      1093.42
+[1842 sec, 34696767 itr]:      1093.42
+[1843 sec, 34705146 itr]:      1093.42
+[1844 sec, 34714026 itr]:      1093.42
+[1845 sec, 34722754 itr]:      1093.42
+[1846 sec, 34730867 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1847 sec, 34741038 itr]:      1093.42
+[1848 sec, 34749360 itr]:      1093.42
+[1849 sec, 34757653 itr]:      1093.42
+[1850 sec, 34764339 itr]:      1093.42
+[1851 sec, 34771765 itr]:      1093.42
+[1852 sec, 34779953 itr]:      1093.42
+[1853 sec, 34787585 itr]:      1093.42
+[1854 sec, 34794939 itr]:      1093.42
+[1855 sec, 34803322 itr]:      1093.42
+[1856 sec, 34809597 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1857 sec, 34817983 itr]:      1093.42
+[1858 sec, 34826836 itr]:      1093.42
+[1859 sec, 34835567 itr]:      1093.42
+[1860 sec, 34843966 itr]:      1093.42
+[1861 sec, 34852488 itr]:      1093.42
+[1862 sec, 34861813 itr]:      1093.42
+[1863 sec, 34869935 itr]:      1093.42
+[1864 sec, 34878296 itr]:      1093.42
+[1865 sec, 34890699 itr]:      1093.42
+[1866 sec, 34890699 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1867 sec, 34898838 itr]:      1093.42
+[1868 sec, 34908283 itr]:      1093.42
+[1869 sec, 34917151 itr]:      1093.42
+[1870 sec, 34924754 itr]:      1093.42
+[1871 sec, 34932558 itr]:      1093.42
+[1872 sec, 34940302 itr]:      1093.42
+[1873 sec, 34948038 itr]:      1093.42
+[1874 sec, 34955795 itr]:      1093.42
+[1875 sec, 34964192 itr]:      1093.42
+[1876 sec, 34972384 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1877 sec, 34980383 itr]:      1093.42
+[1878 sec, 34988478 itr]:      1093.42
+[1879 sec, 34996812 itr]:      1093.42
+[1880 sec, 35005216 itr]:      1093.42
+[1881 sec, 35013256 itr]:      1093.42
+[1882 sec, 35021857 itr]:      1093.42
+[1883 sec, 35030343 itr]:      1093.42
+[1884 sec, 35038956 itr]:      1093.42
+[1885 sec, 35046884 itr]:      1093.42
+[1886 sec, 35054223 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1887 sec, 35062038 itr]:      1093.42
+[1888 sec, 35069926 itr]:      1093.42
+[1889 sec, 35078639 itr]:      1093.42
+[1890 sec, 35085949 itr]:      1093.42
+[1891 sec, 35094051 itr]:      1093.42
+[1892 sec, 35103203 itr]:      1093.42
+[1893 sec, 35112866 itr]:      1093.42
+[1894 sec, 35122292 itr]:      1093.42
+[1895 sec, 35130526 itr]:      1093.42
+[1896 sec, 35139538 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1897 sec, 35147430 itr]:      1093.42
+[1898 sec, 35157096 itr]:      1093.42
+[1899 sec, 35166302 itr]:      1093.42
+[1900 sec, 35175467 itr]:      1093.42
+[1901 sec, 35184264 itr]:      1093.42
+[1902 sec, 35193094 itr]:      1093.42
+[1903 sec, 35201715 itr]:      1093.42
+[1904 sec, 35209412 itr]:      1093.42
+[1905 sec, 35219228 itr]:      1093.42
+[1906 sec, 35228455 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1907 sec, 35236775 itr]:      1093.42
+[1908 sec, 35245372 itr]:      1093.42
+[1909 sec, 35255248 itr]:      1093.42
+[1910 sec, 35274049 itr]:      1093.42
+[1911 sec, 35274049 itr]:      1093.42
+[1912 sec, 35283080 itr]:      1093.42
+[1913 sec, 35291059 itr]:      1093.42
+[1914 sec, 35299255 itr]:      1093.42
+[1915 sec, 35309115 itr]:      1093.42
+[1916 sec, 35318390 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1917 sec, 35327982 itr]:      1093.42
+[1918 sec, 35336402 itr]:      1093.42
+[1919 sec, 35355076 itr]:      1093.42
+[1920 sec, 35355076 itr]:      1093.42
+[1921 sec, 35364763 itr]:      1093.42
+[1922 sec, 35373897 itr]:      1093.42
+[1923 sec, 35382914 itr]:      1093.42
+[1924 sec, 35392097 itr]:      1093.42
+[1925 sec, 35400415 itr]:      1093.42
+[1926 sec, 35409983 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1927 sec, 35419103 itr]:      1093.42
+[1928 sec, 35428823 itr]:      1093.42
+[1929 sec, 35438542 itr]:      1093.42
+[1930 sec, 35446360 itr]:      1093.42
+[1931 sec, 35454980 itr]:      1093.42
+[1932 sec, 35464197 itr]:      1093.42
+[1933 sec, 35472329 itr]:      1093.42
+[1934 sec, 35480425 itr]:      1093.42
+[1935 sec, 35488788 itr]:      1093.42
+[1936 sec, 35497517 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1937 sec, 35507025 itr]:      1093.42
+[1938 sec, 35515009 itr]:      1093.42
+[1939 sec, 35522790 itr]:      1093.42
+[1940 sec, 35531746 itr]:      1093.42
+[1941 sec, 35540437 itr]:      1093.42
+[1942 sec, 35548864 itr]:      1093.42
+[1943 sec, 35558886 itr]:      1093.42
+[1944 sec, 35566293 itr]:      1093.42
+[1945 sec, 35575090 itr]:      1093.42
+[1946 sec, 35583249 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1947 sec, 35590666 itr]:      1093.42
+[1948 sec, 35599267 itr]:      1093.42
+[1949 sec, 35607139 itr]:      1093.42
+[1950 sec, 35616211 itr]:      1093.42
+[1951 sec, 35623842 itr]:      1093.42
+[1952 sec, 35632598 itr]:      1093.42
+[1953 sec, 35640430 itr]:      1093.42
+[1954 sec, 35649395 itr]:      1093.42
+[1955 sec, 35657788 itr]:      1093.42
+[1956 sec, 35666418 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1957 sec, 35675463 itr]:      1093.42
+[1958 sec, 35683516 itr]:      1093.42
+[1959 sec, 35692148 itr]:      1093.42
+[1960 sec, 35700048 itr]:      1093.42
+[1961 sec, 35708312 itr]:      1093.42
+[1962 sec, 35717323 itr]:      1093.42
+[1963 sec, 35725809 itr]:      1093.42
+[1964 sec, 35734437 itr]:      1093.42
+[1965 sec, 35743088 itr]:      1093.42
+[1966 sec, 35751820 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1967 sec, 35759625 itr]:      1093.42
+[1968 sec, 35769415 itr]:      1093.42
+[1969 sec, 35777750 itr]:      1093.42
+[1970 sec, 35786157 itr]:      1093.42
+[1971 sec, 35795716 itr]:      1093.42
+[1972 sec, 35804000 itr]:      1093.42
+[1973 sec, 35810519 itr]:      1093.42
+[1974 sec, 35820152 itr]:      1093.42
+[1975 sec, 35829937 itr]:      1093.42
+[1976 sec, 35839007 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1977 sec, 35847694 itr]:      1093.42
+[1978 sec, 35855467 itr]:      1093.42
+[1979 sec, 35864811 itr]:      1093.42
+[1980 sec, 35874500 itr]:      1093.42
+[1981 sec, 35892134 itr]:      1093.42
+[1982 sec, 35892134 itr]:      1093.42
+[1983 sec, 35900648 itr]:      1093.42
+[1984 sec, 35909816 itr]:      1093.42
+[1985 sec, 35919572 itr]:      1093.42
+[1986 sec, 35928248 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1987 sec, 35936794 itr]:      1093.42
+[1988 sec, 35946098 itr]:      1093.42
+[1989 sec, 35954615 itr]:      1093.42
+[1990 sec, 35963537 itr]:      1093.42
+[1991 sec, 35972533 itr]:      1093.42
+[1992 sec, 35981348 itr]:      1093.42
+[1993 sec, 35990679 itr]:      1093.42
+[1994 sec, 36000143 itr]:      1093.42
+[1995 sec, 36009827 itr]:      1093.42
+[1996 sec, 36018997 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[1997 sec, 36028166 itr]:      1093.42
+[1998 sec, 36037377 itr]:      1093.42
+[1999 sec, 36046352 itr]:      1093.42
+[2000 sec, 36054006 itr]:      1093.42
+[2001 sec, 36062818 itr]:      1093.42
+[2002 sec, 36073536 itr]:      1093.42
+[2003 sec, 36082930 itr]:      1093.42
+[2004 sec, 36091293 itr]:      1093.42
+[2005 sec, 36100397 itr]:      1093.42
+[2006 sec, 36109238 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2007 sec, 36119007 itr]:      1093.42
+[2008 sec, 36129203 itr]:      1093.42
+[2009 sec, 36147567 itr]:      1093.42
+[2010 sec, 36147567 itr]:      1093.42
+[2011 sec, 36156357 itr]:      1093.42
+[2012 sec, 36165766 itr]:      1093.42
+[2013 sec, 36174470 itr]:      1093.42
+[2014 sec, 36183987 itr]:      1093.42
+[2015 sec, 36194213 itr]:      1093.42
+[2016 sec, 36211119 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2017 sec, 36211119 itr]:      1093.42
+[2018 sec, 36220760 itr]:      1093.42
+[2019 sec, 36229373 itr]:      1093.42
+[2020 sec, 36237403 itr]:      1093.42
+[2021 sec, 36245705 itr]:      1093.42
+[2022 sec, 36253226 itr]:      1093.42
+[2023 sec, 36263167 itr]:      1093.42
+[2024 sec, 36271931 itr]:      1093.42
+[2025 sec, 36281000 itr]:      1093.42
+[2026 sec, 36288604 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2027 sec, 36298384 itr]:      1093.42
+[2028 sec, 36307415 itr]:      1093.42
+[2029 sec, 36315875 itr]:      1093.42
+[2030 sec, 36325159 itr]:      1093.42
+[2031 sec, 36334391 itr]:      1093.42
+[2032 sec, 36343494 itr]:      1093.42
+[2033 sec, 36353196 itr]:      1093.42
+[2034 sec, 36361496 itr]:      1093.42
+[2035 sec, 36370306 itr]:      1093.42
+[2036 sec, 36379340 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2037 sec, 36388479 itr]:      1093.42
+[2038 sec, 36397877 itr]:      1093.42
+[2039 sec, 36407305 itr]:      1093.42
+[2040 sec, 36414817 itr]:      1093.42
+[2041 sec, 36423456 itr]:      1093.42
+[2042 sec, 36431963 itr]:      1093.42
+[2043 sec, 36441342 itr]:      1093.42
+[2044 sec, 36451110 itr]:      1093.42
+[2045 sec, 36461058 itr]:      1093.42
+[2046 sec, 36470008 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2047 sec, 36486953 itr]:      1093.42
+[2048 sec, 36486953 itr]:      1093.42
+[2049 sec, 36497342 itr]:      1093.42
+[2050 sec, 36506384 itr]:      1093.42
+[2051 sec, 36515647 itr]:      1093.42
+[2052 sec, 36524418 itr]:      1093.42
+[2053 sec, 36532061 itr]:      1093.42
+[2054 sec, 36541030 itr]:      1093.42
+[2055 sec, 36550235 itr]:      1093.42
+[2056 sec, 36560342 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2057 sec, 36570396 itr]:      1093.42
+[2058 sec, 36590019 itr]:      1093.42
+[2059 sec, 36590019 itr]:      1093.42
+[2060 sec, 36599368 itr]:      1093.42
+[2061 sec, 36618668 itr]:      1093.42
+[2062 sec, 36618668 itr]:      1093.42
+[2063 sec, 36628294 itr]:      1093.42
+[2064 sec, 36638503 itr]:      1093.42
+[2065 sec, 36647676 itr]:      1093.42
+[2066 sec, 36654094 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2067 sec, 36663519 itr]:      1093.42
+[2068 sec, 36672746 itr]:      1093.42
+[2069 sec, 36683635 itr]:      1093.42
+[2070 sec, 36693647 itr]:      1093.42
+[2071 sec, 36703217 itr]:      1093.42
+[2072 sec, 36712881 itr]:      1093.42
+[2073 sec, 36723758 itr]:      1093.42
+[2074 sec, 36732817 itr]:      1093.42
+[2075 sec, 36742150 itr]:      1093.42
+[2076 sec, 36751598 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2077 sec, 36760654 itr]:      1093.42
+[2078 sec, 36770451 itr]:      1093.42
+[2079 sec, 36779691 itr]:      1093.42
+[2080 sec, 36797386 itr]:      1093.42
+[2081 sec, 36807070 itr]:      1093.42
+[2082 sec, 36807070 itr]:      1093.42
+[2083 sec, 36816924 itr]:      1093.42
+[2084 sec, 36826450 itr]:      1093.42
+[2085 sec, 36835502 itr]:      1093.42
+[2086 sec, 36844106 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2087 sec, 36853602 itr]:      1093.42
+[2088 sec, 36863879 itr]:      1093.42
+[2089 sec, 36882479 itr]:      1093.42
+[2090 sec, 36882479 itr]:      1093.42
+[2091 sec, 36891269 itr]:      1093.42
+[2092 sec, 36900711 itr]:      1093.42
+[2093 sec, 36910045 itr]:      1093.42
+[2094 sec, 36919447 itr]:      1093.42
+[2095 sec, 36928171 itr]:      1093.42
+[2096 sec, 36937209 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2097 sec, 36947604 itr]:      1093.42
+[2098 sec, 36957440 itr]:      1093.42
+[2099 sec, 36966480 itr]:      1093.42
+[2100 sec, 36976002 itr]:      1093.42
+[2101 sec, 36986242 itr]:      1093.42
+[2102 sec, 36996583 itr]:      1093.42
+[2103 sec, 37006151 itr]:      1093.42
+[2104 sec, 37012296 itr]:      1093.42
+[2105 sec, 37018740 itr]:      1093.42
+[2106 sec, 37027989 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2107 sec, 37038000 itr]:      1093.42
+[2108 sec, 37047334 itr]:      1093.42
+[2109 sec, 37056572 itr]:      1093.42
+[2110 sec, 37066245 itr]:      1093.42
+[2111 sec, 37075938 itr]:      1093.42
+[2112 sec, 37085237 itr]:      1093.42
+[2113 sec, 37103128 itr]:      1093.42
+[2114 sec, 37103128 itr]:      1093.42
+[2115 sec, 37112736 itr]:      1093.42
+[2116 sec, 37123062 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2117 sec, 37132443 itr]:      1093.42
+[2118 sec, 37140259 itr]:      1093.42
+[2119 sec, 37148435 itr]:      1093.42
+[2120 sec, 37165795 itr]:      1093.42
+[2121 sec, 37165795 itr]:      1093.42
+[2122 sec, 37174481 itr]:      1093.42
+[2123 sec, 37184112 itr]:      1093.42
+[2124 sec, 37192504 itr]:      1093.42
+[2125 sec, 37201477 itr]:      1093.42
+[2126 sec, 37211544 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2127 sec, 37221479 itr]:      1093.42
+[2128 sec, 37229724 itr]:      1093.42
+[2129 sec, 37238185 itr]:      1093.42
+[2130 sec, 37247500 itr]:      1093.42
+[2131 sec, 37256134 itr]:      1093.42
+[2132 sec, 37264499 itr]:      1093.42
+[2133 sec, 37273268 itr]:      1093.42
+[2134 sec, 37281737 itr]:      1093.42
+[2135 sec, 37291461 itr]:      1093.42
+[2136 sec, 37300081 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2137 sec, 37307977 itr]:      1093.42
+[2138 sec, 37325930 itr]:      1093.42
+[2139 sec, 37325930 itr]:      1093.42
+[2140 sec, 37336043 itr]:      1093.42
+[2141 sec, 37344229 itr]:      1093.42
+[2142 sec, 37353459 itr]:      1093.42
+[2143 sec, 37372108 itr]:      1093.42
+[2144 sec, 37372108 itr]:      1093.42
+[2145 sec, 37379341 itr]:      1093.42
+[2146 sec, 37388858 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2147 sec, 37399389 itr]:      1093.42
+[2148 sec, 37408458 itr]:      1093.42
+[2149 sec, 37417703 itr]:      1093.42
+[2150 sec, 37427843 itr]:      1093.42
+[2151 sec, 37437139 itr]:      1093.42
+[2152 sec, 37447316 itr]:      1093.42
+[2153 sec, 37457612 itr]:      1093.42
+[2154 sec, 37466850 itr]:      1093.42
+[2155 sec, 37487202 itr]:      1093.42
+[2156 sec, 37487202 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2157 sec, 37497640 itr]:      1093.42
+[2158 sec, 37502837 itr]:      1093.42
+[2159 sec, 37511161 itr]:      1093.42
+[2160 sec, 37520335 itr]:      1093.42
+[2161 sec, 37530652 itr]:      1093.42
+[2162 sec, 37540412 itr]:      1093.42
+[2163 sec, 37549124 itr]:      1093.42
+[2164 sec, 37559290 itr]:      1093.42
+[2165 sec, 37569117 itr]:      1093.42
+[2166 sec, 37579013 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2167 sec, 37587526 itr]:      1093.42
+[2168 sec, 37597461 itr]:      1093.42
+[2169 sec, 37607705 itr]:      1093.42
+[2170 sec, 37617288 itr]:      1093.42
+[2171 sec, 37625513 itr]:      1093.42
+[2172 sec, 37633489 itr]:      1093.42
+[2173 sec, 37642459 itr]:      1093.42
+[2174 sec, 37651991 itr]:      1093.42
+[2175 sec, 37660885 itr]:      1093.42
+[2176 sec, 37670663 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2177 sec, 37679469 itr]:      1093.42
+[2178 sec, 37689829 itr]:      1093.42
+[2179 sec, 37698241 itr]:      1093.42
+[2180 sec, 37708105 itr]:      1093.42
+[2181 sec, 37717914 itr]:      1093.42
+[2182 sec, 37726843 itr]:      1093.42
+[2183 sec, 37735491 itr]:      1093.42
+[2184 sec, 37745406 itr]:      1093.42
+[2185 sec, 37764616 itr]:      1093.42
+[2186 sec, 37764616 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2187 sec, 37775286 itr]:      1093.42
+[2188 sec, 37785338 itr]:      1093.42
+[2189 sec, 37794056 itr]:      1093.42
+[2190 sec, 37802783 itr]:      1093.42
+[2191 sec, 37813353 itr]:      1093.42
+[2192 sec, 37822419 itr]:      1093.42
+[2193 sec, 37842024 itr]:      1093.42
+[2194 sec, 37842024 itr]:      1093.42
+[2195 sec, 37851921 itr]:      1093.42
+[2196 sec, 37862687 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2197 sec, 37870835 itr]:      1093.42
+[2198 sec, 37877356 itr]:      1093.42
+[2199 sec, 37886926 itr]:      1093.42
+[2200 sec, 37896329 itr]:      1093.42
+[2201 sec, 37905657 itr]:      1093.42
+[2202 sec, 37915085 itr]:      1093.42
+[2203 sec, 37924209 itr]:      1093.42
+[2204 sec, 37934257 itr]:      1093.42
+[2205 sec, 37943049 itr]:      1093.42
+[2206 sec, 37953119 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2207 sec, 37961961 itr]:      1093.42
+[2208 sec, 37971723 itr]:      1093.42
+[2209 sec, 37980915 itr]:      1093.42
+[2210 sec, 37989266 itr]:      1093.42
+[2211 sec, 37999503 itr]:      1093.42
+[2212 sec, 38009425 itr]:      1093.42
+[2213 sec, 38018229 itr]:      1093.42
+[2214 sec, 38027660 itr]:      1093.42
+[2215 sec, 38035906 itr]:      1093.42
+[2216 sec, 38045191 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2217 sec, 38054298 itr]:      1093.42
+[2218 sec, 38062920 itr]:      1093.42
+[2219 sec, 38072889 itr]:      1093.42
+[2220 sec, 38082226 itr]:      1093.42
+[2221 sec, 38091005 itr]:      1093.42
+[2222 sec, 38099997 itr]:      1093.42
+[2223 sec, 38108010 itr]:      1093.42
+[2224 sec, 38124849 itr]:      1093.42
+[2225 sec, 38124849 itr]:      1093.42
+[2226 sec, 38134942 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2227 sec, 38145032 itr]:      1093.42
+[2228 sec, 38155301 itr]:      1093.42
+[2229 sec, 38165657 itr]:      1093.42
+[2230 sec, 38175064 itr]:      1093.42
+[2231 sec, 38192907 itr]:      1093.42
+[2232 sec, 38192907 itr]:      1093.42
+[2233 sec, 38213200 itr]:      1093.42
+[2234 sec, 38224086 itr]:      1093.42
+[2235 sec, 38224086 itr]:      1093.42
+[2236 sec, 38231636 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2237 sec, 38240813 itr]:      1093.42
+[2238 sec, 38249995 itr]:      1093.42
+[2239 sec, 38260967 itr]:      1093.42
+[2240 sec, 38270829 itr]:      1093.42
+[2241 sec, 38280165 itr]:      1093.42
+[2242 sec, 38291224 itr]:      1093.42
+[2243 sec, 38301359 itr]:      1093.42
+[2244 sec, 38312212 itr]:      1093.42
+[2245 sec, 38321536 itr]:      1093.42
+[2246 sec, 38330022 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2247 sec, 38342032 itr]:      1093.42
+[2248 sec, 38350099 itr]:      1093.42
+[2249 sec, 38360929 itr]:      1093.42
+[2250 sec, 38370738 itr]:      1093.42
+[2251 sec, 38380965 itr]:      1093.42
+[2252 sec, 38392393 itr]:      1093.42
+[2253 sec, 38414008 itr]:      1093.42
+[2254 sec, 38414008 itr]:      1093.42
+[2255 sec, 38433720 itr]:      1093.42
+[2256 sec, 38433720 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2257 sec, 38443454 itr]:      1093.42
+[2258 sec, 38453292 itr]:      1093.42
+[2259 sec, 38462942 itr]:      1093.42
+[2260 sec, 38470706 itr]:      1093.42
+[2261 sec, 38480887 itr]:      1093.42
+[2262 sec, 38490656 itr]:      1093.42
+[2263 sec, 38501881 itr]:      1093.42
+[2264 sec, 38512634 itr]:      1093.42
+[2265 sec, 38524390 itr]:      1093.42
+[2266 sec, 38535146 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2267 sec, 38545902 itr]:      1093.42
+[2268 sec, 38555490 itr]:      1093.42
+[2269 sec, 38566767 itr]:      1093.42
+[2270 sec, 38587489 itr]:      1093.42
+[2271 sec, 38587489 itr]:      1093.42
+[2272 sec, 38597582 itr]:      1093.42
+[2273 sec, 38605862 itr]:      1093.42
+[2274 sec, 38617096 itr]:      1093.42
+[2275 sec, 38627021 itr]:      1093.42
+[2276 sec, 38636180 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2277 sec, 38646004 itr]:      1093.42
+[2278 sec, 38655674 itr]:      1093.42
+[2279 sec, 38665878 itr]:      1093.42
+[2280 sec, 38676688 itr]:      1093.42
+[2281 sec, 38687578 itr]:      1093.42
+[2282 sec, 38698630 itr]:      1093.42
+[2283 sec, 38708388 itr]:      1093.42
+[2284 sec, 38716151 itr]:      1093.42
+[2285 sec, 38726785 itr]:      1093.42
+[2286 sec, 38738224 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2287 sec, 38748913 itr]:      1093.42
+[2288 sec, 38757884 itr]:      1093.42
+[2289 sec, 38768338 itr]:      1093.42
+[2290 sec, 38779300 itr]:      1093.42
+[2291 sec, 38787575 itr]:      1093.42
+[2292 sec, 38798840 itr]:      1093.42
+[2293 sec, 38809272 itr]:      1093.42
+[2294 sec, 38820328 itr]:      1093.42
+[2295 sec, 38831117 itr]:      1093.42
+[2296 sec, 38840019 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2297 sec, 38851173 itr]:      1093.42
+[2298 sec, 38862539 itr]:      1093.42
+[2299 sec, 38873247 itr]:      1093.42
+[2300 sec, 38884412 itr]:      1093.42
+[2301 sec, 38895403 itr]:      1093.42
+[2302 sec, 38906305 itr]:      1093.42
+[2303 sec, 38926740 itr]:      1093.42
+[2304 sec, 38926740 itr]:      1093.42
+[2305 sec, 38936360 itr]:      1093.42
+[2306 sec, 38957213 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2307 sec, 38957213 itr]:      1093.42
+[2308 sec, 38967183 itr]:      1093.42
+[2309 sec, 38977059 itr]:      1093.42
+[2310 sec, 38987271 itr]:      1093.42
+[2311 sec, 38998478 itr]:      1093.42
+[2312 sec, 39009551 itr]:      1093.42
+[2313 sec, 39020204 itr]:      1093.42
+[2314 sec, 39029887 itr]:      1093.42
+[2315 sec, 39040092 itr]:      1093.42
+[2316 sec, 39060405 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2317 sec, 39060405 itr]:      1093.42
+[2318 sec, 39070763 itr]:      1093.42
+[2319 sec, 39077994 itr]:      1093.42
+[2320 sec, 39088334 itr]:      1093.42
+[2321 sec, 39100105 itr]:      1093.42
+[2322 sec, 39109922 itr]:      1093.42
+[2323 sec, 39118570 itr]:      1093.42
+[2324 sec, 39129585 itr]:      1093.42
+[2325 sec, 39141428 itr]:      1093.42
+[2326 sec, 39152218 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2327 sec, 39163965 itr]:      1093.42
+[2328 sec, 39174417 itr]:      1093.42
+[2329 sec, 39184833 itr]:      1093.42
+[2330 sec, 39195068 itr]:      1093.42
+[2331 sec, 39204895 itr]:      1093.42
+[2332 sec, 39215454 itr]:      1093.42
+[2333 sec, 39225545 itr]:      1093.42
+[2334 sec, 39233494 itr]:      1093.42
+[2335 sec, 39243712 itr]:      1093.42
+[2336 sec, 39253380 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2337 sec, 39264507 itr]:      1093.42
+[2338 sec, 39275155 itr]:      1093.42
+[2339 sec, 39285321 itr]:      1093.42
+[2340 sec, 39295394 itr]:      1093.42
+[2341 sec, 39303704 itr]:      1093.42
+[2342 sec, 39312770 itr]:      1093.42
+[2343 sec, 39333474 itr]:      1093.42
+[2344 sec, 39333474 itr]:      1093.42
+[2345 sec, 39344354 itr]:      1093.42
+[2346 sec, 39350523 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2347 sec, 39360681 itr]:      1093.42
+[2348 sec, 39371370 itr]:      1093.42
+[2349 sec, 39382618 itr]:      1093.42
+[2350 sec, 39392807 itr]:      1093.42
+[2351 sec, 39402880 itr]:      1093.42
+[2352 sec, 39413860 itr]:      1093.42
+[2353 sec, 39422720 itr]:      1093.42
+[2354 sec, 39433357 itr]:      1093.42
+[2355 sec, 39442963 itr]:      1093.42
+[2356 sec, 39453502 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2357 sec, 39464750 itr]:      1093.42
+[2358 sec, 39471658 itr]:      1093.42
+[2359 sec, 39483712 itr]:      1093.42
+[2360 sec, 39494892 itr]:      1093.42
+[2361 sec, 39506423 itr]:      1093.42
+[2362 sec, 39517433 itr]:      1093.42
+[2363 sec, 39528109 itr]:      1093.42
+[2364 sec, 39538852 itr]:      1093.42
+[2365 sec, 39549171 itr]:      1093.42
+[2366 sec, 39560079 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2367 sec, 39570832 itr]:      1093.42
+[2368 sec, 39579690 itr]:      1093.42
+[2369 sec, 39596919 itr]:      1093.42
+[2370 sec, 39596919 itr]:      1093.42
+[2371 sec, 39607999 itr]:      1093.42
+[2372 sec, 39617156 itr]:      1093.42
+[2373 sec, 39627438 itr]:      1093.42
+[2374 sec, 39637593 itr]:      1093.42
+[2375 sec, 39647997 itr]:      1093.42
+[2376 sec, 39660074 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2377 sec, 39671718 itr]:      1093.42
+[2378 sec, 39681821 itr]:      1093.42
+[2379 sec, 39692672 itr]:      1093.42
+[2380 sec, 39703605 itr]:      1093.42
+[2381 sec, 39711719 itr]:      1093.42
+[2382 sec, 39722581 itr]:      1093.42
+[2383 sec, 39734808 itr]:      1093.42
+[2384 sec, 39745243 itr]:      1093.42
+[2385 sec, 39754533 itr]:      1093.42
+[2386 sec, 39764763 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2387 sec, 39776082 itr]:      1093.42
+[2388 sec, 39787748 itr]:      1093.42
+[2389 sec, 39809761 itr]:      1093.42
+[2390 sec, 39809761 itr]:      1093.42
+[2391 sec, 39821487 itr]:      1093.42
+[2392 sec, 39831542 itr]:      1093.42
+[2393 sec, 39850186 itr]:      1093.42
+[2394 sec, 39850186 itr]:      1093.42
+[2395 sec, 39860492 itr]:      1093.42
+[2396 sec, 39871280 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2397 sec, 39882797 itr]:      1093.42
+[2398 sec, 39894181 itr]:      1093.42
+[2399 sec, 39904691 itr]:      1093.42
+[2400 sec, 39915237 itr]:      1093.42
+[2401 sec, 39926129 itr]:      1093.42
+[2402 sec, 39937408 itr]:      1093.42
+[2403 sec, 39959785 itr]:      1093.42
+[2404 sec, 39959785 itr]:      1093.42
+[2405 sec, 39971346 itr]:      1093.42
+[2406 sec, 39982810 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2407 sec, 39993828 itr]:      1093.42
+[2408 sec, 40003522 itr]:      1093.42
+[2409 sec, 40013429 itr]:      1093.42
+[2410 sec, 40025057 itr]:      1093.42
+[2411 sec, 40035625 itr]:      1093.42
+[2412 sec, 40055560 itr]:      1093.42
+[2413 sec, 40055560 itr]:      1093.42
+[2414 sec, 40066865 itr]:      1093.42
+[2415 sec, 40074993 itr]:      1093.42
+[2416 sec, 40086050 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2417 sec, 40096273 itr]:      1093.42
+[2418 sec, 40107292 itr]:      1093.42
+[2419 sec, 40118177 itr]:      1093.42
+[2420 sec, 40138070 itr]:      1093.42
+[2421 sec, 40138070 itr]:      1093.42
+[2422 sec, 40149165 itr]:      1093.42
+[2423 sec, 40160441 itr]:      1093.42
+[2424 sec, 40171649 itr]:      1093.42
+[2425 sec, 40192296 itr]:      1093.42
+[2426 sec, 40200940 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2427 sec, 40200940 itr]:      1093.42
+[2428 sec, 40210104 itr]:      1093.42
+[2429 sec, 40221074 itr]:      1093.42
+[2430 sec, 40230671 itr]:      1093.42
+[2431 sec, 40241926 itr]:      1093.42
+[2432 sec, 40253224 itr]:      1093.42
+[2433 sec, 40263602 itr]:      1093.42
+[2434 sec, 40275771 itr]:      1093.42
+[2435 sec, 40287524 itr]:      1093.42
+[2436 sec, 40299930 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2437 sec, 40312019 itr]:      1093.42
+[2438 sec, 40317801 itr]:      1093.42
+[2439 sec, 40328775 itr]:      1093.42
+[2440 sec, 40338236 itr]:      1093.42
+[2441 sec, 40349882 itr]:      1093.42
+[2442 sec, 40360938 itr]:      1093.42
+[2443 sec, 40372291 itr]:      1093.42
+[2444 sec, 40382815 itr]:      1093.42
+[2445 sec, 40394961 itr]:      1093.42
+[2446 sec, 40405075 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2447 sec, 40417452 itr]:      1093.42
+[2448 sec, 40427224 itr]:      1093.42
+[2449 sec, 40438455 itr]:      1093.42
+[2450 sec, 40446944 itr]:      1093.42
+[2451 sec, 40457591 itr]:      1093.42
+[2452 sec, 40468460 itr]:      1093.42
+[2453 sec, 40479661 itr]:      1093.42
+[2454 sec, 40491213 itr]:      1093.42
+[2455 sec, 40500807 itr]:      1093.42
+[2456 sec, 40510864 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2457 sec, 40520390 itr]:      1093.42
+[2458 sec, 40532496 itr]:      1093.42
+[2459 sec, 40554979 itr]:      1093.42
+[2460 sec, 40554979 itr]:      1093.42
+[2461 sec, 40563903 itr]:      1093.42
+[2462 sec, 40574635 itr]:      1093.42
+[2463 sec, 40584859 itr]:      1093.42
+[2464 sec, 40596352 itr]:      1093.42
+[2465 sec, 40606864 itr]:      1093.42
+[2466 sec, 40618622 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2467 sec, 40630339 itr]:      1093.42
+[2468 sec, 40639719 itr]:      1093.42
+[2469 sec, 40651180 itr]:      1093.42
+[2470 sec, 40662593 itr]:      1093.42
+[2471 sec, 40674416 itr]:      1093.42
+[2472 sec, 40682276 itr]:      1093.42
+[2473 sec, 40688708 itr]:      1093.42
+[2474 sec, 40700224 itr]:      1093.42
+[2475 sec, 40710733 itr]:      1093.42
+[2476 sec, 40720248 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2477 sec, 40731920 itr]:      1093.42
+[2478 sec, 40743253 itr]:      1093.42
+[2479 sec, 40754453 itr]:      1093.42
+[2480 sec, 40765434 itr]:      1093.42
+[2481 sec, 40777210 itr]:      1093.42
+[2482 sec, 40789017 itr]:      1093.42
+[2483 sec, 40799157 itr]:      1093.42
+[2484 sec, 40809221 itr]:      1093.42
+[2485 sec, 40818178 itr]:      1093.42
+[2486 sec, 40829904 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2487 sec, 40839873 itr]:      1093.42
+[2488 sec, 40850435 itr]:      1093.42
+[2489 sec, 40860558 itr]:      1093.42
+[2490 sec, 40872103 itr]:      1093.42
+[2491 sec, 40883601 itr]:      1093.42
+[2492 sec, 40894264 itr]:      1093.42
+[2493 sec, 40904370 itr]:      1093.42
+[2494 sec, 40915325 itr]:      1093.42
+[2495 sec, 40923825 itr]:      1093.42
+[2496 sec, 40931365 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2497 sec, 40942694 itr]:      1093.42
+[2498 sec, 40954084 itr]:      1093.42
+[2499 sec, 40966249 itr]:      1093.42
+[2500 sec, 40977751 itr]:      1093.42
+[2501 sec, 40989016 itr]:      1093.42
+[2502 sec, 41000389 itr]:      1093.42
+[2503 sec, 41012790 itr]:      1093.42
+[2504 sec, 41022618 itr]:      1093.42
+[2505 sec, 41032885 itr]:      1093.42
+[2506 sec, 41044099 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2507 sec, 41053857 itr]:      1093.42
+[2508 sec, 41063515 itr]:      1093.42
+[2509 sec, 41074899 itr]:      1093.42
+[2510 sec, 41086322 itr]:      1093.42
+[2511 sec, 41098732 itr]:      1093.42
+[2512 sec, 41118700 itr]:      1093.42
+[2513 sec, 41118700 itr]:      1093.42
+[2514 sec, 41128807 itr]:      1093.42
+[2515 sec, 41139365 itr]:      1093.42
+[2516 sec, 41150867 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2517 sec, 41162424 itr]:      1093.42
+[2518 sec, 41172869 itr]:      1093.42
+[2519 sec, 41196466 itr]:      1093.42
+[2520 sec, 41196466 itr]:      1093.42
+[2521 sec, 41221342 itr]:      1093.42
+[2522 sec, 41221342 itr]:      1093.42
+[2523 sec, 41232829 itr]:      1093.42
+[2524 sec, 41244265 itr]:      1093.42
+[2525 sec, 41255179 itr]:      1093.42
+[2526 sec, 41267612 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2527 sec, 41280186 itr]:      1093.42
+[2528 sec, 41291460 itr]:      1093.42
+[2529 sec, 41311786 itr]:      1093.42
+[2530 sec, 41311786 itr]:      1093.42
+[2531 sec, 41322152 itr]:      1093.42
+[2532 sec, 41332374 itr]:      1093.42
+[2533 sec, 41343082 itr]:      1093.42
+[2534 sec, 41353249 itr]:      1093.42
+[2535 sec, 41363818 itr]:      1093.42
+[2536 sec, 41374466 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2537 sec, 41384831 itr]:      1093.42
+[2538 sec, 41397646 itr]:      1093.42
+[2539 sec, 41407865 itr]:      1093.42
+[2540 sec, 41415684 itr]:      1093.42
+[2541 sec, 41428445 itr]:      1093.42
+[2542 sec, 41441813 itr]:      1093.42
+[2543 sec, 41463772 itr]:      1093.42
+[2544 sec, 41463772 itr]:      1093.42
+[2545 sec, 41477329 itr]:      1093.42
+[2546 sec, 41490232 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2547 sec, 41502485 itr]:      1093.42
+[2548 sec, 41513563 itr]:      1093.42
+[2549 sec, 41525805 itr]:      1093.42
+[2550 sec, 41536297 itr]:      1093.42
+[2551 sec, 41562244 itr]:      1093.42
+[2552 sec, 41562244 itr]:      1093.42
+[2553 sec, 41585213 itr]:      1093.42
+[2554 sec, 41585213 itr]:      1093.42
+[2555 sec, 41598974 itr]:      1093.42
+[2556 sec, 41611332 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2557 sec, 41621950 itr]:      1093.42
+[2558 sec, 41634387 itr]:      1093.42
+[2559 sec, 41646209 itr]:      1093.42
+[2560 sec, 41658535 itr]:      1093.42
+[2561 sec, 41670636 itr]:      1093.42
+[2562 sec, 41683184 itr]:      1093.42
+[2563 sec, 41695041 itr]:      1093.42
+[2564 sec, 41707732 itr]:      1093.42
+[2565 sec, 41719752 itr]:      1093.42
+[2566 sec, 41731462 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2567 sec, 41744898 itr]:      1093.42
+[2568 sec, 41757114 itr]:      1093.42
+[2569 sec, 41770412 itr]:      1093.42
+[2570 sec, 41796485 itr]:      1093.42
+[2571 sec, 41796485 itr]:      1093.42
+[2572 sec, 41809371 itr]:      1093.42
+[2573 sec, 41821610 itr]:      1093.42
+[2574 sec, 41833286 itr]:      1093.42
+[2575 sec, 41842064 itr]:      1093.42
+[2576 sec, 41854383 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2577 sec, 41864796 itr]:      1093.42
+[2578 sec, 41877607 itr]:      1093.42
+[2579 sec, 41890597 itr]:      1093.42
+[2580 sec, 41901305 itr]:      1093.42
+[2581 sec, 41913471 itr]:      1093.42
+[2582 sec, 41924436 itr]:      1093.42
+[2583 sec, 41937319 itr]:      1093.42
+[2584 sec, 41950519 itr]:      1093.42
+[2585 sec, 41960720 itr]:      1093.42
+[2586 sec, 41969782 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2587 sec, 41982143 itr]:      1093.42
+[2588 sec, 41994813 itr]:      1093.42
+[2589 sec, 42006590 itr]:      1093.42
+[2590 sec, 42017388 itr]:      1093.42
+[2591 sec, 42028652 itr]:      1093.42
+[2592 sec, 42042177 itr]:      1093.42
+[2593 sec, 42066069 itr]:      1093.42
+[2594 sec, 42066069 itr]:      1093.42
+[2595 sec, 42077972 itr]:      1093.42
+[2596 sec, 42086276 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2597 sec, 42096960 itr]:      1093.42
+[2598 sec, 42107689 itr]:      1093.42
+[2599 sec, 42120293 itr]:      1093.42
+[2600 sec, 42132071 itr]:      1093.42
+[2601 sec, 42143550 itr]:      1093.42
+[2602 sec, 42155231 itr]:      1093.42
+[2603 sec, 42168374 itr]:      1093.42
+[2604 sec, 42180132 itr]:      1093.42
+[2605 sec, 42193234 itr]:      1093.42
+[2606 sec, 42202776 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2607 sec, 42211047 itr]:      1093.42
+[2608 sec, 42222950 itr]:      1093.42
+[2609 sec, 42234813 itr]:      1093.42
+[2610 sec, 42244770 itr]:      1093.42
+[2611 sec, 42255118 itr]:      1093.42
+[2612 sec, 42266119 itr]:      1093.42
+[2613 sec, 42277515 itr]:      1093.42
+[2614 sec, 42289008 itr]:      1093.42
+[2615 sec, 42299498 itr]:      1093.42
+[2616 sec, 42308790 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2617 sec, 42321312 itr]:      1093.42
+[2618 sec, 42332800 itr]:      1093.42
+[2619 sec, 42344770 itr]:      1093.42
+[2620 sec, 42356695 itr]:      1093.42
+[2621 sec, 42368725 itr]:      1093.42
+[2622 sec, 42379619 itr]:      1093.42
+[2623 sec, 42403021 itr]:      1093.42
+[2624 sec, 42403021 itr]:      1093.42
+[2625 sec, 42415581 itr]:      1093.42
+[2626 sec, 42428483 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2627 sec, 42439827 itr]:      1093.42
+[2628 sec, 42447465 itr]:      1093.42
+[2629 sec, 42458365 itr]:      1093.42
+[2630 sec, 42469469 itr]:      1093.42
+[2631 sec, 42481875 itr]:      1093.42
+[2632 sec, 42493143 itr]:      1093.42
+[2633 sec, 42506173 itr]:      1093.42
+[2634 sec, 42517445 itr]:      1093.42
+[2635 sec, 42529188 itr]:      1093.42
+[2636 sec, 42541258 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2637 sec, 42565082 itr]:      1093.42
+[2638 sec, 42565082 itr]:      1093.42
+[2639 sec, 42574317 itr]:      1093.42
+[2640 sec, 42585258 itr]:      1093.42
+[2641 sec, 42610672 itr]:      1093.42
+[2642 sec, 42610672 itr]:      1093.42
+[2643 sec, 42621043 itr]:      1093.42
+[2644 sec, 42632682 itr]:      1093.42
+[2645 sec, 42644871 itr]:      1093.42
+[2646 sec, 42657511 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2647 sec, 42669220 itr]:      1093.42
+[2648 sec, 42682536 itr]:      1093.42
+[2649 sec, 42691669 itr]:      1093.42
+[2650 sec, 42702896 itr]:      1093.42
+[2651 sec, 42714612 itr]:      1093.42
+[2652 sec, 42726437 itr]:      1093.42
+[2653 sec, 42738843 itr]:      1093.42
+[2654 sec, 42748656 itr]:      1093.42
+[2655 sec, 42760619 itr]:      1093.42
+[2656 sec, 42773368 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2657 sec, 42784615 itr]:      1093.42
+[2658 sec, 42794576 itr]:      1093.42
+[2659 sec, 42805139 itr]:      1093.42
+[2660 sec, 42812788 itr]:      1093.42
+[2661 sec, 42826065 itr]:      1093.42
+[2662 sec, 42838134 itr]:      1093.42
+[2663 sec, 42848178 itr]:      1093.42
+[2664 sec, 42859763 itr]:      1093.42
+[2665 sec, 42870282 itr]:      1093.42
+[2666 sec, 42883120 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2667 sec, 42894963 itr]:      1093.42
+[2668 sec, 42906785 itr]:      1093.42
+[2669 sec, 42918629 itr]:      1093.42
+[2670 sec, 42929124 itr]:      1093.42
+[2671 sec, 42935816 itr]:      1093.42
+[2672 sec, 42948598 itr]:      1093.42
+[2673 sec, 42960461 itr]:      1093.42
+[2674 sec, 42970811 itr]:      1093.42
+[2675 sec, 42996460 itr]:      1093.42
+[2676 sec, 42996460 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2677 sec, 43010838 itr]:      1093.42
+[2678 sec, 43023073 itr]:      1093.42
+[2679 sec, 43035727 itr]:      1093.42
+[2680 sec, 43060728 itr]:      1093.42
+[2681 sec, 43060728 itr]:      1093.42
+[2682 sec, 43073609 itr]:      1093.42
+[2683 sec, 43099482 itr]:      1093.42
+[2684 sec, 43113299 itr]:      1093.42
+[2685 sec, 43113299 itr]:      1093.42
+[2686 sec, 43125438 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2687 sec, 43138473 itr]:      1093.42
+[2688 sec, 43151685 itr]:      1093.42
+[2689 sec, 43163697 itr]:      1093.42
+[2690 sec, 43175644 itr]:      1093.42
+[2691 sec, 43186930 itr]:      1093.42
+[2692 sec, 43198418 itr]:      1093.42
+[2693 sec, 43211672 itr]:      1093.42
+[2694 sec, 43223835 itr]:      1093.42
+[2695 sec, 43237653 itr]:      1093.42
+[2696 sec, 43264517 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2697 sec, 43264517 itr]:      1093.42
+[2698 sec, 43278121 itr]:      1093.42
+[2699 sec, 43292049 itr]:      1093.42
+[2700 sec, 43300038 itr]:      1093.42
+[2701 sec, 43321142 itr]:      1093.42
+[2702 sec, 43321142 itr]:      1093.42
+[2703 sec, 43334693 itr]:      1093.42
+[2704 sec, 43345869 itr]:      1093.42
+[2705 sec, 43357095 itr]:      1093.42
+[2706 sec, 43369177 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2707 sec, 43379991 itr]:      1093.42
+[2708 sec, 43393014 itr]:      1093.42
+[2709 sec, 43406224 itr]:      1093.42
+[2710 sec, 43416973 itr]:      1093.42
+[2711 sec, 43429951 itr]:      1093.42
+[2712 sec, 43442273 itr]:      1093.42
+[2713 sec, 43453480 itr]:      1093.42
+[2714 sec, 43464289 itr]:      1093.42
+[2715 sec, 43477418 itr]:      1093.42
+[2716 sec, 43491301 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2717 sec, 43517992 itr]:      1093.42
+[2718 sec, 43517992 itr]:      1093.42
+[2719 sec, 43529735 itr]:      1093.42
+[2720 sec, 43539500 itr]:      1093.42
+[2721 sec, 43563329 itr]:      1093.42
+[2722 sec, 43563329 itr]:      1093.42
+[2723 sec, 43575156 itr]:      1093.42
+[2724 sec, 43587249 itr]:      1093.42
+[2725 sec, 43600687 itr]:      1093.42
+[2726 sec, 43613459 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2727 sec, 43624326 itr]:      1093.42
+[2728 sec, 43637482 itr]:      1093.42
+[2729 sec, 43650519 itr]:      1093.42
+[2730 sec, 43661542 itr]:      1093.42
+[2731 sec, 43670554 itr]:      1093.42
+[2732 sec, 43681890 itr]:      1093.42
+[2733 sec, 43694146 itr]:      1093.42
+[2734 sec, 43707463 itr]:      1093.42
+[2735 sec, 43721416 itr]:      1093.42
+[2736 sec, 43734173 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2737 sec, 43746033 itr]:      1093.42
+[2738 sec, 43759532 itr]:      1093.42
+[2739 sec, 43771763 itr]:      1093.42
+[2740 sec, 43783420 itr]:      1093.42
+[2741 sec, 43806044 itr]:      1093.42
+[2742 sec, 43806044 itr]:      1093.42
+[2743 sec, 43819010 itr]:      1093.42
+[2744 sec, 43829430 itr]:      1093.42
+[2745 sec, 43842043 itr]:      1093.42
+[2746 sec, 43853180 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2747 sec, 43865067 itr]:      1093.42
+[2748 sec, 43876661 itr]:      1093.42
+[2749 sec, 43889109 itr]:      1093.42
+[2750 sec, 43900437 itr]:      1093.42
+[2751 sec, 43911980 itr]:      1093.42
+[2752 sec, 43924025 itr]:      1093.42
+[2753 sec, 43936586 itr]:      1093.42
+[2754 sec, 43948137 itr]:      1093.42
+[2755 sec, 43961280 itr]:      1093.42
+[2756 sec, 43973072 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2757 sec, 43986069 itr]:      1093.42
+[2758 sec, 43999395 itr]:      1093.42
+[2759 sec, 44012341 itr]:      1093.42
+[2760 sec, 44024438 itr]:      1093.42
+[2761 sec, 44031233 itr]:      1093.42
+[2762 sec, 44042545 itr]:      1093.42
+[2763 sec, 44052700 itr]:      1093.42
+[2764 sec, 44065763 itr]:      1093.42
+[2765 sec, 44077091 itr]:      1093.42
+[2766 sec, 44090221 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2767 sec, 44102384 itr]:      1093.42
+[2768 sec, 44124950 itr]:      1093.42
+[2769 sec, 44124950 itr]:      1093.42
+[2770 sec, 44136171 itr]:      1093.42
+[2771 sec, 44147888 itr]:      1093.42
+[2772 sec, 44157319 itr]:      1093.42
+[2773 sec, 44169238 itr]:      1093.42
+[2774 sec, 44181888 itr]:      1093.42
+[2775 sec, 44194385 itr]:      1093.42
+[2776 sec, 44207051 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2777 sec, 44219406 itr]:      1093.42
+[2778 sec, 44231847 itr]:      1093.42
+[2779 sec, 44244170 itr]:      1093.42
+[2780 sec, 44255724 itr]:      1093.42
+[2781 sec, 44267827 itr]:      1093.42
+[2782 sec, 44278432 itr]:      1093.42
+[2783 sec, 44289415 itr]:      1093.42
+[2784 sec, 44302727 itr]:      1093.42
+[2785 sec, 44314859 itr]:      1093.42
+[2786 sec, 44326885 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2787 sec, 44338889 itr]:      1093.42
+[2788 sec, 44350302 itr]:      1093.42
+[2789 sec, 44362057 itr]:      1093.42
+[2790 sec, 44375515 itr]:      1093.42
+[2791 sec, 44398929 itr]:      1093.42
+[2792 sec, 44398929 itr]:      1093.42
+[2793 sec, 44409290 itr]:      1093.42
+[2794 sec, 44422295 itr]:      1093.42
+[2795 sec, 44434015 itr]:      1093.42
+[2796 sec, 44446376 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2797 sec, 44459213 itr]:      1093.42
+[2798 sec, 44470758 itr]:      1093.42
+[2799 sec, 44483377 itr]:      1093.42
+[2800 sec, 44495878 itr]:      1093.42
+[2801 sec, 44508311 itr]:      1093.42
+[2802 sec, 44518460 itr]:      1093.42
+[2803 sec, 44528213 itr]:      1093.42
+[2804 sec, 44541168 itr]:      1093.42
+[2805 sec, 44552693 itr]:      1093.42
+[2806 sec, 44564397 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2807 sec, 44588143 itr]:      1093.42
+[2808 sec, 44588143 itr]:      1093.42
+[2809 sec, 44599969 itr]:      1093.42
+[2810 sec, 44611750 itr]:      1093.42
+[2811 sec, 44625226 itr]:      1093.42
+[2812 sec, 44636607 itr]:      1093.42
+[2813 sec, 44648993 itr]:      1093.42
+[2814 sec, 44661429 itr]:      1093.42
+[2815 sec, 44670874 itr]:      1093.42
+[2816 sec, 44684754 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2817 sec, 44697641 itr]:      1093.42
+[2818 sec, 44709204 itr]:      1093.42
+[2819 sec, 44723067 itr]:      1093.42
+[2820 sec, 44735562 itr]:      1093.42
+[2821 sec, 44748902 itr]:      1093.42
+[2822 sec, 44761385 itr]:      1093.42
+[2823 sec, 44773820 itr]:      1093.42
+[2824 sec, 44785444 itr]:      1093.42
+[2825 sec, 44797022 itr]:      1093.42
+[2826 sec, 44808841 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2827 sec, 44822947 itr]:      1093.42
+[2828 sec, 44836422 itr]:      1093.42
+[2829 sec, 44849023 itr]:      1093.42
+[2830 sec, 44860413 itr]:      1093.42
+[2831 sec, 44873543 itr]:      1093.42
+[2832 sec, 44885876 itr]:      1093.42
+[2833 sec, 44897224 itr]:      1093.42
+[2834 sec, 44911356 itr]:      1093.42
+[2835 sec, 44923478 itr]:      1093.42
+[2836 sec, 44937755 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2837 sec, 44948728 itr]:      1093.42
+[2838 sec, 44961083 itr]:      1093.42
+[2839 sec, 44973482 itr]:      1093.42
+[2840 sec, 44985981 itr]:      1093.42
+[2841 sec, 44996397 itr]:      1093.42
+[2842 sec, 45009769 itr]:      1093.42
+[2843 sec, 45035500 itr]:      1093.42
+[2844 sec, 45035500 itr]:      1093.42
+[2845 sec, 45047458 itr]:      1093.42
+[2846 sec, 45060045 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2847 sec, 45073851 itr]:      1093.42
+[2848 sec, 45087129 itr]:      1093.42
+[2849 sec, 45101041 itr]:      1093.42
+[2850 sec, 45110800 itr]:      1093.42
+[2851 sec, 45119942 itr]:      1093.42
+[2852 sec, 45133440 itr]:      1093.42
+[2853 sec, 45145505 itr]:      1093.42
+[2854 sec, 45166914 itr]:      1093.42
+[2855 sec, 45166914 itr]:      1093.42
+[2856 sec, 45180245 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2857 sec, 45191940 itr]:      1093.42
+[2858 sec, 45204809 itr]:      1093.42
+[2859 sec, 45218795 itr]:      1093.42
+[2860 sec, 45230484 itr]:      1093.42
+[2861 sec, 45235812 itr]:      1093.42
+[2862 sec, 45244619 itr]:      1093.42
+[2863 sec, 45257956 itr]:      1093.42
+[2864 sec, 45270430 itr]:      1093.42
+[2865 sec, 45282724 itr]:      1093.42
+[2866 sec, 45295778 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2867 sec, 45308356 itr]:      1093.42
+[2868 sec, 45322092 itr]:      1093.42
+[2869 sec, 45333668 itr]:      1093.42
+[2870 sec, 45345375 itr]:      1093.42
+[2871 sec, 45355604 itr]:      1093.42
+[2872 sec, 45364308 itr]:      1093.42
+[2873 sec, 45377981 itr]:      1093.42
+[2874 sec, 45389258 itr]:      1093.42
+[2875 sec, 45401992 itr]:      1093.42
+[2876 sec, 45414937 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2877 sec, 45428609 itr]:      1093.42
+[2878 sec, 45441553 itr]:      1093.42
+[2879 sec, 45463649 itr]:      1093.42
+[2880 sec, 45463649 itr]:      1093.42
+[2881 sec, 45476522 itr]:      1093.42
+[2882 sec, 45486029 itr]:      1093.42
+[2883 sec, 45497952 itr]:      1093.42
+[2884 sec, 45509615 itr]:      1093.42
+[2885 sec, 45521804 itr]:      1093.42
+[2886 sec, 45532877 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2887 sec, 45545640 itr]:      1093.42
+[2888 sec, 45557618 itr]:      1093.42
+[2889 sec, 45568658 itr]:      1093.42
+[2890 sec, 45580552 itr]:      1093.42
+[2891 sec, 45592292 itr]:      1093.42
+[2892 sec, 45600557 itr]:      1093.42
+[2893 sec, 45613245 itr]:      1093.42
+[2894 sec, 45625348 itr]:      1093.42
+[2895 sec, 45637319 itr]:      1093.42
+[2896 sec, 45648743 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2897 sec, 45662312 itr]:      1093.42
+[2898 sec, 45674895 itr]:      1093.42
+[2899 sec, 45688244 itr]:      1093.42
+[2900 sec, 45703004 itr]:      1093.42
+[2901 sec, 45716790 itr]:      1093.42
+[2902 sec, 45729693 itr]:      1093.42
+[2903 sec, 45742875 itr]:      1093.42
+[2904 sec, 45754759 itr]:      1093.42
+[2905 sec, 45762756 itr]:      1093.42
+[2906 sec, 45775872 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2907 sec, 45789412 itr]:      1093.42
+[2908 sec, 45800603 itr]:      1093.42
+[2909 sec, 45812410 itr]:      1093.42
+[2910 sec, 45824390 itr]:      1093.42
+[2911 sec, 45837702 itr]:      1093.42
+[2912 sec, 45849444 itr]:      1093.42
+[2913 sec, 45861783 itr]:      1093.42
+[2914 sec, 45881316 itr]:      1093.42
+[2915 sec, 45881316 itr]:      1093.42
+[2916 sec, 45893514 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2917 sec, 45905584 itr]:      1093.42
+[2918 sec, 45916834 itr]:      1093.42
+[2919 sec, 45928610 itr]:      1093.42
+[2920 sec, 45942023 itr]:      1093.42
+[2921 sec, 45952523 itr]:      1093.42
+[2922 sec, 45964127 itr]:      1093.42
+[2923 sec, 45976643 itr]:      1093.42
+[2924 sec, 45989185 itr]:      1093.42
+[2925 sec, 46002682 itr]:      1093.42
+[2926 sec, 46016293 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2927 sec, 46028980 itr]:      1093.42
+[2928 sec, 46042385 itr]:      1093.42
+[2929 sec, 46054338 itr]:      1093.42
+[2930 sec, 46067398 itr]:      1093.42
+[2931 sec, 46080755 itr]:      1093.42
+[2932 sec, 46091915 itr]:      1093.42
+[2933 sec, 46104861 itr]:      1093.42
+[2934 sec, 46115755 itr]:      1093.42
+[2935 sec, 46128574 itr]:      1093.42
+[2936 sec, 46141310 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2937 sec, 46154443 itr]:      1093.42
+[2938 sec, 46165677 itr]:      1093.42
+[2939 sec, 46178156 itr]:      1093.42
+[2940 sec, 46191198 itr]:      1093.42
+[2941 sec, 46204772 itr]:      1093.42
+[2942 sec, 46217269 itr]:      1093.42
+[2943 sec, 46230115 itr]:      1093.42
+[2944 sec, 46241912 itr]:      1093.42
+[2945 sec, 46264467 itr]:      1093.42
+[2946 sec, 46264467 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2947 sec, 46278502 itr]:      1093.42
+[2948 sec, 46291405 itr]:      1093.42
+[2949 sec, 46305096 itr]:      1093.42
+[2950 sec, 46318371 itr]:      1093.42
+[2951 sec, 46330452 itr]:      1093.42
+[2952 sec, 46342552 itr]:      1093.42
+[2953 sec, 46352883 itr]:      1093.42
+[2954 sec, 46363956 itr]:      1093.42
+[2955 sec, 46375748 itr]:      1093.42
+[2956 sec, 46386235 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2957 sec, 46399125 itr]:      1093.42
+[2958 sec, 46411607 itr]:      1093.42
+[2959 sec, 46423501 itr]:      1093.42
+[2960 sec, 46436943 itr]:      1093.42
+[2961 sec, 46448535 itr]:      1093.42
+[2962 sec, 46473866 itr]:      1093.42
+[2963 sec, 46473866 itr]:      1093.42
+[2964 sec, 46486435 itr]:      1093.42
+[2965 sec, 46493129 itr]:      1093.42
+[2966 sec, 46502850 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2967 sec, 46516729 itr]:      1093.42
+[2968 sec, 46528679 itr]:      1093.42
+[2969 sec, 46540704 itr]:      1093.42
+[2970 sec, 46553112 itr]:      1093.42
+[2971 sec, 46564100 itr]:      1093.42
+[2972 sec, 46577986 itr]:      1093.42
+[2973 sec, 46589868 itr]:      1093.42
+[2974 sec, 46602334 itr]:      1093.42
+[2975 sec, 46612726 itr]:      1093.42
+[2976 sec, 46623987 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2977 sec, 46635840 itr]:      1093.42
+[2978 sec, 46660822 itr]:      1093.42
+[2979 sec, 46660822 itr]:      1093.42
+[2980 sec, 46674619 itr]:      1093.42
+[2981 sec, 46686878 itr]:      1093.42
+[2982 sec, 46699478 itr]:      1093.42
+[2983 sec, 46711888 itr]:      1093.42
+[2984 sec, 46724827 itr]:      1093.42
+[2985 sec, 46732481 itr]:      1093.42
+[2986 sec, 46743046 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2987 sec, 46754097 itr]:      1093.42
+[2988 sec, 46765181 itr]:      1093.42
+[2989 sec, 46778627 itr]:      1093.42
+[2990 sec, 46791717 itr]:      1093.42
+[2991 sec, 46803605 itr]:      1093.42
+[2992 sec, 46815236 itr]:      1093.42
+[2993 sec, 46828524 itr]:      1093.42
+[2994 sec, 46840130 itr]:      1093.42
+[2995 sec, 46852254 itr]:      1093.42
+[2996 sec, 46861946 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[2997 sec, 46872869 itr]:      1093.42
+[2998 sec, 46883954 itr]:      1093.42
+[2999 sec, 46893995 itr]:      1093.42
+[3000 sec, 46904562 itr]:      1093.42
+[3001 sec, 46917353 itr]:      1093.42
+[3002 sec, 46930655 itr]:      1093.42
+[3003 sec, 46942679 itr]:      1093.42
+[3004 sec, 46955220 itr]:      1093.42
+[3005 sec, 46968676 itr]:      1093.42
+[3006 sec, 46977726 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3007 sec, 47002033 itr]:      1093.42
+[3008 sec, 47002033 itr]:      1093.42
+[3009 sec, 47013042 itr]:      1093.42
+[3010 sec, 47039719 itr]:      1093.42
+[3011 sec, 47039719 itr]:      1093.42
+[3012 sec, 47050476 itr]:      1093.42
+[3013 sec, 47063183 itr]:      1093.42
+[3014 sec, 47074825 itr]:      1093.42
+[3015 sec, 47087617 itr]:      1093.42
+[3016 sec, 47097879 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3017 sec, 47107479 itr]:      1093.42
+[3018 sec, 47131631 itr]:      1093.42
+[3019 sec, 47131631 itr]:      1093.42
+[3020 sec, 47146819 itr]:      1093.42
+[3021 sec, 47158677 itr]:      1093.42
+[3022 sec, 47172102 itr]:      1093.42
+[3023 sec, 47185246 itr]:      1093.42
+[3024 sec, 47197407 itr]:      1093.42
+[3025 sec, 47211665 itr]:      1093.42
+[3026 sec, 47221731 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3027 sec, 47230183 itr]:      1093.42
+[3028 sec, 47242437 itr]:      1093.42
+[3029 sec, 47253640 itr]:      1093.42
+[3030 sec, 47267842 itr]:      1093.42
+[3031 sec, 47280577 itr]:      1093.42
+[3032 sec, 47293672 itr]:      1093.42
+[3033 sec, 47305621 itr]:      1093.42
+[3034 sec, 47318321 itr]:      1093.42
+[3035 sec, 47330725 itr]:      1093.42
+[3036 sec, 47341587 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3037 sec, 47352246 itr]:      1093.42
+[3038 sec, 47363423 itr]:      1093.42
+[3039 sec, 47376105 itr]:      1093.42
+[3040 sec, 47404710 itr]:      1093.42
+[3041 sec, 47404710 itr]:      1093.42
+[3042 sec, 47417197 itr]:      1093.42
+[3043 sec, 47430404 itr]:      1093.42
+[3044 sec, 47441361 itr]:      1093.42
+[3045 sec, 47454431 itr]:      1093.42
+[3046 sec, 47465094 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3047 sec, 47476891 itr]:      1093.42
+[3048 sec, 47488522 itr]:      1093.42
+[3049 sec, 47500328 itr]:      1093.42
+[3050 sec, 47514465 itr]:      1093.42
+[3051 sec, 47526780 itr]:      1093.42
+[3052 sec, 47539302 itr]:      1093.42
+[3053 sec, 47551320 itr]:      1093.42
+[3054 sec, 47562086 itr]:      1093.42
+[3055 sec, 47574765 itr]:      1093.42
+[3056 sec, 47588183 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3057 sec, 47600450 itr]:      1093.42
+[3058 sec, 47612567 itr]:      1093.42
+[3059 sec, 47625493 itr]:      1093.42
+[3060 sec, 47636766 itr]:      1093.42
+[3061 sec, 47649586 itr]:      1093.42
+[3062 sec, 47664659 itr]:      1093.42
+[3063 sec, 47678342 itr]:      1093.42
+[3064 sec, 47691220 itr]:      1093.42
+[3065 sec, 47704306 itr]:      1093.42
+[3066 sec, 47713641 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3067 sec, 47725984 itr]:      1093.42
+[3068 sec, 47737568 itr]:      1093.42
+[3069 sec, 47750920 itr]:      1093.42
+[3070 sec, 47763617 itr]:      1093.42
+[3071 sec, 47775406 itr]:      1093.42
+[3072 sec, 47786910 itr]:      1093.42
+[3073 sec, 47799899 itr]:      1093.42
+[3074 sec, 47811848 itr]:      1093.42
+[3075 sec, 47823804 itr]:      1093.42
+[3076 sec, 47845154 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3077 sec, 47845154 itr]:      1093.42
+[3078 sec, 47856251 itr]:      1093.42
+[3079 sec, 47870379 itr]:      1093.42
+[3080 sec, 47885321 itr]:      1093.42
+[3081 sec, 47897971 itr]:      1093.42
+[3082 sec, 47910081 itr]:      1093.42
+[3083 sec, 47923490 itr]:      1093.42
+[3084 sec, 47937210 itr]:      1093.42
+[3085 sec, 47950806 itr]:      1093.42
+[3086 sec, 47961221 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3087 sec, 47972215 itr]:      1093.42
+[3088 sec, 47983881 itr]:      1093.42
+[3089 sec, 48008274 itr]:      1093.42
+[3090 sec, 48008274 itr]:      1093.42
+[3091 sec, 48021830 itr]:      1093.42
+[3092 sec, 48034065 itr]:      1093.42
+[3093 sec, 48045504 itr]:      1093.42
+[3094 sec, 48055901 itr]:      1093.42
+[3095 sec, 48069481 itr]:      1093.42
+[3096 sec, 48081130 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3097 sec, 48094559 itr]:      1093.42
+[3098 sec, 48108470 itr]:      1093.42
+[3099 sec, 48122918 itr]:      1093.42
+[3100 sec, 48133797 itr]:      1093.42
+[3101 sec, 48145917 itr]:      1093.42
+[3102 sec, 48158859 itr]:      1093.42
+[3103 sec, 48173509 itr]:      1093.42
+[3104 sec, 48187635 itr]:      1093.42
+[3105 sec, 48199410 itr]:      1093.42
+[3106 sec, 48213695 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3107 sec, 48226539 itr]:      1093.42
+[3108 sec, 48238176 itr]:      1093.42
+[3109 sec, 48251953 itr]:      1093.42
+[3110 sec, 48265479 itr]:      1093.42
+[3111 sec, 48279012 itr]:      1093.42
+[3112 sec, 48292615 itr]:      1093.42
+[3113 sec, 48304794 itr]:      1093.42
+[3114 sec, 48316409 itr]:      1093.42
+[3115 sec, 48329944 itr]:      1093.42
+[3116 sec, 48342855 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3117 sec, 48353741 itr]:      1093.42
+[3118 sec, 48366466 itr]:      1093.42
+[3119 sec, 48393188 itr]:      1093.42
+[3120 sec, 48393188 itr]:      1093.42
+[3121 sec, 48406850 itr]:      1093.42
+[3122 sec, 48419612 itr]:      1093.42
+[3123 sec, 48432698 itr]:      1093.42
+[3124 sec, 48457445 itr]:      1093.42
+[3125 sec, 48470297 itr]:      1093.42
+[3126 sec, 48470297 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3127 sec, 48483544 itr]:      1093.42
+[3128 sec, 48494797 itr]:      1093.42
+[3129 sec, 48506744 itr]:      1093.42
+[3130 sec, 48519164 itr]:      1093.42
+[3131 sec, 48531204 itr]:      1093.42
+[3132 sec, 48544432 itr]:      1093.42
+[3133 sec, 48558018 itr]:      1093.42
+[3134 sec, 48568670 itr]:      1093.42
+[3135 sec, 48580602 itr]:      1093.42
+[3136 sec, 48607673 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3137 sec, 48607673 itr]:      1093.42
+[3138 sec, 48620083 itr]:      1093.42
+[3139 sec, 48631751 itr]:      1093.42
+[3140 sec, 48645518 itr]:      1093.42
+[3141 sec, 48660403 itr]:      1093.42
+[3142 sec, 48671905 itr]:      1093.42
+[3143 sec, 48695890 itr]:      1093.42
+[3144 sec, 48695890 itr]:      1093.42
+[3145 sec, 48709314 itr]:      1093.42
+[3146 sec, 48723369 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3147 sec, 48735410 itr]:      1093.42
+[3148 sec, 48748645 itr]:      1093.42
+[3149 sec, 48760967 itr]:      1093.42
+[3150 sec, 48774218 itr]:      1093.42
+[3151 sec, 48787456 itr]:      1093.42
+[3152 sec, 48801657 itr]:      1093.42
+[3153 sec, 48813193 itr]:      1093.42
+[3154 sec, 48823371 itr]:      1093.42
+[3155 sec, 48835297 itr]:      1093.42
+[3156 sec, 48858361 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3157 sec, 48858361 itr]:      1093.42
+[3158 sec, 48870665 itr]:      1093.42
+[3159 sec, 48884228 itr]:      1093.42
+[3160 sec, 48898597 itr]:      1093.42
+[3161 sec, 48910740 itr]:      1093.42
+[3162 sec, 48923287 itr]:      1093.42
+[3163 sec, 48936118 itr]:      1093.42
+[3164 sec, 48942593 itr]:      1093.42
+[3165 sec, 48954899 itr]:      1093.42
+[3166 sec, 48966346 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3167 sec, 48978454 itr]:      1093.42
+[3168 sec, 48990912 itr]:      1093.42
+[3169 sec, 49002770 itr]:      1093.42
+[3170 sec, 49015519 itr]:      1093.42
+[3171 sec, 49028078 itr]:      1093.42
+[3172 sec, 49039993 itr]:      1093.42
+[3173 sec, 49053354 itr]:      1093.42
+[3174 sec, 49067079 itr]:      1093.42
+[3175 sec, 49077887 itr]:      1093.42
+[3176 sec, 49090761 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3177 sec, 49103307 itr]:      1093.42
+[3178 sec, 49115606 itr]:      1093.42
+[3179 sec, 49128238 itr]:      1093.42
+[3180 sec, 49141384 itr]:      1093.42
+[3181 sec, 49153560 itr]:      1093.42
+[3182 sec, 49166402 itr]:      1093.42
+[3183 sec, 49179667 itr]:      1093.42
+[3184 sec, 49188742 itr]:      1093.42
+[3185 sec, 49200324 itr]:      1093.42
+[3186 sec, 49213203 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3187 sec, 49227027 itr]:      1093.42
+[3188 sec, 49239485 itr]:      1093.42
+[3189 sec, 49262766 itr]:      1093.42
+[3190 sec, 49262766 itr]:      1093.42
+[3191 sec, 49275543 itr]:      1093.42
+[3192 sec, 49289189 itr]:      1093.42
+[3193 sec, 49304535 itr]:      1093.42
+[3194 sec, 49315196 itr]:      1093.42
+[3195 sec, 49329084 itr]:      1093.42
+[3196 sec, 49339474 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3197 sec, 49352964 itr]:      1093.42
+[3198 sec, 49366504 itr]:      1093.42
+[3199 sec, 49378791 itr]:      1093.42
+[3200 sec, 49392021 itr]:      1093.42
+[3201 sec, 49403478 itr]:      1093.42
+[3202 sec, 49416035 itr]:      1093.42
+[3203 sec, 49428181 itr]:      1093.42
+[3204 sec, 49434374 itr]:      1093.42
+[3205 sec, 49444190 itr]:      1093.42
+[3206 sec, 49456579 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3207 sec, 49469535 itr]:      1093.42
+[3208 sec, 49496652 itr]:      1093.42
+[3209 sec, 49496652 itr]:      1093.42
+[3210 sec, 49510895 itr]:      1093.42
+[3211 sec, 49523883 itr]:      1093.42
+[3212 sec, 49549750 itr]:      1093.42
+[3213 sec, 49549750 itr]:      1093.42
+[3214 sec, 49560131 itr]:      1093.42
+[3215 sec, 49571374 itr]:      1093.42
+[3216 sec, 49583917 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3217 sec, 49598152 itr]:      1093.42
+[3218 sec, 49608105 itr]:      1093.42
+[3219 sec, 49621516 itr]:      1093.42
+[3220 sec, 49634085 itr]:      1093.42
+[3221 sec, 49646757 itr]:      1093.42
+[3222 sec, 49659429 itr]:      1093.42
+[3223 sec, 49672286 itr]:      1093.42
+[3224 sec, 49682926 itr]:      1093.42
+[3225 sec, 49692215 itr]:      1093.42
+[3226 sec, 49705769 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3227 sec, 49718235 itr]:      1093.42
+[3228 sec, 49730268 itr]:      1093.42
+[3229 sec, 49742290 itr]:      1093.42
+[3230 sec, 49756035 itr]:      1093.42
+[3231 sec, 49768361 itr]:      1093.42
+[3232 sec, 49781658 itr]:      1093.42
+[3233 sec, 49795599 itr]:      1093.42
+[3234 sec, 49801311 itr]:      1093.42
+[3235 sec, 49811126 itr]:      1093.42
+[3236 sec, 49824968 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3237 sec, 49837779 itr]:      1093.42
+[3238 sec, 49851768 itr]:      1093.42
+[3239 sec, 49866382 itr]:      1093.42
+[3240 sec, 49879336 itr]:      1093.42
+[3241 sec, 49891842 itr]:      1093.42
+[3242 sec, 49902996 itr]:      1093.42
+[3243 sec, 49916817 itr]:      1093.42
+[3244 sec, 49927342 itr]:      1093.42
+[3245 sec, 49939630 itr]:      1093.42
+[3246 sec, 49952709 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3247 sec, 49966771 itr]:      1093.42
+[3248 sec, 49979339 itr]:      1093.42
+[3249 sec, 49992677 itr]:      1093.42
+[3250 sec, 50004597 itr]:      1093.42
+[3251 sec, 50016120 itr]:      1093.42
+[3252 sec, 50041327 itr]:      1093.42
+[3253 sec, 50041327 itr]:      1093.42
+[3254 sec, 50053448 itr]:      1093.42
+[3255 sec, 50065679 itr]:      1093.42
+[3256 sec, 50080201 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3257 sec, 50091936 itr]:      1093.42
+[3258 sec, 50105253 itr]:      1093.42
+[3259 sec, 50131529 itr]:      1093.42
+[3260 sec, 50131529 itr]:      1093.42
+[3261 sec, 50146892 itr]:      1093.42
+[3262 sec, 50158559 itr]:      1093.42
+[3263 sec, 50171241 itr]:      1093.42
+[3264 sec, 50182296 itr]:      1093.42
+[3265 sec, 50194372 itr]:      1093.42
+[3266 sec, 50207377 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3267 sec, 50218100 itr]:      1093.42
+[3268 sec, 50230648 itr]:      1093.42
+[3269 sec, 50242993 itr]:      1093.42
+[3270 sec, 50256996 itr]:      1093.42
+[3271 sec, 50270745 itr]:      1093.42
+[3272 sec, 50282239 itr]:      1093.42
+[3273 sec, 50292925 itr]:      1093.42
+[3274 sec, 50301355 itr]:      1093.42
+[3275 sec, 50313852 itr]:      1093.42
+[3276 sec, 50327244 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3277 sec, 50339675 itr]:      1093.42
+[3278 sec, 50352280 itr]:      1093.42
+[3279 sec, 50364912 itr]:      1093.42
+[3280 sec, 50377453 itr]:      1093.42
+[3281 sec, 50390212 itr]:      1093.42
+[3282 sec, 50402555 itr]:      1093.42
+[3283 sec, 50415557 itr]:      1093.42
+[3284 sec, 50419101 itr]:      1093.42
+[3285 sec, 50432700 itr]:      1093.42
+[3286 sec, 50445725 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3287 sec, 50456983 itr]:      1093.42
+[3288 sec, 50469513 itr]:      1093.42
+[3289 sec, 50484203 itr]:      1093.42
+[3290 sec, 50497898 itr]:      1093.42
+[3291 sec, 50509543 itr]:      1093.42
+[3292 sec, 50523534 itr]:      1093.42
+[3293 sec, 50537159 itr]:      1093.42
+[3294 sec, 50543020 itr]:      1093.42
+[3295 sec, 50555069 itr]:      1093.42
+[3296 sec, 50568889 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3297 sec, 50582440 itr]:      1093.42
+[3298 sec, 50596761 itr]:      1093.42
+[3299 sec, 50609068 itr]:      1093.42
+[3300 sec, 50620611 itr]:      1093.42
+[3301 sec, 50633059 itr]:      1093.42
+[3302 sec, 50645957 itr]:      1093.42
+[3303 sec, 50660306 itr]:      1093.42
+[3304 sec, 50673746 itr]:      1093.42
+[3305 sec, 50686922 itr]:      1093.42
+[3306 sec, 50700244 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3307 sec, 50719564 itr]:      1093.42
+[3308 sec, 50719564 itr]:      1093.42
+[3309 sec, 50746809 itr]:      1093.42
+[3310 sec, 50746809 itr]:      1093.42
+[3311 sec, 50759871 itr]:      1093.42
+[3312 sec, 50773329 itr]:      1093.42
+[3313 sec, 50785322 itr]:      1093.42
+[3314 sec, 50798618 itr]:      1093.42
+[3315 sec, 50811651 itr]:      1093.42
+[3316 sec, 50826308 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3317 sec, 50838986 itr]:      1093.42
+[3318 sec, 50852372 itr]:      1093.42
+[3319 sec, 50865726 itr]:      1093.42
+[3320 sec, 50878554 itr]:      1093.42
+[3321 sec, 50890340 itr]:      1093.42
+[3322 sec, 50901384 itr]:      1093.42
+[3323 sec, 50915351 itr]:      1093.42
+[3324 sec, 50929082 itr]:      1093.42
+[3325 sec, 50940399 itr]:      1093.42
+[3326 sec, 50952073 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3327 sec, 50965577 itr]:      1093.42
+[3328 sec, 50977332 itr]:      1093.42
+[3329 sec, 50991309 itr]:      1093.42
+[3330 sec, 51003411 itr]:      1093.42
+[3331 sec, 51016502 itr]:      1093.42
+[3332 sec, 51030033 itr]:      1093.42
+[3333 sec, 51041908 itr]:      1093.42
+[3334 sec, 51053842 itr]:      1093.42
+[3335 sec, 51067748 itr]:      1093.42
+[3336 sec, 51079994 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3337 sec, 51093949 itr]:      1093.42
+[3338 sec, 51107881 itr]:      1093.42
+[3339 sec, 51120160 itr]:      1093.42
+[3340 sec, 51132434 itr]:      1093.42
+[3341 sec, 51144642 itr]:      1093.42
+[3342 sec, 51157701 itr]:      1093.42
+[3343 sec, 51167751 itr]:      1093.42
+[3344 sec, 51180354 itr]:      1093.42
+[3345 sec, 51192567 itr]:      1093.42
+[3346 sec, 51199302 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3347 sec, 51210862 itr]:      1093.42
+[3348 sec, 51224374 itr]:      1093.42
+[3349 sec, 51238645 itr]:      1093.42
+[3350 sec, 51252354 itr]:      1093.42
+[3351 sec, 51266940 itr]:      1093.42
+[3352 sec, 51280689 itr]:      1093.42
+[3353 sec, 51295005 itr]:      1093.42
+[3354 sec, 51308202 itr]:      1093.42
+[3355 sec, 51321285 itr]:      1093.42
+[3356 sec, 51334584 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3357 sec, 51346892 itr]:      1093.42
+[3358 sec, 51360547 itr]:      1093.42
+[3359 sec, 51373027 itr]:      1093.42
+[3360 sec, 51384836 itr]:      1093.42
+[3361 sec, 51396699 itr]:      1093.42
+[3362 sec, 51409953 itr]:      1093.42
+[3363 sec, 51423936 itr]:      1093.42
+[3364 sec, 51436446 itr]:      1093.42
+[3365 sec, 51449678 itr]:      1093.42
+[3366 sec, 51461686 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3367 sec, 51473046 itr]:      1093.42
+[3368 sec, 51487600 itr]:      1093.42
+[3369 sec, 51500307 itr]:      1093.42
+[3370 sec, 51513722 itr]:      1093.42
+[3371 sec, 51526666 itr]:      1093.42
+[3372 sec, 51537062 itr]:      1093.42
+[3373 sec, 51541984 itr]:      1093.42
+[3374 sec, 51554601 itr]:      1093.42
+[3375 sec, 51567909 itr]:      1093.42
+[3376 sec, 51581747 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3377 sec, 51594617 itr]:      1093.42
+[3378 sec, 51606473 itr]:      1093.42
+[3379 sec, 51619484 itr]:      1093.42
+[3380 sec, 51632887 itr]:      1093.42
+[3381 sec, 51647024 itr]:      1093.42
+[3382 sec, 51661031 itr]:      1093.42
+[3383 sec, 51674637 itr]:      1093.42
+[3384 sec, 51687193 itr]:      1093.42
+[3385 sec, 51701125 itr]:      1093.42
+[3386 sec, 51714365 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3387 sec, 51727476 itr]:      1093.42
+[3388 sec, 51740630 itr]:      1093.42
+[3389 sec, 51753494 itr]:      1093.42
+[3390 sec, 51763632 itr]:      1093.42
+[3391 sec, 51775833 itr]:      1093.42
+[3392 sec, 51789778 itr]:      1093.42
+[3393 sec, 51801068 itr]:      1093.42
+[3394 sec, 51813344 itr]:      1093.42
+[3395 sec, 51841152 itr]:      1093.42
+[3396 sec, 51841152 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3397 sec, 51854886 itr]:      1093.42
+[3398 sec, 51868280 itr]:      1093.42
+[3399 sec, 51880127 itr]:      1093.42
+[3400 sec, 51892469 itr]:      1093.42
+[3401 sec, 51906507 itr]:      1093.42
+[3402 sec, 51919497 itr]:      1093.42
+[3403 sec, 51929526 itr]:      1093.42
+[3404 sec, 51944144 itr]:      1093.42
+[3405 sec, 51956763 itr]:      1093.42
+[3406 sec, 51970304 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3407 sec, 51998485 itr]:      1093.42
+[3408 sec, 51998485 itr]:      1093.42
+[3409 sec, 52011689 itr]:      1093.42
+[3410 sec, 52037397 itr]:      1093.42
+[3411 sec, 52037397 itr]:      1093.42
+[3412 sec, 52048533 itr]:      1093.42
+[3413 sec, 52060156 itr]:      1093.42
+[3414 sec, 52072615 itr]:      1093.42
+[3415 sec, 52087936 itr]:      1093.42
+[3416 sec, 52102087 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3417 sec, 52115782 itr]:      1093.42
+[3418 sec, 52142264 itr]:      1093.42
+[3419 sec, 52142264 itr]:      1093.42
+[3420 sec, 52156497 itr]:      1093.42
+[3421 sec, 52169382 itr]:      1093.42
+[3422 sec, 52181345 itr]:      1093.42
+[3423 sec, 52194851 itr]:      1093.42
+[3424 sec, 52207611 itr]:      1093.42
+[3425 sec, 52221045 itr]:      1093.42
+[3426 sec, 52234486 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3427 sec, 52247539 itr]:      1093.42
+[3428 sec, 52273920 itr]:      1093.42
+[3429 sec, 52273920 itr]:      1093.42
+[3430 sec, 52285888 itr]:      1093.42
+[3431 sec, 52293167 itr]:      1093.42
+[3432 sec, 52305506 itr]:      1093.42
+[3433 sec, 52319284 itr]:      1093.42
+[3434 sec, 52331875 itr]:      1093.42
+[3435 sec, 52346328 itr]:      1093.42
+[3436 sec, 52371446 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3437 sec, 52385312 itr]:      1093.42
+[3438 sec, 52385312 itr]:      1093.42
+[3439 sec, 52399372 itr]:      1093.42
+[3440 sec, 52412431 itr]:      1093.42
+[3441 sec, 52419021 itr]:      1093.42
+[3442 sec, 52433665 itr]:      1093.42
+[3443 sec, 52445273 itr]:      1093.42
+[3444 sec, 52460040 itr]:      1093.42
+[3445 sec, 52474952 itr]:      1093.42
+[3446 sec, 52489562 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3447 sec, 52504902 itr]:      1093.42
+[3448 sec, 52518806 itr]:      1093.42
+[3449 sec, 52532223 itr]:      1093.42
+[3450 sec, 52541377 itr]:      1093.42
+[3451 sec, 52553728 itr]:      1093.42
+[3452 sec, 52567058 itr]:      1093.42
+[3453 sec, 52579984 itr]:      1093.42
+[3454 sec, 52594398 itr]:      1093.42
+[3455 sec, 52606423 itr]:      1093.42
+[3456 sec, 52620279 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3457 sec, 52632244 itr]:      1093.42
+[3458 sec, 52644081 itr]:      1093.42
+[3459 sec, 52656190 itr]:      1093.42
+[3460 sec, 52667210 itr]:      1093.42
+[3461 sec, 52680612 itr]:      1093.42
+[3462 sec, 52694840 itr]:      1093.42
+[3463 sec, 52707748 itr]:      1093.42
+[3464 sec, 52720006 itr]:      1093.42
+[3465 sec, 52734432 itr]:      1093.42
+[3466 sec, 52748566 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3467 sec, 52761555 itr]:      1093.42
+[3468 sec, 52773940 itr]:      1093.42
+[3469 sec, 52784785 itr]:      1093.42
+[3470 sec, 52795575 itr]:      1093.42
+[3471 sec, 52810587 itr]:      1093.42
+[3472 sec, 52825848 itr]:      1093.42
+[3473 sec, 52838511 itr]:      1093.42
+[3474 sec, 52851997 itr]:      1093.42
+[3475 sec, 52866677 itr]:      1093.42
+[3476 sec, 52881005 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3477 sec, 52894222 itr]:      1093.42
+[3478 sec, 52907766 itr]:      1093.42
+[3479 sec, 52917007 itr]:      1093.42
+[3480 sec, 52930231 itr]:      1093.42
+[3481 sec, 52942776 itr]:      1093.42
+[3482 sec, 52954883 itr]:      1093.42
+[3483 sec, 52967685 itr]:      1093.42
+[3484 sec, 52979044 itr]:      1093.42
+[3485 sec, 52991767 itr]:      1093.42
+[3486 sec, 53017566 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3487 sec, 53017566 itr]:      1093.42
+[3488 sec, 53029838 itr]:      1093.42
+[3489 sec, 53042233 itr]:      1093.42
+[3490 sec, 53056855 itr]:      1093.42
+[3491 sec, 53071874 itr]:      1093.42
+[3492 sec, 53084742 itr]:      1093.42
+[3493 sec, 53099356 itr]:      1093.42
+[3494 sec, 53113116 itr]:      1093.42
+[3495 sec, 53126885 itr]:      1093.42
+[3496 sec, 53138437 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3497 sec, 53148609 itr]:      1093.42
+[3498 sec, 53157051 itr]:      1093.42
+[3499 sec, 53170521 itr]:      1093.42
+[3500 sec, 53183688 itr]:      1093.42
+[3501 sec, 53197511 itr]:      1093.42
+[3502 sec, 53211140 itr]:      1093.42
+[3503 sec, 53224340 itr]:      1093.42
+[3504 sec, 53239157 itr]:      1093.42
+[3505 sec, 53251959 itr]:      1093.42
+[3506 sec, 53264547 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3507 sec, 53277207 itr]:      1093.42
+[3508 sec, 53286499 itr]:      1093.42
+[3509 sec, 53296734 itr]:      1093.42
+[3510 sec, 53308100 itr]:      1093.42
+[3511 sec, 53320993 itr]:      1093.42
+[3512 sec, 53333135 itr]:      1093.42
+[3513 sec, 53345394 itr]:      1093.42
+[3514 sec, 53358678 itr]:      1093.42
+[3515 sec, 53371854 itr]:      1093.42
+[3516 sec, 53398133 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3517 sec, 53398133 itr]:      1093.42
+[3518 sec, 53407674 itr]:      1093.42
+[3519 sec, 53417568 itr]:      1093.42
+[3520 sec, 53431548 itr]:      1093.42
+[3521 sec, 53441268 itr]:      1093.42
+[3522 sec, 53454885 itr]:      1093.42
+[3523 sec, 53468133 itr]:      1093.42
+[3524 sec, 53480696 itr]:      1093.42
+[3525 sec, 53492986 itr]:      1093.42
+[3526 sec, 53505017 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3527 sec, 53517207 itr]:      1093.42
+[3528 sec, 53539047 itr]:      1093.42
+[3529 sec, 53539047 itr]:      1093.42
+[3530 sec, 53552912 itr]:      1093.42
+[3531 sec, 53565955 itr]:      1093.42
+[3532 sec, 53579113 itr]:      1093.42
+[3533 sec, 53591726 itr]:      1093.42
+[3534 sec, 53604800 itr]:      1093.42
+[3535 sec, 53628856 itr]:      1093.42
+[3536 sec, 53642472 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3537 sec, 53642472 itr]:      1093.42
+[3538 sec, 53655427 itr]:      1093.42
+[3539 sec, 53668311 itr]:      1093.42
+[3540 sec, 53681338 itr]:      1093.42
+[3541 sec, 53693514 itr]:      1093.42
+[3542 sec, 53707345 itr]:      1093.42
+[3543 sec, 53719668 itr]:      1093.42
+[3544 sec, 53732359 itr]:      1093.42
+[3545 sec, 53744398 itr]:      1093.42
+[3546 sec, 53755103 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3547 sec, 53767630 itr]:      1093.42
+[3548 sec, 53778508 itr]:      1093.42
+[3549 sec, 53786799 itr]:      1093.42
+[3550 sec, 53797465 itr]:      1093.42
+[3551 sec, 53811754 itr]:      1093.42
+[3552 sec, 53824436 itr]:      1093.42
+[3553 sec, 53837584 itr]:      1093.42
+[3554 sec, 53852262 itr]:      1093.42
+[3555 sec, 53865423 itr]:      1093.42
+[3556 sec, 53878663 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3557 sec, 53890908 itr]:      1093.42
+[3558 sec, 53911550 itr]:      1093.42
+[3559 sec, 53911550 itr]:      1093.42
+[3560 sec, 53923984 itr]:      1093.42
+[3561 sec, 53935833 itr]:      1093.42
+[3562 sec, 53948586 itr]:      1093.42
+[3563 sec, 53962004 itr]:      1093.42
+[3564 sec, 53975499 itr]:      1093.42
+[3565 sec, 54001961 itr]:      1093.42
+[3566 sec, 54001961 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3567 sec, 54015754 itr]:      1093.42
+[3568 sec, 54026072 itr]:      1093.42
+[3569 sec, 54050361 itr]:      1093.42
+[3570 sec, 54050361 itr]:      1093.42
+[3571 sec, 54064887 itr]:      1093.42
+[3572 sec, 54077409 itr]:      1093.42
+[3573 sec, 54088807 itr]:      1093.42
+[3574 sec, 54101555 itr]:      1093.42
+[3575 sec, 54115945 itr]:      1093.42
+[3576 sec, 54130481 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3577 sec, 54143870 itr]:      1093.42
+[3578 sec, 54155594 itr]:      1093.42
+[3579 sec, 54168084 itr]:      1093.42
+[3580 sec, 54180473 itr]:      1093.42
+[3581 sec, 54193484 itr]:      1093.42
+[3582 sec, 54217237 itr]:      1093.42
+[3583 sec, 54217237 itr]:      1093.42
+[3584 sec, 54230057 itr]:      1093.42
+[3585 sec, 54242133 itr]:      1093.42
+[3586 sec, 54255011 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3587 sec, 54269073 itr]:      1093.42
+[3588 sec, 54275730 itr]:      1093.42
+[3589 sec, 54287805 itr]:      1093.42
+[3590 sec, 54298996 itr]:      1093.42
+[3591 sec, 54310648 itr]:      1093.42
+[3592 sec, 54324847 itr]:      1093.42
+[3593 sec, 54337534 itr]:      1093.42
+[3594 sec, 54352223 itr]:      1093.42
+[3595 sec, 54365157 itr]:      1093.42
+[3596 sec, 54377541 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+[3597 sec, 54389189 itr]:      1093.42
+[3598 sec, 54408551 itr]:      1093.42
+[3599 sec, 54421635 itr]:      1093.42
+[3600 sec, 54421635 itr]:      1093.42
+[3600 sec, 54434386 itr]:      1093.42
+[ optimality gap       ]:       47.27%
+
+54434386 iterations performed in 3600 seconds
+
+Feasible solution: 
+  obj    =      1093.42
+  gap    =       47.27%
+  bounds =       576.55
+Time limit reached, but a feasible solution is available
+  objective value = 1093.4166875569724
+  status = HxSolutionStatus.FEASIBLE, iterations = 54434386, time = 3600.00s, gap = 47.27%
+
+[10:38:20.062835] Saving solution to file: /dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/logs/form_melo_hx/solutions/08R_08V_04F_03M/lr104_sol_genconfig_melo_hx.txt
+
+[10:38:20] Saving solution timeline to file: /dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/logs/form_melo_hx/timelines/08R_08V_04F_03M/lr104_timeline_genconfig_melo_hx.txt
+
+[21/09/2025 10:38:20] Writing results to CSV: /dados/rmelo/PDPTW-SE/benchmark_multi_floor_v3/official_experiments/mip_hexaly/set_02_pt_01/logs/form_melo_hx/outputs/csvresults_form_melo_hx.csv
+---------------------| VEHICLES |---------------------
+
+Vehicle 0 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 30.739523116491682
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 30.739523116491682
+	
+	Task 0 -> Task 12: 15.0
+	Vehicle arrival at task: 45.73952311649168
+	Waiting time until service start time: 0.0
+	
+	id: 12
+			node: 5
+			(x, y, z): (50, 35, 0)
+			dem: 19
+			earl: 0
+			lat: 205
+			servt: 10
+			pid: 0
+			did: 79
+			servST: 45.73952311649168
+			(h, h_ind): (-1, -1)
+			load: 19.0
+			
+	Finished service at time: 55.73952311649168
+	
+	Using Machine: 1
+			Task 12 -> Machine 1 (Station 0): 13.34
+			Vehicle arrival at machine station: 69.07952311649169
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 69.07943522624316
+			Region 0 -> Region 2: 10.0
+			Machine arrival at machine station: 79.07943522624316
+			
+			Machine 1 (Station 2)-> Task 79: 22.36
+			Vehicle arrival at task: 101.43943522624316
+			Waiting time until service start time: 0.0
+			
+	id: 79
+			node: 13
+			(x, y, z): (57, 48, 2)
+			dem: -19
+			earl: 92
+			lat: 102
+			servt: 10
+			pid: 12
+			did: 0
+			servST: 101.43943522624318
+			(h, h_ind): (1, 0)
+			load: 0.0
+			
+	Finished service at time: 111.43943522624318
+	
+	Using Machine: 1
+			Task 79 -> Machine 1 (Station 2): 22.36
+			Vehicle arrival at machine station: 133.7994352262432
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 133.7994352262432
+			Region 2 -> Region 0: 10.0
+			Machine arrival at machine station: 143.7994352262432
+			
+			Machine 1 (Station 0)-> Task 0: 3.61
+			Vehicle arrival at task: 147.4094352262432
+			Waiting time until service start time: -0.0
+			
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 147.40919815140546
+			(h, h_ind): (1, 2)
+			load: 0.0
+			
+
+Vehicle 1 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 77.68324281214132
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 77.68324281214132
+	
+	Using Machine: 2
+			Task 0 -> Machine 2 (Station 0): 3.61
+			Vehicle arrival at machine station: 81.29324281214132
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 81.29324281214133
+			Region 0 -> Region 1: 5.0
+			Machine arrival at machine station: 86.29324281214133
+			
+			Machine 2 (Station 1)-> Task 17: 29.12
+			Vehicle arrival at task: 115.41324281214133
+			Waiting time until service start time: -0.0
+			
+	id: 17
+			node: 7
+			(x, y, z): (5, 30, 1)
+			dem: 2
+			earl: 0
+			lat: 189
+			servt: 10
+			pid: 0
+			did: 45
+			servST: 115.41324172776261
+			(h, h_ind): (2, 3)
+			load: 2.0
+			
+	Finished service at time: 125.41324172776261
+	
+	Using Machine: 2
+			Task 17 -> Machine 2 (Station 1): 29.12
+			Vehicle arrival at machine station: 154.5332417277626
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 154.53324172776263
+			Region 1 -> Region 0: 5.0
+			Machine arrival at machine station: 159.53324172776263
+			
+			Machine 2 (Station 0)-> Task 45: 27.0
+			Vehicle arrival at task: 186.53324172776263
+			Waiting time until service start time: 0.0
+			
+	id: 45
+			node: 15
+			(x, y, z): (6, 38, 0)
+			dem: -2
+			earl: 0
+			lat: 190
+			servt: 10
+			pid: 17
+			did: 0
+			servST: 186.53324172776263
+			(h, h_ind): (2, 7)
+			load: 0.0
+			
+	Finished service at time: 196.53324172776263
+	
+	Task 45 -> Task 0: 29.15
+	Vehicle arrival at task: 225.68324172776263
+	Waiting time until service start time: -0.0
+	
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 225.6828004782087
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+
+Vehicle 2 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 0.0
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 0.0
+	
+	Using Machine: 2
+			Task 0 -> Machine 2 (Station 0): 3.61
+			Vehicle arrival at machine station: 3.61
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 3.6100000000000563
+			Region 0 -> Region 2: 10.0
+			Machine arrival at machine station: 13.610000000000056
+			
+			Machine 2 (Station 2)-> Task 6: 11.31
+			Vehicle arrival at task: 24.92000000000006
+			Waiting time until service start time: -0.0
+			
+	id: 6
+			node: 3
+			(x, y, z): (25, 30, 2)
+			dem: 3
+			earl: 0
+			lat: 208
+			servt: 10
+			pid: 0
+			did: 96
+			servST: 24.92
+			(h, h_ind): (2, 0)
+			load: 3.0
+			
+	Finished service at time: 34.92
+	
+	Task 6 -> Task 18: 11.18
+	Vehicle arrival at task: 46.1
+	Waiting time until service start time: -0.0
+	
+	id: 18
+			node: 8
+			(x, y, z): (20, 40, 2)
+			dem: 12
+			earl: 0
+			lat: 204
+			servt: 10
+			pid: 0
+			did: 8
+			servST: 46.09990854411423
+			(h, h_ind): (-1, -1)
+			load: 15.0
+			
+	Finished service at time: 56.09990854411423
+	
+	Using Machine: 2
+			Task 18 -> Machine 2 (Station 2): 13.15
+			Vehicle arrival at machine station: 69.24990854411423
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 69.24990676221012
+			Region 2 -> Region 1: 5.0
+			Machine arrival at machine station: 74.24990676221012
+			
+			Machine 2 (Station 1)-> Task 8: 23.54
+			Vehicle arrival at task: 97.78990676221011
+			Waiting time until service start time: 0.0
+			
+	id: 8
+			node: 16
+			(x, y, z): (10, 43, 1)
+			dem: -12
+			earl: 95
+			lat: 105
+			servt: 10
+			pid: 18
+			did: 0
+			servST: 97.78990971816955
+			(h, h_ind): (2, 2)
+			load: 3.0
+			
+	Finished service at time: 107.78990971816955
+	
+	Using Machine: 2
+			Task 8 -> Machine 2 (Station 1): 23.54
+			Vehicle arrival at machine station: 131.32990971816955
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 131.32991100822318
+			Region 1 -> Region 0: 5.0
+			Machine arrival at machine station: 136.32991100822318
+			
+			Machine 2 (Station 0)-> Task 96: 15.56
+			Vehicle arrival at task: 151.88991100822318
+			Waiting time until service start time: -0.0
+			
+	id: 96
+			node: 11
+			(x, y, z): (22, 27, 0)
+			dem: -3
+			earl: 0
+			lat: 204
+			servt: 10
+			pid: 6
+			did: 0
+			servST: 151.88991100822312
+			(h, h_ind): (2, 6)
+			load: 0.0
+			
+	Finished service at time: 161.88991100822312
+	
+	Task 96 -> Task 0: 15.26
+	Vehicle arrival at task: 177.1499110082231
+	Waiting time until service start time: 0.0
+	
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 177.1499110082231
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+
+Vehicle 3 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 28.182062826394954
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 28.182062826394954
+	
+	Using Machine: 2
+			Task 0 -> Machine 2 (Station 0): 3.61
+			Vehicle arrival at machine station: 31.792062826394954
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 31.79206282639491
+			Region 0 -> Region 2: 10.0
+			Machine arrival at machine station: 41.79206282639491
+			
+			Machine 2 (Station 2)-> Task 11: 29.97
+			Vehicle arrival at task: 71.76206282639491
+			Waiting time until service start time: -0.0
+			
+	id: 11
+			node: 4
+			(x, y, z): (20, 65, 2)
+			dem: 12
+			earl: 67
+			lat: 77
+			servt: 10
+			pid: 0
+			did: 31
+			servST: 71.76204701813859
+			(h, h_ind): (2, 1)
+			load: 12.0
+			
+	Finished service at time: 81.76204701813859
+	
+	Using Machine: 2
+			Task 11 -> Machine 2 (Station 2): 29.97
+			Vehicle arrival at machine station: 111.73204701813859
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 111.73189475118795
+			Region 2 -> Region 3: 5.0
+			Machine arrival at machine station: 116.73189475118795
+			
+			Machine 2 (Station 3)-> Task 31: 14.14
+			Vehicle arrival at task: 130.87189475118794
+			Waiting time until service start time: -0.0
+			
+	id: 31
+			node: 12
+			(x, y, z): (31, 52, 3)
+			dem: -12
+			earl: 0
+			lat: 202
+			servt: 10
+			pid: 11
+			did: 0
+			servST: 130.87184989425387
+			(h, h_ind): (2, 5)
+			load: 0.0
+			
+	Finished service at time: 140.87184989425387
+	
+	Using Machine: 0
+			Task 31 -> Machine 0 (Station 3): 14.56
+			Vehicle arrival at machine station: 155.43184989425387
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 155.43187677580505
+			Region 3 -> Region 0: 15.0
+			Machine arrival at machine station: 170.43187677580505
+			
+			Machine 0 (Station 0)-> Task 0: 3.0
+			Vehicle arrival at task: 173.43187677580505
+			Waiting time until service start time: 0.0
+			
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 173.43189475118794
+			(h, h_ind): (0, 2)
+			load: 0.0
+			
+
+Vehicle 4 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 0.6233479683123047
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 0.6233479683123047
+	
+	Using Machine: 0
+			Task 0 -> Machine 0 (Station 0): 3.0
+			Vehicle arrival at machine station: 3.623347968312305
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 3.623347968312305
+			Region 0 -> Region 3: 15.0
+			Machine arrival at machine station: 18.623347968312306
+			
+			Machine 0 (Station 3)-> Task 14: 34.41
+			Vehicle arrival at task: 53.0333479683123
+			Waiting time until service start time: 0.0
+			
+	id: 14
+			node: 6
+			(x, y, z): (15, 10, 3)
+			dem: 20
+			earl: 0
+			lat: 187
+			servt: 10
+			pid: 0
+			did: 44
+			servST: 53.03335732649191
+			(h, h_ind): (0, 0)
+			load: 20.0
+			
+	Finished service at time: 63.03335732649191
+	
+	Using Machine: 2
+			Task 14 -> Machine 2 (Station 3): 33.29
+			Vehicle arrival at machine station: 96.3233573264919
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 96.32335732649187
+			Region 3 -> Region 1: 10.0
+			Machine arrival at machine station: 106.32335732649187
+			
+			Machine 2 (Station 1)-> Task 44: 32.56
+			Vehicle arrival at task: 138.88335732649188
+			Waiting time until service start time: -0.0
+			
+	id: 44
+			node: 14
+			(x, y, z): (11, 14, 1)
+			dem: -20
+			earl: 131
+			lat: 141
+			servt: 10
+			pid: 14
+			did: 0
+			servST: 138.8830907952552
+			(h, h_ind): (2, 4)
+			load: 0.0
+			
+	Finished service at time: 148.8830907952552
+	
+	Using Machine: 2
+			Task 44 -> Machine 2 (Station 1): 32.56
+			Vehicle arrival at machine station: 181.44309079525522
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 181.44287984680986
+			Region 1 -> Region 0: 5.0
+			Machine arrival at machine station: 186.44287984680986
+			
+			Machine 2 (Station 0)-> Task 0: 3.61
+			Vehicle arrival at task: 190.05287984680987
+			Waiting time until service start time: 0.0
+			
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 190.05287984680987
+			(h, h_ind): (2, 8)
+			load: 0.0
+			
+
+Vehicle 6 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 124.00027563270004
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 124.00027563270004
+	
+	Task 0 -> Task 4: 25.0
+	Vehicle arrival at task: 149.00027563270004
+	Waiting time until service start time: -0.0
+	
+	id: 4
+			node: 2
+			(x, y, z): (55, 20, 0)
+			dem: 19
+			earl: 149
+			lat: 159
+			servt: 10
+			pid: 0
+			did: 25
+			servST: 149.00000126262327
+			(h, h_ind): (-1, -1)
+			load: 19.0
+			
+	Finished service at time: 159.00000126262327
+	
+	Using Machine: 1
+			Task 4 -> Machine 1 (Station 0): 25.46
+			Vehicle arrival at machine station: 184.46000126262328
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 184.45968162250196
+			Region 0 -> Region 3: 15.0
+			Machine arrival at machine station: 199.45968162250196
+			
+			Machine 1 (Station 3)-> Task 25: 33.29
+			Vehicle arrival at task: 232.74968162250195
+			Waiting time until service start time: 0.0
+			
+	id: 25
+			node: 10
+			(x, y, z): (65, 20, 3)
+			dem: -19
+			earl: 223
+			lat: 233
+			servt: 10
+			pid: 4
+			did: 0
+			servST: 232.75
+			(h, h_ind): (1, 3)
+			load: 0.0
+			
+	Finished service at time: 242.75
+	
+	Using Machine: 1
+			Task 25 -> Machine 1 (Station 3): 33.29
+			Vehicle arrival at machine station: 276.04
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 276.0394513131394
+			Region 3 -> Region 0: 15.0
+			Machine arrival at machine station: 291.0394513131394
+			
+			Machine 1 (Station 0)-> Task 0: 3.61
+			Vehicle arrival at task: 294.6494513131394
+			Waiting time until service start time: 0.0
+			
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 294.64945330268796
+			(h, h_ind): (1, 4)
+			load: 0.0
+			
+
+Vehicle 7 :
+	id: 0
+			node: 0
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 37.33000109397484
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+	Finished service at time: 37.33000109397484
+	
+	Using Machine: 0
+			Task 0 -> Machine 0 (Station 0): 3.0
+			Vehicle arrival at machine station: 40.33000109397484
+			Waiting time until machine travel: 0.0
+			Machine travel start time: 40.33000109397484
+			Region 0 -> Region 3: 15.0
+			Machine arrival at machine station: 55.33000109397484
+			
+			Machine 0 (Station 3)-> Task 2: 21.0
+			Vehicle arrival at task: 76.33000109397484
+			Waiting time until service start time: 0.0
+			
+	id: 2
+			node: 1
+			(x, y, z): (35, 17, 3)
+			dem: 7
+			earl: 0
+			lat: 202
+			servt: 10
+			pid: 0
+			did: 74
+			servST: 76.33000159836999
+			(h, h_ind): (0, 1)
+			load: 7.0
+			
+	Finished service at time: 86.33000159836999
+	
+	Using Machine: 1
+			Task 2 -> Machine 1 (Station 3): 21.1
+			Vehicle arrival at machine station: 107.43000159836998
+			Waiting time until machine travel: -0.0
+			Machine travel start time: 107.43000034028132
+			Region 3 -> Region 0: 15.0
+			Machine arrival at machine station: 122.43000034028132
+			
+			Machine 1 (Station 0)-> Task 74: 26.57
+			Vehicle arrival at task: 149.00000034028133
+			Waiting time until service start time: -0.0
+			
+	id: 74
+			node: 9
+			(x, y, z): (46, 13, 0)
+			dem: -7
+			earl: 149
+			lat: 159
+			servt: 10
+			pid: 2
+			did: 0
+			servST: 149.0
+			(h, h_ind): (1, 1)
+			load: 0.0
+			
+	Finished service at time: 159.0
+	
+	Task 74 -> Task 0: 24.6
+	Vehicle arrival at task: 183.6
+	Waiting time until service start time: -0.0
+	
+	id: 0
+			node: 17
+			(x, y, z): (35, 35, 0)
+			dem: 0
+			earl: 0
+			lat: 295
+			servt: 0
+			pid: 0
+			did: 0
+			servST: 183.59963301617805
+			(h, h_ind): (-1, -1)
+			load: 0.0
+			
+
+---------------------| MACHINES |---------------------
+
+Machine 0 :
+	setup duration: 0.0
+	
+	vehicle: 4
+	vehicleInd: 1
+	(orig, dest): (0, 6)
+	(origID, destID): (0, 14)
+	(origRegion, destRegion): (0, 3)
+	st: 3.623347968312305
+	duration: 15.0
+	
+	setup duration: 15.0
+	
+	vehicle: 7
+	vehicleInd: 1
+	(orig, dest): (0, 1)
+	(origID, destID): (0, 2)
+	(origRegion, destRegion): (0, 3)
+	st: 40.33000109397484
+	duration: 15.0
+	
+	setup duration: 0.0
+	
+	vehicle: 3
+	vehicleInd: 3
+	(orig, dest): (12, 17)
+	(origID, destID): (31, 0)
+	(origRegion, destRegion): (3, 0)
+	st: 155.43187677580505
+	duration: 15.0
+	
+
+Machine 1 :
+	setup duration: 0.0
+	
+	vehicle: 0
+	vehicleInd: 2
+	(orig, dest): (5, 13)
+	(origID, destID): (12, 79)
+	(origRegion, destRegion): (0, 2)
+	st: 69.07943522624316
+	duration: 10.0
+	
+	setup duration: 5.0
+	
+	vehicle: 7
+	vehicleInd: 2
+	(orig, dest): (1, 9)
+	(origID, destID): (2, 74)
+	(origRegion, destRegion): (3, 0)
+	st: 107.43000034028132
+	duration: 15.0
+	
+	setup duration: 10.0
+	
+	vehicle: 0
+	vehicleInd: 3
+	(orig, dest): (13, 17)
+	(origID, destID): (79, 0)
+	(origRegion, destRegion): (2, 0)
+	st: 133.7994352262432
+	duration: 10.0
+	
+	setup duration: 0.0
+	
+	vehicle: 6
+	vehicleInd: 2
+	(orig, dest): (2, 10)
+	(origID, destID): (4, 25)
+	(origRegion, destRegion): (0, 3)
+	st: 184.45968162250196
+	duration: 15.0
+	
+	setup duration: 0.0
+	
+	vehicle: 6
+	vehicleInd: 3
+	(orig, dest): (10, 17)
+	(origID, destID): (25, 0)
+	(origRegion, destRegion): (3, 0)
+	st: 276.0394513131394
+	duration: 15.0
+	
+
+Machine 2 :
+	setup duration: 0.0
+	
+	vehicle: 2
+	vehicleInd: 1
+	(orig, dest): (0, 3)
+	(origID, destID): (0, 6)
+	(origRegion, destRegion): (0, 2)
+	st: 3.6100000000000563
+	duration: 10.0
+	
+	setup duration: 10.0
+	
+	vehicle: 3
+	vehicleInd: 1
+	(orig, dest): (0, 4)
+	(origID, destID): (0, 11)
+	(origRegion, destRegion): (0, 2)
+	st: 31.79206282639491
+	duration: 10.0
+	
+	setup duration: 0.0
+	
+	vehicle: 2
+	vehicleInd: 3
+	(orig, dest): (8, 16)
+	(origID, destID): (18, 8)
+	(origRegion, destRegion): (2, 1)
+	st: 69.24990676221012
+	duration: 5.0
+	
+	setup duration: 5.0
+	
+	vehicle: 1
+	vehicleInd: 1
+	(orig, dest): (0, 7)
+	(origID, destID): (0, 17)
+	(origRegion, destRegion): (0, 1)
+	st: 81.29324281214133
+	duration: 5.0
+	
+	setup duration: 10.0
+	
+	vehicle: 4
+	vehicleInd: 2
+	(orig, dest): (6, 14)
+	(origID, destID): (14, 44)
+	(origRegion, destRegion): (3, 1)
+	st: 96.32335732649187
+	duration: 10.0
+	
+	setup duration: 5.0
+	
+	vehicle: 3
+	vehicleInd: 2
+	(orig, dest): (4, 12)
+	(origID, destID): (11, 31)
+	(origRegion, destRegion): (2, 3)
+	st: 111.73189475118795
+	duration: 5.0
+	
+	setup duration: 10.0
+	
+	vehicle: 2
+	vehicleInd: 4
+	(orig, dest): (16, 11)
+	(origID, destID): (8, 96)
+	(origRegion, destRegion): (1, 0)
+	st: 131.32991100822318
+	duration: 5.0
+	
+	setup duration: 5.0
+	
+	vehicle: 1
+	vehicleInd: 2
+	(orig, dest): (7, 15)
+	(origID, destID): (17, 45)
+	(origRegion, destRegion): (1, 0)
+	st: 154.53324172776263
+	duration: 5.0
+	
+	setup duration: 5.0
+	
+	vehicle: 4
+	vehicleInd: 3
+	(orig, dest): (14, 17)
+	(origID, destID): (44, 0)
+	(origRegion, destRegion): (1, 0)
+	st: 181.44287984680986
+	duration: 5.0
+	
+
+-------------------| COMPL. TIMES |-------------------
+
+Vehicle 0 : 116.66967
+Vehicle 1 : 147.99956
+Vehicle 2 : 177.14956
+Vehicle 3 : 145.2496
+Vehicle 4 : 189.42953
+Vehicle 5 : 0.0
+Vehicle 6 : 170.64914
+Vehicle 7 : 146.26963
+-------------------| STATISTICS |-------------------
+
+    Vehicles used                           : 87.5
+    Machines used                           : 100.0
+    Max load (vehicles)                     : 73.0769
+    Min load (vehicles)                     : 6.0606
+    Mean load (vehicles)                    : 40.1623
+    Min completion time                     : 39.549
+    Max completion time                     : 64.2134
+    Mean completion time                    : 52.95
+    Avrg travel time (with vehicle)         : 29.9435
+    Avrg travel time (only with vehicle)    : 19.209
+    Avrg travel time (no vehicle)           : 10.7345
+    Avrg waiting time (machine travel)      : 0.0
+    Avrg waiting time (service)             : 0.0
+    Machines travel times (with vehicle)    : [22.0339, 28.8136, 38.9831]
+    Machines travel times (no vehicle)      : [6.7797, 6.7797, 18.6441]
+    Max load per vehicle                    : [73.0769, 6.0606, 37.5, 30.0, 50.0, 0.0, 57.5758, 26.9231]
+----------------------------------------------------
+
+TOTAL: 1093.41669
+
+Everything is awesome!
