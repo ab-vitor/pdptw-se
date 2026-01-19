@@ -2,7 +2,6 @@ from enum import Enum
 
 
 class StopRule(Enum):
-    GENERATIONS = 0
     TARGET = 1
     MAXTIME = 2
     ITERATIONS = 3
@@ -12,16 +11,13 @@ class StopRule(Enum):
     def parse(value: str) -> 'StopRule':
         """
         Parse a string into a StopRule.
-        G -> GENERATIONS
         T -> TARGET
         M -> MAXTIME
         I -> ITERATIONS
         F -> FEASIBILITY
         """
         local_value = value.strip().upper()[0]
-        if local_value == 'G':
-            return StopRule.GENERATIONS
-        elif local_value == 'T':
+        if local_value == 'T':
             return StopRule.TARGET
         elif local_value == 'M':
             return StopRule.MAXTIME
