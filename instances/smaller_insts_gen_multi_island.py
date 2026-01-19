@@ -526,7 +526,7 @@ def main():
     )
     parser.add_argument(
         "--mf",
-        choices=["greedy", "none"],
+        choices=["gmutate", "none"],
         default="none",
         help="Heuristic to make instance feasible after generation",
     )

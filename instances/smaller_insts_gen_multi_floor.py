@@ -370,7 +370,7 @@ def main():
     )
     parser.add_argument(
         "--mf",
-        choices=["greedy", "none"],
+        choices=["gmutate", "none"],
         default="none",
         help="Instances with all machine stations",
     )
