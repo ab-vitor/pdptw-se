@@ -30,7 +30,7 @@ end
 	Updates the `extmd` with the best solution found and various statistics during the run.
 """
 function run_MSLP!(inst::InstanceData, extmd::ExternalMSLPData, all_params::AllParams)::Nothing
-	println("objValue;greedysol;iteration;time")
+	println("obj_value;greedysol;iteration;time")
 	extmd.curr_sol = greedy_heuristic(inst)
 
 	if extmd.curr_sol.feasible
