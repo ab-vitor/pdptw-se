@@ -48,9 +48,9 @@ for (j in seq_along(variations)) {
     
     output_file <- paste0("grouped_avrg_alpha_type_", t, "_", variations[j], ".tex")
     output_path <- file.path(prefix_output, "preliminary", output_dir, output_file)
-    sink(output_path)
+    # sink(output_path)
     # print(latex_table, include.rownames = FALSE, sanitize.text.function = identity) # comment to save latex table for each type
-    sink()
+    # sink()
   }
   
   # --- Merge types side by side ---
