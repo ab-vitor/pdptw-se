@@ -51,10 +51,10 @@ def create_mip_gurobi_model(
         max_num_threads = max(1, multiprocessing.cpu_count() // 2)
         num_threads = min(params.threads, max_num_threads)
         model.setParam("Threads", num_threads)
-        model.setParam("Heuristics", params.mip_heuristics)
+        model.setParam("Heuristics", params.mip_grb_heuristics)
 
-    model.setParam("TimeLimit", params.mip_max_time)
-    model.setParam("Presolve", params.mip_presolve)
+    model.setParam("TimeLimit", params.mip_grb_max_time)
+    model.setParam("Presolve", params.mip_grb_presolve)
     model.setParam("Cuts", params.gurobi_cuts)
 
     if params.max_nodes >= 0:

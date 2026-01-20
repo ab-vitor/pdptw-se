@@ -32,7 +32,7 @@ def mip_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solutio
     mip_hx_model.model.close()
 
     hxparams: HxParam = mip_hx_model.optimizer.param
-    hxparams.time_limit = int(params.hx_max_time)
+    hxparams.time_limit = int(params.mip_hx_max_time)
     hxparams.set_verbosity(1)
     num_threads = min(os.cpu_count(), params.threads)
     hxparams.set_nb_threads(num_threads)

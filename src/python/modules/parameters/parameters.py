@@ -48,9 +48,9 @@ def save_instance_full_name(params: ParameterData) -> None:
 def read_input_parameters(args: list[str]) -> ParameterData:
     params = ParameterData()
 
-    i = 0
+    i = 1
     while i < len(args):
-        if args[i] == "--inst":
+        if args[i] == "--inst_path":
             params.inst_path = args[i + 1]
             i += 1
         elif args[i] == "--gen_config_file_path":
@@ -73,9 +73,6 @@ def read_input_parameters(args: list[str]) -> ParameterData:
         elif args[i] == "--method_code":
             params.method_code = args[i + 1]
             i += 1
-        elif args[i] == "--greedy_service_order":
-            params.greedy_service_order = args[i + 1]
-            i += 1
         elif args[i] == "--cut_off":
             params.cut_off = int(args[i + 1])
             i += 1
@@ -87,89 +84,23 @@ def read_input_parameters(args: list[str]) -> ParameterData:
         elif args[i] == "--max_nodes":
             params.max_nodes = int(args[i + 1])
             i += 1
-        elif args[i] == "--make_instance_feasible":
-            params.make_instance_feasible = True
         elif args[i] == "--epsilon":
             params.epsilon = float(args[i + 1])
             i += 1
-        elif args[i] == "--warm_start":
-            params.warm_start = True
         elif args[i] == "--output":
             params.output = args[i + 1]
             i += 1
         elif args[i] == "--seed":
             params.seed = int(args[i + 1])
             i += 1
-        elif args[i] == "--alpha":
-            params.alpha = float(args[i + 1])
-            i += 1
-        elif args[i] == "--max_iter":
-            params.max_iter = int(args[i + 1])
-            i += 1
         elif args[i] == "--output_flag_grb_mip":
             params.output_flag_grb_mip = int(args[i + 1])
             i += 1
-        elif args[i] == "--output_flag_grb_mslp":
-            params.output_flag_grb_mslp = int(args[i + 1])
+        elif args[i] == "--mip_grb_max_time":
+            params.mip_grb_max_time = int(args[i + 1])
             i += 1
-        elif args[i] == "--output_flag_grb_lmns":
-            params.output_flag_grb_lmns = int(args[i + 1])
-            i += 1
-        elif args[i] == "--mslp_r":
-            params.mslp_r = args[i + 1]
-            i += 1
-        elif args[i] == "--mslp_a":
-            params.mslp_a = args[i + 1]
-            i += 1
-        elif args[i] == "--lmns_r":
-            params.lmns_r = args[i + 1]
-            i += 1
-        elif args[i] == "--lmns_a":
-            params.lmns_a = args[i + 1]
-            i += 1
-        elif args[i] == "--lmns_repair_time":
-            params.lmns_repair_time = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_mip_focus":
-            params.lmns_mip_focus = int(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_gap_to_bigger_destruction":
-            params.lmns_gap_to_bigger_destruction = int(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_gap_to_smaller_destruction":
-            params.lmns_gap_to_smaller_destruction = int(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_weight_shaw_dist_prox":
-            params.lmns_weight_shaw_dist_prox = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_weight_shaw_earl_prox":
-            params.lmns_weight_shaw_earl_prox = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_weight_shaw_same_route":
-            params.lmns_weight_shaw_same_route = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_weight_shaw_demand_sim":
-            params.lmns_weight_shaw_demand_sim = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_req_r_apply_mip_start":
-            params.lmns_req_r_apply_mip_start = True
-        elif args[i] == "--lmns_acceptance_criteria":
-            params.lmns_acceptance_criteria = args[i + 1]
-            i += 1
-        elif args[i] == "--lmns_metropolis_temp":
-            params.lmns_metropolis_temp = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_simulated_annealing_temp":
-            params.lmns_simulated_annealing_temp = float(args[i + 1])
-            i += 1
-        elif args[i] == "--lmns_simulated_annealing_cool":
-            params.lmns_simulated_annealing_cool = float(args[i + 1])
-            i += 1
-        elif args[i] == "--mip_max_time":
-            params.mip_max_time = int(args[i + 1])
-            i += 1
-        elif args[i] == "--hx_max_time":
-            params.hx_max_time = int(args[i + 1])
+        elif args[i] == "--mip_hx_max_time":
+            params.mip_hx_max_time = int(args[i + 1])
             i += 1
         elif args[i] == "--csv_file_name":
             params.csv_file_name = args[i + 1]
@@ -191,13 +122,15 @@ def read_input_parameters(args: list[str]) -> ParameterData:
         elif args[i] == "--run_callback_mip_gurobi":
             params.run_callback_mip_gurobi = True
             i += 1
-        elif args[i] == "--mip_heuristics":
-            params.mip_heuristics = float(args[i + 1])
+        elif args[i] == "--mip_grb_heuristics":
+            params.mip_grb_heuristics = float(args[i + 1])
             i += 1
         elif args[i] == "--threads":
             params.threads = int(args[i + 1])
             i += 1
         # Add other parameters as needed
+        else:
+            raise ValueError(f"Parameter {args[i]} does not exist")
         i += 1
 
     if not params.inst_path.endswith("/"):
@@ -218,4 +151,6 @@ def read_input_parameters(args: list[str]) -> ParameterData:
     for i in range(1,50):
         if params.constraints_used_mip[i]:
             print(f"{i}", end=" ")
+            
+    print()
     return params
