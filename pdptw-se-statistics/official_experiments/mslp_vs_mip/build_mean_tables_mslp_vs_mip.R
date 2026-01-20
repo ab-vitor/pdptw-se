@@ -6,7 +6,7 @@
   prefix_path_mslp <- "official_experiments/data/mslp_official"
   types <- c(1, 2)
   
-  prefix_input_csvr_mip <- "csvresults_form_melo"
+  prefix_input_csvr_mip <- "csvresults_form_mip"
   prefix_input_csvr_mslp <- "csvresults_heur_mslp"
   
   prefix_output <- "official_experiments/mslp_vs_mip/tables"

@@ -5,7 +5,7 @@ variations <- c("multi_island", "multi_floor")
 prefix_path_mip <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_path_mslp <- "official_experiments/data/mslp_official"
 
-prefix_mip_input_name <- "csvresults_form_melo"
+prefix_mip_input_name <- "csvresults_form_mip"
 prefix_mslp_input_name <- "csvresults_heur_mslp"
 
 prefix_output_tables <- "official_experiments/mslp_vs_mip/tables"

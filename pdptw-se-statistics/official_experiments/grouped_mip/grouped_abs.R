@@ -18,7 +18,7 @@ KILLED_HX <- "KILLED"
 
 for (i in seq_along(solvers)){
   prefix_set <- paste0("official_experiments/data/mip_", solvers[i])
-  prefix_csv_input <- paste0("csvresults_form_melo", solvers_suff[i])
+  prefix_csv_input <- paste0("csvresults_form_mip", solvers_suff[i])
   for (j in seq_along(variations)) {
     for (t in types) {
       suff_output <- paste0("abs_type_", t)

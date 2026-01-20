@@ -3,7 +3,7 @@ library(dplyr)
 
 variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities"
-prefix_csv_input <- "csvresults_form_melo"
+prefix_csv_input <- "csvresults_form_mip"
 vi_test <- c("all_minus_one_vi", "all_vi", "no_vi", "one_vi")
 path_to_csv_output <- "official_experiments/mip_grb_vi/tables_per_instance/"
 
@@ -80,9 +80,6 @@ for(i in seq_along(variations)){
     csv_results_vi_test_1, csv_results_vi_test_2, 
     csv_results_vi_test_3, csv_results_vi_test_4
   )
-  
-  csv_results_vi_test <- csv_results_vi_test %>%
-    select(-gen_config_file_name)
   
   dir.create(path_to_csv_output, showWarnings = FALSE)
 

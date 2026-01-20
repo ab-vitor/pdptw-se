@@ -4,8 +4,8 @@ library(readr)
 
 variations <- c("multi_island", "multi_floor")
 
-prefix_input_path_mipr <- "official_experiments/data/mip_gurobi/csvresults_form_melo"
-prefix_input_path_mipvir <- "official_experiments/data/mip_grb_valid_inequalities/official/csvresults_form_melo"
+prefix_input_path_mipr <- "official_experiments/data/mip_gurobi/csvresults_form_mip"
+prefix_input_path_mipvir <- "official_experiments/data/mip_grb_valid_inequalities/official/csvresults_form_mip"
 prefix_input_path_mslpr <- "official_experiments/data/mslp_official/csvresults_heur_mslp"
 
 prefix_output_path <- "official_experiments/mslp_vs_mip/tables_mach_sens_analysis"
