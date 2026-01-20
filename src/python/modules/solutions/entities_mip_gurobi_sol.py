@@ -6,7 +6,7 @@ from gurobipy import GRB
 
 
 @dataclass
-class MIPVarsSolution:
+class MIPGrbVarsSolution:
     x: Optional[sp.spmatrix] = None
     z: Optional[np.ndarray] = None
     t: Optional[np.ndarray] = None
@@ -19,7 +19,7 @@ class MIPVarsSolution:
 
 
 @dataclass
-class MIPStats:
+class MIPGrbStats:
     status: int = field(default_factory=lambda: GRB.INFEASIBLE)
     optimal: int = 0
     tle_feas: int = 0
@@ -32,23 +32,6 @@ class MIPStats:
 
 
 @dataclass
-class MIPSolution:
-    vars: MIPVarsSolution = field(default_factory=MIPVarsSolution)
-    stats: MIPStats = field(default_factory=MIPStats)
-
-
-@dataclass
-class LPSolution:
-    t: np.ndarray
-    tstart: np.ndarray
-    tfinal: np.ndarray
-    C: np.ndarray
-    alpha: sp.spmatrix
-    status: int
-    optimal: int
-    tle: int
-    objValue: float
-    bestbound: float
-    numnodes: int
-    time: float
-    gap: float
+class MIPGrbSolution:
+    vars: MIPGrbVarsSolution = field(default_factory=MIPGrbVarsSolution)
+    stats: MIPGrbStats = field(default_factory=MIPGrbStats)

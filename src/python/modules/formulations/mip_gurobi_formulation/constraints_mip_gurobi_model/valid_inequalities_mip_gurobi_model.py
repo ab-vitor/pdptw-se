@@ -11,26 +11,22 @@ from modules.data import (
 )
 from modules.parameters import ParameterData
 from modules.print_utils import indent_prints
-from ..entities import MIPRoutingVariables, MIPSchedulingVariables
+from ..entities import MIPGrbRoutingVariables, MIPGrbSchedulingVariables
 
 
 @indent_prints
-def melo_valid_inequalities(
+def mip_gurobi_valid_inequalities(
     inst: InstanceData,
     model: Model,
     params: ParameterData,
-    rtvars: MIPRoutingVariables,
-    schvars: MIPSchedulingVariables,
+    rtvars: MIPGrbRoutingVariables,
+    schvars: MIPGrbSchedulingVariables,
 ) -> None:
     x = rtvars.x
-    z = rtvars.z
     t = schvars.t
-    tstart = schvars.tstart
-    tfinal = schvars.tfinal
     alpha = schvars.alpha
     phi = schvars.phi
     gamma = schvars.gamma
-    C = schvars.C
 
     # c35
     if params.constraints_used_mip[35]:

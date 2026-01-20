@@ -2,15 +2,15 @@ from gurobipy import Model, quicksum
 
 from modules.data import InstanceData, is_precede_possible
 from modules.parameters import ParameterData
-from ..entities import MIPRoutingVariables, MIPSchedulingVariables
+from ..entities import MIPGrbRoutingVariables, MIPGrbSchedulingVariables
 
 
-def melo_scheduling_constraints(
+def mip_gurobi_scheduling_constraints(
     inst: InstanceData,
     model: Model,
     params: ParameterData,
-    rtvars: MIPRoutingVariables,
-    schvars: MIPSchedulingVariables,
+    rtvars: MIPGrbRoutingVariables,
+    schvars: MIPGrbSchedulingVariables,
 ) -> None:
     x = rtvars.x
     t = schvars.t

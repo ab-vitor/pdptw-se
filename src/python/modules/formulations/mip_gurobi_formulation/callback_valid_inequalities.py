@@ -1,13 +1,13 @@
-from itertools import permutations, product
+from itertools import permutations
 from gurobipy import Model, GRB, tupledict
 from statistics import mean, stdev
 
 from modules.data import InstanceData, is_min_t_arrival_infeasible_k, is_min_t_arrival_infeasible, valid_path, valid_path_m
 
-from .entities import MIPModelStats
+from .entities import MIPGrbModelStats
 
 
-def check_c35(inst: InstanceData, x: tupledict, stats: MIPModelStats):
+def check_c35(inst: InstanceData, x: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 35
     for k in inst.K:
@@ -21,7 +21,7 @@ def check_c35(inst: InstanceData, x: tupledict, stats: MIPModelStats):
                 stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c36(inst: InstanceData, x: tupledict, stats: MIPModelStats):
+def check_c36(inst: InstanceData, x: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 36
     for i in inst.Vprime[:-1]:
@@ -36,7 +36,7 @@ def check_c36(inst: InstanceData, x: tupledict, stats: MIPModelStats):
                     stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c37(inst: InstanceData, phi: tupledict, stats: MIPModelStats):
+def check_c37(inst: InstanceData, phi: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 37
     """Check and count violations for constraint c37."""
@@ -52,7 +52,7 @@ def check_c37(inst: InstanceData, phi: tupledict, stats: MIPModelStats):
                     stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c38(inst: InstanceData, gamma: tupledict, stats: MIPModelStats):
+def check_c38(inst: InstanceData, gamma: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 38
     """Check and count violations for constraint c38."""
@@ -73,7 +73,7 @@ def check_c38(inst: InstanceData, gamma: tupledict, stats: MIPModelStats):
                         stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c39(inst: InstanceData, x: tupledict, stats: MIPModelStats):
+def check_c39(inst: InstanceData, x: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 39
     """Check and count violations for constraint c39."""
@@ -89,7 +89,7 @@ def check_c39(inst: InstanceData, x: tupledict, stats: MIPModelStats):
                         stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c40(inst: InstanceData, phi: tupledict, stats: MIPModelStats):
+def check_c40(inst: InstanceData, phi: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 40
     """Check and count violations for constraint c40."""
@@ -110,7 +110,7 @@ def check_c40(inst: InstanceData, phi: tupledict, stats: MIPModelStats):
                     stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c41(inst: InstanceData, x: tupledict, t: tupledict, stats: MIPModelStats):
+def check_c41(inst: InstanceData, x: tupledict, t: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 41
     """Check and count violations for constraint c41."""
@@ -127,7 +127,7 @@ def check_c41(inst: InstanceData, x: tupledict, t: tupledict, stats: MIPModelSta
             stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c42(inst: InstanceData, alpha: tupledict, stats: MIPModelStats):
+def check_c42(inst: InstanceData, alpha: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 42
     """Check and count violations for constraint c42."""
@@ -140,7 +140,7 @@ def check_c42(inst: InstanceData, alpha: tupledict, stats: MIPModelStats):
                 stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c43(inst: InstanceData, alpha: tupledict, stats: MIPModelStats):
+def check_c43(inst: InstanceData, alpha: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 43
     """Check and count violations for constraint c43."""
@@ -153,7 +153,7 @@ def check_c43(inst: InstanceData, alpha: tupledict, stats: MIPModelStats):
                 stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c44(inst: InstanceData, alpha: tupledict, x: tupledict, stats: MIPModelStats):
+def check_c44(inst: InstanceData, alpha: tupledict, x: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 44
     """Check and count violations for constraint c44."""
@@ -170,7 +170,7 @@ def check_c44(inst: InstanceData, alpha: tupledict, x: tupledict, stats: MIPMode
                 stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c45(inst: InstanceData, alpha: tupledict, x: tupledict, stats: MIPModelStats):
+def check_c45(inst: InstanceData, alpha: tupledict, x: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 45
     """Check and count violations for constraint c45."""
@@ -183,7 +183,7 @@ def check_c45(inst: InstanceData, alpha: tupledict, x: tupledict, stats: MIPMode
                 stats.cuts["c" + str(cid)].append(violation)
 
 
-def check_c46(inst: InstanceData, alpha: tupledict, stats: MIPModelStats):
+def check_c46(inst: InstanceData, alpha: tupledict, stats: MIPGrbModelStats):
     epsilon = 1e-6
     cid = 46
     for i, j in inst.A_m:
@@ -215,24 +215,13 @@ def check_c46(inst: InstanceData, alpha: tupledict, stats: MIPModelStats):
 
 
 def cb_analyze_valid_inequalities(
-    model: Model, where, inst: InstanceData, stats: MIPModelStats
+    model: Model, where, inst: InstanceData, stats: MIPGrbModelStats
 ):
-    # if where == GRB.Callback.MIP:
-    #     time = model.cbGet(GRB.Callback.RUNTIME)
-    #     best = model.cbGet(GRB.Callback.MIP_OBJBST)
-    #     if time > 10 and best < GRB.INFINITY:
-    #         model.terminate()
-
-    # print("where", where, "mipnode_rel", GRB.Callback.MIPNODE_REL)
     if where == GRB.Callback.MIPNODE:
         status = model.cbGet(GRB.Callback.MIPNODE_STATUS)
         if status == GRB.OPTIMAL:
             x = model.cbGetNodeRel(model._x)
-            z = model.cbGetNodeRel(model._z)
             t = model.cbGetNodeRel(model._t)
-            tstart = model.cbGetNodeRel(model._tstart)
-            tfinal = model.cbGetNodeRel(model._tfinal)
-            C = model.cbGetNodeRel(model._C)
             alpha = model.cbGetNodeRel(model._alpha)
             gamma = model.cbGetNodeRel(model._gamma)
             phi = model.cbGetNodeRel(model._phi)
@@ -253,7 +242,7 @@ def cb_analyze_valid_inequalities(
             # print(stats.cuts)
 
 
-def compute_stats_violation_for_each_constraint(stats: MIPModelStats) -> float:
+def compute_stats_violation_for_each_constraint(stats: MIPGrbModelStats) -> float:
     for cid in range(35, 48):
         cut = f"c{cid}"
         compute_cut = cut in stats.cuts.keys() and len(stats.cuts[cut]) > 0
@@ -263,7 +252,7 @@ def compute_stats_violation_for_each_constraint(stats: MIPModelStats) -> float:
         stats.cuts[cut + "_maxv"] = max(stats.cuts[cut]) if compute_cut else 0
 
 
-def print_valid_inequalities_summary(stats: MIPModelStats) -> None:
+def print_valid_inequalities_summary(stats: MIPGrbModelStats) -> None:
     print("\n### Valid Inequalities Summary ###")
     for cid in range(35, 48):
         cut = f"c{cid}"
@@ -275,7 +264,7 @@ def print_valid_inequalities_summary(stats: MIPModelStats) -> None:
             print(f"\tmax violation = {stats.cuts.get(cut + '_maxv', 0):.4f}")
 
 
-def delete_cut_list(stats: MIPModelStats) -> None:
+def delete_cut_list(stats: MIPGrbModelStats) -> None:
     for cid in range(35, 48):
         cut = f"c{cid}"
         stats.cuts.pop(cut)

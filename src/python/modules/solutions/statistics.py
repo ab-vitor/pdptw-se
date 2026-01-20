@@ -2,7 +2,7 @@ from typing import List
 
 from modules.parameters import ParameterData
 from modules.data import InstanceData
-from .entities_sol import Solution, StatsSolution, VehicleStop, MachineTravel
+from .entities_sol import Solution, SolutionStats, VehicleStop, MachineTravel
 
 
 def calculate_rate_machine_travel_time(
@@ -65,7 +65,7 @@ def calculate_rate_waiting_time_vehicles_for_a_service(
     return vehicles_waiting_times
 
 
-def save_stats_solution(inst: InstanceData, bestSol: Solution, params: ParameterData) -> StatsSolution:
+def save_stats_solution(inst: InstanceData, bestSol: Solution, params: ParameterData) -> SolutionStats:
     vehicles = bestSol.vehicles
     machines = bestSol.machines
     completion_times = bestSol.completion_times
@@ -114,7 +114,7 @@ def save_stats_solution(inst: InstanceData, bestSol: Solution, params: Parameter
     min_max_load = min([load for load in max_load_vehicle if load > params.epsilon])
     mean_max_load = sum(max_load_vehicle) / (n_vehicles * len(inst.K))
 
-    return StatsSolution(
+    return SolutionStats(
         n_vehicles,
         n_machines,
         max_max_load,

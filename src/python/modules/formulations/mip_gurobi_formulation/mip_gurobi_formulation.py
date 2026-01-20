@@ -4,10 +4,10 @@ from typing import Optional
 from modules.parameters import ParameterData
 from modules.data import InstanceData
 from modules.solutions import (
-    MIPVarsSolution,
-    MIPStats,
-    MIPSolution,
-    create_solution_melo,
+    MIPGrbVarsSolution,
+    MIPGrbStats,
+    MIPGrbSolution,
+    create_solution_mip_gurobi,
     save_solution_to_file,
     save_solution_timeline,
     Solution,
@@ -15,9 +15,9 @@ from modules.solutions import (
 from modules.csv_utils.csv_utils import write_csv_with_flock
 from modules.print_utils import get_time_now
 
-from .entities import MIPModel
+from .entities import MIPGrbModel
 from .csv_results import get_csv_results
-from .create_melo_mip_model import create_melo_mip_model
+from .create_mip_gurobi_model import create_mip_gurobi_model
 from .callback_valid_inequalities import cb_analyze_valid_inequalities, compute_stats_violation_for_each_constraint, delete_cut_list, print_valid_inequalities_summary
 
 
@@ -32,22 +32,22 @@ def extract_relaxed_values(orig_var_dict: tupledict, relaxed_model: Model) -> di
     return relaxed_sol
 
 
-def melo_mip_formulation(
+def mip_gurobi_formulation(
     env: Optional[Env], inst: InstanceData, params: ParameterData
 ) -> Solution:
     """
     Build, solve, and export results for the MELO MIP.
     Returns a Solution object or None if infeasible/error.
     """
-    print(f"\n[{get_time_now()}] Running melo_formulation")
+    print(f"\n[{get_time_now()}] Running mip_gurobi_formulation")
 
     # --- build the model + variables + constraints + objective ---
-    mip_model: MIPModel = create_melo_mip_model(env, inst, params)
+    mip_model: MIPGrbModel = create_mip_gurobi_model(env, inst, params)
     model = mip_model.model
 
 
     # --- solve ---
-    if params.run_callback_melo_mip:
+    if params.run_callback_mip_gurobi:
         def callback_function(model, where):
             return cb_analyze_valid_inequalities(
                     model, where, inst, mip_model.stats
@@ -56,7 +56,7 @@ def melo_mip_formulation(
     else:
         model.optimize()
 
-    if params.run_callback_melo_mip: 
+    if params.run_callback_mip_gurobi: 
         compute_stats_violation_for_each_constraint(mip_model.stats)
         print_valid_inequalities_summary(mip_model.stats)
         delete_cut_list(mip_model.stats)
@@ -97,7 +97,7 @@ def melo_mip_formulation(
         f"  status = {status}, nodes = {nodes}, time = {solve_time:.2f}s, gap = {gap:.2f}%, bound = {best_bound:.2f}"
     )
 
-    mip_sol_stats = MIPStats(
+    mip_sol_stats = MIPGrbStats(
         status,
         int(is_optimal),
         int(is_tle_feas),
@@ -124,7 +124,7 @@ def melo_mip_formulation(
         alpha_sol = {idx: v.X for idx, v in mip_model.schvars.alpha.items()}
 
         # pack into your solution‐holder classes
-        mip_vars_sol = MIPVarsSolution(
+        mip_vars_sol = MIPGrbVarsSolution(
             x_sol,
             z_sol,
             t_sol,
@@ -136,10 +136,10 @@ def melo_mip_formulation(
             alpha_sol,
         )
 
-        mip_sol = MIPSolution(mip_vars_sol, mip_sol_stats)
+        mip_sol = MIPGrbSolution(mip_vars_sol, mip_sol_stats)
 
         # --- build final domain solution and write outputs ---
-        sol = create_solution_melo(inst, mip_sol, params)
+        sol = create_solution_mip_gurobi(inst, mip_sol, params)
 
         save_solution_to_file(sol, inst, params)
         save_solution_timeline(sol, inst, params)

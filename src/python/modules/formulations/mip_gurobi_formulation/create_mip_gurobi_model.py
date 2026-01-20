@@ -8,7 +8,7 @@ from modules.parameters import ParameterData
 from modules.data import InstanceData
 from modules.print_utils import get_time_now
 
-from .entities import MIPModel
+from .entities import MIPGrbModel
 from .vars_mip_gurobi_model import (
     mip_gurobi_routing_variables,
     mip_gurobi_scheduling_variables,
@@ -24,9 +24,9 @@ from .objective_mip_gurobi_model import mip_gurobi_objective_function
 
 def create_mip_gurobi_model(
     env: Optional[Env], inst: InstanceData, params: ParameterData
-) -> MIPModel:
-    """Create Melo MIP model with Gurobi."""
-    print(f"\n[{get_time_now()}] Creating Melo MIP model...")
+) -> MIPGrbModel:
+    """Create MIP model with Gurobi."""
+    print(f"\n[{get_time_now()}] Creating MIP model...")
 
     if params.solver != "Gurobi":
         print("No solver selected")
@@ -95,4 +95,4 @@ def create_mip_gurobi_model(
     print(f"[{get_time_now()}] Adding objective function")
     mip_gurobi_objective_function(model, schvars.C)
 
-    return MIPModel(model=model, rtvars=rtvars, schvars=schvars, stats=stats)
+    return MIPGrbModel(model=model, rtvars=rtvars, schvars=schvars, stats=stats)

@@ -1,9 +1,9 @@
 from gurobipy import Model, GRB, tupledict
 from modules.data import InstanceData, is_precede_possible
-from .entities import MIPRoutingVariables, MIPSchedulingVariables, MIPModelStats
+from .entities import MIPGrbRoutingVariables, MIPGrbSchedulingVariables, MIPGrbModelStats
 
 
-def melo_routing_variables(
+def mip_gurobi_routing_variables(
     inst: InstanceData, model: Model
 ) -> tuple[tupledict, tupledict]:
     """
@@ -33,10 +33,10 @@ def melo_routing_variables(
     model._x = x
     model._z = z
 
-    return MIPRoutingVariables(x, z)
+    return MIPGrbRoutingVariables(x, z)
 
 
-def melo_scheduling_variables(
+def mip_gurobi_scheduling_variables(
     inst: InstanceData, model: Model
 ) -> tuple[tupledict, tupledict, tupledict, tupledict, tupledict, tupledict, tupledict]:
     """
@@ -94,10 +94,10 @@ def melo_scheduling_variables(
     model._gamma  = gamma
     model._alpha  = alpha
 
-    return MIPSchedulingVariables(t, tstart, tfinal, C, phi, gamma, alpha)
+    return MIPGrbSchedulingVariables(t, tstart, tfinal, C, phi, gamma, alpha)
 
 
-def get_mip_model_stats(model: Model) -> MIPModelStats:
+def get_mip_model_stats(model: Model) -> MIPGrbModelStats:
     model.update()  # mandatory
 
     vars = model.getVars()
@@ -112,7 +112,7 @@ def get_mip_model_stats(model: Model) -> MIPModelStats:
     n_alpha_vars = sum(1 for v in vars if "alpha[" in v.VarName)
     n_gamma_vars = sum(1 for v in vars if "gamma[" in v.VarName)
 
-    return MIPModelStats(
+    return MIPGrbModelStats(
         n_vars=n_vars,
         n_bin_vars=n_bin_vars,
         n_x_vars=n_x_vars,
@@ -126,7 +126,7 @@ def get_mip_model_stats(model: Model) -> MIPModelStats:
     )
 
 
-def print_model_stats_summary(stats: MIPModelStats) -> None:
+def print_model_stats_summary(stats: MIPGrbModelStats) -> None:
     print()
     print("### Model variables summary ###")
 

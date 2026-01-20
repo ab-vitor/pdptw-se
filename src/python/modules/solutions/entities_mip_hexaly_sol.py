@@ -6,7 +6,7 @@ from gurobipy import GRB
 
 
 @dataclass
-class MeloHxVarsSolution:
+class MIPHxVarsSolution:
     x: Optional[sp.spmatrix] = None
     z: Optional[np.ndarray] = None
     t: Optional[np.ndarray] = None
@@ -19,7 +19,7 @@ class MeloHxVarsSolution:
 
 
 @dataclass
-class MeloHxStats:
+class MIPHxStats:
     status: int = field(default_factory=lambda: GRB.INFEASIBLE)
     optimal: int = 0
     tle_feas: int = 0
@@ -32,8 +32,8 @@ class MeloHxStats:
 
 
 @dataclass
-class MeloHxSolution:
-    vars: MeloHxVarsSolution = field(default_factory=MeloHxVarsSolution)
-    stats: MeloHxStats = field(default_factory=MeloHxStats)
+class MIPHxSolution:
+    vars: MIPHxVarsSolution = field(default_factory=MIPHxVarsSolution)
+    stats: MIPHxStats = field(default_factory=MIPHxStats)
 
 

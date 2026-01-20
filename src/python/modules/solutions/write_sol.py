@@ -4,6 +4,7 @@ from datetime import datetime
 from modules.parameters import ParameterData
 from modules.data import InstanceData
 from modules.solutions import Solution
+from .print_timeline_solution import print_timeline_solution
 
 
 def save_solution_to_file(
@@ -38,3 +39,18 @@ def save_solution_to_file(
             file.write("\n")
 
         file.write(f"\nValue = {sol.value}\n")
+
+def save_solution_timeline(
+    sol: Solution, inst: InstanceData, gp: ParameterData, suff: str = ""
+) -> None:
+    timestamp = datetime.now().time().strftime("%H:%M:%S")
+    print(f"\n[{timestamp}] Saving solution timeline to file: {gp.timeline_file_name}")
+    dir_path = os.path.dirname(gp.timeline_file_name)
+    if not os.path.isdir(dir_path):
+        os.makedirs(dir_path)
+    timeline_filename = gp.timeline_file_name[:-4] + suff + ".txt"
+    with open(timeline_filename, "w") as file:
+        from contextlib import redirect_stdout
+
+        with redirect_stdout(file):
+            print_timeline_solution(inst, sol)

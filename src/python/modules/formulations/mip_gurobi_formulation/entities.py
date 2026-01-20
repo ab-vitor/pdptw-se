@@ -3,13 +3,13 @@ import scipy.sparse as sp
 from gurobipy import Model
 
 
-class MIPRoutingVariables:
+class MIPGrbRoutingVariables:
     def __init__(self, x: sp.spmatrix, z: np.ndarray):
         self.x = x  # Binary routing variables
         self.z = z  # Continuous routing variables
 
 
-class MIPSchedulingVariables:
+class MIPGrbSchedulingVariables:
     def __init__(
         self,
         t: np.ndarray,
@@ -29,7 +29,7 @@ class MIPSchedulingVariables:
         self.alpha = alpha  # Continuous variables for machine travel start times
 
 
-class MIPModelStats:
+class MIPGrbModelStats:
     def __init__(
         self,
         n_vars=0,
@@ -60,13 +60,13 @@ class MIPModelStats:
         self.cuts = cuts
 
 
-class MIPModel:
+class MIPGrbModel:
     def __init__(
         self,
         model: Model,
-        rtvars: MIPRoutingVariables,
-        schvars: MIPSchedulingVariables,
-        stats: MIPModelStats,
+        rtvars: MIPGrbRoutingVariables,
+        schvars: MIPGrbSchedulingVariables,
+        stats: MIPGrbModelStats,
     ):
         self.model = model
         self.rtvars = rtvars

@@ -3,7 +3,7 @@ from hexaly.optimizer import HexalyOptimizer, HxModel, HxExpression
 
 
 @dataclass
-class MeloHxRoutingVars:
+class MIPHxRoutingVars:
     def __init__(
         self,
         x: dict[tuple, HxExpression],
@@ -14,7 +14,7 @@ class MeloHxRoutingVars:
 
 
 @dataclass
-class MeloHxSchedulingVars:
+class MIPHxSchedulingVars:
     def __init__(
         self,
         t: dict[tuple, HxExpression],
@@ -35,7 +35,7 @@ class MeloHxSchedulingVars:
 
 
 @dataclass
-class MeloHxModelStats:
+class MIPHxModelStats:
     def __init__(
         self,
         n_vars=0,
@@ -61,14 +61,14 @@ class MeloHxModelStats:
         self.n_gamma_vars = n_gamma_vars
         
 @dataclass
-class MeloHxModel:
+class MIPHxModel:
     def __init__(
         self,
         optimizer: HexalyOptimizer,
         model: HxModel,
-        rtvars: MeloHxRoutingVars,
-        schvars: MeloHxSchedulingVars,
-        stats: MeloHxModelStats
+        rtvars: MIPHxRoutingVars,
+        schvars: MIPHxSchedulingVars,
+        stats: MIPHxModelStats
     ):
         self.optimizer = optimizer
         self.model = model

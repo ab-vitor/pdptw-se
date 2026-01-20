@@ -2,11 +2,11 @@ from gurobipy import Model, quicksum
 
 from modules.data import InstanceData
 from modules.parameters import ParameterData
-from ..entities import MIPRoutingVariables
+from ..entities import MIPGrbRoutingVariables
 
 
 def mip_gurobi_routing_constraints(
-    inst: InstanceData, params: ParameterData, model: Model, rtvars: MIPRoutingVariables
+    inst: InstanceData, params: ParameterData, model: Model, rtvars: MIPGrbRoutingVariables
 ) -> None:
     x = rtvars.x
     z = rtvars.z

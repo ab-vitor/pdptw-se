@@ -1,7 +1,7 @@
 from gurobipy import Model, GRB, tupledict
 
 
-def melo_objective_function(model: Model, C: tupledict) -> None:
+def mip_gurobi_objective_function(model: Model, C: tupledict) -> None:
     """
     Set the MIP's objective to minimize the total C[k] across all vehicles k.
     """

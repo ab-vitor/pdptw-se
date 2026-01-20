@@ -1,38 +1,34 @@
 # modules/solutions/__init__.py
-from .entities_mip_sol import MIPVarsSolution, MIPStats, LPSolution, MIPSolution
-from .entities_melo_hexaly_sol import MeloHxVarsSolution, MeloHxStats, MeloHxSolution
-from .entities_sol import VehicleStop, MachineTravel, StatsSolution, Solution
-from .convert_sol_mip import create_solution_melo
-from .convert_sol_melo_hexaly import create_solution_melo_hexaly
+from .entities_mip_gurobi_sol import MIPGrbVarsSolution, MIPGrbStats, MIPGrbSolution
+from .entities_mip_hexaly_sol import MIPHxVarsSolution, MIPHxStats, MIPHxSolution
+from .entities_sol import VehicleStop, MachineTravel, SolutionStats, Solution
+from .convert_sol_mip_gurobi import create_solution_mip_gurobi
+from .convert_sol_mip_hexaly import create_solution_mip_hexaly
 from .write_sol import save_solution_to_file
-from .print_detailed import (
-    print_detail_melo_formulation_solution,
+from .print_timeline_solution import (
+    print_timeline_solution,
     save_solution_timeline,
 )
 from .validate_sol import validate_solution
 from .statistics import save_stats_solution
 
 __all__ = [
-    "MIPVarsSolution",
-    "MIPStats",
-    "LPSolution",
-    "MIPSolution",
+    "MIPGrbVarsSolution",
+    "MIPGrbStats",
+    "MIPGrbSolution",
     "VehicleStop",
     "MachineTravel",
-    "StatsSolution",
+    "SolutionStats",
     "Solution",
-    "create_solution_melo",
+    "create_solution_mip_gurobi",
     "save_solution_to_file",
-    "print_detail_melo_formulation_solution",
+    "print_timeline_solution",
     "save_solution_timeline",
     "validate_solution",
-    "MeloHxVarsSolution",
-    "MeloHxStats",
-    "MeloHxSolution",
-    "create_solution_melo_hexaly",
-    "BarloHxVarsSolution",
-    "BarloHxStats",
-    "BarloHxSolution",
+    "MIPHxVarsSolution",
+    "MIPHxStats",
+    "MIPHxSolution",
+    "create_solution_mip_hexaly",
     "save_stats_solution",
     "update_sol_from_lp_sol",
 ]

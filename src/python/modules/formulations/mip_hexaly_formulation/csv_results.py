@@ -3,18 +3,18 @@ import pandas as pd
 
 from modules.parameters import ParameterData
 from modules.data import InstanceData
-from modules.solutions import Solution, MeloHxStats, StatsSolution
+from modules.solutions import Solution, MIPHxStats, SolutionStats
 from modules.csv_utils import struct_to_key_dict, parse_field
 
-from .entities_mip_hexaly_formulation import MeloHxModelStats
+from .entities_mip_hexaly_formulation import MIPHxModelStats
 
 
 def get_csv_results(
     inst: InstanceData,
     params: ParameterData,
-    mip_hx_model_stats: MeloHxModelStats = None,
+    mip_hx_model_stats: MIPHxModelStats = None,
     sol: Optional[Solution] = None,
-    mip_hx_stats: Optional[MeloHxStats] = None,
+    mip_hx_stats: Optional[MIPHxStats] = None,
 ) -> pd.DataFrame:
     exclude_fields_i = {
         "vehicles",
@@ -89,7 +89,7 @@ def get_csv_results(
         result_data.update(struct_to_key_dict(mip_hx_stats))
     else:
         result_data.update(
-            {key: parse_field(value) for key, value in vars(MeloHxStats()).items()}
+            {key: parse_field(value) for key, value in vars(MIPHxStats()).items()}
         )
 
     if mip_hx_model_stats:
@@ -100,7 +100,7 @@ def get_csv_results(
         result_data.update(
             {
                 key: parse_field(value)
-                for key, value in vars(MeloHxModelStats()).items()
+                for key, value in vars(MIPHxModelStats()).items()
                 if key not in exclude_fields_mip_hx_stats
             }
         )
@@ -111,7 +111,7 @@ def get_csv_results(
         result_data.update(
             {
                 key: parse_field(value)
-                for key, value in vars(StatsSolution()).items()
+                for key, value in vars(SolutionStats()).items()
                 if key not in exclude_fields_stats
             }
         )

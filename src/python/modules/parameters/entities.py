@@ -7,17 +7,16 @@ import numpy as np
 @dataclass
 class ParameterData:
     inst_path: str = (
-        "../../benchmark_multi_island_v5/instances/orig_ams_fg/12R_12V_04I_04M/t2/lr202/"
+        "../../instances/multi_island/orig_ams_fg/06R_06V_02I_04M/t2/lr202/"
     )
     name: str = ""
     type: str = ""
     group: str = ""
     full_name: str = ""
-    method_type: str = "heur"
-    method_code: str = "mslp"
-    gen_config_file_path: str = "configs/mslp/genconfig_mslp.conf"
+    method_type: str = "form"
+    method_code: str = "mip_grb"
+    gen_config_file_path: str = "configs/mip_grb/genconfig_mip_grb.conf"
     gen_config_file_name: str = field(init=False)
-    greedy_service_order: str = "tightest_tw"
     cut_off: int = 0
     cut_off_machs: int = 0
     solver: str = "Gurobi"
@@ -32,31 +31,9 @@ class ParameterData:
     output: str = "./logs/"
     epsilon: float = 0.005
     epsilon_cap: float = 0.5
-    warm_start: bool = False
     seed: int = 0
     rng: random.Random = field(init=False)
-    alpha: float = 0.2
-    max_iter: int = int(1e6)
     output_flag_grb_mip: int = 0
-    output_flag_grb_mslp: int = 0
-    output_flag_grb_lmns: int = 0
-    mslp_r: str = "M"
-    mslp_a: str = "60"
-    lmns_r: str = "M"
-    lmns_a: str = "60"
-    lmns_repair_time: float = 30.0
-    lmns_mip_focus: int = 0
-    lmns_gap_to_bigger_destruction: int = 50
-    lmns_gap_to_smaller_destruction: int = 95
-    lmns_weight_shaw_dist_prox: float = 1.0
-    lmns_weight_shaw_earl_prox: float = 1.0
-    lmns_weight_shaw_same_route: float = 1.0
-    lmns_weight_shaw_demand_sim: float = 1.0
-    lmns_req_r_apply_mip_start: bool = True
-    lmns_acceptance_criteria: str = "H"
-    lmns_metropolis_temp: float = 100.0
-    lmns_simulated_annealing_temp: float = 100.0
-    lmns_simulated_annealing_cool: float = 0.95
     mip_max_time: int = 3600
     hx_max_time: int = 3600
     csv_file_name: str = ""
@@ -66,8 +43,8 @@ class ParameterData:
     validate_synchronization: bool = True
     constraints_used_mip_str: str = "1-100"
     constraints_used_mip: np.ndarray = None
-    run_callback_melo_mip: bool = False
-    mip_heuristics: float = 0.05 # default is 0.05 (according to docs)
+    run_callback_mip_gurobi: bool = False
+    mip_heuristics: float = 0.05 # default is 0.05 (according to Gurobi docs)
     threads: int = 16
 
     def __post_init__(self):

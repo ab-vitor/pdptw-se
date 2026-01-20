@@ -32,7 +32,7 @@ class MachineTravel:
 
 
 @dataclass
-class StatsSolution:
+class SolutionStats:
     n_vehicles_used: float = 0.0
     n_machines_used: float = 0.0
     max_max_load_all_vehicles: float = 0.0
@@ -90,4 +90,4 @@ class Solution:
     completion_times: List[float]
     is_feasible: bool
     value: float
-    stats: StatsSolution
+    stats: SolutionStats

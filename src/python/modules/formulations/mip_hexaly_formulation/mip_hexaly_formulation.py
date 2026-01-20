@@ -13,9 +13,9 @@ from modules.solutions import (
     save_solution_to_file,
     save_solution_timeline,
     Solution,
-    MeloHxSolution,
-    MeloHxStats,
-    MeloHxVarsSolution,
+    MIPHxSolution,
+    MIPHxStats,
+    MIPHxVarsSolution,
     create_solution_mip_hexaly,
 )
 from modules.csv_utils.csv_utils import write_csv_with_flock
@@ -68,7 +68,7 @@ def mip_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solutio
         f"  status = {status}, iterations = {iterations}, time = {solve_time:.2f}s, gap = {gap:.2f}%"
     )
 
-    mip_hx_stats = MeloHxStats(
+    mip_hx_stats = MIPHxStats(
         status,
         int(is_optimal),
         int(is_feas),
@@ -102,7 +102,7 @@ def mip_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solutio
             idx: hxsol.get_value(var) for idx, var in mip_hx_model.schvars.alpha.items()
         }
 
-        mip_hx_vars_sol = MeloHxVarsSolution(
+        mip_hx_vars_sol = MIPHxVarsSolution(
             x_sol,
             z_sol,
             t_sol,
@@ -114,7 +114,7 @@ def mip_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solutio
             alpha_sol,
         )
 
-        mip_hx_sol = MeloHxSolution(mip_hx_vars_sol, mip_hx_stats)
+        mip_hx_sol = MIPHxSolution(mip_hx_vars_sol, mip_hx_stats)
 
         sol = create_solution_mip_hexaly(inst, mip_hx_sol, params)
 

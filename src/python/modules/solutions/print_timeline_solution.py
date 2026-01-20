@@ -1,9 +1,6 @@
-import os
-from datetime import datetime
 from typing import List
 
 
-from modules.parameters import ParameterData
 from modules.data import InstanceData
 from modules.print_utils.indent_stream import indent_prints
 from .entities_sol import VehicleStop, MachineTravel, Solution
@@ -123,7 +120,7 @@ def print_machine_detail(inst: InstanceData, machine: List[MachineTravel], h) ->
         print()
 
 
-def print_detail_melo_formulation_solution(inst: InstanceData, sol: Solution) -> None:
+def print_timeline_solution(inst: InstanceData, sol: Solution) -> None:
     print("---------------------| VEHICLES |---------------------\n")
     for k in inst.K:
         if len(sol.vehicles[k]) > 2:
@@ -148,17 +145,3 @@ def print_detail_melo_formulation_solution(inst: InstanceData, sol: Solution) ->
     print(f"TOTAL: {sum(sol.completion_times)}\n")
 
 
-def save_solution_timeline(
-    sol: Solution, inst: InstanceData, gp: ParameterData, suff: str = ""
-) -> None:
-    timestamp = datetime.now().time().strftime("%H:%M:%S")
-    print(f"\n[{timestamp}] Saving solution timeline to file: {gp.timeline_file_name}")
-    dir_path = os.path.dirname(gp.timeline_file_name)
-    if not os.path.isdir(dir_path):
-        os.makedirs(dir_path)
-    timeline_filename = gp.timeline_file_name[:-4] + suff + ".txt"
-    with open(timeline_filename, "w") as file:
-        from contextlib import redirect_stdout
-
-        with redirect_stdout(file):
-            print_detail_melo_formulation_solution(inst, sol)

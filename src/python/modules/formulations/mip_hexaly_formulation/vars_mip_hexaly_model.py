@@ -1,15 +1,15 @@
 from hexaly.optimizer import HxModel, HxExpression
 from modules.data import InstanceData, is_precede_possible
 from .entities_mip_hexaly_formulation import (
-    MeloHxModelStats,
-    MeloHxRoutingVars,
-    MeloHxSchedulingVars,
+    MIPHxModelStats,
+    MIPHxRoutingVars,
+    MIPHxSchedulingVars,
 )
 
 
 def mip_hexaly_routing_variables(
     inst: InstanceData, model: HxModel
-) -> MeloHxRoutingVars:
+) -> MIPHxRoutingVars:
     x: dict[tuple, HxExpression] = {
         (i, j, k): model.bool()
         for i in inst.Vprime
@@ -22,12 +22,12 @@ def mip_hexaly_routing_variables(
         (i, k): model.float(0, inst.Q[k]) for i in inst.Vprime for k in inst.K
     }
 
-    return MeloHxRoutingVars(x, z)
+    return MIPHxRoutingVars(x, z)
 
 
 def mip_hexaly_scheduling_variables(
     inst: InstanceData, model: HxModel
-) -> MeloHxSchedulingVars:
+) -> MIPHxSchedulingVars:
     Le = inst.l[inst.depot_begin]
     Lb = inst.e[inst.depot_begin]
 
@@ -55,12 +55,12 @@ def mip_hexaly_scheduling_variables(
         (i, j, h): model.float(Lb, Le) for (i, j) in inst.A_m for h in inst.H_e[i][j]
     }
 
-    return MeloHxSchedulingVars(t, tstart, tfinal, C, phi, gamma, alpha)
+    return MIPHxSchedulingVars(t, tstart, tfinal, C, phi, gamma, alpha)
 
 
 def get_mip_hx_model_stats(
-    model: HxModel, rtvars: MeloHxRoutingVars, schvars: MeloHxSchedulingVars
-) -> MeloHxModelStats:
+    model: HxModel, rtvars: MIPHxRoutingVars, schvars: MIPHxSchedulingVars
+) -> MIPHxModelStats:
     n_x_vars = len(rtvars.x)
     n_z_vars = len(rtvars.z)
     n_t_vars = len(schvars.t)
@@ -81,7 +81,7 @@ def get_mip_hx_model_stats(
         + n_gamma_vars
     )
 
-    return MeloHxModelStats(
+    return MIPHxModelStats(
         n_vars=n_vars,
         n_bin_vars=n_bin_vars,
         n_x_vars=n_x_vars,
@@ -95,7 +95,7 @@ def get_mip_hx_model_stats(
     )
 
 
-def print_model_stats_summary(stats: MeloHxModelStats) -> None:
+def print_model_stats_summary(stats: MIPHxModelStats) -> None:
     print()
     print("### Model variables summary ###")
 

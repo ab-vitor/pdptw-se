@@ -3,18 +3,18 @@ import pandas as pd
 
 from modules.parameters import ParameterData
 from modules.data import InstanceData
-from modules.solutions import Solution, MIPStats, StatsSolution
+from modules.solutions import Solution, MIPGrbStats, SolutionStats
 from modules.csv_utils import struct_to_key_dict, parse_field
 
-from .entities import MIPModelStats
+from .entities import MIPGrbModelStats
 
 
 def get_csv_results(
     inst: InstanceData,
     params: ParameterData,
-    mip_model_stats: MIPModelStats,
+    mip_model_stats: MIPGrbModelStats,
     sol: Optional[Solution] = None,
-    mip_sol_stats: Optional[MIPStats] = None,
+    mip_sol_stats: Optional[MIPGrbStats] = None,
 ) -> pd.DataFrame:
 
     exclude_fields_i = {
@@ -90,7 +90,7 @@ def get_csv_results(
     if mip_sol_stats is not None:
         result_data.update(struct_to_key_dict(mip_sol_stats))
     else:
-        result_data.update({key: parse_field(value) for key, value in vars(MIPStats()).items()})
+        result_data.update({key: parse_field(value) for key, value in vars(MIPGrbStats()).items()})
 
     result_data.update(
         struct_to_key_dict(mip_model_stats, exclude_fileds_mip_stats)
@@ -101,15 +101,14 @@ def get_csv_results(
     if sol is not None:
         result_data.update(struct_to_key_dict(sol.stats, exclude_fields_stats))
     else:
-        result_data.update({key: parse_field(value) for key, value in vars(StatsSolution()).items() if key not in exclude_fields_stats})
+        result_data.update({key: parse_field(value) for key, value in vars(SolutionStats()).items() if key not in exclude_fields_stats})
 
 
     df = pd.DataFrame([result_data])
 
-    # Round float columns (except maybe excluded column like 'best_cost')
+    # Round float columns
     for col in df.columns:
         if pd.api.types.is_float_dtype(df[col]):
             df[col] = df[col].round(4)
-    # newResultDF.best_cost = round.(newResultDF.best_cost, digits = 0)
 
     return df

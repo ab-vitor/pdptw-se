@@ -1,9 +1,9 @@
-from .routing_constraints_melo_mip_model import melo_routing_constraints
-from .scheduling_constraints_melo_mip_model import melo_scheduling_constraints
-from .valid_inequalities_melo_mip_model import melo_valid_inequalities
+from .routing_constraints_mip_gurobi_model import mip_gurobi_routing_constraints
+from .scheduling_constraints_mip_gurobi_model import mip_gurobi_scheduling_constraints
+from .valid_inequalities_mip_gurobi_model import mip_gurobi_valid_inequalities
 
 __all__ = [
-    "melo_routing_constraints",
-    "melo_scheduling_constraints",
-    "melo_valid_inequalities",
+    "mip_gurobi_routing_constraints",
+    "mip_gurobi_scheduling_constraints",
+    "mip_gurobi_valid_inequalities",
 ]

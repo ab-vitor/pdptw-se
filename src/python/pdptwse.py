@@ -2,10 +2,10 @@ import sys
 from modules.parameters import read_input_parameters
 from modules.data import read_data
 from modules.formulations import (
-    melo_mip_formulation,
-    melo_hexaly_formulation,
+    mip_gurobi_formulation,
+    mip_hexaly_formulation,
 )
-from modules.solutions import print_detail_melo_formulation_solution, validate_solution
+from modules.solutions import print_timeline_solution, validate_solution
 from gurobipy import Env, Model
 
 
@@ -26,15 +26,16 @@ inst = read_data(params)
 
 sol = None
 if params.method_type == "form":
-    if params.method_code == "melo":
-        sol = melo_mip_formulation(GRB_ENV, inst, params)
-    if params.method_code == "melo_hx":
-        sol = melo_hexaly_formulation(inst, params)
+    if params.method_code == "mip_grb":
+        sol = mip_gurobi_formulation(GRB_ENV, inst, params)
+    if params.method_code == "mip_hx":
+        sol = mip_hexaly_formulation(inst, params)
 
-if sol is not None and params.print_sol == 1:
-    print_detail_melo_formulation_solution(inst, sol)
-    # if validate_solution(inst, sol, params):
+if sol is not None:
+    if params.print_sol == 1:
+        print_timeline_solution(inst, sol)
+    
     if validate_solution(inst, sol, params):
-        print("Everything is awesome!")
+        print("Feasible solution! :D")
     else:
-        print("Infeasible solution :(")
+        print("Infeasible solution! :(")

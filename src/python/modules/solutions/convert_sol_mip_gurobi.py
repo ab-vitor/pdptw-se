@@ -2,36 +2,33 @@ from typing import List
 
 from modules.parameters import ParameterData
 from modules.data import InstanceData
-from .entities_mip_sol import MIPSolution
-from .entities_sol import VehicleStop, MachineTravel, Solution, StatsSolution
+from .entities_mip_gurobi_sol import MIPGrbSolution
+from .entities_sol import VehicleStop, MachineTravel, Solution, SolutionStats
 from .statistics import save_stats_solution
-from .print_detailed import print_detail_melo_formulation_solution
 
 
 def get_machine_attending_arc(
-    i: int, j: int, inst: InstanceData, mip_sol: MIPSolution, params: ParameterData
+    i: int, j: int, inst: InstanceData, mip_sol: MIPGrbSolution, params: ParameterData
 ) -> int:
     for h in inst.H:
         if h in inst.H_e[i][j] and abs(mip_sol.vars.phi[i, j, h] - 1) <= 0.1:
             return h
 
-    print("opa opa opa")
     return -1  # should never happen in a feasible solution
 
 
 def get_next_node_route(
-    i: int, k: int, inst: InstanceData, mip_sol: MIPSolution, params: ParameterData
+    i: int, k: int, inst: InstanceData, mip_sol: MIPGrbSolution, params: ParameterData
 ) -> int:
     for j in inst.Vprime:
         if (i, j) in inst.A and abs(mip_sol.vars.x[i, j, k] - 1) <= 0.1:
             return j
 
-    print("opa opa opa")
     return -1  # should never happen in a feasible solution
 
 
 def create_vehicles(
-    inst: InstanceData, mip_sol: MIPSolution, params: ParameterData
+    inst: InstanceData, mip_sol: MIPGrbSolution, params: ParameterData
 ) -> tuple[List[int], dict]:
     vehicles = [[] for _ in inst.K]
     arcsh_kp = {}
@@ -91,8 +88,8 @@ def create_vehicles(
     return vehicles, arcsh_kp
 
 
-def create_solution_melo(
-    inst: InstanceData, mip_sol: MIPSolution, params: ParameterData
+def create_solution_mip_gurobi(
+    inst: InstanceData, mip_sol: MIPGrbSolution, params: ParameterData
 ) -> Solution:
     vehicles, arcsh_kp = create_vehicles(inst, mip_sol, params)
 
@@ -123,7 +120,7 @@ def create_solution_melo(
         completion_times=completion_times,
         is_feasible=True,
         value=mip_sol.stats.obj_value,
-        stats=StatsSolution(),
+        stats=SolutionStats(),
     )
     sol.stats = save_stats_solution(inst, sol, params)
     return sol

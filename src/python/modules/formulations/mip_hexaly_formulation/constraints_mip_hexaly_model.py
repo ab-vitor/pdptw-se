@@ -2,13 +2,13 @@ from modules.data import InstanceData, is_precede_possible
 from modules.parameters import ParameterData
 from hexaly.optimizer import HxModel
 from .entities_mip_hexaly_formulation import (
-    MeloHxRoutingVars,
-    MeloHxSchedulingVars,
+    MIPHxRoutingVars,
+    MIPHxSchedulingVars,
 )
 
 
 def mip_hexaly_routing_constraints(
-    inst: InstanceData, params: ParameterData, model: HxModel, rtvars: MeloHxRoutingVars
+    inst: InstanceData, params: ParameterData, model: HxModel, rtvars: MIPHxRoutingVars
 ) -> None:
     """
     Add the routing constraints c1–c10 to `model`.
@@ -98,8 +98,8 @@ def mip_hexaly_routing_constraints(
 def mip_hexaly_scheduling_constraints(
     inst: InstanceData,
     model: HxModel,
-    rtvars: MeloHxRoutingVars,
-    schvars: MeloHxSchedulingVars,
+    rtvars: MIPHxRoutingVars,
+    schvars: MIPHxSchedulingVars,
     params: ParameterData
 ) -> None:
 

@@ -188,8 +188,8 @@ def read_input_parameters(args: list[str]) -> ParameterData:
         elif args[i] == "--constraints_used_mip_str":
             params.constraints_used_mip_str = args[i + 1]
             i += 1
-        elif args[i] == "--run_callback_melo_mip":
-            params.run_callback_melo_mip = True
+        elif args[i] == "--run_callback_mip_gurobi":
+            params.run_callback_mip_gurobi = True
             i += 1
         elif args[i] == "--mip_heuristics":
             params.mip_heuristics = float(args[i + 1])
@@ -214,7 +214,7 @@ def read_input_parameters(args: list[str]) -> ParameterData:
     params.timeline_file_name = f"{params.output}{params.method_type}_{params.method_code}/timelines/{params.group}/{params.name}_timeline_{params.gen_config_file_name}.txt"
     params.grb_file_name = f"{params.output}{params.method_type}_{params.method_code}/gurobi/{params.group}/{params.name}_grb_{params.gen_config_file_name}.log"
     parse_constraints_used_mip(params)
-    print("Constraints active in melo MIP")
+    print("Constraints active in MIP")
     for i in range(1,50):
         if params.constraints_used_mip[i]:
             print(f"{i}", end=" ")
