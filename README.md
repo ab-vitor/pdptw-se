@@ -59,6 +59,14 @@ This repository refers to the code and data used in the paper: "The pickup and d
 
 ## How to run the Julia code
 
+- The Julia version used in the experiments is Julia v1.11.3. Make sure you install Julia in your machine.
+- Clone the repository and navigate to the folder `src/julia/` in your terminal.
+- To install the necessary packages, run Julia's package manager by typing `]` in the Julia REPL, and then run:
+
+    ```julia
+    add CSV@0.10.15 DataFrames@1.7.0 Gurobi@1.5.0 JuMP@1.23.6 Gurobi_jll@12.0.2
+    ```
+
 - Necessary packages and respective versions used on the experiments (maybe other versions work as well):
   - CSV v0.10.15
   - DataFrames v1.7.0
@@ -130,3 +138,7 @@ This repository refers to the code and data used in the paper: "The pickup and d
 ## Citation
 
 Please use the citation provided by GitHub (via `CITATION.cff`).
+
+## Questions?
+
+For any questions, please contact Vítor A. Barbosa (<vitor.barbosa@ufba.br>).
