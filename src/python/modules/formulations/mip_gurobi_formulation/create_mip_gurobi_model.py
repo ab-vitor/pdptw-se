@@ -9,20 +9,20 @@ from modules.data import InstanceData
 from modules.print_utils import get_time_now
 
 from .entities import MIPModel
-from .vars_melo_mip_model import (
-    melo_routing_variables,
-    melo_scheduling_variables,
+from .vars_mip_gurobi_model import (
+    mip_gurobi_routing_variables,
+    mip_gurobi_scheduling_variables,
     get_mip_model_stats,
     print_model_stats_summary,
 )
-from .constraints_melo_mip_model import (
-    melo_routing_constraints,
-    melo_scheduling_constraints,
-    melo_valid_inequalities,
+from .constraints_mip_gurobi_model import (
+    mip_gurobi_routing_constraints,
+    mip_gurobi_scheduling_constraints,
+    mip_gurobi_valid_inequalities,
 )
-from .objective_melo_mip_model import melo_objective_function
+from .objective_mip_gurobi_model import mip_gurobi_objective_function
 
-def create_melo_mip_model(
+def create_mip_gurobi_model(
     env: Optional[Env], inst: InstanceData, params: ParameterData
 ) -> MIPModel:
     """Create Melo MIP model with Gurobi."""
@@ -70,10 +70,10 @@ def create_melo_mip_model(
 
     # === Defining variables ===
     # Routing variables
-    rtvars = melo_routing_variables(inst, model)
+    rtvars = mip_gurobi_routing_variables(inst, model)
 
     # Scheduling variables
-    schvars = melo_scheduling_variables(inst, model)
+    schvars = mip_gurobi_scheduling_variables(inst, model)
 
     # Summary - Model variables
     stats = get_mip_model_stats(model)
@@ -81,18 +81,18 @@ def create_melo_mip_model(
 
     # === Routing Constraints ===
     print(f"\n[{get_time_now()}] Adding routing constraints")
-    melo_routing_constraints(inst, params, model, rtvars)
+    mip_gurobi_routing_constraints(inst, params, model, rtvars)
 
     # === Scheduling Constraints ===
     print(f"[{get_time_now()}] Adding scheduling constraints")
-    melo_scheduling_constraints(inst, model, params, rtvars, schvars)
+    mip_gurobi_scheduling_constraints(inst, model, params, rtvars, schvars)
 
     # === Valid inequalities ===
     print(f"[{get_time_now()}] Adding valid inequalities")
-    melo_valid_inequalities(inst, model, params, rtvars, schvars)
+    mip_gurobi_valid_inequalities(inst, model, params, rtvars, schvars)
 
     # === Objective Function ===
     print(f"[{get_time_now()}] Adding objective function")
-    melo_objective_function(model, schvars.C)
+    mip_gurobi_objective_function(model, schvars.C)
 
     return MIPModel(model=model, rtvars=rtvars, schvars=schvars, stats=stats)
