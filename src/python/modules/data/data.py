@@ -203,12 +203,11 @@ def build_O(inst: InstanceData, params: ParameterData) -> None:
 
     for o, v in inst.O.items():
         print(o, v)
-    # print("O_matrix:", inst.O_matrix[inst.initial_station, inst.initial_station, :])
-    # print("O:", inst.O)
     return None
 
 
 def can_be_used_to_traverse_the_arc(i: int, j: int, h: int, inst: InstanceData) -> bool:
+    # check if machine h has stations for both jobs i and j
     job_i_z = inst.jobs[inst.refs[i]].point.z
     job_j_z = inst.jobs[inst.refs[j]].point.z
     has_station_for_i = any(p.z == job_i_z for p in inst.machines[h].points)
@@ -232,6 +231,7 @@ def build_H_e(inst: InstanceData) -> None:
     return None
 
 def build_H_eprime(inst: InstanceData) -> None:
+    # inst.H_eprime initialization
     if inst.n > 20:
         print("Skipping H_eprime construction for large instances (n > 20)")
         inst.H_eprime = None
@@ -348,6 +348,7 @@ def build_arcs(inst: InstanceData) -> None:
         inst.in_A_s[i, j] = 1
 
 def build_feas_gamma(inst: InstanceData) -> None:
+    # inst.feas_gamma initialization
     if inst.n > 20:
         print("Skipping feas_gamma construction for large instances (n > 20)")
         inst.feas_gamma = None
@@ -387,6 +388,8 @@ def build_minimums_and_maximums(inst: InstanceData) -> None:
 
 
 def build_big_M(inst: InstanceData) -> None:
+    # big M constants initialization
+    # inst.max_d
     inst.max_d = max(inst.d[i, j, k] for (i, j) in inst.A for k in inst.K)
     
     # inst.M vector
