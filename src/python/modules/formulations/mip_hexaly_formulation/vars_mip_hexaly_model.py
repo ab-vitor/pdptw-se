@@ -1,13 +1,13 @@
 from hexaly.optimizer import HxModel, HxExpression
 from modules.data import InstanceData, is_precede_possible
-from .entities_melo_hexaly_formulation import (
+from .entities_mip_hexaly_formulation import (
     MeloHxModelStats,
     MeloHxRoutingVars,
     MeloHxSchedulingVars,
 )
 
 
-def melo_hexaly_routing_variables(
+def mip_hexaly_routing_variables(
     inst: InstanceData, model: HxModel
 ) -> MeloHxRoutingVars:
     x: dict[tuple, HxExpression] = {
@@ -25,7 +25,7 @@ def melo_hexaly_routing_variables(
     return MeloHxRoutingVars(x, z)
 
 
-def melo_hexaly_scheduling_variables(
+def mip_hexaly_scheduling_variables(
     inst: InstanceData, model: HxModel
 ) -> MeloHxSchedulingVars:
     Le = inst.l[inst.depot_begin]
@@ -58,7 +58,7 @@ def melo_hexaly_scheduling_variables(
     return MeloHxSchedulingVars(t, tstart, tfinal, C, phi, gamma, alpha)
 
 
-def get_melo_hx_model_stats(
+def get_mip_hx_model_stats(
     model: HxModel, rtvars: MeloHxRoutingVars, schvars: MeloHxSchedulingVars
 ) -> MeloHxModelStats:
     n_x_vars = len(rtvars.x)

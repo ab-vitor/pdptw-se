@@ -6,15 +6,15 @@ from modules.data import InstanceData
 from modules.solutions import Solution, MeloHxStats, StatsSolution
 from modules.csv_utils import struct_to_key_dict, parse_field
 
-from .entities_melo_hexaly_formulation import MeloHxModelStats
+from .entities_mip_hexaly_formulation import MeloHxModelStats
 
 
 def get_csv_results(
     inst: InstanceData,
     params: ParameterData,
-    melo_hx_model_stats: MeloHxModelStats = None,
+    mip_hx_model_stats: MeloHxModelStats = None,
     sol: Optional[Solution] = None,
-    melo_hx_stats: Optional[MeloHxStats] = None,
+    mip_hx_stats: Optional[MeloHxStats] = None,
 ) -> pd.DataFrame:
     exclude_fields_i = {
         "vehicles",
@@ -79,29 +79,29 @@ def get_csv_results(
         "max_load_vehicle",
     }
 
-    exclude_fields_melo_hx_stats = {}
+    exclude_fields_mip_hx_stats = {}
 
     result_data = {}
     result_data.update(struct_to_key_dict(inst, exclude_fields_i))
     result_data.update(struct_to_key_dict(params, exclude_fields_params))
 
-    if melo_hx_stats is not None:
-        result_data.update(struct_to_key_dict(melo_hx_stats))
+    if mip_hx_stats is not None:
+        result_data.update(struct_to_key_dict(mip_hx_stats))
     else:
         result_data.update(
             {key: parse_field(value) for key, value in vars(MeloHxStats()).items()}
         )
 
-    if melo_hx_model_stats:
+    if mip_hx_model_stats:
         result_data.update(
-            struct_to_key_dict(melo_hx_model_stats, exclude_fields_melo_hx_stats)
+            struct_to_key_dict(mip_hx_model_stats, exclude_fields_mip_hx_stats)
         )
     else:
         result_data.update(
             {
                 key: parse_field(value)
                 for key, value in vars(MeloHxModelStats()).items()
-                if key not in exclude_fields_melo_hx_stats
+                if key not in exclude_fields_mip_hx_stats
             }
         )
 

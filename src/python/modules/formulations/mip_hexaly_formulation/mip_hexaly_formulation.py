@@ -16,31 +16,31 @@ from modules.solutions import (
     MeloHxSolution,
     MeloHxStats,
     MeloHxVarsSolution,
-    create_solution_melo_hexaly,
+    create_solution_mip_hexaly,
 )
 from modules.csv_utils.csv_utils import write_csv_with_flock
 from modules.print_utils.date_now import get_time_now
 
-from .create_melo_hexaly_model import create_melo_hexaly_model
+from .create_mip_hexaly_model import create_mip_hexaly_model
 from .csv_results import get_csv_results
 
 
-def melo_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solution:
+def mip_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solution:
 
-    melo_hx_model = create_melo_hexaly_model(inst, params)
+    mip_hx_model = create_mip_hexaly_model(inst, params)
 
-    melo_hx_model.model.close()
+    mip_hx_model.model.close()
 
-    hxparams: HxParam = melo_hx_model.optimizer.param
+    hxparams: HxParam = mip_hx_model.optimizer.param
     hxparams.time_limit = int(params.hx_max_time)
     hxparams.set_verbosity(1)
     num_threads = min(os.cpu_count(), params.threads)
     hxparams.set_nb_threads(num_threads)
     hxparams.set_seed(params.seed)
 
-    melo_hx_model.optimizer.solve()
+    mip_hx_model.optimizer.solve()
 
-    optimizer: HexalyOptimizer = melo_hx_model.optimizer
+    optimizer: HexalyOptimizer = mip_hx_model.optimizer
     hxsol: HxSolution = optimizer.get_solution()
     status: HxSolutionStatus = hxsol.get_status()
     is_optimal = status == HxSolutionStatus.OPTIMAL
@@ -57,7 +57,7 @@ def melo_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Soluti
 
     # --- extract statistics ---
     sol_stats: HxStatistics = optimizer.get_statistics()
-    obj_val = hxsol.get_value(melo_hx_model.model.get_objective(0))
+    obj_val = hxsol.get_value(mip_hx_model.model.get_objective(0))
     best_bound = hxsol.get_objective_bound(0)
     iterations = sol_stats.get_nb_iterations()
     solve_time = sol_stats.get_running_time()
@@ -68,7 +68,7 @@ def melo_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Soluti
         f"  status = {status}, iterations = {iterations}, time = {solve_time:.2f}s, gap = {gap:.2f}%"
     )
 
-    melo_hx_stats = MeloHxStats(
+    mip_hx_stats = MeloHxStats(
         status,
         int(is_optimal),
         int(is_feas),
@@ -82,27 +82,27 @@ def melo_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Soluti
 
     sol = None
     if is_optimal or is_feas:
-        x_sol = {idx: hxsol.get_value(var) for idx, var in melo_hx_model.rtvars.x.items()}
-        z_sol = {idx: hxsol.get_value(var) for idx, var in melo_hx_model.rtvars.z.items()}
-        t_sol = {i: hxsol.get_value(var) for i, var in melo_hx_model.schvars.t.items()}
+        x_sol = {idx: hxsol.get_value(var) for idx, var in mip_hx_model.rtvars.x.items()}
+        z_sol = {idx: hxsol.get_value(var) for idx, var in mip_hx_model.rtvars.z.items()}
+        t_sol = {i: hxsol.get_value(var) for i, var in mip_hx_model.schvars.t.items()}
         tstart_sol = {
-            k: hxsol.get_value(var) for k, var in melo_hx_model.schvars.tstart.items()
+            k: hxsol.get_value(var) for k, var in mip_hx_model.schvars.tstart.items()
         }
         tfinal_sol = {
-            k: hxsol.get_value(var) for k, var in melo_hx_model.schvars.tfinal.items()
+            k: hxsol.get_value(var) for k, var in mip_hx_model.schvars.tfinal.items()
         }
-        C_sol = {k: hxsol.get_value(var) for k, var in melo_hx_model.schvars.C.items()}
+        C_sol = {k: hxsol.get_value(var) for k, var in mip_hx_model.schvars.C.items()}
         phi_sol = {
-            idx: hxsol.get_value(var) for idx, var in melo_hx_model.schvars.phi.items()
+            idx: hxsol.get_value(var) for idx, var in mip_hx_model.schvars.phi.items()
         }
         gamma_sol = {
-            idx: hxsol.get_value(var) for idx, var in melo_hx_model.schvars.gamma.items()
+            idx: hxsol.get_value(var) for idx, var in mip_hx_model.schvars.gamma.items()
         }
         alpha_sol = {
-            idx: hxsol.get_value(var) for idx, var in melo_hx_model.schvars.alpha.items()
+            idx: hxsol.get_value(var) for idx, var in mip_hx_model.schvars.alpha.items()
         }
 
-        melo_hx_vars_sol = MeloHxVarsSolution(
+        mip_hx_vars_sol = MeloHxVarsSolution(
             x_sol,
             z_sol,
             t_sol,
@@ -114,15 +114,15 @@ def melo_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Soluti
             alpha_sol,
         )
 
-        melo_hx_sol = MeloHxSolution(melo_hx_vars_sol, melo_hx_stats)
+        mip_hx_sol = MeloHxSolution(mip_hx_vars_sol, mip_hx_stats)
 
-        sol = create_solution_melo_hexaly(inst, melo_hx_sol, params)
+        sol = create_solution_mip_hexaly(inst, mip_hx_sol, params)
 
         save_solution_to_file(sol, inst, params)
         save_solution_timeline(sol, inst, params)
 
     print(f"\n[{get_time_now()}] Writing results to CSV: {params.csv_file_name}")
-    row = get_csv_results(inst=inst, params=params, sol=sol, melo_hx_stats=melo_hx_stats, melo_hx_model_stats=melo_hx_model.stats)
+    row = get_csv_results(inst=inst, params=params, sol=sol, mip_hx_stats=mip_hx_stats, mip_hx_model_stats=mip_hx_model.stats)
     write_csv_with_flock(params.csv_file_name, row)
     
     return sol
