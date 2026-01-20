@@ -32,7 +32,7 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
     - `time_and_optimality_gap/`: for the time and optimality gap analysis.
 - `src/`: algorithmic code.
   - `julia/`: Multi-start heuristic with a Linear Programming (LP) improvement procedure (MSLP), and the heuristic to ensure instance feasibility.
-  - `python/`: Mixed integer programming (MIP) formulation, Hexaly formulation (MIP in hexaly format).
+  - `python/`: Mixed integer programming (MIP) formulation, and the Hexaly formulation (MIP in hexaly format).
 
 ## Julia code organiztion
 
@@ -118,6 +118,10 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
     ```shell
     python3.9 smaller_insts_gen_multi_island.py --help
     ```
+
+## How to run the Python code
+
+- By default, the seed used for all MIP experiments (Gurobi or Hexaly) is `0`.
 
 ## How to run the R code (pdptw-se-statistics)
 
