@@ -1,6 +1,18 @@
 # pdptw-se
 
-Source code, instances, and results for the Pickup and Delivery Problem with Time windows and Scheduling on the Edges
+Source code, instances, data processing scripts, and detailed results for the Pickup and Delivery Problem with Time windows and Scheduling on the Edges.
+
+This repository refers to the code and data used in the paper: "The pickup and delivery problem with time windows and scheduling on the edges", by Vítor A. Barbosa, Sunil Tiwari, and Rafael A. Melo, currently under review.
+
+## Contents
+
+- [General organization](#general-organization) — repository layout and key folders (instances, pdptw-se-statistics, src).
+- [Julia code organiztion](#julia-code-organiztion) — structure of the Julia modules and configs.
+- [How to run the Julia code](#how-to-run-the-julia-code) — required packages, run modes, and main parameters for MSLP.
+- [How to run the instance generator](#how-to-run-the-instance-generator) — scripts and example commands to produce instances.
+- [How to run the R code (pdptw-se-statistics)](#how-to-run-the-r-code-pdptw-se-statistics) — instructions to reproduce tables and plots.
+- [Citation](#citation) — how to cite the work.
+- [Questions?](#questions) — contact information.
 
 ## General organization
 
@@ -58,12 +70,20 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
 
 ## How to run the Julia code
 
+- The Julia version used in the experiments is Julia v1.11.3. Make sure you install Julia in your machine.
+- Clone the repository and navigate to the folder `src/julia/` in your terminal.
 - Necessary packages and respective versions used on the experiments (maybe other versions work as well):
   - CSV v0.10.15
   - DataFrames v1.7.0
   - Gurobi v1.5.0
   - JuMP v1.23.6
   - Gurobi_jll v12.0.2
+- To install the necessary packages, run Julia's package manager by typing `]` in the Julia REPL, and then run for each package:
+
+    ```julia
+    add <package_name>@<version>
+    ```
+
 - There are three main ways to run the Julia code:
   1. **Passing each parameter in the command line**: pass each parameter by writting its name with the prefix `--`, followed by the desired value (if it has a value).
 
@@ -129,3 +149,11 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
 - We recommend running each R script directly in an R environment (e.g., RStudio).
 - By default, the working directory is always the root folder `pdptw-se-statistics/`. Thus, you can run each script without changing the working directory.
 - For the plots, the line that saves the plot is always commented by default. You can uncomment it to save the plots in your local machine.
+
+## Citation
+
+Please use the citation provided by GitHub (via `CITATION.cff`).
+
+## Questions?
+
+For any questions, please contact Vítor A. Barbosa (<vitor.alvs.brbs@gmail.com>).
