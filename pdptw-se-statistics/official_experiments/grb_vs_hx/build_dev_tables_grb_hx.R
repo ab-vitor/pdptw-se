@@ -5,8 +5,8 @@ library(readr)
 variations <- c("multi_island", "multi_floor")
 prefix_csv_output <- "grouped"
 prefix_set_output <- "official_experiments/data/grb_vs_hx"
-prefix_csv_input_grb <- "official_experiments/data/mip_gurobi/csvresults_form_melo"
-prefix_csv_input_hx <- "official_experiments/data/mip_hexaly/csvresults_form_melo_hx"
+prefix_csv_input_grb <- "official_experiments/data/mip_gurobi/csvresults_form_mip"
+prefix_csv_input_hx <- "official_experiments/data/mip_hexaly/csvresults_form_mip_hx"
 ext_csv <- ".csv"
 
 types <- c(1, 2)

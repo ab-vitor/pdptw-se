@@ -8,7 +8,7 @@ benchmarks_desc <- c("Multi-island", "Multi-floor")
 names_regions <- c("Islands", "Floors")
 variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
-prefix_csv_input_file_name <- "csvresults_form_melo"
+prefix_csv_input_file_name <- "csvresults_form_mip"
 plot_dir <- "official_experiments/time_and_optimality_gap/plots"
 tables_dir <- "official_experiments/time_and_optimality_gap/tables"
 

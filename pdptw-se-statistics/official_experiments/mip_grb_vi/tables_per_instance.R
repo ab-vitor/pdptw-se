@@ -3,7 +3,7 @@ library(dplyr)
 
 variations <- c("multi_island", "multi_floor")
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities"
-prefix_csv_input <- "csvresults_form_melo"
+prefix_csv_input <- "csvresults_form_mip"
 vi_test <- c("all_minus_one_vi", "all_vi", "no_vi", "one_vi")
 path_to_csv_output <- "official_experiments/mip_grb_vi/tables_per_instance/"
 
