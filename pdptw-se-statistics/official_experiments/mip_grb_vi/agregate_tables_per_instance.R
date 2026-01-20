@@ -23,7 +23,7 @@ results_for_all_instances <- results_for_all_instances %>%
   left_join(best_per_instance, by = "full_name") %>%
   # mutate(rpd = (obj_value - best_obj) / best_obj)
   mutate(rpd = ifelse(obj_value == Inf, 1, (obj_value - best_obj) / best_obj)) %>%
-  rename(vi_config = constraints_used_melo_mip_str)
+  rename(vi_config = constraints_used_mip_str)
 
 path_to_csv_output <- "official_experiments/mip_grb_vi/table_all_instances/"
 
