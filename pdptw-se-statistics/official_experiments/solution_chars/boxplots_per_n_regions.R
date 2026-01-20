@@ -7,7 +7,7 @@ benchmarks_desc <- c("Multi-island","Multi-floor")
 names_regions <- c("Islands", "Floors")
 variations <- c("multi_island", "multi_floor")
 method_output_prefix_file_path <- c(
-  "official_experiments/data/solution_chars/sol_chars_form_melo",
+  "official_experiments/data/solution_chars/sol_chars_form_mip",
   "official_experiments/data/solution_chars/sol_chars_heur_mslp"
 )
 method_names <- c("mip_vi", "mslp")
