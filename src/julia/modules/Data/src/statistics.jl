@@ -1,4 +1,4 @@
-function compare_orig_instance_with_modified(orig_inst::InstanceData, mod_inst::InstanceData)
+function compare_orig_instance_with_modified(orig_inst::InstanceData, mod_inst::InstanceData)::Nothing
 	tw_shifts = Float64[]
 	for i in eachindex(orig_inst.jobs)
 		push!(tw_shifts, (mod_inst.jobs[i].lat - orig_inst.jobs[i].lat) / orig_inst.jobs[i].lat)

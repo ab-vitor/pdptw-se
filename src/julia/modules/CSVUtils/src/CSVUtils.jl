@@ -3,7 +3,7 @@ module CSVUtils
 using CSV
 using DataFrames
 
-export write_csv_with_flock, structToKeyInDict
+export write_csv_with_flock, struct_to_key_in_dict
 
 # The idea was to write into a CSV file without concurrence,
 # but it didn't work as expected, so I decided to save results
@@ -48,14 +48,14 @@ function write_csv_with_flock(filename::String, data::DataFrame)
     end
 end
 
-function parseField(field::Any)::Any
+function parse_field(field::Any)::Any
     if typeof(field) == Enum
         return string(field)
     end
     return field
 end
 
-function structToKeyInDict(s)
+function struct_to_key_in_dict(s)
     return Dict(
         field => (typeof(val) <: Enum ? string(val) : val)
         for field in fieldnames(typeof(s))

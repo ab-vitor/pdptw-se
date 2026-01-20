@@ -8,7 +8,7 @@ function csvresults(
 
 	newResultData = Dict()
 	for s in (inst, extmd, gp, stats, extmd.best_sol)
-		for (k, v) in structToKeyInDict(s)
+		for (k, v) in struct_to_key_in_dict(s)
 			newResultData[k] = v
 		end
 	end
