@@ -1,6 +1,8 @@
 # pdptw-se
 
-Source code, instances, and results for the Pickup and Delivery Problem with Time windows and Scheduling on the Edges
+Source code, instances, and results for the Pickup and Delivery Problem with Time windows and Scheduling on the Edges.
+
+This repository refers to the code and data used in the paper: "The pickup and delivery problem with time windows and scheduling on the edges", by Vítor A. Barbosa, Sunil Tiwari, and Rafael A. Melo, currently under review. Please, see the [Citation](#citation) section for more details on how to cite this work.
 
 ## General organization
 
@@ -124,3 +126,7 @@ Source code, instances, and results for the Pickup and Delivery Problem with Tim
 - We recommend running each R script directly in an R environment (e.g., RStudio).
 - By default, the working directory is always the root folder `pdptw-se-statistics/`. Thus, you can run each script without changing the working directory.
 - For the plots, the line that saves the plot is always commented by default. You can uncomment it to save the plots in your local machine.
+
+## Citation
+
+Please use the citation provided by GitHub (via `CITATION.cff`).
