@@ -6,11 +6,11 @@ library(readr)
 library(stringr)
 
 variations <- c("multi_island", "multi_floor")
-prefix_file_name <- "csvresults_form_melo"
+prefix_file_name <- "csvresults_form_mip"
 prefix_set_with_vi <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_set_no_vi <- "official_experiments/data/mip_gurobi"
 prefix_output <- "official_experiments/mip_grb_vi/benchmark_tests/comparison_mip_grb"
-prefix_output_file_name <- "csvresults_form_melo.csv"
+prefix_output_file_name <- "csvresults_form_mip.csv"
 
 post_process <- function(df) {
   df <- df %>%
@@ -21,14 +21,14 @@ post_process <- function(df) {
       name, group, type, full_name, 
       time, gap, obj_value, status, 
       tle_feas, tle_not_feas, optimal,
-      constraints_used_melo_mip_str
+      constraints_used_mip_str
     ) %>%
     mutate(
       found_sol = pmax(optimal, tle_feas), 
       killed = ifelse(status == 11, 1, 0), 
       tle = pmax(tle_feas, tle_not_feas)
     ) %>%
-    rename(vi_config = constraints_used_melo_mip_str)
+    rename(vi_config = constraints_used_mip_str)
   
   
   df

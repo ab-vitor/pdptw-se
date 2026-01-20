@@ -5,7 +5,7 @@ prefix_csv_output <- "grouped"
 types <- c(1, 2)
 
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
-prefix_csv_input <- "csvresults_form_melo"
+prefix_csv_input <- "csvresults_form_mip"
 for (j in seq_along(variations)) {
   for (t in types) {
     suff_output <- paste0("avrg_type_", t)

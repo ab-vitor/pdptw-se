@@ -6,7 +6,7 @@ library(readr)
 library(ggplot2)
 
 variations <- c("multi_island", "multi_floor")
-prefix_file_name <- "csvresults_form_melo"
+prefix_file_name <- "csvresults_form_mip"
 prefix_set_with_vi <- "official_experiments/data/mip_grb_valid_inequalities/official"
 prefix_set_no_vi <- "official_experiments/data/mip_gurobi"
 prefix_output_plots <- "official_experiments/mip_grb_vi/benchmark_tests/comparison_mip_grb/plots"
