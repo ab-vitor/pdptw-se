@@ -6,22 +6,22 @@ from .entities import ParameterData
 from .load_general_configuration import load_general_configuration
 
 
-def parse_constraints_used_melo_mip(params: ParameterData) -> None:
-    # Parse constraints_used_melo_mip_str into a list of ints
-    constraints_used_melo_mip_int = []
-    if params.constraints_used_melo_mip_str:
-        parts = params.constraints_used_melo_mip_str.split(",")
+def parse_constraints_used_mip(params: ParameterData) -> None:
+    # Parse constraints_used_mip_str into a list of ints
+    constraints_used_mip_int = []
+    if params.constraints_used_mip_str:
+        parts = params.constraints_used_mip_str.split(",")
         for part in parts:
             if "-" in part:
                 start, end = map(int, part.split("-"))
-                constraints_used_melo_mip_int.extend(range(start, end + 1))
+                constraints_used_mip_int.extend(range(start, end + 1))
             else:
-                constraints_used_melo_mip_int.append(int(part))
+                constraints_used_mip_int.append(int(part))
     max_index = 100 # probably this will never happen
-    params.constraints_used_melo_mip = np.zeros(max_index + 1, dtype=bool)
-    for c in constraints_used_melo_mip_int:
+    params.constraints_used_mip = np.zeros(max_index + 1, dtype=bool)
+    for c in constraints_used_mip_int:
         if c <= max_index:
-            params.constraints_used_melo_mip[c] = True
+            params.constraints_used_mip[c] = True
 
     return None
 
@@ -185,8 +185,8 @@ def read_input_parameters(args: list[str]) -> ParameterData:
             i += 1
         elif args[i] == "--validate_synchronization":
             params.validate_synchronization = True
-        elif args[i] == "--constraints_used_melo_mip_str":
-            params.constraints_used_melo_mip_str = args[i + 1]
+        elif args[i] == "--constraints_used_mip_str":
+            params.constraints_used_mip_str = args[i + 1]
             i += 1
         elif args[i] == "--run_callback_melo_mip":
             params.run_callback_melo_mip = True
@@ -213,9 +213,9 @@ def read_input_parameters(args: list[str]) -> ParameterData:
     params.sol_file_name = f"{params.output}{params.method_type}_{params.method_code}/solutions/{params.group}/{params.name}_sol_{params.gen_config_file_name}.txt"
     params.timeline_file_name = f"{params.output}{params.method_type}_{params.method_code}/timelines/{params.group}/{params.name}_timeline_{params.gen_config_file_name}.txt"
     params.grb_file_name = f"{params.output}{params.method_type}_{params.method_code}/gurobi/{params.group}/{params.name}_grb_{params.gen_config_file_name}.log"
-    parse_constraints_used_melo_mip(params)
+    parse_constraints_used_mip(params)
     print("Constraints active in melo MIP")
     for i in range(1,50):
-        if params.constraints_used_melo_mip[i]:
+        if params.constraints_used_mip[i]:
             print(f"{i}", end=" ")
     return params

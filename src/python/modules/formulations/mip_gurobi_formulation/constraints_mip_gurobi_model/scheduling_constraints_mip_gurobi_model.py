@@ -22,7 +22,7 @@ def melo_scheduling_constraints(
     C = schvars.C
 
     # c13
-    if params.constraints_used_melo_mip[13]:
+    if params.constraints_used_mip[13]:
         for k in inst.K:
             for i, j in inst.A:
                 if i != inst.depot_begin and j in inst.V_p_d:
@@ -36,7 +36,7 @@ def melo_scheduling_constraints(
                     )
 
     # c14
-    if params.constraints_used_melo_mip[14]:
+    if params.constraints_used_mip[14]:
         for k in inst.K:
             for j in inst.V_p:
                 if inst.in_A[inst.depot_begin, j]:
@@ -49,7 +49,7 @@ def melo_scheduling_constraints(
                     )
 
     # c15
-    if params.constraints_used_melo_mip[15]:
+    if params.constraints_used_mip[15]:
         for i in inst.V_p:
             sumX = quicksum(
                 inst.d[i, inst.n + i, k] * x[ell, i, k]
@@ -60,14 +60,14 @@ def melo_scheduling_constraints(
             model.addConstr(t[i] + inst.s[i] + sumX <= t[inst.n + i], name="c15")
 
     # c16
-    if params.constraints_used_melo_mip[16]:
+    if params.constraints_used_mip[16]:
         for i, j in inst.A_m:
             sum1 = quicksum(phi[i, j, h] for h in inst.H_e[i][j])
             sum2 = quicksum(x[i, j, k] for k in inst.K)
             model.addConstr(sum1 == sum2, name="c16")
 
     # c17
-    if params.constraints_used_melo_mip[17]:
+    if params.constraints_used_mip[17]:
         for i, j in inst.A_m:
             for k in inst.K:
                 for h in inst.H_e[i][j]:
@@ -82,7 +82,7 @@ def melo_scheduling_constraints(
                         )
 
     # c18
-    if params.constraints_used_melo_mip[18]:
+    if params.constraints_used_mip[18]:
         for i, j in inst.A_m:
             if j in inst.V_p:
                 for h in inst.H_e[i][j]:
@@ -102,7 +102,7 @@ def melo_scheduling_constraints(
                             )
 
     # c19
-    if params.constraints_used_melo_mip[19]:
+    if params.constraints_used_mip[19]:
         for i, j in inst.A_m:
             for k in inst.K:
                 for h in inst.H_e[i][j]:
@@ -117,7 +117,7 @@ def melo_scheduling_constraints(
                         )
 
     # c20
-    if params.constraints_used_melo_mip[20]:
+    if params.constraints_used_mip[20]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -161,7 +161,7 @@ def melo_scheduling_constraints(
                             )
 
     # c21
-    if params.constraints_used_melo_mip[21]:
+    if params.constraints_used_mip[21]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -186,7 +186,7 @@ def melo_scheduling_constraints(
                             )
 
     # c22
-    if params.constraints_used_melo_mip[22]:
+    if params.constraints_used_mip[22]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -211,7 +211,7 @@ def melo_scheduling_constraints(
                             )
 
     # c23
-    if params.constraints_used_melo_mip[23]:
+    if params.constraints_used_mip[23]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -250,7 +250,7 @@ def melo_scheduling_constraints(
                             )
 
     # c24
-    if params.constraints_used_melo_mip[24]:
+    if params.constraints_used_mip[24]:
         for i, j in inst.A_m:
             for h in inst.H_e[i][j]:
                 model.addConstr(
@@ -261,7 +261,7 @@ def melo_scheduling_constraints(
                 )
 
     # c25
-    if params.constraints_used_melo_mip[25]:
+    if params.constraints_used_mip[25]:
         for k in inst.K:
             for i in inst.V_d:
                 if inst.in_A[i, inst.depot_end]:
@@ -275,7 +275,7 @@ def melo_scheduling_constraints(
                     )
 
     # c26
-    if params.constraints_used_melo_mip[26]:
+    if params.constraints_used_mip[26]:
         for i in inst.V_d:
             if inst.in_A_m[i, inst.depot_end]:
                 for k in inst.K:
@@ -291,12 +291,12 @@ def melo_scheduling_constraints(
                         )
 
     # c27
-    if params.constraints_used_melo_mip[27]:
+    if params.constraints_used_mip[27]:
         for k in inst.K:
             model.addConstr(C[k] >= tfinal[k] - tstart[k], name=f"c27_{k}")
 
     # c28
-    if params.constraints_used_melo_mip[28]:
+    if params.constraints_used_mip[28]:
         for i in inst.V_p_d:
             model.addConstr(
                 inst.eprime[i] <= t[i],
@@ -308,6 +308,6 @@ def melo_scheduling_constraints(
             )
 
     # c29
-    if params.constraints_used_melo_mip[29]:
+    if params.constraints_used_mip[29]:
         for k in inst.K:
             model.addConstr(tstart[k] <= tfinal[k], name=f"c29_{k}")

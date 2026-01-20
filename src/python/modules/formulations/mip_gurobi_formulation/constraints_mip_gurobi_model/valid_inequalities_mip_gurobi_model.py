@@ -33,7 +33,7 @@ def melo_valid_inequalities(
     C = schvars.C
 
     # c35
-    if params.constraints_used_melo_mip[35]:
+    if params.constraints_used_mip[35]:
         count = 0
         for k in inst.K:
             for i in inst.V_p_d:
@@ -48,7 +48,7 @@ def melo_valid_inequalities(
         print(f"Number of c35 constraints added: {count}")
 
     # c36
-    if params.constraints_used_melo_mip[36]:
+    if params.constraints_used_mip[36]:
         count = 0
         for i, j in combinations(inst.V_p_d, 2):
             if inst.in_A[i, j] and inst.in_A[j, i]:
@@ -60,7 +60,7 @@ def melo_valid_inequalities(
         print(f"Number of c36 constraints added: {count}")
 
     # c37
-    if params.constraints_used_melo_mip[37]:
+    if params.constraints_used_mip[37]:
         count = 0
         for i, j in combinations(inst.V_p_d, 2):
             if inst.in_A_m[i, j] and inst.in_A_m[j, i]:
@@ -72,7 +72,7 @@ def melo_valid_inequalities(
         print(f"Number of c37 constraints added: {count}")
 
     # c38
-    if params.constraints_used_melo_mip[38]:
+    if params.constraints_used_mip[38]:
         count = 0
         if inst.n > 20:
             for (i, j), (iprime, jprime) in combinations(inst.A_m, 2):
@@ -108,7 +108,7 @@ def melo_valid_inequalities(
         print(f"Number of c38 constraints added: {count}")
 
     # c39
-    if params.constraints_used_melo_mip[39]:
+    if params.constraints_used_mip[39]:
         max_w = 2
         count = 0
         for k in inst.K:
@@ -129,7 +129,7 @@ def melo_valid_inequalities(
         print(f"Number of c39 constraints added: {count}")
 
     # c40
-    if params.constraints_used_melo_mip[40]:
+    if params.constraints_used_mip[40]:
         max_w = 2
         count = 0
         for w in range(2, max_w + 1):
@@ -152,7 +152,7 @@ def melo_valid_inequalities(
         print(f"Number of c40 constraints added: {count}")
 
     # c41
-    if params.constraints_used_melo_mip[41]:
+    if params.constraints_used_mip[41]:
         count = 0
         for j in inst.V_p_d:
             count += 1
@@ -170,7 +170,7 @@ def melo_valid_inequalities(
         print(f"Number of c41 constraints added: {count}")
 
     # c42
-    if params.constraints_used_melo_mip[42]:
+    if params.constraints_used_mip[42]:
         count = 0
         for i, j in inst.A_m:
             for h in inst.H_e[i][j]:
@@ -183,7 +183,7 @@ def melo_valid_inequalities(
         print(f"Number of c42 constraints added: {count}")
 
     # c43
-    if params.constraints_used_melo_mip[43]:
+    if params.constraints_used_mip[43]:
         count = 0
         for i, j in inst.A_m:
             for h in inst.H_e[i][j]:
@@ -199,7 +199,7 @@ def melo_valid_inequalities(
         print(f"Number of c43 constraints added: {count}")
 
     # c44
-    if params.constraints_used_melo_mip[44]:
+    if params.constraints_used_mip[44]:
         count = 0
         for i, j in inst.A_m:
             for h in inst.H_e[i][j]:
@@ -215,7 +215,7 @@ def melo_valid_inequalities(
         print(f"Number of c44 constraints added: {count}")
 
     # c45
-    if params.constraints_used_melo_mip[45]:
+    if params.constraints_used_mip[45]:
         count = 0
         for i, j in inst.A_m:
             for h in inst.H_e[i][j]:
@@ -234,7 +234,7 @@ def melo_valid_inequalities(
         print(f"Number of c45 constraints added: {count}")
 
     # c46
-    if params.constraints_used_melo_mip[46]:
+    if params.constraints_used_mip[46]:
         count = 0
         for i, j in inst.A_m:
             for iprime, jprime in inst.A_m:

@@ -17,7 +17,7 @@ def mip_hexaly_routing_constraints(
     z = rtvars.z
 
     # c1
-    if params.constraints_used_melo_mip[1]:
+    if params.constraints_used_mip[1]:
         for k in inst.K:
             sumX = model.sum(
                 [x[inst.depot_begin, j, k] for j in inst.V_p]
@@ -26,7 +26,7 @@ def mip_hexaly_routing_constraints(
             model.constraint(sumX == 1)
 
     # c2
-    if params.constraints_used_melo_mip[2]:
+    if params.constraints_used_mip[2]:
         for k in inst.K:
             for i in inst.V_p_d:
                 sum1 = model.sum(x[j, i, k] for j in inst.Vprime if inst.in_A[j, i])
@@ -34,7 +34,7 @@ def mip_hexaly_routing_constraints(
                 model.constraint(sum1 - sum2 == 0)
 
     # c3
-    if params.constraints_used_melo_mip[3]:
+    if params.constraints_used_mip[3]:
         for k in inst.K:
             sumX = model.sum(
                 [x[j, inst.depot_end, k] for j in inst.V_d]
@@ -43,13 +43,13 @@ def mip_hexaly_routing_constraints(
             model.constraint(sumX == 1)
 
     # c4
-    if params.constraints_used_melo_mip[4]:
+    if params.constraints_used_mip[4]:
         for i in inst.V_p_d:
             sumX = model.sum(x[j, i, k] for k in inst.K for j in inst.Vprime if inst.in_A[j, i])
             model.constraint(sumX == 1)
 
     # c5
-    if params.constraints_used_melo_mip[5]:
+    if params.constraints_used_mip[5]:
         for k in inst.K:
             for i in inst.V_p:
                 sum1 = model.sum(x[j, i, k] for j in inst.Vprime if inst.in_A[j, i])
@@ -59,12 +59,12 @@ def mip_hexaly_routing_constraints(
                 model.constraint(sum1 == sum2)
 
     # c6
-    if params.constraints_used_melo_mip[6]:
+    if params.constraints_used_mip[6]:
         for k in inst.K:
             model.constraint(z[inst.depot_begin, k] == 0)
 
     # c7
-    if params.constraints_used_melo_mip[7]:
+    if params.constraints_used_mip[7]:
         for k in inst.K:
             for i, j in inst.A:
                 model.constraint(
@@ -72,7 +72,7 @@ def mip_hexaly_routing_constraints(
                 )
 
     # c8
-    if params.constraints_used_melo_mip[8]:
+    if params.constraints_used_mip[8]:
         for k in inst.K:
             for i, j in inst.A:
                 model.constraint(
@@ -80,7 +80,7 @@ def mip_hexaly_routing_constraints(
                 )
 
     # c9
-    if params.constraints_used_melo_mip[9]:
+    if params.constraints_used_mip[9]:
         for k in inst.K:
             for i in inst.V_p_d:
                 sumX = model.sum(x[j, i, k] for j in inst.Vprime if inst.in_A[j, i])
@@ -88,7 +88,7 @@ def mip_hexaly_routing_constraints(
                 model.constraint(z[i, k] <= rhs)
 
     # c10
-    if params.constraints_used_melo_mip[10]:
+    if params.constraints_used_mip[10]:
         for k in inst.K:
             for i in inst.V_p:
                 sumX = model.sum(x[j, i, k] for j in inst.Vprime if inst.in_A[j, i])
@@ -113,7 +113,7 @@ def mip_hexaly_scheduling_constraints(
     C = schvars.C
 
     # c13
-    if params.constraints_used_melo_mip[13]:
+    if params.constraints_used_mip[13]:
         for k in inst.K:
             for i, j in inst.A:
                 if i != inst.depot_begin and j in inst.V_p_d:
@@ -123,7 +123,7 @@ def mip_hexaly_scheduling_constraints(
                     )
 
     # c14
-    if params.constraints_used_melo_mip[14]:
+    if params.constraints_used_mip[14]:
         for k in inst.K:
             for j in inst.V_p:
                 if inst.in_A[inst.depot_begin, j]:
@@ -135,7 +135,7 @@ def mip_hexaly_scheduling_constraints(
                     )
 
     # c15
-    if params.constraints_used_melo_mip[15]:
+    if params.constraints_used_mip[15]:
         for i in inst.V_p:
             sumX = 0
             for k in inst.K:
@@ -145,7 +145,7 @@ def mip_hexaly_scheduling_constraints(
             model.constraint(t[i] + inst.s[i] + sumX <= t[inst.n + i])
 
     # c16
-    if params.constraints_used_melo_mip[16]:
+    if params.constraints_used_mip[16]:
         for i, j in inst.A_m:
             sum1 = 0
             for h in inst.H_e[i][j]:
@@ -156,7 +156,7 @@ def mip_hexaly_scheduling_constraints(
             model.constraint(sum1 == sum2)
 
     # c17
-    if params.constraints_used_melo_mip[17]:
+    if params.constraints_used_mip[17]:
         for i, j in inst.A_m:
             for k in inst.K:
                 for h in inst.H_e[i][j]:
@@ -170,7 +170,7 @@ def mip_hexaly_scheduling_constraints(
                         )
 
     # c18
-    if params.constraints_used_melo_mip[18]:
+    if params.constraints_used_mip[18]:
         for i, j in inst.A_m:
             if j in inst.V_p:
                 for h in inst.H_e[i][j]:
@@ -189,7 +189,7 @@ def mip_hexaly_scheduling_constraints(
                             )
 
     # c19
-    if params.constraints_used_melo_mip[19]:
+    if params.constraints_used_mip[19]:
         for i, j in inst.A_m:
             for k in inst.K:
                 for h in inst.H_e[i][j]:
@@ -203,7 +203,7 @@ def mip_hexaly_scheduling_constraints(
                         )
 
     # c20
-    if params.constraints_used_melo_mip[20]:
+    if params.constraints_used_mip[20]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -244,7 +244,7 @@ def mip_hexaly_scheduling_constraints(
                             )
 
     # c21
-    if params.constraints_used_melo_mip[21]:
+    if params.constraints_used_mip[21]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -261,7 +261,7 @@ def mip_hexaly_scheduling_constraints(
                             model.constraint(gamma[i, j, iprime, jprime, h] <= phi[i, j, h])
 
     # c22
-    if params.constraints_used_melo_mip[22]:
+    if params.constraints_used_mip[22]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -279,7 +279,7 @@ def mip_hexaly_scheduling_constraints(
 
 
     # c23
-    if params.constraints_used_melo_mip[23]:
+    if params.constraints_used_mip[23]:
         if inst.n > 20:
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
@@ -313,7 +313,7 @@ def mip_hexaly_scheduling_constraints(
                             )
 
     # c24
-    if params.constraints_used_melo_mip[24]:
+    if params.constraints_used_mip[24]:
         for i, j in inst.A_m:
             for h in inst.H_e[i][j]:
                 model.constraint(
@@ -323,7 +323,7 @@ def mip_hexaly_scheduling_constraints(
                 )
 
     # c25
-    if params.constraints_used_melo_mip[25]:
+    if params.constraints_used_mip[25]:
         for k in inst.K:
             for i in inst.V_d:
                 if inst.in_A[i, inst.depot_end]:
@@ -336,7 +336,7 @@ def mip_hexaly_scheduling_constraints(
                     )
 
     # c26
-    if params.constraints_used_melo_mip[26]:
+    if params.constraints_used_mip[26]:
         for i in inst.V_d:
             if inst.in_A_m[i, inst.depot_end]:
                 for k in inst.K:
@@ -351,12 +351,12 @@ def mip_hexaly_scheduling_constraints(
                         )
 
     # c27
-    if params.constraints_used_melo_mip[27]:
+    if params.constraints_used_mip[27]:
         for k in inst.K:
             model.constraint(C[k] >= tfinal[k] - tstart[k])
 
     # c28
-    if params.constraints_used_melo_mip[28]:
+    if params.constraints_used_mip[28]:
         for i in inst.V_p_d:
             model.constraint(
                 inst.eprime[i] <= t[i],
@@ -366,6 +366,6 @@ def mip_hexaly_scheduling_constraints(
             )
 
     # c29
-    if params.constraints_used_melo_mip[29]:
+    if params.constraints_used_mip[29]:
         for k in inst.K:
             model.constraint(tstart[k] <= tfinal[k])

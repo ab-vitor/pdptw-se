@@ -71,7 +71,7 @@ def get_csv_results(
         "ppd",
     }
 
-    exclude_fields_params = {"constraints_used_melo_mip", "rng"}
+    exclude_fields_params = {"constraints_used_mip", "rng"}
 
     exclude_fields_stats = {
         "machines_travel_times_with_vehicle",

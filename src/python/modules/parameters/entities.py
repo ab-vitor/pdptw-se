@@ -64,8 +64,8 @@ class ParameterData:
     timeline_file_name: str = ""
     grb_file_name: str = ""
     validate_synchronization: bool = True
-    constraints_used_melo_mip_str: str = "1-100"
-    constraints_used_melo_mip: np.ndarray = None
+    constraints_used_mip_str: str = "1-100"
+    constraints_used_mip: np.ndarray = None
     run_callback_melo_mip: bool = False
     mip_heuristics: float = 0.05 # default is 0.05 (according to docs)
     threads: int = 16
