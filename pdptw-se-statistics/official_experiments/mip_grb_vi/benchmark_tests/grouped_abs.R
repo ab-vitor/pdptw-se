@@ -7,7 +7,7 @@ library(glue)
 variations <- c("multi_island", "multi_floor")
 prefix_csv_output <- "grouped"
 prefix_set <- "official_experiments/data/mip_grb_valid_inequalities/official"
-prefix_csv_input <- "csvresults_form_melo"
+prefix_csv_input <- "csvresults_form_mip"
 types <- c(1, 2)
 
 OPTIMAL <- 2
