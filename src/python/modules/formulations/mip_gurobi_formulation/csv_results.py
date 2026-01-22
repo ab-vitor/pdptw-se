@@ -109,6 +109,6 @@ def get_csv_results(
     # Round float columns
     for col in df.columns:
         if pd.api.types.is_float_dtype(df[col]):
-            df[col] = df[col].round(4)
+            df[col] = df[col].round(6)
 
     return df
