@@ -5,7 +5,12 @@ import numpy as np
 from .entities import ParameterData
 from .load_general_configuration import load_general_configuration
 
-
+"""
+    def parse_constraints_used_mip(params: ParameterData) -> None:
+    
+    Parse constraints_used_mip_str into a list of bools indicating which constraints are used in the MIP model.
+    The input string can contain individual indices or ranges (e.g., "1,2,5-7").
+"""
 def parse_constraints_used_mip(params: ParameterData) -> None:
     # Parse constraints_used_mip_str into a list of ints
     constraints_used_mip_int = []
@@ -28,13 +33,8 @@ def parse_constraints_used_mip(params: ParameterData) -> None:
 def save_instance_full_name(params: ParameterData) -> None:
     path_splitted = os.path.normpath(params.inst_path).split(os.sep)
     params.name = path_splitted[-1]
-
-    if path_splitted[-2][0] == "t":
-        params.type = path_splitted[-2]
-        params.group = path_splitted[-3]
-    else:
-        params.type = f"t{params.name[2]}"
-        params.group = path_splitted[-2]
+    params.type = path_splitted[-2]
+    params.group = path_splitted[-3]
 
     if params.cut_off_machs <= 0:
         params.cut_off_machs = int(params.group[-3:-1])
