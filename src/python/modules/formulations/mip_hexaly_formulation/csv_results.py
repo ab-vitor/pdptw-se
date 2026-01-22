@@ -118,10 +118,9 @@ def get_csv_results(
 
     df = pd.DataFrame([result_data])
 
-    # Round float columns (except maybe excluded column like 'best_cost')
+    # Round float columns
     for col in df.columns:
         if pd.api.types.is_float_dtype(df[col]):
             df[col] = df[col].round(6)
-    # newResultDF.best_cost = round.(newResultDF.best_cost, digits = 0)
 
     return df
