@@ -52,7 +52,7 @@ def mip_gurobi_scheduling_variables(
 
     # Upper bound for all times is the common lateness limit
     Le = inst.l[inst.depot_begin]
-    Lb = inst.e[inst.depot_end]
+    Lb = inst.e[inst.depot_begin]
 
     t = model.addVars(inst.V_p_d, lb=Lb, ub=Le, vtype=GRB.CONTINUOUS, name="t")
 
