@@ -178,7 +178,6 @@ def mip_gurobi_scheduling_constraints(
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
                     for h in inst.H_eprime[i][j][iprime][jprime]:
-                        # if (i, j) != (iprime, jprime):
                         if inst.feas_gamma[i, j, iprime, jprime, h]:
                             model.addConstr(
                                 gamma[i, j, iprime, jprime, h] <= phi[i, j, h],
@@ -203,7 +202,6 @@ def mip_gurobi_scheduling_constraints(
             for i, j in inst.A_m:
                 for iprime, jprime in inst.A_m:
                     for h in inst.H_eprime[i][j][iprime][jprime]:
-                        # if (i, j) != (iprime, jprime):
                         if inst.feas_gamma[iprime, jprime, i, j, h]:
                             model.addConstr(
                                 gamma[iprime, jprime, i, j, h] <= phi[i, j, h],
@@ -238,7 +236,6 @@ def mip_gurobi_scheduling_constraints(
                         .intersection(inst.H_e[iprime][jprime])
                         .intersection(inst.H_e[j][iprime])
                     ):
-                        # if (i, j) != (iprime, jprime):
                         if inst.feas_gamma[i, j, iprime, jprime, h]:
                             model.addConstr(
                                 alpha[iprime, jprime, h]
