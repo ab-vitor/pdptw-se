@@ -129,7 +129,7 @@ def read_input_parameters(args: list[str]) -> ParameterData:
             params.threads = int(args[i + 1])
             i += 1
         # Add other parameters as needed
-        else:
+        elif args[i].startswith("--"):
             raise ValueError(f"Parameter {args[i]} does not exist")
         i += 1
 
