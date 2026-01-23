@@ -22,7 +22,7 @@ def parse_constraints_used_mip(params: ParameterData) -> None:
                 constraints_used_mip_int.extend(range(start, end + 1))
             else:
                 constraints_used_mip_int.append(int(part))
-    max_index = 100 # probably this will never happen
+    max_index = 100 # probably this will never be insufficient
     params.constraints_used_mip = np.zeros(max_index + 1, dtype=bool)
     for c in constraints_used_mip_int:
         if c <= max_index:
