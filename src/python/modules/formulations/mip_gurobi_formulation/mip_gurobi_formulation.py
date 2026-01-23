@@ -35,18 +35,12 @@ def extract_relaxed_values(orig_var_dict: tupledict, relaxed_model: Model) -> di
 def mip_gurobi_formulation(
     env: Optional[Env], inst: InstanceData, params: ParameterData
 ) -> Solution:
-    """
-    Build, solve, and export results for the MELO MIP.
-    Returns a Solution object or None if infeasible/error.
-    """
     print(f"\n[{get_time_now()}] Running mip_gurobi_formulation")
 
-    # --- build the model + variables + constraints + objective ---
     mip_model: MIPGrbModel = create_mip_gurobi_model(env, inst, params)
     model = mip_model.model
 
 
-    # --- solve ---
     if params.run_callback_mip_gurobi:
         def callback_function(model, where):
             return cb_analyze_valid_inequalities(
@@ -63,7 +57,6 @@ def mip_gurobi_formulation(
 
     status = model.Status
 
-    # --- check status ---
     is_optimal = status == GRB.OPTIMAL
     is_tle_feas = status == GRB.TIME_LIMIT and model.SolCount > 0
     is_tle_no_sol = status == GRB.TIME_LIMIT and model.SolCount == 0
@@ -85,7 +78,6 @@ def mip_gurobi_formulation(
     else:
         print(f"Model failed (status {status})")
 
-    # --- extract statistics ---
     obj_val = model.ObjVal or 0
     best_bound = model.ObjBound or 0
     nodes = model.NodeCount or 0
@@ -111,7 +103,6 @@ def mip_gurobi_formulation(
 
     mip_sol = None
     sol = None
-    # --- extract variable values ---
     if model.SolCount > 0:
         x_sol = {idx: v.X for idx, v in mip_model.rtvars.x.items()}
         z_sol = {idx: v.X for idx, v in mip_model.rtvars.z.items()}
@@ -123,7 +114,6 @@ def mip_gurobi_formulation(
         gamma_sol = {idx: v.X for idx, v in mip_model.schvars.gamma.items()}
         alpha_sol = {idx: v.X for idx, v in mip_model.schvars.alpha.items()}
 
-        # pack into your solution‐holder classes
         mip_vars_sol = MIPGrbVarsSolution(
             x_sol,
             z_sol,
@@ -138,7 +128,6 @@ def mip_gurobi_formulation(
 
         mip_sol = MIPGrbSolution(mip_vars_sol, mip_sol_stats)
 
-        # --- build final domain solution and write outputs ---
         sol = create_solution_mip_gurobi(inst, mip_sol, params)
 
         save_solution_to_file(sol, inst, params)

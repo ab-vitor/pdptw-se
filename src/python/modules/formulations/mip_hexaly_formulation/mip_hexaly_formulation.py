@@ -55,7 +55,6 @@ def mip_hexaly_formulation(inst: InstanceData, params: ParameterData) -> Solutio
     else:
         print(f"Model failed (status {status})")
 
-    # --- extract statistics ---
     sol_stats: HxStatistics = optimizer.get_statistics()
     obj_val = hxsol.get_value(mip_hx_model.model.get_objective(0))
     best_bound = hxsol.get_objective_bound(0)
