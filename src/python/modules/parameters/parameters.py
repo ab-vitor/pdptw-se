@@ -12,7 +12,6 @@ from .load_general_configuration import load_general_configuration
     The input string can contain individual indices or ranges (e.g., "1,2,5-7").
 """
 def parse_constraints_used_mip(params: ParameterData) -> None:
-    # Parse constraints_used_mip_str into a list of ints
     constraints_used_mip_int = []
     if params.constraints_used_mip_str:
         parts = params.constraints_used_mip_str.split(",")

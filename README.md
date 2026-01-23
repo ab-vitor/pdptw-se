@@ -207,6 +207,9 @@ This repository refers to the code and data used in the paper: "The pickup and d
 
 - You can check the default value of each parameter in the file [src/python/modules/parameters/entities.py](src/python/modules/parameters/entities.py). Some of them are defined after reading all the parameters (see `def read_input_parameters(args: List[str]) -> ParameterData`), like output file names, and others cannot be passed (e.g. parameter `rng`, which is defined based on the parameter `seed`).
 - By default, the seed used for all MIP experiments (Gurobi or Hexaly) is `0`.
+- For the MIP with valid inequalities, use the parameter `--constraints_used_mip` followed by the basic sets of constraints (1-29), and the desired sets of valid inequalities (35-46). You can check which one exists in this file [valid_inequalities_mip_gurobi_model.py](src/python/modules/formulations/mip_gurobi_formulation/constraints_mip_gurobi_model/valid_inequalities_mip_gurobi_model.py).
+- Information on how you can write the desired constraints in the command line or the configuration file is provided in the description of the function `parse_constraints_used_mip(params: ParameterData) -> None` (see the file [parameters.py](src/python/modules/parameters/parameters.py)).
+- For convinience, the example configuration file [configs/mip_grb_with_vi/gen_config_mip_grb_vi_example.conf](src/python/configs/mip_grb/gen_config_mip_grb_vi_example.conf) already contains all valid inequalities (35-46) along with the basic constraints (1-29). OBS.: do not use spaces to separate the constraint numbers or ranges, only commas.
 
 ## How to run the R code (pdptw-se-statistics)
 
