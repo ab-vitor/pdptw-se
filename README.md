@@ -16,32 +16,32 @@ This repository refers to the code and data used in the paper: "The pickup and d
 
 ## General organization
 
-- `instances/`: place for the instances, instance generators, and scripts to generate all original instances.
-  - `multi_floor/` or `multi_island/`: original pdptw-se instances multi-floor or multi-island.
-    - `orig_ams/`: original instances with all machine stations, along with map illustrations.
-    - `orig_ams_fg/`: original instances modified to ensure feasibility using the greedy procedure.
-  - `pdptw_100_li_lim/`: original pdptw instances with about 100 tasks (about 50 pickup and delivery requests).
+- [instances/](instances/): place for the instances, instance generators, and scripts to generate all original instances.
+  - [multi_floor/](instances/multi_floor/) or [multi_island/](instances/multi_island/): original pdptw-se instances multi-floor or multi-island.
+    - **orig_ams/**: original instances with all machine stations, along with map illustrations.
+    - **orig_ams_fg/**: original instances modified to ensure feasibility using the greedy procedure.
+  - [pdptw_100_li_lim/](instances/pdptw_100_li_lim/): original pdptw instances with about 100 tasks (about 50 pickup and delivery requests).
     - `lc*`: clustered instances.
     - `lrc*`: randomized-clustered instances.
     - `lr*`: randomized instances (used to generate the pdptw-se instances).
-  - `pdptw_200_li_lim/`: original pdptw instances with about 200 tasks (about 100 pickup and delivery requests).
+  - [pdptw_200_li_lim/](instances/pdptw_200_li_lim/): original pdptw instances with about 200 tasks (about 100 pickup and delivery requests).
     - `LC*`: clustered instances.
     - `LCR*`: randomized-clustered instances.
     - `LR*`: randomized instances (used to generate the pdptw-se instances).
-- `pdptw-se-statistics/`: paper experiment data and data processing scripts along with the resulting outputs (tables, plots, etc.).
-  - `inst_statistics/`: instance statistics data regarding time window and capacity changes, scripts and their output tables.
-  - `official_experiments/`: data, scripts and their output tables and plots.
-    - `data/`: all csv tables from experiments and other auxiliary tables.
-    - `grb_vs_hx/`: for the Gurobi-Hexaly MIP comparison.
-    - `grouped_mip/`: for grouping MIP results for both the Gurobi and Hexaly solvers.
-    - `mip_grb_vi/`: for the MIP with valid inequalities experiments.
-    - `mslp/`: for the MSLP heuristic.
-    - `mslp_vs_mip/`: for the comparison between MSLP heuristic and MIP formulation.
-    - `solution_chars/`: for the solution characteristics/statistics analysis.
-    - `time_and_optimality_gap/`: for the time and optimality gap analysis.
-- `src/`: algorithmic code.
-  - `julia/`: Multi-start heuristic with a Linear Programming (LP) improvement procedure (MSLP), and the heuristic to ensure instance feasibility.
-  - `python/`: Mixed integer programming (MIP) formulation, and the Hexaly formulation (MIP in hexaly format).
+- [pdptw-se-statistics/](pdptw-se-statistics/): paper experiment data and data processing scripts along with the resulting outputs (tables, plots, etc.).
+  - [inst_statistics/](pdptw-se-statistics/inst_statistics/): instance statistics data regarding time window and capacity changes, scripts and their output tables.
+  - [official_experiments/](pdptw-se-statistics/official_experiments/): data, scripts and their output tables and plots.
+    - [data/](pdptw-se-statistics/official_experiments/data/): all csv tables from experiments and other auxiliary tables.
+    - [grb_vs_hx/](pdptw-se-statistics/official_experiments/grb_vs_hx/): for the Gurobi-Hexaly MIP comparison.
+    - [grouped_mip/](pdptw-se-statistics/official_experiments/grouped_mip/): for grouping MIP results for both the Gurobi and Hexaly solvers.
+    - [mip_grb_vi/](pdptw-se-statistics/official_experiments/mip_grb_vi/): for the MIP with valid inequalities experiments.
+    - [mslp/](pdptw-se-statistics/official_experiments/mslp/): for the MSLP heuristic.
+    - [mslp_vs_mip/](pdptw-se-statistics/official_experiments/mslp_vs_mip/): for the comparison between MSLP heuristic and MIP formulation.
+    - [solution_chars/](pdptw-se-statistics/official_experiments/solution_chars/): for the solution characteristics/statistics analysis.
+    - [time_and_optimality_gap/](pdptw-se-statistics/official_experiments/time_and_optimality_gap/): for the time and optimality gap analysis.
+- [src/](src/): algorithmic code.
+  - [julia/](src/julia/): Multi-start heuristic with a Linear Programming (LP) improvement procedure (MSLP), and the heuristic to ensure instance feasibility.
+  - [python/](src/python/): Mixed integer programming (MIP) formulation, and the Hexaly formulation (MIP in hexaly format).
 
 ## Julia code organiztion
 
