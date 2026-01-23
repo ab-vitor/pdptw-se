@@ -31,9 +31,9 @@ def load_general_configuration(gen_config_file_path: str, params:ParameterData) 
             param_name, value = line.split()
             if param_name in param_names_types:
                 field_type = param_names_types[param_name].type
-                if field_type == bool:
+                if field_type is bool:
                     parsed_value = value.lower() in ("true", "1", "yes", "on")
-                elif field_type == str:
+                elif field_type is str:
                     parsed_value = parse(value)
                 else:
                     parsed_value = field_type(value)
