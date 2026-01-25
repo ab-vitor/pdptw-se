@@ -108,14 +108,14 @@ This repository refers to the code and data used in the paper: "The pickup and d
   - `--elevator`: only pass this parameter if it is a multi-floor instance.
   - `--method_type heur`: to run a heuristic method.
   - `--method_code mslp`: to run the MSLP heuristic.
-  - `--mslpr <string>`: stop rule for the MSLP heuristic. Possible values: see [StopRule.jl](src/julia/modules/Enumerations/src/StopRule.jl).
+  - `--mslpr <string>`: stop rule for the MSLP heuristic. Choices: see [StopRule.jl](src/julia/modules/Enumerations/src/StopRule.jl).
   - `--mslpa <int>`: stop argument for the MSLP heuristic.
   - `--max_time <float>`: maximum time allowed for the execution (in seconds).
-  - `--greedy_service_order <string>`: defines the order of insertion of the requests in the partial solution. Possible values: `tightest_tw` (sorts by the tightest pickup time window) and `random` (sorts randomly).
+  - `--greedy_service_order <string>`: defines the order of insertion of the requests in the partial solution. Choices: `tightest_tw` (sorts by the tightest pickup time window) and `random` (sorts randomly).
   - `--seed <int>`: seed for the random number generator.
   - `--threads <int>`: number of threads for the LP solver.
-  - `--solver_method <char>`: solver method for Gurobi. Possible values: see [SolverMethod.jl](src/julia/modules/Enumerations/src/SolverMethod.jl).
-  - `--output_flag_grb_MSLP <int>`: output flag for Gurobi during the MSLP execution. Possible values: `0` (no output), `1` (normal output).
+  - `--solver_method <char>`: solver method for Gurobi. Choices: see [SolverMethod.jl](src/julia/modules/Enumerations/src/SolverMethod.jl).
+  - `--output_flag_grb_MSLP <int>`: output flag for Gurobi during the MSLP execution. Choices: `0` (no output), `1` (normal output).
 - The MSLP heuristic uses Gurobi as LP solver. Make sure you have Gurobi installed and properly configured in your machine.
 - Furthermore, each function of the Multistart module is documented for clarification.
 
@@ -222,7 +222,7 @@ This repository refers to the code and data used in the paper: "The pickup and d
   - `--seed <int>`: seed for the random number generator.
   - `--threads <int>`: number of threads for the MIP solver.
   - `--constraints_used_mip_str 1-29`: to use all basic constraints (1-29). You can add valid inequalities after a comma, e.g., `1-29,35,36,40`.
-  - Optional: `--output_flag_grb_mip <int>`: output flag for Gurobi during the MIP execution. Possible values: `0` (no output), `1` (normal output - default).
+  - Optional: `--output_flag_grb_mip <int>`: output flag for Gurobi during the MIP execution. Choices: `0` (no output), `1` (normal output - default).
 - Make sure you have Gurobi and Hexaly installed and properly configured in your machine. We used the Gurobi version 12.0.2, and Hexaly version 14.0.
 - Furthermore, the module formulations identify and describe each constraint used in the paper.
 
