@@ -28,7 +28,10 @@ def mip_gurobi_valid_inequalities(
     phi = schvars.phi
     gamma = schvars.gamma
 
-    # c35
+    """
+    Constraints (35):
+    - Each vehicle cannot be inactive and also serve a pickup/delivery node.
+    """
     if params.constraints_used_mip[35]:
         count = 0
         for k in inst.K:
@@ -43,7 +46,10 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c35 constraints added: {count}")
 
-    # c36
+    """
+    Constraints (36):
+    - (P&D vehicle) Each edge can only be traversed in one direction
+    """
     if params.constraints_used_mip[36]:
         count = 0
         for i, j in combinations(inst.V_p_d, 2):
@@ -55,7 +61,10 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c36 constraints added: {count}")
 
-    # c37
+    """
+    Constraints (37):
+    - (Machine) Each edge can only be traversed in one direction
+    """
     if params.constraints_used_mip[37]:
         count = 0
         for i, j in combinations(inst.V_p_d, 2):
@@ -67,7 +76,10 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c37 constraints added: {count}")
 
-    # c38
+    """
+    Constraints (38):
+    - Only one arc can precede the other.
+    """
     if params.constraints_used_mip[38]:
         count = 0
         if inst.n > 20:
@@ -103,7 +115,11 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c38 constraints added: {count}")
 
-    # c39
+    """
+    Constraints (39):
+    - No path of length w is assigned to a vehicle when the destination 
+    node is not reachable within its time window.
+    """
     if params.constraints_used_mip[39]:
         max_w = 2
         count = 0
@@ -124,7 +140,11 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c39 constraints added: {count}")
 
-    # c40
+    """
+    Constraints (40):
+    - No path of length w composed of arcs in A^m has all its arcs assigned to
+    any machine when the destination node is not reachable within its time window for every k ∈ K.
+    """
     if params.constraints_used_mip[40]:
         max_w = 2
         count = 0
@@ -147,7 +167,10 @@ def mip_gurobi_valid_inequalities(
                     )
         print(f"Number of c40 constraints added: {count}")
 
-    # c41
+    """
+    Constraints (41):
+    - A lower bound on the start time of the service at a pickup/delivery node.
+    """
     if params.constraints_used_mip[41]:
         count = 0
         for j in inst.V_p_d:
@@ -165,7 +188,16 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c41 constraints added: {count}")
 
-    # c42
+    """
+    Constraints (42):
+    - Lower bound on the start time of a machine travel based on the time windows
+    of the arc nodes.
+    - Notice that, given an arc (i, j) in A^m and a machine h ∈ H_{ij}, the variable 
+    alpha^h_ij can assume any value when phi^h_{ij} = 0, because it is not taken 
+    into account in a feasible solution.
+    - Besides, observe that these inequalities are only valid after the 
+    preprocessing step on set H_{ij} (see Section 4.4).
+    """
     if params.constraints_used_mip[42]:
         count = 0
         for i, j in inst.A_m:
@@ -178,7 +210,16 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c42 constraints added: {count}")
 
-    # c43
+    """
+    Constraints (43):
+    - Upper bound on the start time of a machine travel based on the time windows
+    of the arc nodes.
+    - Notice that, given an arc (i, j) in A^m and a machine h ∈ H_{ij}, the variable 
+    alpha^h_ij can assume any value when phi^h_{ij} = 0, because it is not taken 
+    into account in a feasible solution.
+    - Besides, observe that these inequalities are only valid after the 
+    preprocessing step on set H_{ij} (see Section 4.4).
+    """
     if params.constraints_used_mip[43]:
         count = 0
         for i, j in inst.A_m:
@@ -194,7 +235,13 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c43 constraints added: {count}")
 
-    # c44
+    """
+    Constraints (44):
+    - Similar to constraints (42), but now they include the distinct traversal times 
+    of the vehicles.
+    - For vehicles with equal traversal times, constraints (42) dominate constraints (44).
+    - However, this is not the case when dealing with vehicles with distinct traversal times.
+    """
     if params.constraints_used_mip[44]:
         count = 0
         for i, j in inst.A_m:
@@ -210,7 +257,13 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c44 constraints added: {count}")
 
-    # c45
+    """
+    Constraints (45):
+    - Similar to constraints (43), but now they include the distinct traversal times 
+    of the vehicles.
+    - For vehicles with equal traversal times, constraints (43) dominate constraints (45).
+    - However, this is not the case when dealing with vehicles with distinct traversal times.
+    """
     if params.constraints_used_mip[45]:
         count = 0
         for i, j in inst.A_m:
@@ -229,7 +282,18 @@ def mip_gurobi_valid_inequalities(
 
         print(f"Number of c45 constraints added: {count}")
 
-    # c46
+    """
+    Constraints (46):
+    - Denote by mi^h_{iji'} in {0, 1} the constant indicator that is equal to one 
+    if the minimum arrival time of a vehicle at machine h coming from node i' 
+    (e'_{i'} + s_{i'} + min_{k in K} {d_bar^k_{i′ h}) is greater than or equal to 
+    the maximum arrival time of the machine h after traversing arc (i, j) 
+    (l'_{j} − min_{k in K} {d_bar^k_{jh} + O^h_{f^h_j f^h_{i'}}), otherwise,
+    it is zero. 
+    - Hence, the constraints enforce that the start time to use a machine h 
+    in a certain arc (i', j') in A^m must always precede the start time to 
+    use a machine h in another arc (i, j) in A^m when mi^h_{iji'} = 1.
+    """
     if params.constraints_used_mip[46]:
         count = 0
         for i, j in inst.A_m:

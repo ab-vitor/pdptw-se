@@ -207,9 +207,24 @@ This repository refers to the code and data used in the paper: "The pickup and d
 
 - You can check the default value of each parameter in the file [src/python/modules/parameters/entities.py](src/python/modules/parameters/entities.py). Some of them are defined after reading all the parameters (see `def read_input_parameters(args: List[str]) -> ParameterData`), like output file names, and others cannot be passed (e.g. parameter `rng`, which is defined based on the parameter `seed`).
 - By default, the seed used for all MIP experiments (Gurobi or Hexaly) is `0`.
-- For the MIP with valid inequalities, use the parameter `--constraints_used_mip` followed by the basic sets of constraints (1-29), and the desired sets of valid inequalities (35-46). You can check which one exists in this file [valid_inequalities_mip_gurobi_model.py](src/python/modules/formulations/mip_gurobi_formulation/constraints_mip_gurobi_model/valid_inequalities_mip_gurobi_model.py).
+- For the MIP with valid inequalities, use the parameter `--constraints_used_mip_str` followed by the basic sets of constraints (1-29), and the desired sets of valid inequalities (35-46). You can check which one exists in this file [valid_inequalities_mip_gurobi_model.py](src/python/modules/formulations/mip_gurobi_formulation/constraints_mip_gurobi_model/valid_inequalities_mip_gurobi_model.py).
 - Information on how you can write the desired constraints in the command line or the configuration file is provided in the description of the function `parse_constraints_used_mip(params: ParameterData) -> None` (see the file [parameters.py](src/python/modules/parameters/parameters.py)).
 - For convinience, the example configuration file [configs/mip_grb_with_vi/gen_config_mip_grb_vi_example.conf](src/python/configs/mip_grb/gen_config_mip_grb_vi_example.conf) already contains all valid inequalities (35-46) along with the basic constraints (1-29). OBS.: do not use spaces to separate the constraint numbers or ranges, only commas.
+- Main parameters for the MIP execution:
+  - `--inst_path <string>`: path to the instance file.
+  - `--cut_off_machs <int>`: number of machine stations to be used in the instance (to reduce the original number of machines of the instance). Obs: it selects the first `cut_off_machs` machines in the instance file.
+  - `--elevator`: only pass this parameter if it is a multi-floor instance.
+  - `--method_type form`: to run an exact formulation method.
+  - `--method_code <str>`: to run the MIP formulation using the Gurobi solver. Choices: `mip_grb` or `mip_hx`.
+  - Max time parameters:
+    - `--mip_grb_max_time <int>`: maximum time allowed for the execution of the MIP formulation using Gurobi solver (in seconds).
+    - `--mip_hx_max_time <int>`: maximum time allowed for the execution of the MIP formulation using Hexaly solver (in seconds).
+  - `--seed <int>`: seed for the random number generator.
+  - `--threads <int>`: number of threads for the MIP solver.
+  - `--constraints_used_mip_str 1-29`: to use all basic constraints (1-29). You can add valid inequalities after a comma, e.g., `1-29,35,36,40`.
+  - Optional: `--output_flag_grb_mip <int>`: output flag for Gurobi during the MIP execution. Possible values: `0` (no output), `1` (normal output - default).
+- Make sure you have Gurobi and Hexaly installed and properly configured in your machine. We used the Gurobi version 12.0.2, and Hexaly version 14.0.
+- Furthermore, the module formulations identify and describe each constraint used in the paper.
 
 ## How to run the R code (pdptw-se-statistics)
 
