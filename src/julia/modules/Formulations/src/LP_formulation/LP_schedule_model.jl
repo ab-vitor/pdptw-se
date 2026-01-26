@@ -23,18 +23,26 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		error("No solver selected")
 	end
 
-
-	trvs = Vector[Tuple{Int64, Int64}[(trv.orig, trv.dest) for trv in sol.machines[h]] for h in inst.H]
-
+	# Sequence of pickup and delivery nodes visited for each vehicle
 	sigma = Vector[Int64[stop.node for stop in sol.vehicles[k][2:end-1]] for k in inst.K]
+
+	# Sequence of machine travels performed by each machine
 	psi = Vector[Tuple{Int64, Int64, Int64}[(trv.orig, trv.dest, trv.vehicle) for trv in sol.machines[h]] for h in inst.H]
+	
+	# Route positions for the sigma list (vehicles)
 	L_k = Vector[Int64[i for i in eachindex(sol.vehicles[k][1:end-2])] for k in inst.K]
+
+	# Route positions for the sigma list (machines)
 	L_h = Vector[Int64[i for i in eachindex(sol.machines[h])] for h in inst.H]
 
+	# Create variables and fix their respective domains.
 	@variable(model, inst.l[inst.depot_begin] >= t[i = inst.V_p_d] >= inst.e[inst.depot_begin])
 	@variable(model, inst.l[inst.depot_begin] >= tstart[k = inst.K] >= inst.e[inst.depot_begin])
 	@variable(model, inst.l[inst.depot_begin] >= tfinal[k = inst.K] >= inst.e[inst.depot_begin])
 	@variable(model, inst.l[inst.depot_begin] >= C[k = inst.K] >= 0)
+
+	# Simplify machine travels
+	trvs = Vector[Tuple{Int64, Int64}[(trv.orig, trv.dest) for trv in sol.machines[h]] for h in inst.H]
 	@variable(
 		model,
 		inst.l[inst.depot_begin] >= alpha[i = inst.Vprime, j = inst.Vprime, h = inst.H;
