@@ -10,6 +10,11 @@ from .entities_mip_hexaly_formulation import (
 def mip_hexaly_routing_variables(
     inst: InstanceData, model: HxModel
 ) -> MIPHxRoutingVars:
+    """
+    Create routing variables:
+      x[i,j,k]  binary for whether arc (i,j) is used by vehicle k
+      z[i,k]    continuous: weight of vehicle k after leaving node i
+    """
     x: dict[tuple, HxExpression] = {
         (i, j, k): model.bool()
         for i in inst.Vprime
@@ -28,6 +33,17 @@ def mip_hexaly_routing_variables(
 def mip_hexaly_scheduling_variables(
     inst: InstanceData, model: HxModel
 ) -> MIPHxSchedulingVars:
+    """
+    Create scheduling variables:
+      t[i]                  continuous: starting time to serve node i
+      tstart[k]             continuous: departing time of vehicle k from depot
+      tfinal[k]             continuous: arrival time of vehicle k at the depot
+      C[k]                  continuous: completion time of vehicle k (tfinal[k] - tstart[k])
+      phi[i,j,h]            binary for whether the machine h is used to traverse arc (i,j)
+      gamma[i,j,ip,jp,h]    binary for whether arc (i,j) precedes arc (ip, jp) for machine h
+      alpha[i,j,h]          continuous: time to start machine travel
+    """
+    
     Le = inst.l[inst.depot_begin]
     Lb = inst.e[inst.depot_begin]
 
