@@ -41,7 +41,11 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 			(i, j) in trvs[h]] >= inst.e[inst.depot_begin]
 	)
 
-	# c48
+	"""
+	Constraints (48):
+	- (General case) Whenever an intra-region arc is traversed by a vehicle, the time to serve the 
+	destination node is determined by the times of its origin.
+	"""
 	for k in inst.K, i in L_k[k][2:end]
 		if inst.jobs[inst.refs[sigma[k][i-1]]].point.z == inst.jobs[inst.refs[sigma[k][i]]].point.z
 			@constraint(
@@ -55,7 +59,11 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		end
 	end
 
-	# c49
+	"""
+	Constraints (49):
+	- (Depot case) Whenever an intra-region arc is traversed by a vehicle, the time to serve the 
+	destination node is determined by the times of its origin.
+	"""
 	for k in inst.K
 		if length(L_k[k]) > 0 && inst.jobs[inst.refs[inst.depot_begin]].point.z == inst.jobs[inst.refs[sigma[k][1]]].point.z
 			@constraint(
@@ -68,7 +76,11 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		end
 	end
 
-	# c50 and c51
+	"""
+	Constraints (50):
+	- (General case) Whenever a machine is used to traverse an arc, the starting time on
+	the machine is determined by the times of its origin node.
+	"""
 	for h in inst.H, l in L_h[h]
 		if psi[h][l][1] != inst.depot_begin
 			@constraint(
@@ -79,12 +91,25 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 				inst.d_bar[psi[h][l][1], h, psi[h][l][3]],
 				base_name = "c50"
 			)
-		else
+		end
+	end
+
+	"""
+	Constraints (51):
+	- (Depot case) Whenever a machine is used to traverse an arc, the starting time on
+	the machine is determined by the times of its origin node.
+	"""
+	for h in inst.H, l in L_h[h]
+		if psi[h][l][1] == inst.depot_begin
 			@constraint(model, alpha[inst.depot_begin, psi[h][l][2], h] >= tstart[psi[h][l][3]] + inst.d_bar[inst.depot_begin, h, psi[h][l][3]], base_name = "c51")
 		end
 	end
 
-	# c52
+	"""
+	Constraints (52):
+	- Whenever an inter-region arc is traversed by the vehicle, the time to serve the 
+	destination node is determined by the times of its machine travel origin station.
+	"""
 	for h in inst.H, l in L_h[h]
 		if psi[h][l][2] != inst.depot_end
 			@constraint(
@@ -102,7 +127,11 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		end
 	end
 
-	# c53
+	"""
+	Constraints (53):
+	- The machine can only start a machine travel after finishing the previous
+	travel and traveling to the next machine travel origin station.
+	"""
 	for h in inst.H, l in L_h[h][2:end]
 		@constraint(
 			model,
@@ -122,7 +151,11 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		)
 	end
 
-	# c54
+	"""
+	Constraints (54):
+	- The machine can only start the first machine travel after traveling 
+	from its initial station to the first machine travel origin station.
+	"""
 	for h in inst.H
 		if length(L_h[h]) > 0
 			@constraint(
@@ -134,7 +167,10 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		end
 	end
 
-	# c55
+	"""
+	Constraints (55):
+	- (General case) Arrival times of the vehicles at the depot based on their origin nodes.
+	"""
 	for k in inst.K
 		if length(L_k[k]) > 0 && inst.jobs[inst.refs[sigma[k][end]]].point.z == inst.jobs[inst.refs[inst.depot_end]].point.z
 			@constraint(
@@ -148,7 +184,10 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		end
 	end
 
-	# c56
+	"""
+	Constraints (56):
+	- (Depot case) Arrival times of the vehicles at the depot based on their origin nodes.
+	"""
 	for h in inst.H, l in L_h[h]
 		if psi[h][l][2] == inst.depot_end
 			@constraint(
@@ -166,25 +205,36 @@ function run_LP_to_reschedule_solution(env::Union{Gurobi.Env, Nothing}, sol::Sol
 		end
 	end
 
-	# c57
+	"""
+	Constraints (57):
+	- Lower bounds on the completion times of the vehicles.
+	"""
 	for k in inst.K
 		@constraint(model, C[k] >= tfinal[k] - tstart[k], base_name = "c57")
 	end
 
-	# c58
+	"""
+	Constraints (58):
+	- Lower and upper bounds on the service start times to respect time windows.
+	"""
 	for i in inst.V_p_d
 		@constraint(model, inst.e[i] <= t[i], base_name = "c58_p1")
 		@constraint(model, t[i] <= inst.l[i], base_name = "c58_p2")
 	end
 
-	# c59
+	"""
+	Constraints (59):
+	- Vehicle start time earlier than its end time.
+	"""
 	for k in inst.K
-		@constraint(model, inst.e[inst.depot_begin] <= tstart[k], base_name = "c59_p1")
-		@constraint(model, tstart[k] <= tfinal[k], base_name = "c59_p2")
-		@constraint(model, tfinal[k] <= inst.l[inst.depot_begin], base_name = "c59_p3")
+		@constraint(model, tstart[k] <= tfinal[k], base_name = "c59")
 	end
 
-	# c47
+	"""
+	Objective function (47):
+	- The same for the MIP formulation, i.e., minimizing the total completion
+	time of the vehicles.
+	"""
 	@objective(model, Min, sum(C))
 
 	# Starting optimization
