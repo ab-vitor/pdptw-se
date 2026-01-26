@@ -2,7 +2,7 @@
 
 Source code, instances, data processing scripts, and detailed results for the Pickup and Delivery Problem with Time windows and Scheduling on the Edges.
 
-This repository refers to the code and data used in the paper: [*The pickup and delivery problem with time windows and scheduling on the edges*](https://doi.org/10.1016/j.ejor.2026.01.036), by Vítor A. Barbosa, Sunil Tiwari, and Rafael A. Melo, currently under review.
+This repository refers to the code and data used in the paper: [*The pickup and delivery problem with time windows and scheduling on the edges*](https://doi.org/10.1016/j.ejor.2026.01.036), by Vítor A. Barbosa, Sunil Tiwari, and Rafael A. Melo, currently in pre-proof.
 
 ## Contents
 
